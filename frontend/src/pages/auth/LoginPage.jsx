@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { useAuth } from '../../contexts/AuthContext';
-import { RiEyeLine, RiEyeOffLine, RiStethoscopeLine, RiLockPasswordLine, RiMailLine, RiUser3Line, RiUserStarLine, RiShieldUserLine } from 'react-icons/ri';
+import { RiEyeLine, RiEyeOffLine, RiStethoscopeLine, RiLockPasswordLine, RiMailLine, RiUser3Line, RiUserStarLine, RiShieldUserLine, RiLoader4Line } from 'react-icons/ri';
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -16,9 +17,12 @@ export default function LoginPage() {
     setLoading(true); setError('');
     try {
       const user = await login(form.email, form.password);
+      toast.success(`Xush kelibsiz, ${user.full_name || 'Foydalanuvchi'}!`);
       navigate(`/${user.role}/dashboard`);
     } catch (err) {
-      setError(err.response?.data?.error || 'Login muvaffaqiyatsiz');
+      const msg = err.response?.data?.error || 'Login muvaffaqiyatsiz';
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
@@ -102,10 +106,7 @@ export default function LoginPage() {
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
-                  <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
-                  </svg>
+                  <RiLoader4Line className="animate-spin text-base" />
                   Kirish...
                 </span>
               ) : 'Kirish'}

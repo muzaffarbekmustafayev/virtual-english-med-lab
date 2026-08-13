@@ -147,7 +147,7 @@ export default function ModulesPage() {
 
       {/* ── Module Grid ─────────────────────────────────── */}
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {[...Array(6)].map((_, i) => <SkeletonCard key={i} />)}
         </div>
       ) : filtered.length === 0 ? (
@@ -156,7 +156,7 @@ export default function ModulesPage() {
           <p className="text-sm font-medium">No modules found</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filtered.map((mod, i) => {
             const status   = getStatus(mod);
             const cfg      = STATUS_CONFIG[status];

@@ -80,12 +80,20 @@ Wrap-up (5 min)
 
 ---
 
-## Boshqa Hujjatlar
+## System Hujjatlari Indeksi
 
 | Fayl | Mavzu |
 |------|-------|
-| `02_roles.md` | Rollar va ularning vazifalari |
-| `03_menus.md` | Menular va sahifalar tuzilishi |
-| `04_database.md` | Ma'lumotlar bazasi sxemasi |
-| `05_api.md` | Backend API endpointlari |
-| `06_build_guide.md` | Tizimni qurish bosqichlari |
+| `01_overview.md` | Tizimga umumiy ko'rinish va maqsad |
+| `02_roles.md` | Tizim rollari, vazifalari va ruxsatnomalari |
+| `03_menus.md` | Menular, sahifalar va navigatsiya arxitekturasi |
+| `04_database.md` | MySQL ma'lumotlar bazasi sxemasi va modellar |
+| `05_api_endpoints.md` | Backend REST API endpointlari va so'rovlar spesifikatsiyasi |
+| `06_ai_integration.md` | Gemini GenAI SDK, promptlar va AI baholash algoritmi |
+| `07_frontend_architecture.md` | React, Vite, Tailwind CSS, Stepper va UI komponentlar |
+| `08_modules_and_content.md` | 10 ta stomatologik modul, lug'at va ssenariylar |
+| `09_security_and_auth.md` | JWT, bcrypt, Role guard va xavfsizlik standartlari |
+| `10_deployment_and_setup.md` | Tizimni o'rnatish, ishga tushirish va production deployment |
+| `11_admin_panel_functions.md` | Admin paneli sidebari, funksiyalari va boshqaruv sopesifikatsiyasi |
+| `responsive-design.md` | Mobil va desktop responsive UI qo'llanmasi |
+

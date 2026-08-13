@@ -92,7 +92,7 @@ export default function ForumPage() {
               </div>
               <div className="text-center">
                 <p className="text-sm font-semibold text-slate-500">No messages yet</p>
-                <p className="text-xs text-slate-400 mt-0.5">Be the first to say something! 👋</p>
+                <p className="text-xs text-slate-400 mt-0.5 flex items-center justify-center gap-1">Be the first to say something! <RiEmotionLine className="text-amber-500 text-sm" /></p>
               </div>
             </div>
           )}

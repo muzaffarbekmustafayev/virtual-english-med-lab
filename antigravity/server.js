@@ -1,15 +1,15 @@
 require('dotenv').config();
 const TelegramBot = require('node-telegram-bot-api');
-const { exec, spawn } = require('child_process');
+const { exec } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
-// ── Konfiguratsiya ───────────────────────────────────────────
-const TOKEN        = process.env.BOT_TOKEN;
-const ADMIN_ID     = process.env.ADMIN_CHAT_ID;
-const MAX_OUTPUT   = 3500;
-const CMD_TIMEOUT  = parseInt(process.env.CMD_TIMEOUT_MS || '30000'); // 30 sek
+// ─── Konfiguratsiya ───────────────────────────────────────────────────────────
+const TOKEN = process.env.BOT_TOKEN;
+const ADMIN_ID = process.env.ADMIN_CHAT_ID;
+const MAX_OUTPUT = 3500;
+const DEFAULT_CWD = process.env.DEFAULT_CWD || process.cwd();
 
 if (!TOKEN || !ADMIN_ID) {
   console.error("❌ BOT_TOKEN va ADMIN_CHAT_ID .env da bo'lishi shart!");
@@ -18,22 +18,40 @@ if (!TOKEN || !ADMIN_ID) {
 
 const bot = new TelegramBot(TOKEN, { polling: true });
 
-// ── Holat ────────────────────────────────────────────────────
-let cwd           = process.env.DEFAULT_CWD || process.cwd();
-const cmdHistory  = [];       // oxirgi 20 ta buyruq
-const pending     = new Map(); // messageId → { command, chatId }
-let runningProc   = null;     // joriy ishlab turgan jarayon
+// ─── Sessiyalar ───────────────────────────────────────────────────────────────
+// sessions: Map<sessionId, { name, cwd, agy_conv_id, history[], proc, createdAt }>
+const sessions = new Map();
+let sessionCounter = 0;
 
-// ── Yordamchi funksiyalar ────────────────────────────────────
+// Har bir user uchun aktiv sessiya
+const activeSession = new Map(); // chatId -> sessionId
+
+const createSession = (name = null) => {
+  sessionCounter++;
+  const id = `s${sessionCounter}`;
+  const session = {
+    id,
+    name: name || `Sessiya ${sessionCounter}`,
+    cwd: DEFAULT_CWD,
+    history: [],
+    proc: null,
+    isNewConv: true,         // birinchi ishga tushirishda yangi sessiya
+    createdAt: new Date()
+  };
+  sessions.set(id, session);
+  return session;
+};
+
+// ─── Yordamchi funksiyalar ─────────────────────────────────────────────────────
 const isAdmin = (id) => id.toString() === ADMIN_ID.toString();
 
-const escape = (text) => text.replace(/[`*_[\]()~>#+=|{}.!\\-]/g, '\\$&');
+const escape = (text) => String(text).replace(/[`*_[\]()~>#+=|{}.!\\-]/g, '\\$&');
 
-const shortPath = (p) => p.replace(os.homedir(), '~');
+const shortPath = (p) => String(p).replace(os.homedir(), '~');
 
 const truncate = (text) => {
   if (text.length > MAX_OUTPUT) {
-    return text.substring(0, MAX_OUTPUT) + '\n\n⚠️ [Natija juda uzun — qisqartirildi]';
+    return text.substring(0, MAX_OUTPUT) + '\n\n⚠️ [Natija qisqartirildi]';
   }
   return text;
 };
@@ -43,51 +61,75 @@ const send = (chatId, text, options = {}) => {
     parse_mode: 'MarkdownV2',
     ...options
   }).catch(() => {
-    // Agar Markdown format xato bersa — oddiy matn sifatida yuboramiz
     return bot.sendMessage(chatId, text.replace(/[*_`[\]()~>#+=|{}.!\\-]/g, ''), options);
   });
 };
 
-const editMsg = (chatId, msgId, text) => {
+const editMsg = (chatId, msgId, text, options = {}) => {
   return bot.editMessageText(text, {
     chat_id: chatId,
     message_id: msgId,
-    parse_mode: 'MarkdownV2'
-  }).catch(() => {});
+    parse_mode: 'MarkdownV2',
+    ...options
+  }).catch(() => { });
 };
 
-// ── Yordam menyusi ────────────────────────────────────────────
-const HELP_TEXT = `
-🤖 *Antigravity Remote Terminal Bot*
+// ─── Sessiya tugmalari ─────────────────────────────────────────────────────────
+const buildSessionKeyboard = (chatId) => {
+  const activeSid = activeSession.get(chatId.toString());
+  const buttons = [];
 
-*Maxsus buyruqlar:*
-\`/start\` — Botni boshlash va holat
-\`/help\` — Shu menyu
-\`/pwd\` — Hozirgi papka
-\`/ls\` — Papka mazmuni
-\`/history\` — Oxirgi 20 ta buyruq
-\`/kill\` — Ishlayotgan jarayonni to'xtatish
-\`/sys\` — Tizim ma'lumotlari (CPU, RAM, disk)
-\`/cd <yo'l>\` — Papkani o'zgartirish
+  for (const [sid, sess] of sessions) {
+    const isActive = sid === activeSid;
+    const label = `${isActive ? '✅ ' : ''}${sess.name}`;
+    buttons.push([
+      { text: label, callback_data: `sel_${sid}` },
+      { text: '✖ Yopish', callback_data: `close_${sid}` }
+    ]);
+  }
 
-*Har qanday terminal buyrug'ingizni yuboring ✅/❌ bilan tasdiqlaysiz*
-`;
+  buttons.push([{ text: '➕ Yangi sessiya', callback_data: 'new_session' }]);
+  return { inline_keyboard: buttons };
+};
 
-// ── /start ─────────────────────────────────────────────────────
+const sessionsText = (chatId) => {
+  const activeSid = activeSession.get(chatId.toString());
+  if (sessions.size === 0) {
+    return `📋 *Sessiyalar yo'q*\n\nYangi sessiya yaratish uchun ➕ tugmani bosing\\.`;
+  }
+  const lines = [];
+  for (const [sid, sess] of sessions) {
+    const isActive = sid === activeSid;
+    const status = isActive ? '✅ *aktiv*' : '💤 kutmoqda';
+    const running = sess.proc ? ' ⚙️ _ishlayapti_' : '';
+    lines.push(`${status} — \`${escape(sess.name)}\`${running}`);
+  }
+  return `📋 *Mavjud sessiyalar:*\n\n${lines.join('\n')}`;
+};
+
+// ─── /start ───────────────────────────────────────────────────────────────────
 bot.onText(/\/start/, (msg) => {
-  if (!isAdmin(msg.chat.id)) return bot.sendMessage(msg.chat.id, '⛔ Ruxsat yo\'q.');
+  if (!isAdmin(msg.chat.id)) return bot.sendMessage(msg.chat.id, '🚫 Ruxsat yo\'q.');
+
+  // Agar hech sessiya yo'q bo'lsa — bitta yaratib activ qilamiz
+  if (sessions.size === 0) {
+    const sess = createSession('Asosiy sessiya');
+    activeSession.set(msg.chat.id.toString(), sess.id);
+  }
+
   const statusLine = `
-🟢 *Bot Faol*
-📂 Papka: \`${escape(shortPath(cwd))}\`
+🤖 *Antigravity Bot Faol*
+📁 Jild: \`${escape(shortPath(DEFAULT_CWD))}\`
 💻 Tizim: \`${escape(os.type())} ${escape(os.release())}\`
-🧠 RAM: \`${Math.round(os.freemem() / 1e6)} MB bo'sh / ${Math.round(os.totalmem() / 1e6)} MB jami\`
+📊 RAM: \`${Math.round(os.freemem() / 1e6)} MB / ${Math.round(os.totalmem() / 1e6)} MB\`
 ⏱ Uptime: \`${Math.round(process.uptime())} sek\`
 `;
+
   send(msg.chat.id, statusLine, {
     reply_markup: {
       keyboard: [
-        [{ text: '/ls' }, { text: '/pwd' }, { text: '/sys' }],
-        [{ text: '/history' }, { text: '/kill' }, { text: '/help' }],
+        [{ text: '/sessions' }, { text: '/kill' }, { text: '/help' }],
+        [{ text: '/ls' }, { text: '/pwd' }, { text: '/sys' }]
       ],
       resize_keyboard: true,
       persistent: true
@@ -95,41 +137,74 @@ bot.onText(/\/start/, (msg) => {
   });
 });
 
-// ── /help ──────────────────────────────────────────────────────
+// ─── /sessions ─────────────────────────────────────────────────────────────────
+bot.onText(/\/sessions/, (msg) => {
+  if (!isAdmin(msg.chat.id)) return;
+  const chatId = msg.chat.id.toString();
+  bot.sendMessage(chatId, sessionsText(chatId), {
+    parse_mode: 'MarkdownV2',
+    reply_markup: buildSessionKeyboard(chatId)
+  });
+});
+
+// ─── /help ────────────────────────────────────────────────────────────────────
 bot.onText(/\/help/, (msg) => {
   if (!isAdmin(msg.chat.id)) return;
-  send(msg.chat.id, HELP_TEXT);
+  const help = `
+🚀 *Antigravity Remote Terminal Bot*
+
+*Buyruqlar:*
+\`/start\` — Botni boshlash
+\`/sessions\` — Sessiyalar ro'yxati va boshqaruv
+\`/pwd\` — Hozirgi papka \\(aktiv sessiya\\)
+\`/ls\` — Papka mazmuni
+\`/history\` — So'nggi buyruqlar
+\`/kill\` — Aktiv sessiya jarayonini to'xtatish
+\`/sys\` — Tizim ma'lumotlari
+\`/cd <yo'l>\` — Papkani o'zgartirish
+
+*Xabar yuborsangiz, aktiv sessiyaga AGY orqali yuboriladi*
+`;
+  send(msg.chat.id, help);
 });
 
-// ── /pwd ──────────────────────────────────────────────────────
+// ─── /pwd ─────────────────────────────────────────────────────────────────────
 bot.onText(/\/pwd/, (msg) => {
   if (!isAdmin(msg.chat.id)) return;
-  send(msg.chat.id, `📂 *Hozirgi papka:*\n\`${escape(cwd)}\``);
+  const chatId = msg.chat.id.toString();
+  const sid = activeSession.get(chatId);
+  const sess = sessions.get(sid);
+  if (!sess) return send(chatId, '⚠️ Aktiv sessiya yo\'q\\. /sessions orqali tanlang\\.');
+  send(chatId, `📁 *${escape(sess.name)}* papkasi:\n\`${escape(sess.cwd)}\``);
 });
 
-// ── /ls ───────────────────────────────────────────────────────
+// ─── /ls ──────────────────────────────────────────────────────────────────────
 bot.onText(/\/ls/, (msg) => {
   if (!isAdmin(msg.chat.id)) return;
+  const chatId = msg.chat.id.toString();
+  const sid = activeSession.get(chatId);
+  const sess = sessions.get(sid);
+  if (!sess) return send(chatId, '⚠️ Aktiv sessiya yo\'q\\. /sessions orqali tanlang\\.');
   try {
-    const items = fs.readdirSync(cwd, { withFileTypes: true });
-    const dirs  = items.filter(i => i.isDirectory()).map(i => `📁 ${i.name}`);
+    const items = fs.readdirSync(sess.cwd, { withFileTypes: true });
+    const dirs = items.filter(i => i.isDirectory()).map(i => `📁 ${i.name}`);
     const files = items.filter(i => !i.isDirectory()).map(i => `📄 ${i.name}`);
-    const all   = [...dirs, ...files].join('\n');
-    send(msg.chat.id, `📂 *${escape(shortPath(cwd))}*\n\n${escape(all) || '_(bo\'sh)_'}`);
+    const all = [...dirs, ...files].join('\n');
+    send(chatId, `📁 *${escape(shortPath(sess.cwd))}*\n\n${escape(all) || '_(bo\'sh)_'}`);
   } catch (e) {
-    send(msg.chat.id, `❌ \`${escape(e.message)}\``);
+    send(chatId, `❌ \`${escape(e.message)}\``);
   }
 });
 
-// ── /sys ──────────────────────────────────────────────────────
+// ─── /sys ─────────────────────────────────────────────────────────────────────
 bot.onText(/\/sys/, (msg) => {
   if (!isAdmin(msg.chat.id)) return;
   const cpus = os.cpus();
   const text = `
-💻 *Tizim Ma'lumotlari*
+⚙️ *Tizim Ma'lumotlari*
 🖥 OS: \`${escape(os.type())} ${escape(os.release())}\`
-⚙️ CPU: \`${escape(cpus[0].model)}\` \\(${cpus.length} yadroli\\)
-🧠 RAM: \`${Math.round(os.freemem() / 1e6)} MB bo'sh / ${Math.round(os.totalmem() / 1e6)} MB jami\`
+🧠 CPU: \`${escape(cpus[0].model)}\` \\(${cpus.length} yadroli\\)
+📊 RAM: \`${Math.round(os.freemem() / 1e6)} MB bo'sh / ${Math.round(os.totalmem() / 1e6)} MB jami\`
 👤 Foydalanuvchi: \`${escape(os.userInfo().username)}\`
 🏠 Home: \`${escape(os.homedir())}\`
 ⏱ Tizim uptime: \`${Math.round(os.uptime() / 60)} daqiqa\`
@@ -137,185 +212,218 @@ bot.onText(/\/sys/, (msg) => {
   send(msg.chat.id, text);
 });
 
-// ── /history ─────────────────────────────────────────────────
+// ─── /history ─────────────────────────────────────────────────────────────────
 bot.onText(/\/history/, (msg) => {
   if (!isAdmin(msg.chat.id)) return;
-  if (cmdHistory.length === 0) return send(msg.chat.id, '📋 Tarix bo\'sh.');
-  const list = cmdHistory.slice(-20).map((c, i) => `${i + 1}\\. \`${escape(c)}\``).join('\n');
-  send(msg.chat.id, `📋 *Oxirgi buyruqlar:*\n\n${list}`);
+  const chatId = msg.chat.id.toString();
+  const sid = activeSession.get(chatId);
+  const sess = sessions.get(sid);
+  if (!sess) return send(chatId, '⚠️ Aktiv sessiya yo\'q\\.');
+  if (sess.history.length === 0) return send(chatId, `📜 *${escape(sess.name)}*: tarix bo'sh\\.`);
+  const list = sess.history.slice(-20).map((c, i) => `${i + 1}\\. \`${escape(c)}\``).join('\n');
+  send(chatId, `📜 *${escape(sess.name)} — So'nggi buyruqlar:*\n\n${list}`);
 });
 
-// ── /kill ─────────────────────────────────────────────────────
+// ─── /kill ────────────────────────────────────────────────────────────────────
 bot.onText(/\/kill/, (msg) => {
   if (!isAdmin(msg.chat.id)) return;
-  if (!runningProc) return send(msg.chat.id, '⚠️ Hozir ishlayotgan jarayon yo\'q\\.');
+  const chatId = msg.chat.id.toString();
+  const sid = activeSession.get(chatId);
+  const sess = sessions.get(sid);
+  if (!sess) return send(chatId, '⚠️ Aktiv sessiya yo\'q\\.');
+  if (!sess.proc) return send(chatId, `⚠️ *${escape(sess.name)}*: ishlayotgan jarayon yo'q\\.`);
   try {
-    process.kill(-runningProc.pid);
-    runningProc = null;
-    send(msg.chat.id, '🛑 Jarayon to\'xtatildi\\.');
+    process.kill(-sess.proc.pid);
+    sess.proc = null;
+    send(chatId, `🛑 *${escape(sess.name)}*: jarayon to'xtatildi\\.`);
   } catch (e) {
-    send(msg.chat.id, `❌ To'xtatib bo'lmadi: \`${escape(e.message)}\``);
+    send(chatId, `❌ To'xtatib bo'lmadi: \`${escape(e.message)}\``);
   }
 });
 
-// ── AI bilan buyruqni tarjima qilish (Natural Language to CLI) ──
-const translateWithAI = async (text, dir) => {
-  // Backend'dagi .env dan GEMINI kalitini o'qiymiz (agar bo'lsa)
-  const backendEnv = path.resolve(__dirname, '../backend/.env');
-  if (fs.existsSync(backendEnv)) require('dotenv').config({ path: backendEnv });
-  
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) return text;
-
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
-  const prompt = `You are a smart remote terminal assistant for a Windows machine. The current working directory is: ${dir}.
-The user input is: "${text}"
-
-If the input is already a valid terminal command (like 'npm run dev', 'dir', 'ls'), return it exactly as is.
-If it is natural language in Uzbek or English (e.g. "loyihani githubga push qil", "start the server"), convert it into the correct Windows terminal command (e.g. 'git add . && git commit -m "update" && git push').
-Return ONLY the raw command string. No markdown formatting (\`\`\`), no explanations, nothing else.`;
-
-  try {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ role: 'user', parts: [{ text: prompt }] }],
-        generationConfig: { temperature: 0.1 }
-      })
-    });
-    const data = await res.json();
-    if (data.error) {
-       console.error("API Xatoligi:", data.error.message);
-    }
-    if (data.candidates && data.candidates[0].content.parts[0].text) {
-      return data.candidates[0].content.parts[0].text.trim();
-    }
-  } catch (err) {
-    console.error("AI xatosi:", err);
-  }
-  return text;
-};
-
-// ── Asosiy xabarlar (terminal buyruqlari) ────────────────────
+// ─── Asosiy xabarlar ──────────────────────────────────────────────────────────
 bot.on('message', async (msg) => {
   const chatId = msg.chat.id.toString();
-
   if (!isAdmin(chatId)) {
-    return bot.sendMessage(chatId, '⛔ Kechirasiz, siz bu botdan foydalana olmaysiz.');
+    return bot.sendMessage(chatId, '🚫 Kechirasiz, siz bu botdan foydalana olmaysiz.');
   }
 
   const text = (msg.text || '').trim();
   if (!text || text.startsWith('/')) return;
 
-  // cd → ichki holat o'zgarishi
+  // Aktiv sessiyani olamiz
+  let sid = activeSession.get(chatId);
+  let sess = sessions.get(sid);
+
+  if (!sess) {
+    // Sessiya yo'q — yangi yaratamiz
+    sess = createSession('Asosiy sessiya');
+    activeSession.set(chatId, sess.id);
+    sid = sess.id;
+  }
+
+  // cd — ichki yo'nalish o'zgarishi
   if (text.startsWith('cd ')) {
-    const target   = text.substring(3).trim();
-    const resolved = path.resolve(cwd, target);
+    const target = text.substring(3).trim();
+    const resolved = path.resolve(sess.cwd, target);
     if (fs.existsSync(resolved) && fs.statSync(resolved).isDirectory()) {
-      cwd = resolved;
-      send(chatId, `📂 Papka o'zgardi:\n\`${escape(cwd)}\``);
+      sess.cwd = resolved;
+      send(chatId, `📁 *${escape(sess.name)}*: papka o'zgardi\n\`${escape(sess.cwd)}\``);
     } else {
       send(chatId, `❌ Papka topilmadi:\n\`${escape(resolved)}\``);
     }
     return;
   }
 
-  // Foydalanuvchiga kuttirish xabarini beramiz
-  const waitMsg = await bot.sendMessage(chatId, '⏳ _Tahlil qilinmoqda..._', { parse_mode: 'Markdown' });
+  // AGY buyrug'i
+  const systemPrompt = `[TIZIM BUYRUG'I: Hozirgi ishchi jild - ${sess.cwd}. Foydalanuvchi so'roviga ko'ra BARCHA turdagi fayllar (kod, matn, rasm, konfiguratsiya, md, json, yaml, env, csv va boshqalar) bilan ishlash, o'qish, yozish, o'zgartirish mumkin. Hech qanday fayl turiga cheklov yo'q. Zarur bo'lsa boshqa jildlarga ham kira olasiz. Vazifani darhol bajaring, savol va tasdiqlash so'ramang. Qisqa hisobot bering.]\n\nFoydalanuvchi: `;
 
-  // 1. AI orqali haqiqiy buyruqqa aylantiramiz
-  const finalCommand = await translateWithAI(text, cwd);
+  const agyContinue = !sess.isNewConv;
+  sess.isNewConv = false;
+  const execCommand = `agy ${agyContinue ? '-c ' : ''}--dangerously-skip-permissions --mode accept-edits --print-timeout 15m -p "MUHIM: Faqat AMAL qil. Reja tuzma, hisobot berma, tayyorligingni e'lon qilma. Birinchi qadam - to'g'ridan-to'g'ri vazifani bajar. Ishchi jild: ${sess.cwd.replace(/\\/g, '/')}. Foydalanuvchi buyrug'i: ${text.replace(/"/g, '\\"')}"`;
 
-  // Tasdiqlash tizimi
-  const key = msg.message_id.toString();
-  pending.set(key, { text, command: finalCommand, chatId });
 
-  bot.deleteMessage(chatId, waitMsg.message_id).catch(()=>{});
+  const statusText = `⏳ *${escape(sess.name)}: bajarilmoqda\\.\\.\\.*`;
 
-  let warning = text !== finalCommand ? `🤖 *AI taklifi:*\n` : '';
-
-  bot.sendMessage(chatId,
-    `⚠️ *Harakatni tanlang:*\n\n📂 \`${escape(shortPath(cwd))}\`\n\nSiz yozdingiz:\n\`\`\`text\n${escape(text)}\n\`\`\`\n${warning}${text !== finalCommand ? `\`\`\`bash\n${escape(finalCommand)}\n\`\`\`` : ''}`,
-    {
-      parse_mode: 'MarkdownV2',
-      reply_to_message_id: msg.message_id,
-      reply_markup: {
-        inline_keyboard: [
-          [{ text: '✅ CLI da bajarish', callback_data: `cli_${key}` }],
-          [{ text: '🤖 Antigravity (AGY) ga yuborish', callback_data: `agy_${key}` }],
-          [{ text: '❌ Bekor qilish', callback_data: `reject_${key}` }]
-        ]
-      }
+  bot.sendMessage(chatId, statusText, {
+    parse_mode: 'MarkdownV2',
+    reply_to_message_id: msg.message_id,
+    reply_markup: {
+      inline_keyboard: [
+        [{ text: '🛑 To\'xtatish', callback_data: `kill_${sid}` }]
+      ]
     }
-  );
+  }).then(sentMsg => {
+    sess.history.push(text);
+    if (sess.history.length > 50) sess.history.shift();
+
+    const child = exec(execCommand, {
+      cwd: sess.cwd,
+      timeout: 900000,
+      detached: true
+    }, (error, stdout, stderr) => {
+      sess.proc = null;
+
+      let output = '';
+      if (stdout) output += stdout;
+      if (stderr) output += (stdout ? '\n⚠️ STDERR:\n' : '') + stderr;
+      if (!output && error) output = `Exit code: ${error.code || '?'}`;
+      if (!output) output = '✅ Bajarildi (natija qaytmadi).';
+
+      output = truncate(output);
+
+      // Status xabarini yangilaymiz (tugmasiz)
+      editMsg(chatId, sentMsg.message_id, statusText);
+
+      const reply = `✅ *${escape(sess.name)} — Natija:*\n\`\`\`\n${escape(output)}\n\`\`\``;
+      send(chatId, reply, { reply_to_message_id: msg.message_id }).catch(() =>
+        bot.sendMessage(chatId, `⚠️ Natijani formatlashda xato:\n\n${output.substring(0, 3500)}`)
+      );
+    });
+
+    if (child && child.pid) sess.proc = child;
+  }).catch(e => console.error("Xabar yuborishda xato:", e));
 });
 
-// ── Callback tugmalar (Accept / Reject / AGY) ──────────────────────
+// ─── Callback tugmalar ────────────────────────────────────────────────────────
 bot.on('callback_query', (query) => {
   const chatId = query.message.chat.id.toString();
   if (!isAdmin(chatId)) {
     return bot.answerCallbackQuery(query.id, { text: 'Ruxsat yo\'q!', show_alert: true });
   }
 
-  const [action, key] = query.data.split('_');
-  if (!pending.has(key)) {
-    return bot.answerCallbackQuery(query.id, { text: 'Eskirgan yoki topilmadi.', show_alert: true });
+  const data = query.data;
+
+  // ── Yangi sessiya ──
+  if (data === 'new_session') {
+    const sess = createSession();
+    activeSession.set(chatId, sess.id);
+    bot.answerCallbackQuery(query.id, { text: `✅ ${sess.name} yaratildi va tanlandi!` });
+    return bot.editMessageText(sessionsText(chatId), {
+      chat_id: chatId,
+      message_id: query.message.message_id,
+      parse_mode: 'MarkdownV2',
+      reply_markup: buildSessionKeyboard(chatId)
+    }).catch(() => {});
   }
 
-  const { text: originalText, command: cliCommand } = pending.get(key);
-  pending.delete(key);
-  bot.answerCallbackQuery(query.id);
-
-  if (action === 'reject') {
-    return editMsg(chatId, query.message.message_id,
-      `❌ *Bekor qilindi:*\n\`\`\`bash\n${escape(originalText)}\n\`\`\``
-    );
+  // ── Sessiya tanlash ──
+  if (data.startsWith('sel_')) {
+    const sid = data.substring(4);
+    if (!sessions.has(sid)) {
+      return bot.answerCallbackQuery(query.id, { text: 'Sessiya topilmadi!', show_alert: true });
+    }
+    activeSession.set(chatId, sid);
+    const sess = sessions.get(sid);
+    bot.answerCallbackQuery(query.id, { text: `✅ ${sess.name} tanlandi` });
+    return bot.editMessageText(sessionsText(chatId), {
+      chat_id: chatId,
+      message_id: query.message.message_id,
+      parse_mode: 'MarkdownV2',
+      reply_markup: buildSessionKeyboard(chatId)
+    }).catch(() => {});
   }
 
-  let execCommand = cliCommand;
-  let statusText = `⏳ *CLI da bajarilmoqda\\.\\.\\.*\n\`\`\`bash\n${escape(cliCommand)}\n\`\`\``;
+  // ── Sessiyani yopish ──
+  if (data.startsWith('close_')) {
+    const sid = data.substring(6);
+    const sess = sessions.get(sid);
+    if (!sess) {
+      return bot.answerCallbackQuery(query.id, { text: 'Sessiya topilmadi!', show_alert: true });
+    }
+    // Jarayonni to'xtatamiz
+    if (sess.proc) {
+      try { process.kill(-sess.proc.pid); } catch (_) {}
+    }
+    const closedName = sess.name;
+    sessions.delete(sid);
 
-  if (action === 'agy') {
-    // AGY orqali ishga tushirish (xavfsizlik so'rovlarisiz, avvalgi sessiyani davom ettirgan holda)
-    execCommand = `agy -c --dangerously-skip-permissions --print-timeout 15m -p "${originalText.replace(/"/g, '\\"')}"`;
-    statusText = `🤖 *Antigravity o'ylamoqda va bajarmoqda\\.\\.\\.*\n_(Bu jarayon bir necha daqiqa olishi mumkin)_\n\nSo'rov:\n\`\`\`text\n${escape(originalText)}\n\`\`\``;
+    // Agar aktiv sessiya bu bo'lsa — birinchi mavjudni tanlaymiz
+    if (activeSession.get(chatId) === sid) {
+      const first = sessions.keys().next().value;
+      if (first) {
+        activeSession.set(chatId, first);
+      } else {
+        activeSession.delete(chatId);
+      }
+    }
+
+    bot.answerCallbackQuery(query.id, { text: `🗑 ${closedName} yopildi` });
+    return bot.editMessageText(sessionsText(chatId), {
+      chat_id: chatId,
+      message_id: query.message.message_id,
+      parse_mode: 'MarkdownV2',
+      reply_markup: buildSessionKeyboard(chatId)
+    }).catch(() => {});
   }
 
-  editMsg(chatId, query.message.message_id, statusText);
-
-  cmdHistory.push(action === 'agy' ? `AGY: ${originalText}` : cliCommand);
-  if (cmdHistory.length > 50) cmdHistory.shift();
-
-  const child = exec(execCommand, {
-    cwd,
-    timeout: action === 'agy' ? 900000 : CMD_TIMEOUT, // AGY uchun 15 daqiqa
-    detached: true
-  }, (error, stdout, stderr) => {
-    runningProc = null;
-
-    let output = '';
-    if (stdout) output += stdout;
-    if (stderr) output += (stdout ? '\n⚠️ STDERR:\n' : '') + stderr;
-    if (!output && error) output = `Exit code: ${error.code || '?'}`;
-    if (!output) output = '✅ Bajarildi (natija qaytmadi).';
-
-    output = truncate(output);
-
-    const reply = `✅ *Natija:*\n\`\`\`\n${escape(output)}\n\`\`\``;
-    send(chatId, reply).catch(() =>
-      bot.sendMessage(chatId, '⚠️ Natijani formatlashda xato. Oddiy matn:\n\n' + output.substring(0, 3500))
-    );
-  });
-
-  if (child && child.pid) runningProc = child;
+  // ── Jarayonni to'xtatish (xabar tugmasi) ──
+  if (data.startsWith('kill_')) {
+    const sid = data.substring(5);
+    const sess = sessions.get(sid);
+    if (!sess) {
+      return bot.answerCallbackQuery(query.id, { text: 'Sessiya topilmadi!', show_alert: true });
+    }
+    if (!sess.proc) {
+      return bot.answerCallbackQuery(query.id, { text: 'Jarayon allaqachon tugagan.', show_alert: true });
+    }
+    try {
+      process.kill(-sess.proc.pid);
+      sess.proc = null;
+      bot.answerCallbackQuery(query.id, { text: '🛑 Jarayon to\'xtatildi!' });
+      editMsg(chatId, query.message.message_id,
+        query.message.text + '\n\n🛑 *JARAYON TO\'XTATILDI*'
+      );
+    } catch (e) {
+      bot.answerCallbackQuery(query.id, { text: `❌ Xato: ${e.message}`, show_alert: true });
+    }
+  }
 });
 
-// ── Global xatolik ushlash ────────────────────────────────────
-process.on('uncaughtException', (err) => console.error("💥 UncaughtException:", err));
-process.on('unhandledRejection', (err) => console.error("💥 UnhandledRejection:", err));
+// ─── Global xatolik ───────────────────────────────────────────────────────────
+process.on('uncaughtException', (err) => console.error("⚙️ UncaughtException:", err));
+process.on('unhandledRejection', (err) => console.error("⚙️ UnhandledRejection:", err));
 
-console.log(`🤖 Antigravity Bot ishga tushdi`);
+console.log(`🚀 Antigravity Multi-Session Bot ishga tushdi`);
 console.log(`👤 Admin ID: ${ADMIN_ID}`);
-console.log(`📂 Boshlang'ich papka: ${cwd}`);
-console.log(`⏱ Buyruq timeout: ${CMD_TIMEOUT}ms`);
+console.log(`📁 Default jild: ${DEFAULT_CWD}`);

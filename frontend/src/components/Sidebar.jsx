@@ -1,11 +1,12 @@
-﻿import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import { useAuth } from "../contexts/AuthContext";
 import {
   RiDashboardLine, RiBookOpenLine, RiQuillPenLine,
   RiChatSmile2Line, RiUser3Line, RiLogoutBoxLine,
   RiGroupLine, RiBarChartLine, RiSettings4Line,
   RiFileListLine, RiTeamLine, RiUserStarLine,
-  RiShieldCheckLine, RiHeartPulseLine,
+  RiShieldCheckLine, RiHeartPulseLine, RiCloseLine,
 } from "react-icons/ri";
 
 const STUDENT_NAV = [
@@ -35,17 +36,28 @@ const ROLE_CONFIG = {
   admin:   { icon: RiShieldCheckLine, label: "Admin",   color: "#a855f7" },
 };
 
-export default function Sidebar() {
+export default function Sidebar({ isOpen, onClose }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const navItems = NAV_MAP[user?.role] || [];
   const role = ROLE_CONFIG[user?.role] || ROLE_CONFIG.student;
-  const handleLogout = () => { logout(); navigate("/login"); };
+  const handleLogout = () => { 
+    logout(); 
+    toast.success("Tizimdan muvaffaqiyatli chiqdingiz");
+    if (onClose) onClose();
+    navigate("/login"); 
+  };
 
   return (
-    <aside id="main-sidebar" style={{ width: "260px", background: "#0f1c2e", borderRight: "1px solid rgba(255,255,255,0.06)" }} className="fixed top-0 left-0 h-screen flex flex-col z-50">
-      {/* Brand */}
-      <div style={{ padding: "24px 20px 20px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+    <aside
+      id="main-sidebar"
+      style={{ background: "#0f1c2e" }}
+      className={`fixed top-0 left-0 h-screen w-[260px] flex flex-col z-50 border-r border-white/10 transition-transform duration-300 ease-in-out md:translate-x-0 ${
+        isOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full md:translate-x-0"
+      }`}
+    >
+      {/* Brand & Mobile Close */}
+      <div style={{ padding: "20px 16px", borderBottom: "1px solid rgba(255,255,255,0.06)" }} className="flex items-center justify-between">
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <div style={{ width: 36, height: 36, borderRadius: 10, background: "#2563eb", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 12px rgba(37,99,235,0.35)", flexShrink: 0 }}>
             <RiHeartPulseLine style={{ color: "white", fontSize: 18 }} />
@@ -55,6 +67,13 @@ export default function Sidebar() {
             <p style={{ color: "rgba(255,255,255,0.32)", fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", marginTop: 2 }}>English Lab</p>
           </div>
         </div>
+        <button
+          onClick={onClose}
+          className="md:hidden text-gray-400 hover:text-white p-1.5 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+          aria-label="Close Sidebar"
+        >
+          <RiCloseLine className="text-xl" />
+        </button>
       </div>
 
       {/* User */}
@@ -80,7 +99,14 @@ export default function Sidebar() {
           {navItems.map((item, i) => {
             const Icon = item.icon;
             return (
-              <NavLink key={item.to} to={item.to} id={"nav-" + item.label.toLowerCase().replace(/\s+/g, "-")} style={{ animationDelay: i * 0.05 + "s" }} className="sidebar-item">
+              <NavLink
+                key={item.to}
+                to={item.to}
+                id={"nav-" + item.label.toLowerCase().replace(/\s+/g, "-")}
+                onClick={() => onClose && onClose()}
+                style={{ animationDelay: i * 0.05 + "s" }}
+                className="sidebar-item"
+              >
                 {({ isActive }) => (
                   <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 10px 9px 8px", borderRadius: 9, borderLeft: isActive ? "3px solid #3b82f6" : "3px solid transparent", background: isActive ? "rgba(59,130,246,0.10)" : "transparent", transition: "all 0.15s ease", cursor: "pointer" }}>
                     <Icon style={{ fontSize: 16.5, color: isActive ? "#60a5fa" : "rgba(255,255,255,0.42)", flexShrink: 0, transition: "color 0.15s" }} />

@@ -5,7 +5,7 @@ import {
   RiLoader4Line, RiHeartPulseLine, RiPhoneLine,
   RiCheckDoubleLine, RiUser3Line, RiRobot2Line,
   RiArrowRightSLine, RiStethoscopeLine,
-  RiKeyboardLine, RiSendPlane2Line
+  RiKeyboardLine, RiSendPlane2Line, RiAlertLine
 } from 'react-icons/ri';
 
 // callState:
@@ -336,7 +336,7 @@ export default function VirtualPatientChat({ conversationId, onStartConversation
 
         {/* IDLE: Suhbat boshlanmagan */}
         {isIdle && (
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3">
             <button
               onClick={() => startCall('audio')}
               className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl bg-gradient-to-r from-indigo-600 to-indigo-500 text-white font-semibold text-sm hover:shadow-lg hover:shadow-indigo-500/30 transition-all active:scale-95"
@@ -415,8 +415,8 @@ export default function VirtualPatientChat({ conversationId, onStartConversation
         {isEnded && (
           <div className="space-y-2">
             {!canEvaluate && (
-              <p className="text-xs text-amber-400 text-center">
-                ⚠️ You must speak to the patient at least once to evaluate the conversation
+              <p className="text-xs text-amber-400 text-center flex items-center justify-center gap-1">
+                <RiAlertLine className="text-sm text-amber-400" /> You must speak to the patient at least once to evaluate the conversation
               </p>
             )}
             <div className="flex gap-2">

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import api from '../../lib/api';
 import { RiStethoscopeLine, RiUser3Line, RiMailLine, RiLockPasswordLine, RiEyeLine, RiEyeOffLine } from 'react-icons/ri';
 
@@ -22,9 +23,12 @@ export default function RegisterPage() {
     setLoading(true); setError('');
     try {
       await api.post('/auth/register', { ...form, role: 'student' });
+      toast.success("Muvaffaqiyatli ro'yxatdan o'tdingiz! Endi tizimga kiring.");
       navigate('/login');
     } catch (err) {
-      setError(err.response?.data?.error || "Ro'yxatdan o'tish muvaffaqiyatsiz");
+      const msg = err.response?.data?.error || "Ro'yxatdan o'tish muvaffaqiyatsiz";
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }

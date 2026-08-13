@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 
 // Auth
@@ -37,6 +38,7 @@ function RoleRedirect() {
 export default function App() {
   return (
     <AuthProvider>
+      <Toaster position="top-right" toastOptions={{ duration: 3500, style: { background: '#0f1c2e', color: '#fff', borderRadius: '10px' } }} />
       <BrowserRouter>
         <Routes>
           {/* Public */}

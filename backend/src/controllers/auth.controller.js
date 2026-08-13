@@ -74,6 +74,63 @@ const getMe = async (req, res) => {
   }
 };
 
+// PUT /api/auth/profile
+const updateProfile = async (req, res) => {
+  try {
+    const { full_name, email, specialty_id, group_id } = req.body;
+    const user = await User.findByPk(req.user.id);
+
+    if (!user) return res.status(404).json({ error: 'Foydalanuvchi topilmadi' });
+
+    if (email && email !== user.email) {
+      const existing = await User.findOne({ where: { email } });
+      if (existing) return res.status(400).json({ error: 'Bu email allaqachon boshqa foydalanuvchida bor' });
+      user.email = email;
+    }
+
+    if (full_name) user.full_name = full_name;
+    if (specialty_id !== undefined) user.specialty_id = specialty_id || null;
+    if (group_id !== undefined) user.group_id = group_id || null;
+
+    await user.save();
+
+    const updatedUser = await User.findByPk(user.id, {
+      attributes: { exclude: ['password_hash'] },
+      include: [
+        { model: Specialty,    as: 'specialty', attributes: ['id', 'name'] },
+        { model: StudentGroup, as: 'group',     attributes: ['id', 'name'] },
+      ],
+    });
+
+    res.json({ message: 'Profil muvaffaqiyatli yangilandi', user: updatedUser });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// PUT /api/auth/password
+const changePassword = async (req, res) => {
+  try {
+    const { current_password, new_password } = req.body;
+    if (!current_password || !new_password) {
+      return res.status(400).json({ error: 'Joriy va yangi parolni kiriting' });
+    }
+
+    const user = await User.findByPk(req.user.id);
+    if (!user) return res.status(404).json({ error: 'Foydalanuvchi topilmadi' });
+
+    const valid = await bcrypt.compare(current_password, user.password_hash);
+    if (!valid) return res.status(400).json({ error: 'Joriy parol noto\'g\'ri' });
+
+    user.password_hash = await bcrypt.hash(new_password, 10);
+    await user.save();
+
+    res.json({ message: 'Parol muvaffaqiyatli o\'zgartirildi' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 // GET /api/auth/specialties
 const getSpecialties = async (req, res) => {
   try {
@@ -94,4 +151,4 @@ const getGroups = async (req, res) => {
   }
 };
 
-module.exports = { register, login, getMe, getSpecialties, getGroups };
+module.exports = { register, login, getMe, updateProfile, changePassword, getSpecialties, getGroups };

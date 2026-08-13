@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "../../components/Layout";
 import { useAuth } from "../../contexts/AuthContext";
@@ -119,7 +119,7 @@ export default function StudentDashboard() {
           )}
 
           {/* ── CTA ─────────────────────────────────────────── */}
-          <div className="animate-fade-up delay-400" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+          <div className="animate-fade-up delay-400 grid grid-cols-1 sm:grid-cols-2 gap-3">
             <button className="btn-primary" onClick={() => navigate("/student/modules")} style={{ justifyContent: "center", padding: "14px 20px", fontSize: 14, borderRadius: 12 }}>
               <RiBookOpenLine /> View All Modules <RiArrowRightLine />
             </button>
