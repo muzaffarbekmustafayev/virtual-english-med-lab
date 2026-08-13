@@ -56,9 +56,10 @@ TestResult.belongsTo(Module, { foreignKey: 'module_id'  });
 User.hasMany(TestResult,     { foreignKey: 'student_id' });
 Module.hasMany(TestResult,   { foreignKey: 'module_id'  });
 
-// ForumMessage ↔ User
-ForumMessage.belongsTo(User, { foreignKey: 'sender_id', as: 'sender' });
-User.hasMany(ForumMessage,   { foreignKey: 'sender_id'                });
+// ForumMessage ↔ User & Self (Reply)
+ForumMessage.belongsTo(User,         { foreignKey: 'sender_id',   as: 'sender' });
+ForumMessage.belongsTo(ForumMessage, { foreignKey: 'reply_to_id', as: 'parent' });
+User.hasMany(ForumMessage,           { foreignKey: 'sender_id'                });
 
 // ── Exports ──────────────────────────────────────────────────
 module.exports = {

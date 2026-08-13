@@ -140,12 +140,29 @@ const getTranscript = async (req, res) => {
 // ── GET /api/forum/messages ──────────────────────────────────
 const getForumMessages = async (req, res) => {
   try {
+    const { channel } = req.query;
+    const where = {};
+    if (channel && channel !== 'all') {
+      where.channel = channel;
+    }
+
     const messages = await ForumMessage.findAll({
-      include: [{ model: User, as: 'sender', attributes: ['id', 'full_name', 'role'] }],
-      order: [['created_at', 'DESC']],
-      limit: 50,
+      where,
+      include: [
+        { model: User, as: 'sender', attributes: ['id', 'full_name', 'role'] },
+        {
+          model: ForumMessage,
+          as: 'parent',
+          include: [{ model: User, as: 'sender', attributes: ['id', 'full_name', 'role'] }],
+        },
+      ],
+      order: [
+        ['is_pinned', 'DESC'],
+        ['created_at', 'ASC'],
+      ],
+      limit: 100,
     });
-    res.json(messages.reverse());
+    res.json(messages);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -154,14 +171,71 @@ const getForumMessages = async (req, res) => {
 // ── POST /api/forum/messages ─────────────────────────────────
 const postForumMessage = async (req, res) => {
   try {
-    const { message_text } = req.body;
-    if (!message_text) return res.status(400).json({ error: 'Xabar bo\'sh bo\'lishi mumkin emas' });
+    const { message_text, channel, reply_to_id } = req.body;
+    let file_url = req.body.file_url || null;
+    let audio_url = req.body.audio_url || null;
 
-    const msg = await ForumMessage.create({ sender_id: req.user.id, message_text });
+    if (req.file) {
+      const relativePath = `/uploads/${req.file.filename}`;
+      if (req.file.mimetype.startsWith('audio/')) {
+        audio_url = relativePath;
+      } else {
+        file_url = relativePath;
+      }
+    }
+
+    if (!message_text && !file_url && !audio_url) {
+      return res.status(400).json({ error: 'Xabar matni yoki fayl bo\'lishi kerak' });
+    }
+
+    const msg = await ForumMessage.create({
+      sender_id: req.user.id,
+      message_text: message_text || '',
+      channel: channel || 'general',
+      reply_to_id: reply_to_id ? parseInt(reply_to_id) : null,
+      file_url,
+      audio_url,
+    });
+
     const full = await ForumMessage.findByPk(msg.id, {
-      include: [{ model: User, as: 'sender', attributes: ['id', 'full_name', 'role'] }],
+      include: [
+        { model: User, as: 'sender', attributes: ['id', 'full_name', 'role'] },
+        {
+          model: ForumMessage,
+          as: 'parent',
+          include: [{ model: User, as: 'sender', attributes: ['id', 'full_name', 'role'] }],
+        },
+      ],
     });
     res.status(201).json(full);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ── PUT /api/forum/messages/:id/pin ─────────────────────────
+const togglePinMessage = async (req, res) => {
+  try {
+    if (req.user.role !== 'teacher' && req.user.role !== 'admin') {
+      return res.status(403).json({ error: 'Faqat o\'qituvchi va adminlar xabarni pin qila oladi' });
+    }
+    const msg = await ForumMessage.findByPk(req.params.id);
+    if (!msg) return res.status(404).json({ error: 'Xabar topilmadi' });
+
+    msg.is_pinned = !msg.is_pinned;
+    await msg.save();
+
+    const full = await ForumMessage.findByPk(msg.id, {
+      include: [
+        { model: User, as: 'sender', attributes: ['id', 'full_name', 'role'] },
+        {
+          model: ForumMessage,
+          as: 'parent',
+          include: [{ model: User, as: 'sender', attributes: ['id', 'full_name', 'role'] }],
+        },
+      ],
+    });
+    res.json(full);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -170,5 +244,5 @@ const postForumMessage = async (req, res) => {
 module.exports = {
   getDashboard, getGroups, getGroupStudents,
   getStudentProgress, getTranscript,
-  getForumMessages, postForumMessage,
+  getForumMessages, postForumMessage, togglePinMessage,
 };
