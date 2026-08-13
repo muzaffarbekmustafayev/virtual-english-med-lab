@@ -91,9 +91,15 @@ Wrap-up (5 min)
 | `05_api_endpoints.md` | Backend REST API endpointlari va so'rovlar spesifikatsiyasi |
 | `06_ai_integration.md` | Gemini GenAI SDK, promptlar va AI baholash algoritmi |
 | `07_frontend_architecture.md` | React, Vite, Tailwind CSS, Stepper va UI komponentlar |
-| `08_modules_and_content.md` | 10 ta stomatologik modul, lug'at va ssenariylar |
+| `08_modules_and_content.md` | Stomatologik modullarga umumiy kirish va ssenariylar |
 | `09_security_and_auth.md` | JWT, bcrypt, Role guard va xavfsizlik standartlari |
 | `10_deployment_and_setup.md` | Tizimni o'rnatish, ishga tushirish va production deployment |
-| `11_admin_panel_functions.md` | Admin paneli sidebari, funksiyalari va boshqaruv sopesifikatsiyasi |
+| `11_admin_panel_functions.md` | Admin paneli sidebari, funksiyalari va boshqaruv spesifikatsiyasi |
+| `12_curriculum_and_10_dental_modules.md` | 10 ta stomatologiya modulining to'liq klinik o'quv dasturi |
+| `13_90_minute_pedagogical_cycle.md` | 6 bosqichli 90 daqiqalik dars sikli va vaqt taqsimoti |
+| `14_speech_and_voice_processing.md` | Ovozli muloqot, STT (Whisper), TTS va nutq tahlili |
+| `15_business_pricing_and_roadmap.md` | Tijorat paketlari ($200, $300, $600), narxlar va 15 kunlik roadmap |
+| `16_ai_evaluation_matrix_and_prompt_engineering.md` | AI bemor promptlari, JSON sxemalar va baholash rubrikalari |
 | `responsive-design.md` | Mobil va desktop responsive UI qo'llanmasi |
+
 

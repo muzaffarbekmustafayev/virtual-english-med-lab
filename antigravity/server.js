@@ -4,12 +4,15 @@ const { exec } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const http = require('http');
 
 // ─── Konfiguratsiya ───────────────────────────────────────────────────────────
 const TOKEN = process.env.BOT_TOKEN;
 const ADMIN_ID = process.env.ADMIN_CHAT_ID;
 const MAX_OUTPUT = 3500;
-const DEFAULT_CWD = process.env.DEFAULT_CWD || process.cwd();
+const LOCAL_API_PORT = parseInt(process.env.LOCAL_API_PORT || '7799');
+// DEFAULT_CWD: .env dan o'qiladi, bo'lmasa null — bot o'zi so'raydi
+let currentDefaultCwd = process.env.DEFAULT_CWD || null;
 
 if (!TOKEN || !ADMIN_ID) {
   console.error("❌ BOT_TOKEN va ADMIN_CHAT_ID .env da bo'lishi shart!");
@@ -32,7 +35,7 @@ const createSession = (name = null) => {
   const session = {
     id,
     name: name || `Sessiya ${sessionCounter}`,
-    cwd: DEFAULT_CWD,
+    cwd: currentDefaultCwd,
     history: [],
     proc: null,
     isNewConv: true,         // birinchi ishga tushirishda yangi sessiya
@@ -111,6 +114,20 @@ const sessionsText = (chatId) => {
 bot.onText(/\/start/, (msg) => {
   if (!isAdmin(msg.chat.id)) return bot.sendMessage(msg.chat.id, '🚫 Ruxsat yo\'q.');
 
+  // DEFAULT_CWD yo'q bo'lsa — avval so'raymiz
+  if (!currentDefaultCwd) {
+    return send(msg.chat.id,
+      `🤖 *Antigravity Bot ishga tushdi\!*
+
+⚠️ *Ishchi jild belgilanmagan\.*
+Iltimos, ishlatmoqchi bo'lgan loyiha papkasining to'liq yo'lini yuboring:
+
+_Masalan: \`C:\\Users\\muzaf\\Desktop\\loyiha\`_
+
+Yoki /setcwd buyrug'idan foydalaning: \`/setcwd C:\\yo'l\`_`
+    );
+  }
+
   // Agar hech sessiya yo'q bo'lsa — bitta yaratib activ qilamiz
   if (sessions.size === 0) {
     const sess = createSession('Asosiy sessiya');
@@ -119,7 +136,7 @@ bot.onText(/\/start/, (msg) => {
 
   const statusLine = `
 🤖 *Antigravity Bot Faol*
-📁 Jild: \`${escape(shortPath(DEFAULT_CWD))}\`
+📁 Jild: \`${escape(shortPath(currentDefaultCwd))}\`
 💻 Tizim: \`${escape(os.type())} ${escape(os.release())}\`
 📊 RAM: \`${Math.round(os.freemem() / 1e6)} MB / ${Math.round(os.totalmem() / 1e6)} MB\`
 ⏱ Uptime: \`${Math.round(process.uptime())} sek\`
@@ -129,7 +146,8 @@ bot.onText(/\/start/, (msg) => {
     reply_markup: {
       keyboard: [
         [{ text: '/sessions' }, { text: '/kill' }, { text: '/help' }],
-        [{ text: '/ls' }, { text: '/pwd' }, { text: '/sys' }]
+        [{ text: '/ls' }, { text: '/pwd' }, { text: '/sys' }],
+        [{ text: '/setcwd' }]
       ],
       resize_keyboard: true,
       persistent: true
@@ -156,16 +174,49 @@ bot.onText(/\/help/, (msg) => {
 *Buyruqlar:*
 \`/start\` — Botni boshlash
 \`/sessions\` — Sessiyalar ro'yxati va boshqaruv
-\`/pwd\` — Hozirgi papka \\(aktiv sessiya\\)
+\`/setcwd\` — Ishchi jildni ko'rsatish
+\`/setcwd <yo'l>\` — Default ishchi jildni o'zgartirish
+\`/get <fayl>\` — Faylni Telegram orqali yuborish
+\`/pwd\` — Aktiv sessiya papkasi
 \`/ls\` — Papka mazmuni
 \`/history\` — So'nggi buyruqlar
 \`/kill\` — Aktiv sessiya jarayonini to'xtatish
 \`/sys\` — Tizim ma'lumotlari
-\`/cd <yo'l>\` — Papkani o'zgartirish
+\`/cd <yo'l>\` — Sessiya papkasini o'zgartirish
 
 *Xabar yuborsangiz, aktiv sessiyaga AGY orqali yuboriladi*
 `;
   send(msg.chat.id, help);
+});
+
+// ─── /setcwd ──────────────────────────────────────────────────────────────────
+bot.onText(/^\/setcwd(.*)$/, (msg, match) => {
+  if (!isAdmin(msg.chat.id)) return;
+  const chatId = msg.chat.id.toString();
+  const arg = (match[1] || '').trim();
+
+  // Argument yo'q — hozirgi jildni ko'rsatamiz
+  if (!arg) {
+    return send(chatId,
+      `📁 *Hozirgi default jild:*\n\`${escape(currentDefaultCwd)}\`\n\n_O'zgartirish uchun: /setcwd <yangi yo'l>_`
+    );
+  }
+
+  // Yo'lni tekshiramiz
+  const resolved = path.resolve(arg);
+  if (!fs.existsSync(resolved)) {
+    return send(chatId, `❌ Papka topilmadi:\n\`${escape(resolved)}\``);
+  }
+  if (!fs.statSync(resolved).isDirectory()) {
+    return send(chatId, `❌ Bu papka emas:\n\`${escape(resolved)}\``);
+  }
+
+  const oldCwd = currentDefaultCwd;
+  currentDefaultCwd = resolved;
+
+  send(chatId,
+    `✅ *Default jild o'zgartirildi\\!*\n\n📁 Eski: \`${escape(shortPath(oldCwd))}\`\n📁 Yangi: \`${escape(shortPath(currentDefaultCwd))}\`\n\n_Yangi sessiyalar shu jilddan boshlanadi\\._`
+  );
 });
 
 // ─── /pwd ─────────────────────────────────────────────────────────────────────
@@ -241,6 +292,53 @@ bot.onText(/\/kill/, (msg) => {
   }
 });
 
+// ─── /get — faylni yuborish ───────────────────────────────────────────────────
+bot.onText(/^\/get(.*)$/, async (msg, match) => {
+  if (!isAdmin(msg.chat.id)) return;
+  const chatId = msg.chat.id.toString();
+  const arg = (match[1] || '').trim();
+
+  // Argument yo'q — qanday ishlatishni ko'rsatamiz
+  if (!arg) {
+    const basePath = currentDefaultCwd ? shortPath(currentDefaultCwd) : '~';
+    return send(chatId,
+      `📤 *Fayl yuborish:*\n\n\`/get <fayl yo'li>\`\n\n_Misol:_\n\\- \`/get server\\.js\`\n\\- \`/get frontend/src/App\\.jsx\`\n\\- \`/get C:\\\\to'liq\\\\yo'l\\.txt\`\n\n_Nisbiy yo'l uchun asos: \`${escape(basePath)}\`_`
+    );
+  }
+
+  // Sessiyadan cwd ni olamiz
+  const sid = activeSession.get(chatId);
+  const sess = sessions.get(sid);
+  const baseCwd = (sess && sess.cwd) || currentDefaultCwd || process.cwd();
+
+  // Absolute yoki relative yo'l
+  const filePath = path.isAbsolute(arg) ? arg : path.resolve(baseCwd, arg);
+
+  // Fayl mavjudligini tekshiramiz
+  if (!fs.existsSync(filePath)) {
+    return send(chatId, `❌ Fayl topilmadi:\n\`${escape(filePath)}\``);
+  }
+  if (fs.statSync(filePath).isDirectory()) {
+    return send(chatId, `❌ Bu fayl emas, papka:\n\`${escape(filePath)}\``);
+  }
+
+  const fileSize = fs.statSync(filePath).size;
+  const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB — Telegram limiti
+
+  if (fileSize > MAX_FILE_SIZE) {
+    return send(chatId, `❌ Fayl juda katta \\(${Math.round(fileSize / 1024 / 1024)} MB\\)\\. Telegram 50MB gacha qabul qiladi\\.`);
+  }
+
+  try {
+    await bot.sendDocument(chatId, filePath, {
+      caption: `📄 \`${escape(path.basename(filePath))}\`\n📁 \`${escape(shortPath(filePath))}\``,
+      parse_mode: 'MarkdownV2'
+    });
+  } catch (e) {
+    send(chatId, `❌ Yuborishda xato: \`${escape(e.message)}\``);
+  }
+});
+
 // ─── Asosiy xabarlar ──────────────────────────────────────────────────────────
 bot.on('message', async (msg) => {
   const chatId = msg.chat.id.toString();
@@ -262,6 +360,14 @@ bot.on('message', async (msg) => {
     sid = sess.id;
   }
 
+  // currentDefaultCwd yo'q bo'lsa — so'raymiz
+  if (!currentDefaultCwd) {
+    return send(chatId,
+      `⚠️ Ishchi jild belgilanmagan\. Avval jildni kiriting:
+/setcwd C:\\yo'l\\loyiha`
+    );
+  }
+
   // cd — ichki yo'nalish o'zgarishi
   if (text.startsWith('cd ')) {
     const target = text.substring(3).trim();
@@ -280,7 +386,7 @@ bot.on('message', async (msg) => {
 
   const agyContinue = !sess.isNewConv;
   sess.isNewConv = false;
-  const execCommand = `agy ${agyContinue ? '-c ' : ''}--dangerously-skip-permissions --mode accept-edits --print-timeout 15m -p "MUHIM: Faqat AMAL qil. Reja tuzma, hisobot berma, tayyorligingni e'lon qilma. Birinchi qadam - to'g'ridan-to'g'ri vazifani bajar. Ishchi jild: ${sess.cwd.replace(/\\/g, '/')}. Foydalanuvchi buyrug'i: ${text.replace(/"/g, '\\"')}"`;
+  const execCommand = `agy ${agyContinue ? '-c ' : ''}--dangerously-skip-permissions --mode accept-edits --print-timeout 15m -p "MUHIM: Faqat AMAL qil. Reja tuzma, hisobot berma. Ishchi jild: ${sess.cwd.replace(/\\/g, '/')}. TELEGRAM API (Windows PowerShell): Faylni Telegram'ga yuborish uchun quyidagi buyruqdan foydalan (curl emas, curl.exe ishlatilsin): curl.exe -s \\"http://127.0.0.1:${LOCAL_API_PORT}/send-file\\" -G --data-urlencode \\"file=TO'LIQ_FAYL_YO'LI\\". Misol: curl.exe -s \\"http://127.0.0.1:${LOCAL_API_PORT}/send-file\\" -G --data-urlencode \\"file=C:/Users/muzaf/plan.md\\". Xabar yuborish: curl.exe -s \\"http://127.0.0.1:${LOCAL_API_PORT}/send-msg\\" -G --data-urlencode \\"text=XABAR\\". Foydalanuvchi buyrug'i: ${text.replace(/"/g, '\\"')}"`;
 
 
   const statusText = `⏳ *${escape(sess.name)}: bajarilmoqda\\.\\.\\.*`;
@@ -424,6 +530,82 @@ bot.on('callback_query', (query) => {
 process.on('uncaughtException', (err) => console.error("⚙️ UncaughtException:", err));
 process.on('unhandledRejection', (err) => console.error("⚙️ UnhandledRejection:", err));
 
+// ─── Local HTTP API (AGY uchun) ───────────────────────────────────────────────
+// AGY bu API orqali fayllarni va xabarlarni Telegram'ga yuborishi mumkin
+// Misol: curl "http://localhost:7799/send-file?file=C:/path/to/file.txt"
+// Misol: curl "http://localhost:7799/send-msg?text=Bajarildi"
+const localApiServer = http.createServer(async (req, res) => {
+  const parsed = new URL(req.url, `http://127.0.0.1:${LOCAL_API_PORT}`);
+  const endpoint = parsed.pathname;
+  const params = Object.fromEntries(parsed.searchParams);
+
+  res.setHeader('Content-Type', 'application/json');
+
+  // /send-file?file=<path>[&caption=<text>]
+  if (endpoint === '/send-file') {
+    const filePath = params.file;
+    if (!filePath) {
+      res.writeHead(400);
+      return res.end(JSON.stringify({ ok: false, error: 'file parametri yo\'q' }));
+    }
+    const absPath = path.isAbsolute(filePath) ? filePath : path.resolve(currentDefaultCwd || process.cwd(), filePath);
+    if (!fs.existsSync(absPath)) {
+      res.writeHead(404);
+      return res.end(JSON.stringify({ ok: false, error: `Fayl topilmadi: ${absPath}` }));
+    }
+    try {
+      const caption = params.caption || `📄 ${path.basename(absPath)}`;
+      await bot.sendDocument(ADMIN_ID, absPath, { caption });
+      res.writeHead(200);
+      res.end(JSON.stringify({ ok: true, sent: absPath }));
+    } catch (e) {
+      res.writeHead(500);
+      res.end(JSON.stringify({ ok: false, error: e.message }));
+    }
+    return;
+  }
+
+  // /send-msg?text=<message>
+  if (endpoint === '/send-msg') {
+    const text = params.text || '(xabar yo\'q)';
+    try {
+      await bot.sendMessage(ADMIN_ID, text);
+      res.writeHead(200);
+      res.end(JSON.stringify({ ok: true }));
+    } catch (e) {
+      res.writeHead(500);
+      res.end(JSON.stringify({ ok: false, error: e.message }));
+    }
+    return;
+  }
+
+  res.writeHead(404);
+  res.end(JSON.stringify({ ok: false, error: 'Noma\'lum endpoint' }));
+});
+
+localApiServer.listen(LOCAL_API_PORT, '127.0.0.1', () => {
+  console.log(`🔌 Local API: http://127.0.0.1:${LOCAL_API_PORT}`);
+});
+
+
 console.log(`🚀 Antigravity Multi-Session Bot ishga tushdi`);
 console.log(`👤 Admin ID: ${ADMIN_ID}`);
-console.log(`📁 Default jild: ${DEFAULT_CWD}`);
+console.log(`📁 Default jild: ${currentDefaultCwd || '(belgilanmagan — bot so\'rashi kerak)'}`);
+
+// Agar DEFAULT_CWD yo'q bo'lsa — admin ga xabar yuboramiz
+if (!currentDefaultCwd) {
+  // Bot tayyor bo'lganda admin ga so'rov yuboramiz
+  setTimeout(() => {
+    bot.sendMessage(ADMIN_ID,
+      `🤖 *Antigravity Bot ishga tushdi\!*
+
+⚠️ *\.env da DEFAULT\_CWD belgilanmagan\.*
+Ishlatmoqchi bo'lgan loyiha papkasini yuboring:
+
+_Masalan: \`C:\\\\Users\\\\muzaf\\\\Desktop\\\\loyiha\`_
+
+Yoki: /setcwd C:\\yo'l`,
+      { parse_mode: 'MarkdownV2' }
+    ).catch(() => {});
+  }, 2000);
+}

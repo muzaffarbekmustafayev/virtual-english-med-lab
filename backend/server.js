@@ -10,7 +10,7 @@ async function startServer() {
     console.log('✅ MySQL ulanish muvaffaqiyatli');
 
     // Sync all models (alter: true - mavjud jadvallarni o'zgartirmaydi, faqat yangilarini qo'shadi)
-    await sequelize.sync({ alter: true });
+    await sequelize.sync();
     console.log('✅ Barcha jadvallar sinxronlashtirildi');
 
     app.listen(PORT, () => {
