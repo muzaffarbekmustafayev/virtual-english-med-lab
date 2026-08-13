@@ -11,7 +11,7 @@ async function startServer() {
 
     // Sync all models (alter: true - mavjud jadvallarni o'zgartirmaydi, faqat yangilarini qo'shadi)
     await sequelize.sync({ alter: true });
-    console.log('✅ Barcha jadvallar sinhronlashtirildi');
+    console.log('✅ Barcha jadvallar sinxronlashtirildi');
 
     app.listen(PORT, () => {
       console.log(`🚀 Server ishga tushdi: http://localhost:${PORT}`);

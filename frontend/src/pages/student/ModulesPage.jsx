@@ -18,7 +18,7 @@ const MODULE_ICONS = [
 
 const STATUS_CONFIG = {
   completed:    { bg: 'bg-emerald-50',  text: 'text-emerald-700',  border: 'border-emerald-200', label: 'Completed',    icon: RiCheckboxCircleLine, dot: 'bg-emerald-400' },
-  'in-progress':{ bg: 'bg-indigo-50',   text: 'text-indigo-700',   border: 'border-indigo-200',  label: 'In Progress',  icon: RiTimeLine,           dot: 'bg-indigo-400'  },
+  'in-progress':{ bg: 'bg-amber-50',    text: 'text-amber-700',    border: 'border-amber-200',   label: 'In Progress',  icon: RiTimeLine,           dot: 'bg-amber-400'  },
   'not-started':{ bg: 'bg-slate-50',    text: 'text-slate-600',    border: 'border-slate-200',   label: 'Not Started',  icon: RiPlayLine,           dot: 'bg-slate-400'   },
   locked:       { bg: 'bg-rose-50',     text: 'text-rose-600',     border: 'border-rose-200',    label: 'Locked',       icon: RiLockLine,           dot: 'bg-rose-400'    },
 };

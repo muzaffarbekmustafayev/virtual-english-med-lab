@@ -7,6 +7,7 @@ const isStudent = [authenticate, requireRole('student')];
 router.get('/dashboard',                        isStudent, c.getDashboard);
 router.get('/modules',                          isStudent, c.getModules);
 router.get('/modules/:id',                      isStudent, c.getModuleById);
+router.get('/modules/:id/progress',             isStudent, c.getModuleProgress);
 router.get('/modules/:id/vocabulary',           isStudent, c.getVocabulary);
 router.get('/modules/:id/phrasebook',           isStudent, c.getPhrasebook);
 router.post('/modules/:id/conversation',        isStudent, c.startConversation);

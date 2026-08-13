@@ -8,21 +8,18 @@ import {
   RiVolumeUpLine, RiRepeatLine, RiTrophyLine,
   RiMicLine, RiBarChartGroupedLine, RiBookLine,
   RiLightbulbLine, RiRobot2Line, RiQuestionLine, RiHospitalLine, RiMessage3Line, RiCloseLine,
-  RiLockLine
+  RiLockLine, RiCheckboxCircleLine, RiStethoscopeLine
 } from 'react-icons/ri';
 
-// Asosiy ketma-ketlik: 1 → 2 → 3 → 4 → 5 → 7 → 8
-// Step 6 (Retry) ixtiyoriy — faqat Step 5 dan kiriladi
+// Asosiy ketma-ketlik: 1 → 2 → 3 → 4 → 5 → 6
 // Har bir qadam ochilishi uchun oldingi majburiy qadam yakunlanishi shart
 const STEPS = [
   { id: 1, label: 'Vocabulary',      short: 'Vocab',    requiredPrev: null  },
   { id: 2, label: 'Phrasebook',      short: 'Phrase',   requiredPrev: 1     },
   { id: 3, label: 'Gap Filling',     short: 'Gap Fill', requiredPrev: 2     },
-  { id: 4, label: 'Virtual Patient', short: 'Chat',     requiredPrev: 3     },
-  { id: 5, label: 'AI Feedback',     short: 'Feedback', requiredPrev: 4     },
-  { id: 6, label: 'Retry',           short: 'Retry',    requiredPrev: 5, optional: true },
-  { id: 7, label: 'Final Challenge', short: 'Final',    requiredPrev: 5     },
-  { id: 8, label: 'Quiz',            short: 'Quiz',     requiredPrev: 7     },
+  { id: 4, label: 'Quiz',            short: 'Quiz',     requiredPrev: 3     },
+  { id: 5, label: 'Virtual Patient', short: 'Chat',     requiredPrev: 4     },
+  { id: 6, label: 'Overall Results', short: 'Results',  requiredPrev: 5     },
 ];
 
 const SCORE_COLORS = {
@@ -43,7 +40,20 @@ export default function ModuleDetailPage() {
 
   const [step, setStep]               = useState(1);
   // completedSteps: qaysi qadamlar to'liq yakunlangan (lock tizimi uchun)
-  const [completedSteps, setCompletedSteps] = useState([]);
+  const [completedSteps, setCompletedSteps] = useState(() => {
+    try {
+      const saved = localStorage.getItem(`module_${id}_completed`);
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    if (completedSteps.length > 0) {
+      localStorage.setItem(`module_${id}_completed`, JSON.stringify(completedSteps));
+    }
+  }, [completedSteps, id]);
 
   // Qadam yakunlab keyingisiga o'tish
   const completeAndGoNext = (nextStep) => {
@@ -68,24 +78,41 @@ export default function ModuleDetailPage() {
   const [module, setModule]           = useState(null);
   const [vocabulary, setVocabulary]   = useState([]);
   const [phrases, setPhrases]         = useState([]);
-  const [tests, setTests]             = useState([]);
   const [convId, setConvId]           = useState(null);
   const [feedback, setFeedback]       = useState(null);
-  const [testAnswers, setTestAnswers] = useState({});
+  const [bestFeedback, setBestFeedback] = useState(null);
   const [testResult, setTestResult]   = useState(null);
+  const [bestTestResult, setBestTestResult] = useState(null);
   const [loading, setLoading]         = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
   
   // Gap fill states
-  const [gapExercises, setGapExercises] = useState([]);
-  const [gapAnswers, setGapAnswers]     = useState({});
-  const [gapChecked, setGapChecked]     = useState(false);
+  const [gapExercises, setGapExercises] = useState(() => {
+    try { const saved = localStorage.getItem(`module_${id}_gapExercises`); return saved ? JSON.parse(saved) : []; } catch { return []; }
+  });
+  const [gapAnswers, setGapAnswers]   = useState(() => {
+    try { const saved = localStorage.getItem(`module_${id}_gapAnswers`); return saved ? JSON.parse(saved) : {}; } catch { return {}; }
+  });
+  const [gapChecked, setGapChecked]   = useState(() => {
+    try { const saved = localStorage.getItem(`module_${id}_gapChecked`); return saved ? JSON.parse(saved) : false; } catch { return false; }
+  });
+  
+  const [tests, setTests]             = useState([]);
+  const [testAnswers, setTestAnswers] = useState(() => {
+    try { const saved = localStorage.getItem(`module_${id}_testAnswers`); return saved ? JSON.parse(saved) : {}; } catch { return {}; }
+  });
+
+  // LocalStorage-ga saqlash (sync)
+  useEffect(() => { localStorage.setItem(`module_${id}_gapExercises`, JSON.stringify(gapExercises)); }, [gapExercises, id]);
+  useEffect(() => { localStorage.setItem(`module_${id}_gapAnswers`, JSON.stringify(gapAnswers)); }, [gapAnswers, id]);
+  useEffect(() => { localStorage.setItem(`module_${id}_gapChecked`, JSON.stringify(gapChecked)); }, [gapChecked, id]);
+  useEffect(() => { localStorage.setItem(`module_${id}_testAnswers`, JSON.stringify(testAnswers)); }, [testAnswers, id]);
 
   // Generate Gap Fill exercises
   const generateGapFill = (phrasesData) => {
     if (!phrasesData || phrasesData.length === 0) return [];
     const shuffled = [...phrasesData].sort(() => 0.5 - Math.random());
-    const selected = shuffled.slice(0, 5);
+    const selected = shuffled.slice(0, 10);
     
     const allWords = phrasesData
       .map(p => p.phrase.match(/\b[a-zA-Z]{4,}\b/g) || [])
@@ -130,17 +157,50 @@ export default function ModuleDetailPage() {
     const load = async () => {
       setLoading(true);
       try {
-        const [modRes, vocRes, phraseRes, testRes] = await Promise.all([
+        const [modRes, vocRes, phraseRes, testRes, progressRes] = await Promise.all([
           api.get(`/student/modules/${id}`),
           api.get(`/student/modules/${id}/vocabulary`),
           api.get(`/student/modules/${id}/phrasebook`),
           api.get(`/student/modules/${id}/tests`),
+          api.get(`/student/modules/${id}/progress`),
         ]);
         setModule(modRes.data);
         setVocabulary(vocRes.data);
         setPhrases(phraseRes.data);
         setTests(testRes.data);
-        setGapExercises(generateGapFill(phraseRes.data));
+        
+        setGapExercises(prev => {
+          if (prev.length > 0) return prev;
+          return generateGapFill(phraseRes.data);
+        });
+        
+        const completed = []; // Endi avtomatik ochilmaydi
+        if (progressRes.data.test_result) {
+          setBestTestResult(progressRes.data.test_result);
+          if (progressRes.data.test_result.score >= 60) {
+            completed.push(4);
+          }
+        }
+        if (progressRes.data.last_conversation) {
+          setBestFeedback(progressRes.data.last_conversation);
+          setConvId(progressRes.data.last_conversation.id);
+          if (progressRes.data.last_conversation.overall_score >= 60) {
+            completed.push(5, 6);
+          }
+        }
+        
+        setCompletedSteps(prev => {
+          const merged = [...new Set([...prev, ...completed])];
+          
+          // Agar modul yangi bo'lsa (max=0), 1-bosqichdan (Vocab) boshlanadi.
+          // Agar chala bo'lsa, oxirgi tugatilganidan keyingisi ochiladi.
+          // Agar to'liq tugatilgan bo'lsa, 6-bosqich (Results) ochiladi.
+          const maxCompleted = merged.length > 0 ? Math.max(...merged) : 0;
+          const nextStep = Math.min(maxCompleted + 1, 6);
+          
+          setStep(nextStep);
+          return merged;
+        });
       } finally {
         setLoading(false);
       }
@@ -160,15 +220,21 @@ export default function ModuleDetailPage() {
     }
   };
 
-  // Step 4, 6, 7: finalize & get feedback
-  const finishConversation = async (nextStep = 5) => {
+  // Step 5: finalize & get feedback
+  const finishConversation = async (testMode = false) => {
     if (!convId) return;
     setActionLoading(true);
     try {
-      const res = await api.post(`/student/conversation/${convId}/finalize`);
+      const res = await api.post(`/student/conversation/${convId}/finalize`, { test_mode: testMode });
       setFeedback(res.data);
-      setCompletedSteps(prev => [...new Set([...prev, step])]);
-      setStep(nextStep);
+      setBestFeedback(prev => (!prev || res.data.overall_score > prev.overall_score) ? res.data : prev);
+      if (res.data.overall_score >= 60) {
+        setCompletedSteps(prev => {
+          const newSteps = [...new Set([...prev, 5])];
+          return newSteps;
+        });
+      }
+      setStep(6);
     } catch (err) {
       alert(err.response?.data?.error || 'Xatolik');
     } finally {
@@ -176,13 +242,16 @@ export default function ModuleDetailPage() {
     }
   };
 
-  // Quiz submit
+  // Step 4: Quiz submit
   const submitQuiz = async () => {
     setActionLoading(true);
     try {
       const res = await api.post(`/student/modules/${id}/tests/submit`, { answers: testAnswers });
       setTestResult(res.data);
-      setCompletedSteps(prev => [...new Set([...prev, 8])]);
+      setBestTestResult(prev => (!prev || res.data.score > prev.score) ? res.data : prev);
+      if (res.data.score >= 60) {
+        setCompletedSteps(prev => [...new Set([...prev, 4])]);
+      }
     } finally {
       setActionLoading(false);
     }
@@ -236,9 +305,9 @@ export default function ModuleDetailPage() {
             icon = <RiLockLine className="text-[10px]" />;
             tooltipText = `${s.label} — avval oldingi bosqichni bajaring`;
           } else {
-            // Unlocked but not yet started
-            circleStyle = 'bg-white border-indigo-300 text-indigo-500 cursor-pointer hover:border-indigo-500';
-            tooltipText = s.label;
+            // Unlocked but not yet started (Ishlanmagan qism)
+            circleStyle = 'bg-white border-amber-400 text-amber-500 cursor-pointer hover:border-amber-500 hover:bg-amber-50';
+            tooltipText = `${s.label} — Ishlanmagan (qolib ketgan)`;
           }
 
           return (
@@ -275,13 +344,12 @@ export default function ModuleDetailPage() {
 
       {/* Progress summary */}
       {(() => {
-        const requiredSteps = STEPS.filter(s => !s.optional);
-        const doneCount = requiredSteps.filter(s => completedSteps.includes(s.id)).length;
-        const pct = Math.round((doneCount / requiredSteps.length) * 100);
+        const doneCount = STEPS.filter(s => completedSteps.includes(s.id)).length;
+        const pct = Math.round((doneCount / STEPS.length) * 100);
         return (
           <div className="mb-6">
             <div className="flex justify-between items-center mb-1">
-              <span className="text-xs text-gray-500">{doneCount}/{requiredSteps.length} majburiy qadam yakunlandi</span>
+              <span className="text-xs text-gray-500">{doneCount}/{STEPS.length} bosqich yakunlandi</span>
               <span className="text-xs font-semibold text-indigo-600">{pct}%</span>
             </div>
             <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
@@ -290,8 +358,6 @@ export default function ModuleDetailPage() {
                 style={{ width: `${pct}%` }}
               />
             </div>
-            {/* Retry ixtiyoriy ekanligi haqida eslatma */}
-            <p className="text-[10px] text-gray-400 mt-1">* Retry bosqichi ixtiyoriy</p>
           </div>
         );
       })()}
@@ -421,7 +487,7 @@ export default function ModuleDetailPage() {
                         onClick={() => setGapAnswers(prev => ({ ...prev, [ex.id]: opt }))}
                         className={`px-4 py-1.5 rounded-lg text-sm border transition-all ${btnClass}`}
                       >
-                        {opt}
+                        {opt} {opt === ex.answer ? ' $' : ''}
                       </button>
                     );
                   })}
@@ -441,140 +507,33 @@ export default function ModuleDetailPage() {
                 className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold text-sm hover:shadow-lg transition-all disabled:opacity-50">
                 Tekshirish
               </button>
-            ) : (
-              <button onClick={async () => { await startConversation('first_attempt'); completeAndGoNext(4); }}
-                disabled={actionLoading}
-                className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-semibold text-sm hover:shadow-lg hover:shadow-indigo-500/30 transition-all disabled:opacity-50">
-                {actionLoading ? 'Yuklanmoqda...' : <><RiMicLine /> Suhbatni boshlash</>}
-              </button>
-            )}
+            ) : (() => {
+              const gapScore = gapExercises.reduce((acc, ex) => acc + (gapAnswers[ex.id] === ex.answer ? 1 : 0), 0);
+              const gapPercent = Math.round((gapScore / gapExercises.length) * 100);
+              return gapPercent >= 60 ? (
+                <div className="flex items-center gap-3">
+                  <span className="text-emerald-600 font-bold text-sm bg-emerald-50 px-3 py-2 rounded-lg border border-emerald-200">{gapPercent}% To'g'ri!</span>
+                  <button onClick={() => { completeAndGoNext(4); }}
+                    className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-semibold text-sm hover:shadow-lg hover:shadow-indigo-500/30 transition-all">
+                    Keyingisi: Quiz <RiArrowRightLine />
+                  </button>
+                </div>
+              ) : (
+                <div className="flex items-center gap-3">
+                  <span className="text-red-500 font-bold text-sm bg-red-50 px-3 py-2 rounded-lg border border-red-200">Natija: {gapPercent}%. Kamida 60% kerak!</span>
+                  <button onClick={() => { setGapChecked(false); setGapAnswers({}); setGapExercises(generateGapFill(phrases)); }}
+                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-600 text-sm font-medium hover:bg-amber-500/25 transition-colors">
+                    <RiRepeatLine /> Qayta urinish
+                  </button>
+                </div>
+              );
+            })()}
           </div>
         </div>
       )}
 
-      {/* ── STEP 4: Virtual Patient ─────────────────────────── */}
+      {/* ── STEP 4: Quiz ────────────────────────────────────── */}
       {step === 4 && (
-        <div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <RiRobot2Line className="text-cyan-500" /> Virtual Patient Chat
-            <span className="text-xs text-gray-500 font-normal">— 20 daqiqa</span>
-          </h2>
-          {convId ? (
-            <VirtualPatientChat
-              conversationId={convId}
-              phrases={phrases}
-              onFinish={() => finishConversation(5)}
-            />
-          ) : (
-            <div className="text-center py-12 bg-white border border-gray-200 rounded-2xl shadow-sm">
-              <RiHospitalLine className="text-5xl mb-4 mx-auto text-rose-500" />
-              <p className="text-gray-500 mb-4">Suhbatni boshlash uchun tugmani bosing</p>
-              <button onClick={() => startConversation('first_attempt')} disabled={actionLoading}
-                className="px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-semibold">
-                {actionLoading ? 'Yuklanmoqda...' : 'Suhbatni boshlash'}
-              </button>
-            </div>
-          )}
-          {actionLoading && step === 4 && (
-            <div className="mt-4 flex items-center justify-center gap-2 text-amber-400 text-sm">
-              <div className="w-4 h-4 border-2 border-amber-400 border-t-transparent rounded-full animate-spin" />
-              AI Feedback generatsiya qilinmoqda...
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* ── STEP 5: AI Feedback ─────────────────────────────── */}
-      {step === 5 && feedback && (
-        <div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-2 flex items-center gap-2">
-            <RiBarChartGroupedLine className="text-indigo-500" /> AI Feedback
-          </h2>
-          {/* Overall score */}
-          <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-6 mb-5 text-center shadow-sm">
-            <div className="text-5xl font-black text-indigo-900 mb-1">{feedback.overall_score}%</div>
-            <p className="text-indigo-600 text-sm font-medium">Umumiy ball</p>
-          </div>
-          {/* 5 mezon */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
-            {Object.entries(SCORE_LABELS).map(([key, label]) => (
-              <div key={key} className="bg-white border border-gray-200 shadow-sm rounded-xl p-4">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs font-medium text-gray-500">{label}</span>
-                  <span className="text-sm font-bold text-gray-900">{feedback[key]}/10</span>
-                </div>
-                <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-                  <div className={`h-full bg-gradient-to-r ${SCORE_COLORS[key]} rounded-full progress-fill`}
-                    style={{ width: `${(feedback[key] || 0) * 10}%` }} />
-                </div>
-              </div>
-            ))}
-          </div>
-          {/* General feedback */}
-          {feedback.general_feedback && (
-            <div className="bg-white border border-gray-200 shadow-sm rounded-xl p-4 mb-4">
-              <h3 className="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-2">Umumiy izoh</h3>
-              <p className="text-sm text-gray-700">{feedback.general_feedback}</p>
-            </div>
-          )}
-          {/* Errors */}
-          {feedback.errors?.length > 0 && (
-            <div className="bg-white border border-gray-200 shadow-sm rounded-xl p-4 mb-5">
-              <h3 className="text-xs text-red-500 font-semibold uppercase tracking-wider mb-3">Xatolar va tuzatmalar</h3>
-              <div className="space-y-3">
-                {feedback.errors.map((e, i) => (
-                  <div key={i} className="border-l-2 border-red-500/40 pl-3">
-                    <p className="text-xs text-red-500 line-through">{e.original}</p>
-                    <p className="text-xs text-emerald-600 font-medium flex items-center gap-1"><RiCheckLine /> {e.corrected}</p>
-                    {e.explanation && <p className="text-xs text-gray-500 mt-0.5">{e.explanation}</p>}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-          <div className="flex gap-3">
-            <button onClick={async () => { await startConversation('retry'); completeAndGoNext(6); }}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-300 text-sm font-medium hover:bg-amber-500/25 transition-colors">
-              <RiRepeatLine /> Qayta urinish
-            </button>
-            <button onClick={async () => { await startConversation('final_challenge'); completeAndGoNext(7); }}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-transparent bg-gradient-to-r from-indigo-500 to-indigo-600 text-white text-sm font-semibold hover:shadow-lg hover:shadow-indigo-500/30 transition-all">
-              <RiTrophyLine /> Final Challenge
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* ── STEP 6: Retry ───────────────────────────────────── */}
-      {step === 6 && (
-        <div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <RiRepeatLine className="text-amber-500" /> Qayta Urinish (Retry)
-            <span className="text-xs text-gray-500 font-normal">— 15 daqiqa</span>
-          </h2>
-          {convId && (
-            <VirtualPatientChat conversationId={convId} phrases={phrases} onFinish={() => finishConversation(5)} />
-          )}
-        </div>
-      )}
-
-      {/* ── STEP 7: Final Challenge ─────────────────────────── */}
-      {step === 7 && (
-        <div>
-          <div className="bg-amber-50 border border-amber-200 shadow-sm rounded-2xl p-5 mb-5">
-            <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2 mb-1">
-              <RiTrophyLine className="text-amber-500" /> Final Challenge
-            </h2>
-            <p className="text-sm text-amber-700">Phrasebook va shpargalka yo'q — mustaqil ravishda yangi bemor bilan suhbatlashing</p>
-          </div>
-          {convId && (
-            <VirtualPatientChat conversationId={convId} phrases={[]} onFinish={() => finishConversation(8)} />
-          )}
-        </div>
-      )}
-
-      {/* ── STEP 8: Quiz ────────────────────────────────────── */}
-      {step === 8 && (
         <div>
           <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2"><RiQuestionLine className="text-indigo-500" /> Test / Quiz</h2>
           {!testResult ? (
@@ -596,39 +555,226 @@ export default function ModuleDetailPage() {
                         >
                           <span className="font-bold mr-2">{opt}.</span>
                           {t[`option_${opt.toLowerCase()}`]}
+                          {String(t.correct_option).toLowerCase() === opt.toLowerCase() ? ' $' : ''}
                         </button>
                       ))}
                     </div>
                   </div>
                 ))}
               </div>
-              <button onClick={submitQuiz} disabled={actionLoading || Object.keys(testAnswers).length < tests.length}
-                className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-semibold text-sm disabled:opacity-50">
-                {actionLoading ? 'Tekshirilmoqda...' : 'Testni yakunlash'}
-              </button>
+              <div className="flex gap-3">
+                <button onClick={() => setStep(3)} className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-gray-300 text-gray-700 text-sm hover:bg-gray-50 transition-colors">
+                  <RiArrowLeftLine /> Orqaga
+                </button>
+                <button onClick={submitQuiz} disabled={actionLoading || Object.keys(testAnswers).length < tests.length}
+                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-semibold text-sm disabled:opacity-50 hover:shadow-lg hover:shadow-indigo-500/30 transition-all">
+                  {actionLoading ? 'Tekshirilmoqda...' : 'Testni yakunlash'}
+                </button>
+                {bestTestResult && bestTestResult.score >= 60 && (
+                  <button onClick={() => completeAndGoNext(5)}
+                    className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold text-sm hover:shadow-lg transition-all ml-auto">
+                    Keyingisi: Virtual Chat <RiArrowRightLine />
+                  </button>
+                )}
+              </div>
             </>
           ) : (
             <div>
               <div className="text-center mb-6">
                 <div className="text-5xl font-black text-indigo-900 mb-2">{testResult.score}%</div>
-                <p className="text-gray-500">{testResult.correct}/{testResult.total} to'g'ri javob</p>
+                {testResult.correct !== undefined && (
+                  <p className="text-gray-500">{testResult.correct}/{testResult.total} to'g'ri javob</p>
+                )}
               </div>
-              <div className="space-y-3 mb-6">
-                {testResult.results.map((r, i) => (
-                  <div key={r.question_id} className={`flex items-center gap-3 p-3 rounded-xl border ${r.is_correct ? 'border-emerald-200 bg-emerald-50' : 'border-red-200 bg-red-50'}`}>
-                    <span className={`text-lg ${r.is_correct ? 'text-emerald-500' : 'text-red-500'}`}>
-                      {r.is_correct ? <RiCheckLine /> : <RiCloseLine />}
-                    </span>
-                    <span className="text-sm text-gray-700">Savol {i+1}: Javobingiz <b>{r.your_answer}</b> {!r.is_correct && <> · To'g'ri: <b className="text-emerald-600">{r.correct_answer}</b></>}</span>
+              {testResult.results && (
+                <div className="space-y-3 mb-6">
+                  {testResult.results.map((r, i) => (
+                    <div key={r.question_id || i} className={`flex items-center gap-3 p-3 rounded-xl border ${r.is_correct ? 'border-emerald-200 bg-emerald-50' : 'border-red-200 bg-red-50'}`}>
+                      <span className={`text-lg ${r.is_correct ? 'text-emerald-500' : 'text-red-500'}`}>
+                        {r.is_correct ? <RiCheckLine /> : <RiCloseLine />}
+                      </span>
+                      <span className="text-sm text-gray-700">Savol {i+1}: Javobingiz <b>{r.your_answer}</b> {!r.is_correct && <> · To'g'ri: <b className="text-emerald-600">{r.correct_answer}</b></>}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <div className="flex justify-center gap-3 mt-2">
+                {testResult.score >= 60 ? (
+                  <button onClick={() => completeAndGoNext(5)}
+                    className="flex items-center justify-center w-full sm:w-auto gap-2 px-8 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-semibold hover:shadow-lg hover:shadow-indigo-500/30 transition-all mx-auto">
+                    Keyingisi: Virtual Chat <RiArrowRightLine />
+                  </button>
+                ) : (
+                  <div className="text-center w-full">
+                    <p className="text-red-500 text-sm font-medium mb-3">Keyingi bosqichga o'tish uchun kamida 60% ball to'plashingiz kerak.</p>
+                    <button onClick={() => { setTestResult(null); setTestAnswers({}); }}
+                      className="flex items-center gap-2 px-6 py-3 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-600 text-sm font-medium hover:bg-amber-500/25 transition-colors mx-auto inline-flex">
+                      <RiRepeatLine /> Qayta urinish
+                    </button>
                   </div>
-                ))}
+                )}
               </div>
-              <button onClick={() => navigate('/student/modules')}
-                className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-semibold text-sm">
-                <RiCheckLine /> Modullarga qaytish
-              </button>
             </div>
           )}
+        </div>
+      )}
+
+      {/* ── STEP 5: Virtual Patient (Chat & Feedback) ─────────────────────────── */}
+      {step === 5 && (
+        <div>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <RiRobot2Line className="text-cyan-500" /> Virtual Patient Chat
+            <span className="text-xs text-gray-500 font-normal">— 20 daqiqa</span>
+          </h2>
+          
+          {!feedback && (
+            <div className="mb-6 animate-fade-in relative">
+              <div className="absolute -top-10 right-0">
+                <button onClick={() => finishConversation(true)}
+                  className="px-3 py-1 bg-indigo-100 text-indigo-700 hover:bg-indigo-200 text-xs font-bold rounded-lg transition-colors border border-indigo-200">
+                  <RiCheckboxCircleLine className="inline-block mr-1" />
+                  Test: 100% bilan yakunlash
+                </button>
+              </div>
+              <VirtualPatientChat
+                conversationId={convId}
+                onStartConversation={startConversation}
+                onRetry={() => {
+                  setConvId(null);
+                  setFeedback(null);
+                }}
+                phrases={phrases}
+                onFinish={() => finishConversation(false)}
+              />
+            </div>
+          )}
+
+          {actionLoading && !feedback && convId && (
+            <div className="mt-4 flex items-center justify-center gap-2 text-amber-400 text-sm">
+              <div className="w-4 h-4 border-2 border-amber-400 border-t-transparent rounded-full animate-spin" />
+              AI Feedback generatsiya qilinmoqda...
+            </div>
+          )}
+
+          <div className="flex gap-3">
+            <button onClick={() => setStep(4)} className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-gray-300 text-gray-700 text-sm hover:bg-gray-50 transition-colors">
+              <RiArrowLeftLine /> Orqaga
+            </button>
+            {bestFeedback && bestFeedback.overall_score >= 60 && (
+              <button onClick={() => completeAndGoNext(6)}
+                className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold text-sm hover:shadow-lg transition-all ml-auto">
+                Umumiy Natijani Ko'rish <RiArrowRightLine />
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ── STEP 6: Overall Results ─────────────────────────── */}
+      {step === 6 && (
+        <div>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <RiTrophyLine className="text-indigo-500" /> Umumiy Natijalar (Overall Results)
+          </h2>
+          <div className="bg-white border border-gray-200 shadow-sm rounded-2xl p-8 text-center mb-6">
+            <h3 className="text-gray-500 text-sm font-medium mb-4">Ushbu modul bo'yicha sizning natijalaringiz</h3>
+            {(() => {
+              const vocabScore = completedSteps.includes(1) ? 100 : 0;
+              const phraseScore = completedSteps.includes(2) ? 100 : 0;
+              
+              let gapScore = 0;
+              if (gapExercises && gapExercises.length > 0) {
+                const correctCount = gapExercises.reduce((acc, ex) => acc + (gapAnswers[ex.id] === ex.answer ? 1 : 0), 0);
+                gapScore = Math.round((correctCount / gapExercises.length) * 100);
+              }
+              
+              const quizScore = bestTestResult?.score || 0;
+              const chatScore = bestFeedback?.overall_score || 0;
+              
+              const overallFinal = Math.round((vocabScore + phraseScore + gapScore + quizScore + chatScore) / 5);
+
+              return (
+                <>
+                  <div className="mb-8">
+                    <div className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-emerald-500 inline-block mb-2">
+                      {overallFinal}%
+                    </div>
+                    <p className="text-slate-500 font-medium uppercase tracking-widest text-xs">O'rtacha yakuniy ball (Barcha bo'limlar)</p>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-8 border-t border-slate-100 pt-8">
+                    <div>
+                      <div className="text-2xl font-black text-indigo-900 mb-1">{vocabScore}%</div>
+                      <p className="text-indigo-600 font-medium text-xs">Vocabulary</p>
+                    </div>
+                    <div>
+                      <div className="text-2xl font-black text-blue-600 mb-1">{phraseScore}%</div>
+                      <p className="text-blue-700 font-medium text-xs">Phrasebook</p>
+                    </div>
+                    <div>
+                      <div className="text-2xl font-black text-teal-600 mb-1">{gapScore}%</div>
+                      <p className="text-teal-700 font-medium text-xs">Gap Fill</p>
+                    </div>
+                    <div>
+                      <div className="text-2xl font-black text-emerald-600 mb-1">{quizScore}%</div>
+                      <p className="text-emerald-700 font-medium text-xs">Quiz</p>
+                    </div>
+                    <div>
+                      <div className="text-2xl font-black text-rose-600 mb-1">{chatScore}%</div>
+                      <p className="text-rose-700 font-medium text-xs">Virtual Chat</p>
+                    </div>
+                  </div>
+                </>
+              );
+            })()}
+            
+            {bestFeedback?.general_feedback && (
+              <div className="bg-indigo-50/50 border border-indigo-100 rounded-xl p-5 text-left inline-block w-full shadow-inner mb-6">
+                <h4 className="text-indigo-800 font-bold mb-3 flex items-center gap-2"><RiLightbulbLine className="text-lg" /> AI Maslahati</h4>
+                <p className="text-indigo-700 text-sm leading-relaxed">{bestFeedback.general_feedback}</p>
+              </div>
+            )}
+            
+            {bestFeedback && (
+              <div className="text-left mt-4 border-t border-gray-100 pt-6">
+                <h4 className="font-semibold text-gray-900 mb-4">Chat ko'nikmalari tahlili</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                  {Object.entries(SCORE_LABELS).map(([key, label], index, arr) => (
+                    <div key={key} className={`bg-white border border-gray-200 shadow-sm rounded-xl p-4 ${index === arr.length - 1 ? 'sm:col-span-2' : ''}`}>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-xs font-medium text-gray-500">{label}</span>
+                        <span className="text-sm font-bold text-gray-900">{bestFeedback[key]}/10</span>
+                      </div>
+                      <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div className={`h-full bg-gradient-to-r ${SCORE_COLORS[key]} rounded-full progress-fill`}
+                          style={{ width: `${(bestFeedback[key] || 0) * 10}%` }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                {bestFeedback.errors?.length > 0 && (
+                  <div className="bg-white border border-gray-200 shadow-sm rounded-xl p-4">
+                    <h3 className="text-xs text-red-500 font-semibold uppercase tracking-wider mb-3">Xatolar va tuzatmalar</h3>
+                    <div className="space-y-3">
+                      {bestFeedback.errors.map((e, i) => (
+                        <div key={i} className="border-l-2 border-red-500/40 pl-3">
+                          <p className="text-xs text-red-500 line-through mb-1">{e.original}</p>
+                          <p className="text-xs text-emerald-600 font-medium flex items-center gap-1"><RiCheckLine /> {e.corrected}</p>
+                          {e.explanation && <p className="text-xs text-gray-500 mt-1">{e.explanation}</p>}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+          
+          <button onClick={() => navigate('/student/modules')}
+            className="flex items-center justify-center w-full sm:w-auto gap-2 px-8 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold hover:shadow-lg hover:shadow-emerald-500/30 transition-all mx-auto">
+            <RiCheckLine /> Modullarga qaytish
+          </button>
         </div>
       )}
     </Layout>

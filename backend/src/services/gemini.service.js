@@ -102,11 +102,18 @@ Return ONLY valid JSON. No markdown formatting (\`\`\`json), no extra text.
   const response = await client.models.generateContent({
     model: 'gemini-2.5-flash',
     contents: [{ role: 'user', parts: [{ text: prompt }] }],
-    config: { temperature: 0.8, maxOutputTokens: 800 },
+    config: { temperature: 0.8, responseMimeType: 'application/json' },
   });
 
-  const rawText = response.text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-  return rawText; // Return the JSON string directly
+  let cleanText = response.text;
+  const startIndex = cleanText.indexOf('{');
+  const endIndex = cleanText.lastIndexOf('}');
+  
+  if (startIndex !== -1 && endIndex !== -1) {
+    cleanText = cleanText.substring(startIndex, endIndex + 1);
+  }
+  
+  return cleanText;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -164,14 +171,21 @@ Return ONLY valid JSON. No markdown, no explanation outside the JSON.
   const response = await client.models.generateContent({
     model: 'gemini-2.5-flash',
     contents: [{ role: 'user', parts: [{ text: prompt }] }],
-    config: { temperature: 0.2, maxOutputTokens: 1000 },
+    config: { temperature: 0.2, responseMimeType: 'application/json' },
   });
 
-  const rawText = response.text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-
   try {
-    return JSON.parse(rawText);
-  } catch {
+    let cleanText = response.text;
+    const startIndex = cleanText.indexOf('{');
+    const endIndex = cleanText.lastIndexOf('}');
+    
+    if (startIndex !== -1 && endIndex !== -1) {
+      cleanText = cleanText.substring(startIndex, endIndex + 1);
+    }
+    
+    return JSON.parse(cleanText);
+  } catch (error) {
+    console.error('Failed to parse Gemini feedback JSON:', error, '\\nRaw response:', response.text);
     // Fallback scores if JSON parsing fails
     return {
       grammar_score: 5,
@@ -180,7 +194,7 @@ Return ONLY valid JSON. No markdown, no explanation outside the JSON.
       pronunciation_score: 5,
       clinical_score: 5,
       overall_score: 50,
-      general_feedback: 'Feedback could not be generated. Please try again.',
+      general_feedback: 'Feedback could not be generated properly or conversation was too short.',
       errors: [],
     };
   }
@@ -222,13 +236,11 @@ Return ONLY valid JSON. No markdown formatting.
   const response = await client.models.generateContent({
     model: 'gemini-2.5-flash',
     contents: [{ role: 'user', parts: [{ text: prompt }] }],
-    config: { temperature: 0.1, maxOutputTokens: 500 },
+    config: { temperature: 0.1, responseMimeType: 'application/json' },
   });
 
-  const rawText = response.text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-
   try {
-    return JSON.parse(rawText);
+    return JSON.parse(response.text.trim());
   } catch {
     return { corrected_text: text, has_errors: false, errors: [] };
   }

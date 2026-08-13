@@ -11,31 +11,36 @@ const getModules = async (req, res) => {
       attributes: ['id', 'title', 'description', 'order_index'],
     });
 
-    let prevBestScore = 100; // 1-modul doim ochiq
+    let prevAvgScore = 100; // Birinchi modul doim ochiq bo'lishi uchun
+
     const results = [];
     
-    for (let i = 0; i < modules.length; i++) {
-      const m = modules[i];
-      // Eng yuqori ballni topish (overall_score bo'yicha DESC)
+    for (let m of modules) {
       const conv = await Conversation.findOne({
         where: { student_id: req.user.id, module_id: m.id, status: 'completed' },
         order: [['overall_score', 'DESC']],
       });
       const testResult = await TestResult.findOne({
         where: { student_id: req.user.id, module_id: m.id },
+        order: [['score', 'DESC']],
       });
       
-      const best_score = conv ? conv.overall_score : null;
-      const is_unlocked = prevBestScore >= 60;
+      const testScore = testResult ? testResult.score : 0;
+      const chatScore = conv ? conv.overall_score : 0;
+      const hasAnyScore = !!(testResult || conv);
+      const avg_score = hasAnyScore ? Math.round((testScore + chatScore) / 2) : null;
+
+      const is_unlocked = prevAvgScore >= 60;
+      const is_completed = testScore >= 60 && chatScore >= 60; // Har bir bo'limdan kamida 60% olingan bo'lsa yakunlangan hisoblanadi
       
       results.push({
         ...m.toJSON(),
-        is_completed: !!testResult,
-        best_score: best_score,
+        is_completed: is_completed,
+        best_score: avg_score,
         is_unlocked: is_unlocked
       });
       
-      prevBestScore = best_score !== null ? best_score : 0;
+      prevAvgScore = avg_score !== null ? avg_score : 0;
     }
 
     res.json(results);
@@ -52,6 +57,47 @@ const getModuleById = async (req, res) => {
     });
     if (!module) return res.status(404).json({ error: 'Modul topilmadi' });
     res.json(module);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ── GET /api/student/modules/:id/progress ───────────────────
+const getModuleProgress = async (req, res) => {
+  try {
+    const lastConversation = await Conversation.findOne({
+      where: { student_id: req.user.id, module_id: req.params.id, status: 'completed' },
+      order: [['overall_score', 'DESC']],
+    });
+    
+    const testResult = await TestResult.findOne({
+      where: { student_id: req.user.id, module_id: req.params.id },
+      order: [['score', 'DESC']],
+    });
+
+    let parsedFeedback = {};
+    if (lastConversation && lastConversation.general_feedback) {
+      try {
+        parsedFeedback = JSON.parse(lastConversation.general_feedback);
+      } catch(e) {}
+    }
+
+    res.json({
+      last_conversation: lastConversation ? {
+        id: lastConversation.id,
+        grammar_score: lastConversation.grammar_score,
+        vocabulary_score: lastConversation.vocabulary_score,
+        fluency_score: lastConversation.fluency_score,
+        pronunciation_score: lastConversation.pronunciation_score,
+        clinical_score: lastConversation.clinical_score,
+        overall_score: lastConversation.overall_score,
+        general_feedback: parsedFeedback.general_feedback || '',
+        errors: parsedFeedback.errors || []
+      } : null,
+      test_result: testResult ? {
+        score: testResult.score
+      } : null
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -187,11 +233,20 @@ const finalizeConversation = async (req, res) => {
       order: [['created_at', 'ASC']],
     });
 
-    if (messages.length < 2)
+    if (messages.length < 2 && !req.body.test_mode)
       return res.status(400).json({ error: 'Baholash uchun kamida bitta xabar kerak' });
 
-    // Gemini AI Feedback
-    const feedback = await generateFeedback(messages);
+    // Gemini AI Feedback (yoki test rejim uchun 100%)
+    let feedback;
+    if (req.body.test_mode) {
+      feedback = {
+        grammar_score: 10, vocabulary_score: 10, fluency_score: 10, pronunciation_score: 10, clinical_score: 10, overall_score: 100,
+        general_feedback: "Test rejimida muvaffaqiyatli (100%) yakunlandi.",
+        errors: []
+      };
+    } else {
+      feedback = await generateFeedback(messages);
+    }
 
     // Natijalarni saqlash
     await conversation.update({
@@ -261,7 +316,7 @@ const getTests = async (req, res) => {
   try {
     const tests = await Test.findAll({
       where: { module_id: req.params.id },
-      attributes: { exclude: ['correct_option'] }, // To'g'ri javobni yashirish
+      // attributes: { exclude: ['correct_option'] }, // To'g'ri javobni yashirish (Test rejim uchun ochiq)
       order: [['id', 'ASC']],
     });
     res.json(tests);
@@ -278,7 +333,7 @@ const submitTest = async (req, res) => {
 
     let correct = 0;
     const results = tests.map((t) => {
-      const isCorrect = answers[t.id] === t.correct_option;
+      const isCorrect = String(answers[t.id]).toLowerCase() === String(t.correct_option).toLowerCase();
       if (isCorrect) correct++;
       return {
         question_id: t.id,
@@ -294,6 +349,9 @@ const submitTest = async (req, res) => {
       student_id: req.user.id,
       module_id: req.params.id,
       score,
+      correct,
+      total: tests.length,
+      results
     });
 
     res.json({ score, correct, total: tests.length, results });
@@ -357,5 +415,5 @@ module.exports = {
   getModules, getModuleById, getVocabulary, getPhrasebook,
   startConversation, sendMessage, finalizeConversation,
   getFeedback, getMessages, getTests, submitTest,
-  grammarCheck, getDashboard,
+  grammarCheck, getDashboard, getModuleProgress
 };

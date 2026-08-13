@@ -4,7 +4,8 @@ import {
   RiMicLine, RiStopCircleLine, RiVolumeUpLine,
   RiLoader4Line, RiHeartPulseLine, RiPhoneLine,
   RiCheckDoubleLine, RiUser3Line, RiRobot2Line,
-  RiArrowRightSLine, RiStethoscopeLine
+  RiArrowRightSLine, RiStethoscopeLine,
+  RiKeyboardLine, RiSendPlane2Line
 } from 'react-icons/ri';
 
 // callState:
@@ -17,11 +18,13 @@ import {
 //   'processing' — AI javob bermoqda (API so'rovi)
 //   'speaking'   — bemor ovozi yoqulmoqda (TTS)
 
-export default function VirtualPatientChat({ conversationId, phrases, onFinish }) {
+export default function VirtualPatientChat({ conversationId, onStartConversation, onRetry, phrases, onFinish }) {
   const [callState, setCallState]   = useState('idle');
   const [micState, setMicState]     = useState('listening');
   const [transcript, setTranscript] = useState('');
   const [chatHistory, setChatHistory] = useState([]);   // { role: 'user'|'patient', text }
+  const [chatMode, setChatMode]     = useState('none'); // 'audio' or 'text'
+  const [textInput, setTextInput]   = useState('');
   const [voices, setVoices]   = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -29,6 +32,24 @@ export default function VirtualPatientChat({ conversationId, phrases, onFinish }
   const synthRef       = useRef(window.speechSynthesis);
   const historyEndRef  = useRef(null);
   const utteranceRef   = useRef(null); // Prevent garbage collection bug in Chrome
+  const convIdRef      = useRef(conversationId);
+
+  useEffect(() => {
+    convIdRef.current = conversationId;
+    if (conversationId && chatHistory.length === 0) {
+      // Eski suhbat xabarlarini yuklash
+      api.get(`/student/conversation/${conversationId}/messages`).then(res => {
+        if (res.data && res.data.length > 0) {
+          const history = res.data.map(m => ({
+            role: m.sender === 'student' ? 'user' : 'patient',
+            text: m.text_content
+          }));
+          setChatHistory(history);
+          setCallState('ended'); // Chunki bu yakunlangan eski suhbat
+        }
+      }).catch(err => console.error("Xabarlarni yuklashda xatolik:", err));
+    }
+  }, [conversationId]);
 
   // Ovozlar ro'yxatini yuklash
   useEffect(() => {
@@ -98,15 +119,17 @@ export default function VirtualPatientChat({ conversationId, phrases, onFinish }
   const sendMessage = async (text, rec) => {
     setChatHistory(prev => [...prev, { role: 'user', text }]);
     try {
-      const res = await api.post(`/student/conversation/${conversationId}/message`, { text });
+      const res = await api.post(`/student/conversation/${convIdRef.current}/message`, { text });
       const reply = res.data.reply;
       setChatHistory(prev => [...prev, { role: 'patient', text: reply }]);
-      speakText(reply, rec);
+      if (rec) speakText(reply, rec);
+      else setMicState('listening'); // Reset processing state for text mode
     } catch (err) {
       console.error(err);
       const errMsg = "Sorry, I didn't catch that. Could you repeat?";
       setChatHistory(prev => [...prev, { role: 'patient', text: errMsg }]);
-      speakText(errMsg, rec);
+      if (rec) speakText(errMsg, rec);
+      else setMicState('listening');
     }
   };
 
@@ -140,17 +163,43 @@ export default function VirtualPatientChat({ conversationId, phrases, onFinish }
   };
 
   // ── Qo'ng'iroqni boshlash ─────────────────────────────────
-  const startCall = () => {
-    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SR) {
-      alert("Your browser does not support voice input. Try using Chrome or Edge.");
-      return;
-    }
-    const rec = buildRecognition();
-    recognitionRef.current = rec;
+  const startCall = async (mode) => {
+    setChatMode(mode);
     setCallState('active');
+    setMicState('processing'); // "Thinking..." holati suhbat generatsiya bo'lguncha
+    
+    if (onStartConversation && !convIdRef.current) {
+      try {
+        await onStartConversation();
+      } catch (err) {
+        alert("Xatolik: Suhbatni boshlab bo'lmadi.");
+        setCallState('idle');
+        return;
+      }
+    }
+
     setMicState('listening');
-    try { rec.start(); } catch(e){}
+    
+    if (mode === 'audio') {
+      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SR) {
+        alert("Your browser does not support voice input. Try using Chrome or Edge.");
+        setCallState('idle');
+        return;
+      }
+      const rec = buildRecognition();
+      recognitionRef.current = rec;
+      try { rec.start(); } catch(e){}
+    }
+  };
+
+  const handleSendText = (e) => {
+    e.preventDefault();
+    if (!textInput.trim() || micState === 'processing') return;
+    const text = textInput.trim();
+    setTextInput('');
+    setMicState('processing');
+    sendMessage(text, null);
   };
 
   // ── Qo'ng'iroqni yakunlash (faqat to'xtatish, baholamasdan) ─
@@ -188,7 +237,7 @@ export default function VirtualPatientChat({ conversationId, phrases, onFinish }
   const canEvaluate = isEnded && chatHistory.filter(m => m.role === 'user').length >= 1;
 
   const statusLabel = isIdle      ? 'Conversation Ended'
-    : isListening  ? 'Listening...'
+    : isListening  ? (chatMode === 'text' ? 'Type message...' : 'Listening...')
     : isProcessing ? 'Thinking...'
     : isSpeaking   ? 'Patient Speaking...'
     : 'Conversation Ended';
@@ -287,17 +336,26 @@ export default function VirtualPatientChat({ conversationId, phrases, onFinish }
 
         {/* IDLE: Suhbat boshlanmagan */}
         {isIdle && (
-          <button
-            onClick={startCall}
-            className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl bg-gradient-to-r from-indigo-600 to-indigo-500 text-white font-semibold text-sm hover:shadow-lg hover:shadow-indigo-500/30 transition-all active:scale-95"
-          >
-            <RiStethoscopeLine className="text-lg" />
-            Start Conversation
-          </button>
+          <div className="flex gap-3">
+            <button
+              onClick={() => startCall('audio')}
+              className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl bg-gradient-to-r from-indigo-600 to-indigo-500 text-white font-semibold text-sm hover:shadow-lg hover:shadow-indigo-500/30 transition-all active:scale-95"
+            >
+              <RiMicLine className="text-lg" />
+              Voice Chat
+            </button>
+            <button
+              onClick={() => startCall('text')}
+              className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl bg-gray-800 text-white font-semibold text-sm border border-gray-700 hover:bg-gray-700 transition-all active:scale-95"
+            >
+              <RiKeyboardLine className="text-lg" />
+              Text Chat
+            </button>
+          </div>
         )}
 
         {/* ACTIVE: Qo'ng'iroq davom etyapti */}
-        {isActive && (
+        {isActive && chatMode === 'audio' && (
           <div className="flex items-center gap-3">
             {/* Holat indikatori */}
             <div className={`flex-1 flex items-center gap-2 px-3.5 py-2.5 rounded-xl border text-sm transition-all
@@ -325,6 +383,34 @@ export default function VirtualPatientChat({ conversationId, phrases, onFinish }
           </div>
         )}
 
+        {isActive && chatMode === 'text' && (
+          <form onSubmit={handleSendText} className="flex items-center gap-2">
+            <input
+              type="text"
+              value={textInput}
+              onChange={(e) => setTextInput(e.target.value)}
+              disabled={isProcessing}
+              placeholder={isProcessing ? "Thinking..." : "Type your message..."}
+              className="flex-1 bg-gray-800 border border-gray-700 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500 disabled:opacity-50"
+            />
+            <button
+              type="submit"
+              disabled={!textInput.trim() || isProcessing}
+              className="w-11 h-11 rounded-xl bg-indigo-600 text-white flex items-center justify-center hover:bg-indigo-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
+            >
+              <RiSendPlane2Line className="text-lg" />
+            </button>
+            <button
+              type="button"
+              onClick={endCall}
+              className="w-11 h-11 rounded-xl bg-red-500/20 text-red-400 border border-red-500/30 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all flex-shrink-0 ml-1"
+              title="End Conversation"
+            >
+              <RiStopCircleLine className="text-lg" />
+            </button>
+          </form>
+        )}
+
         {/* ENDED: Qo'ng'iroq tugadi */}
         {isEnded && (
           <div className="space-y-2">
@@ -336,7 +422,12 @@ export default function VirtualPatientChat({ conversationId, phrases, onFinish }
             <div className="flex gap-2">
               {/* Qayta boshlash */}
               <button
-                onClick={() => { setChatHistory([]); setTranscript(''); setCallState('idle'); }}
+                onClick={() => { 
+                  setChatHistory([]); 
+                  setTranscript(''); 
+                  setCallState('idle'); 
+                  if (onRetry) onRetry();
+                }}
                 className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-2xl border border-gray-700 text-gray-400 text-sm hover:bg-gray-800 hover:text-white transition-all"
               >
                 <RiPhoneLine className="text-sm" />

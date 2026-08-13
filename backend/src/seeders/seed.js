@@ -239,8 +239,41 @@ This is the most challenging consultation in the course.`,
     { module_id: module1.id, question: 'The patient says the pain is "8 out of 10." What does this indicate?', option_a: 'Mild discomfort', option_b: 'No significant pain', option_c: 'Severe pain', option_d: 'The patient is exaggerating', correct_option: 'C' },
     { module_id: module1.id, question: 'What is "dentin"?', option_a: 'The outer protective layer of the tooth', option_b: 'The pulp inside the tooth', option_c: 'The layer beneath the enamel that is sensitive when exposed', option_d: 'The root of the tooth', correct_option: 'C' },
     { module_id: module1.id, question: 'Which clinical question helps identify the LOCATION of pain?', option_a: 'When did the pain start?', option_b: 'Can you point to where it hurts?', option_c: 'Are you allergic to any medications?', option_d: 'How often do you brush your teeth?', correct_option: 'B' },
+    { module_id: module1.id, question: 'What type of pain is described as "throbbing"?', option_a: 'A dull, constant ache', option_b: 'A sharp, stabbing sensation', option_c: 'A pain that pulses or beats rhythmically', option_d: 'A pain that spreads to the ear', correct_option: 'C' },
+    { module_id: module1.id, question: 'Which term describes pain that spreads from one area to another?', option_a: 'Constant', option_b: 'Throbbing', option_c: 'Radiating', option_d: 'Lingering', correct_option: 'C' },
+    { module_id: module1.id, question: 'What does "onset" refer to in a dental consultation?', option_a: 'The severity of the pain', option_b: 'The beginning or start time of the symptoms', option_c: 'The location of the tooth', option_d: 'The type of medication taken', correct_option: 'B' },
+    { module_id: module1.id, question: 'If a patient reports pain triggered by cold water, what is the cold water considered?', option_a: 'A treatment', option_b: 'A medication', option_c: 'A trigger', option_d: 'A side effect', correct_option: 'C' },
+    { module_id: module1.id, question: 'Why might a dentist ask "Are you taking any medications at the moment?"', option_a: 'To check the patient\'s dental hygiene', option_b: 'To find out their favorite food', option_c: 'To understand their medical history before prescribing new drugs', option_d: 'To see if they need teeth whitening', correct_option: 'C' },
   ]);
   console.log('✅ Modul 1 uchun test savollari yaratildi');
+
+  // ── 8. Qolgan modullar (2 dan 10 gacha) uchun Fake (soxta) ma'lumotlar ──
+  for (let i = 1; i < modules.length; i++) {
+    const m = modules[i];
+    
+    const vocabs = [];
+    for(let j=1; j<=10; j++) {
+      vocabs.push({ module_id: m.id, word: `dummy word ${j}`, translation: `tarjima ${j}`, definition: `Dummy definition for ${m.title} ${j}`, example: `Example sentence ${j}.` });
+    }
+    await Vocabulary.bulkCreate(vocabs);
+
+    const phrases = [];
+    for(let j=1; j<=5; j++) {
+      phrases.push({ module_id: m.id, category: 'General', phrase: `Can you describe the pain for ${m.title}?`, hint_uz: `Og'riqni tasvirlang ${j}`, step_order: j });
+    }
+    await Phrasebook.bulkCreate(phrases);
+
+    const tests = [];
+    for(let j=1; j<=10; j++) {
+      let correct = 'A';
+      if (j % 4 === 1) correct = 'B';
+      if (j % 4 === 2) correct = 'C';
+      if (j % 4 === 3) correct = 'D';
+      tests.push({ module_id: m.id, question: `Dummy Question ${j} for ${m.title}?`, option_a: 'Option A', option_b: 'Option B', option_c: 'Option C', option_d: 'Option D', correct_option: correct });
+    }
+    await Test.bulkCreate(tests);
+  }
+  console.log('✅ Qolgan modullar (2-10) uchun fake ma\'lumotlar yaratildi');
 
   console.log('\n🎉 Seed muvaffaqiyatli yakunlandi!');
   console.log('='.repeat(50));
