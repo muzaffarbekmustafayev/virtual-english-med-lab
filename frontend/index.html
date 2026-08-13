@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Virtual Patient English</title>
+    <meta name="description" content="AI-powered clinical communication training platform for medical students" />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { inter: ['Inter', 'sans-serif'] },
+            colors: {
+              primary: { DEFAULT: '#6366f1', dark: '#4f46e5', light: '#818cf8' },
+              accent:  { DEFAULT: '#06b6d4', dark: '#0891b2' },
+              surface: { DEFAULT: '#1a1a2e', card: '#16213e', dark: '#0f0f1a' },
+            },
+            animation: {
+              'fade-up':  'fadeUp 0.3s ease',
+              'scale-in': 'scaleIn 0.2s ease',
+              'pulse-slow': 'pulse 2s cubic-bezier(0.4,0,0.6,1) infinite',
+            },
+            keyframes: {
+              fadeUp:  { from: { opacity:'0', transform:'translateY(8px)' }, to: { opacity:'1', transform:'translateY(0)' } },
+              scaleIn: { from: { opacity:'0', transform:'scale(0.95)' }, to: { opacity:'1', transform:'scale(1)' } },
+            },
+          },
+        },
+      }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

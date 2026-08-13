@@ -1,0 +1,361 @@
+const { Module, Vocabulary, Phrasebook, Conversation, Message, Test, TestResult, User } = require('../models');
+const { getPatientReply, generateFeedback, checkGrammar, generatePatientScenario } = require('../services/gemini.service');
+
+// ── GET /api/student/modules ─────────────────────────────────
+// Talabaning mutaxassisligiga mos modullar
+const getModules = async (req, res) => {
+  try {
+    const modules = await Module.findAll({
+      where: { specialty_id: req.user.specialty_id },
+      order: [['order_index', 'ASC']],
+      attributes: ['id', 'title', 'description', 'order_index'],
+    });
+
+    let prevBestScore = 100; // 1-modul doim ochiq
+    const results = [];
+    
+    for (let i = 0; i < modules.length; i++) {
+      const m = modules[i];
+      // Eng yuqori ballni topish (overall_score bo'yicha DESC)
+      const conv = await Conversation.findOne({
+        where: { student_id: req.user.id, module_id: m.id, status: 'completed' },
+        order: [['overall_score', 'DESC']],
+      });
+      const testResult = await TestResult.findOne({
+        where: { student_id: req.user.id, module_id: m.id },
+      });
+      
+      const best_score = conv ? conv.overall_score : null;
+      const is_unlocked = prevBestScore >= 60;
+      
+      results.push({
+        ...m.toJSON(),
+        is_completed: !!testResult,
+        best_score: best_score,
+        is_unlocked: is_unlocked
+      });
+      
+      prevBestScore = best_score !== null ? best_score : 0;
+    }
+
+    res.json(results);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ── GET /api/student/modules/:id ────────────────────────────
+const getModuleById = async (req, res) => {
+  try {
+    const module = await Module.findByPk(req.params.id, {
+      attributes: { exclude: ['patient_context', 'final_challenge_context'] },
+    });
+    if (!module) return res.status(404).json({ error: 'Modul topilmadi' });
+    res.json(module);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ── GET /api/student/modules/:id/vocabulary ─────────────────
+const getVocabulary = async (req, res) => {
+  try {
+    const words = await Vocabulary.findAll({
+      where: { module_id: req.params.id },
+      order: [['id', 'ASC']],
+    });
+    res.json(words);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ── GET /api/student/modules/:id/phrasebook ─────────────────
+const getPhrasebook = async (req, res) => {
+  try {
+    const phrases = await Phrasebook.findAll({
+      where: { module_id: req.params.id },
+      order: [['step_order', 'ASC']],
+    });
+    res.json(phrases);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ── POST /api/student/modules/:id/conversation ──────────────
+// Yangi dialog sessiyasi ochish
+const startConversation = async (req, res) => {
+  try {
+    const { attempt_type = 'first_attempt' } = req.body;
+    const module = await Module.findByPk(req.params.id);
+    if (!module) return res.status(404).json({ error: 'Modul topilmadi' });
+
+    // Avvalgi active sessiyani yopish (agar chala qolgan bo'lsa)
+    await Conversation.update(
+      { status: 'completed' },
+      { where: { student_id: req.user.id, module_id: req.params.id, status: 'active' } }
+    );
+
+    // Attempt type ga qarab tegishli kontekstni tanlash
+    const patientContext =
+      attempt_type === 'final_challenge'
+        ? module.final_challenge_context
+        : module.patient_context;
+
+    // Generate specific scenario for this session
+    const dynamicScenario = await generatePatientScenario(patientContext);
+
+    const conversation = await Conversation.create({
+      student_id: req.user.id,
+      module_id: req.params.id,
+      attempt_type,
+      status: 'active',
+      dynamic_scenario: dynamicScenario,
+    });
+
+    res.status(201).json({ conversation_id: conversation.id, attempt_type });
+  } catch (err) {
+    console.error('startConversation xato:', err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ── POST /api/student/conversation/:id/message ──────────────
+// Talabaning xabarini qabul qilib, Gemini AI bemor javobini qaytarish
+const sendMessage = async (req, res) => {
+  try {
+    const { text } = req.body;
+    if (!text) return res.status(400).json({ error: 'Xabar matni bo\'sh bo\'lishi mumkin emas' });
+
+    const conversation = await Conversation.findByPk(req.params.id, {
+      include: [{ model: Module, as: 'module' }],
+    });
+    if (!conversation) return res.status(404).json({ error: 'Sessiya topilmadi' });
+    if (conversation.student_id !== req.user.id)
+      return res.status(403).json({ error: 'Ruxsat yo\'q' });
+    if (conversation.status === 'completed')
+      return res.status(400).json({ error: 'Bu sessiya allaqachon yakunlangan' });
+
+    // Talaba xabarini saqlash
+    await Message.create({
+      conversation_id: conversation.id,
+      sender: 'student',
+      text_content: text,
+    });
+
+    // Suhbat tarixini Gemini uchun shakllantirish
+    const prevMessages = await Message.findAll({
+      where: { conversation_id: conversation.id },
+      order: [['created_at', 'ASC']],
+    });
+
+    // Gemini history format: [{role: 'user'|'model', parts: [{text}]}]
+    const history = prevMessages.slice(0, -1).map((m) => ({
+      role: m.sender === 'student' ? 'user' : 'model',
+      parts: [{ text: m.text_content }],
+    }));
+
+    // Gemini AI dan bemor javobini olish (dynamic_scenario bilan)
+    const patientReply = await getPatientReply(conversation.dynamic_scenario, history, text);
+
+    // AI bemor javobini saqlash
+    await Message.create({
+      conversation_id: conversation.id,
+      sender: 'patient',
+      text_content: patientReply,
+    });
+
+    res.json({ reply: patientReply });
+  } catch (err) {
+    console.error('sendMessage xato:', err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ── POST /api/student/conversation/:id/finalize ─────────────
+// Suhbatni yakunlash va AI Feedback olish
+const finalizeConversation = async (req, res) => {
+  try {
+    const conversation = await Conversation.findByPk(req.params.id);
+    if (!conversation) return res.status(404).json({ error: 'Sessiya topilmadi' });
+    if (conversation.student_id !== req.user.id)
+      return res.status(403).json({ error: 'Ruxsat yo\'q' });
+
+    const messages = await Message.findAll({
+      where: { conversation_id: conversation.id },
+      order: [['created_at', 'ASC']],
+    });
+
+    if (messages.length < 2)
+      return res.status(400).json({ error: 'Baholash uchun kamida bitta xabar kerak' });
+
+    // Gemini AI Feedback
+    const feedback = await generateFeedback(messages);
+
+    // Natijalarni saqlash
+    await conversation.update({
+      status: 'completed',
+      grammar_score:       feedback.grammar_score       || 0,
+      vocabulary_score:    feedback.vocabulary_score    || 0,
+      fluency_score:       feedback.fluency_score       || 0,
+      pronunciation_score: feedback.pronunciation_score || 0,
+      clinical_score:      feedback.clinical_score      || 0,
+      overall_score:       feedback.overall_score       || 0,
+      general_feedback:    JSON.stringify(feedback),
+    });
+
+    res.json(feedback);
+  } catch (err) {
+    console.error('finalize xato:', err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ── GET /api/student/conversation/:id/feedback ──────────────
+const getFeedback = async (req, res) => {
+  try {
+    const conversation = await Conversation.findByPk(req.params.id);
+    if (!conversation) return res.status(404).json({ error: 'Sessiya topilmadi' });
+    if (conversation.student_id !== req.user.id)
+      return res.status(403).json({ error: 'Ruxsat yo\'q' });
+
+    const feedback = conversation.general_feedback
+      ? JSON.parse(conversation.general_feedback)
+      : null;
+
+    res.json({
+      grammar_score:       conversation.grammar_score,
+      vocabulary_score:    conversation.vocabulary_score,
+      fluency_score:       conversation.fluency_score,
+      pronunciation_score: conversation.pronunciation_score,
+      clinical_score:      conversation.clinical_score,
+      overall_score:       conversation.overall_score,
+      ...feedback,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ── GET /api/student/conversation/:id/messages ──────────────
+const getMessages = async (req, res) => {
+  try {
+    const conversation = await Conversation.findByPk(req.params.id);
+    if (!conversation) return res.status(404).json({ error: 'Sessiya topilmadi' });
+    if (conversation.student_id !== req.user.id)
+      return res.status(403).json({ error: 'Ruxsat yo\'q' });
+
+    const messages = await Message.findAll({
+      where: { conversation_id: req.params.id },
+      order: [['created_at', 'ASC']],
+    });
+    res.json(messages);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ── GET /api/student/modules/:id/tests ──────────────────────
+const getTests = async (req, res) => {
+  try {
+    const tests = await Test.findAll({
+      where: { module_id: req.params.id },
+      attributes: { exclude: ['correct_option'] }, // To'g'ri javobni yashirish
+      order: [['id', 'ASC']],
+    });
+    res.json(tests);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ── POST /api/student/modules/:id/tests/submit ──────────────
+const submitTest = async (req, res) => {
+  try {
+    const { answers } = req.body; // { questionId: 'A', ... }
+    const tests = await Test.findAll({ where: { module_id: req.params.id } });
+
+    let correct = 0;
+    const results = tests.map((t) => {
+      const isCorrect = answers[t.id] === t.correct_option;
+      if (isCorrect) correct++;
+      return {
+        question_id: t.id,
+        your_answer: answers[t.id],
+        correct_answer: t.correct_option,
+        is_correct: isCorrect,
+      };
+    });
+
+    const score = Math.round((correct / tests.length) * 100);
+
+    await TestResult.create({
+      student_id: req.user.id,
+      module_id: req.params.id,
+      score,
+    });
+
+    res.json({ score, correct, total: tests.length, results });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ── POST /api/student/grammar-check ─────────────────────────
+const grammarCheck = async (req, res) => {
+  try {
+    const { text } = req.body;
+    if (!text) return res.status(400).json({ error: 'Matn bo\'sh bo\'lishi mumkin emas' });
+
+    const result = await checkGrammar(text);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ── GET /api/student/dashboard ──────────────────────────────
+const getDashboard = async (req, res) => {
+  try {
+    const modules = await Module.findAll({
+      where: { specialty_id: req.user.specialty_id },
+      attributes: ['id', 'title', 'order_index'],
+    });
+
+    const completedModules = await TestResult.findAll({
+      where: { student_id: req.user.id },
+    });
+
+    const { Op } = require('sequelize');
+    const conversations = await Conversation.findAll({
+      where: { student_id: req.user.id, status: 'completed', overall_score: { [Op.gt]: 0 } },
+      order: [['created_at', 'DESC']],
+      limit: 5,
+      include: [{ model: Module, as: 'module', attributes: ['title'] }],
+    });
+
+    const avgScore = conversations.length
+      ? Math.round(conversations.reduce((s, c) => s + c.overall_score, 0) / conversations.length)
+      : 0;
+
+    res.json({
+      total_modules: modules.length,
+      completed_modules: completedModules.length,
+      progress_percent: modules.length
+        ? Math.round((completedModules.length / modules.length) * 100)
+        : 0,
+      average_score: avgScore,
+      recent_activity: conversations,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+module.exports = {
+  getModules, getModuleById, getVocabulary, getPhrasebook,
+  startConversation, sendMessage, finalizeConversation,
+  getFeedback, getMessages, getTests, submitTest,
+  grammarCheck, getDashboard,
+};
