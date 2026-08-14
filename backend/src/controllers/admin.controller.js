@@ -101,16 +101,35 @@ const deleteUser = async (req, res) => {
 
 // ── SPECIALTIES ──────────────────────────────────────────────
 const getSpecialties = async (req, res) => {
-  const s = await Specialty.findAll(); res.json(s);
+  try {
+    const s = await Specialty.findAll({
+      include: [
+        { model: StudentGroup, as: 'groups', attributes: ['id', 'name'] },
+      ],
+      order: [['name', 'ASC']],
+    });
+    res.json(s);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 const createSpecialty = async (req, res) => {
-  const { name } = req.body;
-  const s = await Specialty.create({ name });
-  res.status(201).json(s);
+  try {
+    const { name } = req.body;
+    if (!name) return res.status(400).json({ error: 'Mutaxassislik nomi majburiy' });
+    const s = await Specialty.create({ name });
+    res.status(201).json(s);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 const deleteSpecialty = async (req, res) => {
-  await Specialty.destroy({ where: { id: req.params.id } });
-  res.json({ message: 'O\'chirildi' });
+  try {
+    await Specialty.destroy({ where: { id: req.params.id } });
+    res.json({ message: 'O\'chirildi' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 const updateSpecialty = async (req, res) => {
   try {
@@ -123,34 +142,85 @@ const updateSpecialty = async (req, res) => {
 
 // ── GROUPS ───────────────────────────────────────────────────
 const getGroups = async (req, res) => {
-  const g = await StudentGroup.findAll(); res.json(g);
+  try {
+    const g = await StudentGroup.findAll({
+      include: [
+        { model: Specialty, as: 'specialty', attributes: ['id', 'name'] },
+        { model: User, as: 'teachers', attributes: ['id', 'full_name', 'email'], through: { attributes: [] } },
+        { model: User, as: 'students', attributes: ['id', 'full_name', 'email'], where: { role: 'student' }, required: false },
+      ],
+      order: [['name', 'ASC']],
+    });
+    res.json(g);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 const createGroup = async (req, res) => {
-  const { name } = req.body;
-  const g = await StudentGroup.create({ name });
-  res.status(201).json(g);
+  try {
+    const { name, specialty_id } = req.body;
+    if (!name) return res.status(400).json({ error: 'Guruh nomi majburiy' });
+    const g = await StudentGroup.create({ name, specialty_id: specialty_id || null });
+    res.status(201).json(g);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 const deleteGroup = async (req, res) => {
-  await StudentGroup.destroy({ where: { id: req.params.id } });
-  res.json({ message: 'O\'chirildi' });
+  try {
+    await StudentGroup.destroy({ where: { id: req.params.id } });
+    res.json({ message: 'O\'chirildi' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 const updateGroup = async (req, res) => {
   try {
     const g = await StudentGroup.findByPk(req.params.id);
     if (!g) return res.status(404).json({ error: 'Topilmadi' });
-    await g.update({ name: req.body.name });
+    const { name, specialty_id } = req.body;
+    await g.update({
+      name: name || g.name,
+      specialty_id: specialty_id !== undefined ? specialty_id : g.specialty_id,
+    });
     res.json(g);
   } catch (err) { res.status(500).json({ error: err.message }); }
 };
 
-// ── Assign teacher to group ───────────────────────────────────
+// ── Teacher-Group Biriktirish / Olib tashlash ──────────────────
 const assignTeacherGroup = async (req, res) => {
   try {
     const { teacher_id, group_id } = req.body;
+    if (!teacher_id || !group_id) return res.status(400).json({ error: 'teacher_id va group_id majburiy' });
     const existing = await TeacherGroup.findOne({ where: { teacher_id, group_id } });
     if (existing) return res.status(400).json({ error: 'Allaqachon biriktirilgan' });
     const tg = await TeacherGroup.create({ teacher_id, group_id });
     res.status(201).json(tg);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+const removeTeacherGroup = async (req, res) => {
+  try {
+    const { teacher_id, group_id } = req.body;
+    await TeacherGroup.destroy({ where: { teacher_id, group_id } });
+    res.json({ message: 'Biriktiruv bekor qilindi' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+const assignStudentGroup = async (req, res) => {
+  try {
+    const { student_id, group_id, specialty_id } = req.body;
+    const student = await User.findOne({ where: { id: student_id, role: 'student' } });
+    if (!student) return res.status(404).json({ error: 'Talaba topilmadi' });
+    const updates = {};
+    if (group_id !== undefined) updates.group_id = group_id;
+    if (specialty_id !== undefined) updates.specialty_id = specialty_id;
+    await student.update(updates);
+    res.json({ message: 'Talaba biriktirildi', student });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -253,7 +323,7 @@ module.exports = {
   getOverview,
   getUsers, createUser, updateUser, deleteUser,
   getSpecialties, createSpecialty, updateSpecialty, deleteSpecialty,
-  getGroups, createGroup, updateGroup, deleteGroup, assignTeacherGroup,
+  getGroups, createGroup, updateGroup, deleteGroup, assignTeacherGroup, removeTeacherGroup, assignStudentGroup,
   getModules, createModule, updateModule, deleteModule,
   getVocabulary, createVocabulary, updateVocabulary, deleteVocabulary,
   getPhrasebook, createPhrase, updatePhrase, deletePhrase,

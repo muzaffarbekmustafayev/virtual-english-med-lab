@@ -1,5 +1,80 @@
-const { Module, Vocabulary, Phrasebook, Conversation, Message, Test, TestResult, User } = require('../models');
+const { Module, Vocabulary, Phrasebook, Conversation, Message, Test, TestResult, User, ModuleResult } = require('../models');
 const { getPatientReply, generateFeedback, checkGrammar, generatePatientScenario } = require('../services/gemini.service');
+
+// Modul natijalarini har safar qayta hisoblab saqlash
+const recalculateAndSaveModuleResult = async (studentId, moduleId) => {
+  try {
+    const convs = await Conversation.findAll({
+      where: { student_id: studentId, module_id: moduleId, status: 'completed' }
+    });
+    const tests = await TestResult.findAll({
+      where: { student_id: studentId, module_id: moduleId }
+    });
+
+    const attemptsCount = convs.length + tests.length;
+
+    let bestChatScore = 0;
+    let bestGrammar = 0;
+    let bestVocab = 0;
+    let bestFluency = 0;
+    let bestPron = 0;
+    let bestClinical = 0;
+
+    convs.forEach(c => {
+      if (c.overall_score > bestChatScore) bestChatScore = c.overall_score;
+      if (c.grammar_score > bestGrammar) bestGrammar = c.grammar_score;
+      if (c.vocabulary_score > bestVocab) bestVocab = c.vocabulary_score;
+      if (c.fluency_score > bestFluency) bestFluency = c.fluency_score;
+      if (c.pronunciation_score > bestPron) bestPron = c.pronunciation_score;
+      if (c.clinical_score > bestClinical) bestClinical = c.clinical_score;
+    });
+
+    let bestQuizScore = 0;
+    tests.forEach(t => {
+      if (t.score > bestQuizScore) bestQuizScore = t.score;
+    });
+
+    const hasChat = convs.length > 0;
+    const hasQuiz = tests.length > 0;
+    let combinedScore = 0;
+    if (hasChat && hasQuiz) {
+      combinedScore = Math.round((bestChatScore + bestQuizScore) / 2);
+    } else if (hasChat) {
+      combinedScore = bestChatScore;
+    } else if (hasQuiz) {
+      combinedScore = bestQuizScore;
+    }
+
+    const isCompleted = (bestChatScore >= 60 && bestQuizScore >= 60) || combinedScore >= 70;
+
+    let [modRes] = await ModuleResult.findOrCreate({
+      where: { student_id: studentId, module_id: moduleId },
+      defaults: {
+        student_id: studentId,
+        module_id: moduleId
+      }
+    });
+
+    await modRes.update({
+      best_chat_score: bestChatScore,
+      best_quiz_score: bestQuizScore,
+      combined_score: combinedScore,
+      best_grammar: bestGrammar,
+      best_vocab: bestVocab,
+      best_fluency: bestFluency,
+      best_pronunciation: bestPron,
+      best_clinical: bestClinical,
+      attempts_count: attemptsCount,
+      is_completed: isCompleted,
+      last_attempt_at: new Date()
+    });
+
+    return modRes;
+  } catch (err) {
+    console.error('recalculateAndSaveModuleResult error:', err);
+  }
+};
+
 
 // ── GET /api/student/modules ─────────────────────────────────
 // Talabaning mutaxassisligiga mos modullar
@@ -11,7 +86,7 @@ const getModules = async (req, res) => {
       attributes: ['id', 'title', 'description', 'order_index'],
     });
 
-    let prevAvgScore = 100; // Birinchi modul doim ochiq bo'lishi uchun
+    let prevPassed = true; // 1-modul har doim ochiq bo'ladi
 
     const results = [];
     
@@ -30,8 +105,9 @@ const getModules = async (req, res) => {
       const hasAnyScore = !!(testResult || conv);
       const avg_score = hasAnyScore ? Math.round((testScore + chatScore) / 2) : null;
 
-      const is_unlocked = prevAvgScore >= 60;
-      const is_completed = testScore >= 60 && chatScore >= 60; // Har bir bo'limdan kamida 60% olingan bo'lsa yakunlangan hisoblanadi
+      // 60% dan oshsa yakunlangan hisoblanadi
+      const is_completed = testScore >= 60 && chatScore >= 60;
+      const is_unlocked = prevPassed;
       
       results.push({
         ...m.toJSON(),
@@ -40,7 +116,8 @@ const getModules = async (req, res) => {
         is_unlocked: is_unlocked
       });
       
-      prevAvgScore = avg_score !== null ? avg_score : 0;
+      // Keyingi modul faqat ushbu modul kamida 60% bilan yakunlanganda ochiladi
+      prevPassed = is_completed && (avg_score !== null && avg_score >= 60);
     }
 
     res.json(results);
@@ -82,6 +159,10 @@ const getModuleProgress = async (req, res) => {
       } catch(e) {}
     }
 
+    const moduleResult = await ModuleResult.findOne({
+      where: { student_id: req.user.id, module_id: req.params.id }
+    });
+
     res.json({
       last_conversation: lastConversation ? {
         id: lastConversation.id,
@@ -96,7 +177,8 @@ const getModuleProgress = async (req, res) => {
       } : null,
       test_result: testResult ? {
         score: testResult.score
-      } : null
+      } : null,
+      module_result: moduleResult || null
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -260,6 +342,9 @@ const finalizeConversation = async (req, res) => {
       general_feedback:    JSON.stringify(feedback),
     });
 
+    // Modul yakuniy natijasini saqlash va yangilash
+    await recalculateAndSaveModuleResult(conversation.student_id, conversation.module_id);
+
     res.json(feedback);
   } catch (err) {
     console.error('finalize xato:', err);
@@ -354,6 +439,9 @@ const submitTest = async (req, res) => {
       results
     });
 
+    // Modul yakuniy natijasini saqlash va yangilash
+    await recalculateAndSaveModuleResult(req.user.id, req.params.id);
+
     res.json({ score, correct, total: tests.length, results });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -363,10 +451,10 @@ const submitTest = async (req, res) => {
 // ── POST /api/student/grammar-check ─────────────────────────
 const grammarCheck = async (req, res) => {
   try {
-    const { text } = req.body;
+    const { text, mode } = req.body;
     if (!text) return res.status(400).json({ error: 'Matn bo\'sh bo\'lishi mumkin emas' });
 
-    const result = await checkGrammar(text);
+    const result = await checkGrammar(text, mode || 'clinical');
     res.json(result);
   } catch (err) {
     res.status(500).json({ error: err.message });

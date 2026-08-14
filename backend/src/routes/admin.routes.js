@@ -19,12 +19,14 @@ router.post('/specialties',              isAdmin, c.createSpecialty);
 router.put('/specialties/:id',           isAdmin, c.updateSpecialty);
 router.delete('/specialties/:id',        isAdmin, c.deleteSpecialty);
 
-// Groups
+// Groups & Assignments
 router.get('/groups',                    isAdmin, c.getGroups);
 router.post('/groups',                   isAdmin, c.createGroup);
 router.put('/groups/:id',                isAdmin, c.updateGroup);
 router.delete('/groups/:id',             isAdmin, c.deleteGroup);
 router.post('/teacher-groups',           isAdmin, c.assignTeacherGroup);
+router.delete('/teacher-groups',         isAdmin, c.removeTeacherGroup);
+router.post('/student-groups',           isAdmin, c.assignStudentGroup);
 
 // Modules
 router.get('/modules',                   isAdmin, c.getModules);

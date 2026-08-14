@@ -9,6 +9,7 @@ const isAuthenticated  = [authenticate];
 // Teacher routes
 router.get('/dashboard',                         isTeacherOrAdmin, c.getDashboard);
 router.get('/groups',                            isTeacherOrAdmin, c.getGroups);
+router.get('/reports',                           isTeacherOrAdmin, c.getReports);
 router.get('/groups/:groupId/students',          isTeacherOrAdmin, c.getGroupStudents);
 router.get('/students/:studentId/progress',      isTeacherOrAdmin, c.getStudentProgress);
 router.get('/conversations/:id/transcript',      isTeacherOrAdmin, c.getTranscript);

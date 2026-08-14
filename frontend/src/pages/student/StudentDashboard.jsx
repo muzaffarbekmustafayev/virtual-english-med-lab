@@ -50,8 +50,7 @@ export default function StudentDashboard() {
       ) : data && (
         <>
           {/* ── Stat cards ──────────────────────────────────── */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 16, marginBottom: 28 }}
-               className="lg:grid-cols-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-7">
             {STAT_DEFS(data).map((s, i) => {
               const Icon = s.icon;
               return (

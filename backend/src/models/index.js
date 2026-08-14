@@ -11,6 +11,7 @@ const Message      = require('./Message');
 const Test         = require('./Test');
 const TestResult   = require('./TestResult');
 const ForumMessage = require('./ForumMessage');
+const ModuleResult = require('./ModuleResult');
 
 // ── Associations (Foreign Key relationships) ─────────────────
 
@@ -18,7 +19,11 @@ const ForumMessage = require('./ForumMessage');
 User.belongsTo(Specialty,    { foreignKey: 'specialty_id', as: 'specialty' });
 User.belongsTo(StudentGroup, { foreignKey: 'group_id',     as: 'group'     });
 Specialty.hasMany(User,      { foreignKey: 'specialty_id'                  });
-StudentGroup.hasMany(User,   { foreignKey: 'group_id'                      });
+StudentGroup.hasMany(User,   { foreignKey: 'group_id',     as: 'students'  });
+
+// StudentGroup ↔ Specialty
+StudentGroup.belongsTo(Specialty, { foreignKey: 'specialty_id', as: 'specialty' });
+Specialty.hasMany(StudentGroup,   { foreignKey: 'specialty_id', as: 'groups'    });
 
 // TeacherGroup (pivot)
 User.belongsToMany(StudentGroup, { through: TeacherGroup, foreignKey: 'teacher_id', as: 'teacherGroups' });
@@ -61,6 +66,12 @@ ForumMessage.belongsTo(User,         { foreignKey: 'sender_id',   as: 'sender' }
 ForumMessage.belongsTo(ForumMessage, { foreignKey: 'reply_to_id', as: 'parent' });
 User.hasMany(ForumMessage,           { foreignKey: 'sender_id'                });
 
+// ModuleResult ↔ User + Module
+ModuleResult.belongsTo(User,   { foreignKey: 'student_id', as: 'student' });
+ModuleResult.belongsTo(Module, { foreignKey: 'module_id',  as: 'module'  });
+User.hasMany(ModuleResult,     { foreignKey: 'student_id', as: 'moduleResults' });
+Module.hasMany(ModuleResult,   { foreignKey: 'module_id',  as: 'moduleResults' });
+
 // ── Exports ──────────────────────────────────────────────────
 module.exports = {
   Specialty,
@@ -75,4 +86,6 @@ module.exports = {
   Test,
   TestResult,
   ForumMessage,
+  ModuleResult,
 };
+

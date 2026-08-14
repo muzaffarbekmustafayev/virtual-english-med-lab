@@ -229,12 +229,9 @@ export default function ModuleDetailPage() {
       setFeedback(res.data);
       setBestFeedback(prev => (!prev || res.data.overall_score > prev.overall_score) ? res.data : prev);
       if (res.data.overall_score >= 60) {
-        setCompletedSteps(prev => {
-          const newSteps = [...new Set([...prev, 5])];
-          return newSteps;
-        });
+        setCompletedSteps(prev => [...new Set([...prev, 5])]);
+        setStep(6);
       }
-      setStep(6);
     } catch (err) {
       alert(err.response?.data?.error || 'Xatolik');
     } finally {
@@ -627,7 +624,7 @@ export default function ModuleDetailPage() {
             <span className="text-xs text-gray-500 font-normal">— 20 daqiqa</span>
           </h2>
           
-          {!feedback && (
+          {!feedback ? (
             <div className="mb-6 animate-fade-in relative">
               <div className="absolute -top-10 right-0">
                 <button onClick={() => finishConversation(true)}
@@ -647,6 +644,53 @@ export default function ModuleDetailPage() {
                 onFinish={() => finishConversation(false)}
               />
             </div>
+          ) : (
+            <div className="bg-white border border-gray-200 shadow-sm rounded-2xl p-6 mb-6">
+              <div className="text-center mb-6">
+                <div className={`text-5xl font-black mb-2 ${feedback.overall_score >= 60 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                  {feedback.overall_score}%
+                </div>
+                <p className={`text-sm font-semibold ${feedback.overall_score >= 60 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                  {feedback.overall_score >= 60 
+                    ? 'Muvaffaqiyatli! Keyingi bosqich ochildi.' 
+                    : 'Natija 60% dan past. Keyingi bosqichga o\'tish uchun kamida 60% to\'plashingiz kerak.'}
+                </p>
+              </div>
+
+              {/* Mezonlar */}
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-6">
+                {Object.entries(SCORE_LABELS).map(([key, label]) => (
+                  <div key={key} className="bg-gray-50 rounded-xl p-3 text-center border border-gray-100">
+                    <p className="text-xs text-gray-500 font-medium">{label}</p>
+                    <p className="text-lg font-bold text-gray-900">{feedback[key] || 0}/10</p>
+                  </div>
+                ))}
+              </div>
+
+              {feedback.general_feedback && (
+                <div className="bg-indigo-50 border border-indigo-100 rounded-xl p-4 mb-4 text-sm text-indigo-900 leading-relaxed">
+                  <span className="font-bold flex items-center gap-1 mb-1"><RiLightbulbLine /> AI Tavsiyasi:</span>
+                  {feedback.general_feedback}
+                </div>
+              )}
+
+              <div className="flex justify-center gap-3 mt-4">
+                <button 
+                  onClick={() => { setConvId(null); setFeedback(null); }}
+                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold transition"
+                >
+                  <RiRepeatLine /> Suhbatni qayta urinish
+                </button>
+                {feedback.overall_score >= 60 && (
+                  <button 
+                    onClick={() => completeAndGoNext(6)}
+                    className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition"
+                  >
+                    Umumiy Natijani Ko'rish <RiArrowRightLine />
+                  </button>
+                )}
+              </div>
+            </div>
           )}
 
           {actionLoading && !feedback && convId && (
@@ -660,7 +704,7 @@ export default function ModuleDetailPage() {
             <button onClick={() => setStep(4)} className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-gray-300 text-gray-700 text-sm hover:bg-gray-50 transition-colors">
               <RiArrowLeftLine /> Orqaga
             </button>
-            {bestFeedback && bestFeedback.overall_score >= 60 && (
+            {bestFeedback && bestFeedback.overall_score >= 60 && !feedback && (
               <button onClick={() => completeAndGoNext(6)}
                 className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold text-sm hover:shadow-lg transition-all ml-auto">
                 Umumiy Natijani Ko'rish <RiArrowRightLine />

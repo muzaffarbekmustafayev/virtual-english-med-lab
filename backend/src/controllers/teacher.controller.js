@@ -1,6 +1,6 @@
 const {
   User, StudentGroup, TeacherGroup, Module,
-  Conversation, Message, TestResult, ForumMessage
+  Conversation, Message, TestResult, ForumMessage, ModuleResult
 } = require('../models');
 const { Op } = require('sequelize');
 
@@ -115,7 +115,12 @@ const getStudentProgress = async (req, res) => {
       where: { student_id: req.params.studentId },
     });
 
-    res.json({ student, conversations, testResults });
+    const moduleResults = await ModuleResult.findAll({
+      where: { student_id: req.params.studentId },
+      include: [{ model: Module, as: 'module', attributes: ['id', 'title', 'order_index'] }]
+    });
+
+    res.json({ student, conversations, testResults, moduleResults });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -241,8 +246,131 @@ const togglePinMessage = async (req, res) => {
   }
 };
 
+// ── GET /api/teacher/reports ─────────────────────────────────
+const getReports = async (req, res) => {
+  try {
+    const { group_id, module_id, search } = req.query;
+
+    let groupIds = [];
+    if (req.user.role === 'admin') {
+      const allGroups = await StudentGroup.findAll();
+      groupIds = allGroups.map(g => g.id);
+    } else {
+      const links = await TeacherGroup.findAll({ where: { teacher_id: req.user.id } });
+      groupIds = links.map(l => l.group_id);
+    }
+
+    const availableGroups = await StudentGroup.findAll({
+      where: { id: { [Op.in]: groupIds } },
+      attributes: ['id', 'name']
+    });
+    const availableModules = await Module.findAll({
+      attributes: ['id', 'title', 'order_index'],
+      order: [['order_index', 'ASC']]
+    });
+
+    let targetGroupIds = groupIds;
+    if (group_id && group_id !== 'all') {
+      targetGroupIds = [parseInt(group_id)];
+    }
+
+    const userWhere = {
+      role: 'student',
+      group_id: { [Op.in]: targetGroupIds }
+    };
+
+    if (search) {
+      userWhere.full_name = { [Op.like]: `%${search}%` };
+    }
+
+    const students = await User.findAll({
+      where: userWhere,
+      include: [{ model: StudentGroup, as: 'group', attributes: ['id', 'name'] }],
+      attributes: ['id', 'full_name', 'email', 'current_level', 'created_at']
+    });
+
+    const reportRows = await Promise.all(
+      students.map(async (s) => {
+        const convWhere = { student_id: s.id, status: 'completed' };
+        if (module_id && module_id !== 'all') {
+          convWhere.module_id = parseInt(module_id);
+        }
+
+        const convs = await Conversation.findAll({ where: convWhere });
+        const testWhere = { student_id: s.id };
+        if (module_id && module_id !== 'all') {
+          testWhere.module_id = parseInt(module_id);
+        }
+        const testResults = await TestResult.findAll({ where: testWhere });
+
+        const count = convs.length;
+        const avgGrammar = count ? Math.round(convs.reduce((a, b) => a + (b.grammar_score || 0), 0) / count) : 0;
+        const avgVocab = count ? Math.round(convs.reduce((a, b) => a + (b.vocabulary_score || 0), 0) / count) : 0;
+        const avgFluency = count ? Math.round(convs.reduce((a, b) => a + (b.fluency_score || 0), 0) / count) : 0;
+        const avgPron = count ? Math.round(convs.reduce((a, b) => a + (b.pronunciation_score || 0), 0) / count) : 0;
+        const avgClinical = count ? Math.round(convs.reduce((a, b) => a + (b.clinical_score || 0), 0) / count) : 0;
+        const avgOverall = count ? Math.round(convs.reduce((a, b) => a + (b.overall_score || 0), 0) / count) : 0;
+
+        const quizAvg = testResults.length
+          ? Math.round(testResults.reduce((a, b) => a + (b.score || 0), 0) / testResults.length)
+          : 0;
+
+        const lastConv = convs.length
+          ? convs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0]
+          : null;
+
+        return {
+          student_id: s.id,
+          full_name: s.full_name,
+          email: s.email,
+          group_name: s.group ? s.group.name : '—',
+          completed_sessions: count,
+          quiz_score: quizAvg,
+          grammar_score: avgGrammar,
+          vocab_score: avgVocab,
+          fluency_score: avgFluency,
+          pron_score: avgPron,
+          clinical_score: avgClinical,
+          overall_score: avgOverall,
+          last_activity: lastConv ? lastConv.created_at : s.created_at
+        };
+      })
+    );
+
+    const totalStudents = reportRows.length;
+    const overallAvg = totalStudents
+      ? Math.round(reportRows.reduce((a, b) => a + b.overall_score, 0) / totalStudents)
+      : 0;
+    const grammarAvg = totalStudents
+      ? Math.round(reportRows.reduce((a, b) => a + b.grammar_score, 0) / totalStudents)
+      : 0;
+    const vocabAvg = totalStudents
+      ? Math.round(reportRows.reduce((a, b) => a + b.vocab_score, 0) / totalStudents)
+      : 0;
+    const clinicalAvg = totalStudents
+      ? Math.round(reportRows.reduce((a, b) => a + b.clinical_score, 0) / totalStudents)
+      : 0;
+
+    res.json({
+      groups: availableGroups,
+      modules: availableModules,
+      summary: {
+        total_students: totalStudents,
+        average_overall: overallAvg,
+        average_grammar: grammarAvg,
+        average_vocab: vocabAvg,
+        average_clinical: clinicalAvg,
+      },
+      reports: reportRows
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 module.exports = {
   getDashboard, getGroups, getGroupStudents,
   getStudentProgress, getTranscript,
   getForumMessages, postForumMessage, togglePinMessage,
+  getReports,
 };

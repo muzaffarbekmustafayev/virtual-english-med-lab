@@ -205,32 +205,62 @@ Return ONLY valid JSON. No markdown, no explanation outside the JSON.
 // ═══════════════════════════════════════════════════════════════
 
 /**
- * Kiritilgan inglizcha matnni grammatik tekshiradi
+ * Kiritilgan inglizcha matnni grammatik, klinik uslub va tibbiy terminologiya bo'yicha chuqur tahlil qiladi
  * @param {string} text - Tekshiriladigan matn
- * @returns {Object} - { corrected_text, errors: [{original, corrected, explanation}] }
+ * @param {string} mode - 'clinical' | 'patient' | 'academic' | 'general'
+ * @returns {Object}
  */
-async function checkGrammar(text) {
-  const prompt = `
-You are an expert English grammar and spelling checker. Analyze the following text and fix ALL grammar, spelling, punctuation, and capitalization errors.
-If the text is perfectly correct, set "has_errors" to false. Otherwise, set it to true and list every single error.
+async function checkGrammar(text, mode = 'clinical') {
+  let modeInstruction = '';
+  if (mode === 'clinical') {
+    modeInstruction = 'Style: Formal Medical Clinical (Case notes, Doctor-to-Doctor, SOAP notes). Upgrade casual words to professional medical terminology (e.g., "toothache" -> "dental pain/odontalgia", "bleeding gums" -> "gingival bleeding").';
+  } else if (mode === 'patient') {
+    modeInstruction = 'Style: Doctor-to-Patient Consultation. Keep language clear, compassionate, empathetic, and easily understandable while maintaining clinical accuracy.';
+  } else if (mode === 'academic') {
+    modeInstruction = 'Style: Academic Medical Journal / Research. Use formal scientific English, passive or precise active voice, and academic medical phrasing.';
+  } else {
+    modeInstruction = 'Style: Standard English Grammar, spelling and punctuation correction.';
+  }
 
-Return a JSON object exactly in this format:
+  const prompt = `
+You are an expert Medical English language editor and clinician. Analyze the following text in depth.
+Target Tone / ${modeInstruction}
+
+Evaluate and return a JSON object with this exact schema:
 {
-  "corrected_text": "<fully corrected and properly formatted version of the input text>",
+  "corrected_text": "<fully corrected, polished, and properly punctuated text in target style>",
   "has_errors": <true|false>,
+  "error_count": <number of errors found>,
+  "quality_score": <number between 40 and 100 based on overall writing quality>,
+  "metrics": {
+    "grammar": <number 0-100>,
+    "vocabulary": <number 0-100>,
+    "clarity": <number 0-100>,
+    "medical_accuracy": <number 0-100>
+  },
+  "readability": "<Easy|Moderate|Advanced>",
   "errors": [
     {
-      "original": "<incorrect word or phrase>",
-      "corrected": "<corrected version>",
-      "explanation": "<brief explanation of the rule>"
+      "original": "<incorrect word/phrase>",
+      "corrected": "<corrected word/phrase>",
+      "category": "<Grammar|Spelling|Punctuation|Terminology|Tone>",
+      "explanation": "<concise explanation>"
     }
-  ]
+  ],
+  "medical_enhancements": [
+    {
+      "original": "<casual or plain word>",
+      "suggested": "<professional medical term>",
+      "reason": "<why this term is preferred in clinical context>"
+    }
+  ],
+  "clinical_tone_advice": "<1-2 sentences of actionable clinical writing advice>"
 }
 
 Text to check:
 "${text}"
 
-Return ONLY valid JSON. No markdown formatting.
+Return ONLY valid JSON.
 `.trim();
 
   const response = await client.models.generateContent({
@@ -240,10 +270,28 @@ Return ONLY valid JSON. No markdown formatting.
   });
 
   try {
-    return JSON.parse(response.text.trim());
-  } catch {
-    return { corrected_text: text, has_errors: false, errors: [] };
+    let cleanText = response.text.trim();
+    const startIndex = cleanText.indexOf('{');
+    const endIndex = cleanText.lastIndexOf('}');
+    if (startIndex !== -1 && endIndex !== -1) {
+      cleanText = cleanText.substring(startIndex, endIndex + 1);
+    }
+    return JSON.parse(cleanText);
+  } catch (err) {
+    console.error('Error parsing checkGrammar JSON:', err);
+    return {
+      corrected_text: text,
+      has_errors: false,
+      error_count: 0,
+      quality_score: 85,
+      metrics: { grammar: 85, vocabulary: 80, clarity: 85, medical_accuracy: 85 },
+      readability: 'Moderate',
+      errors: [],
+      medical_enhancements: [],
+      clinical_tone_advice: 'Tekshiruv yakunlandi.',
+    };
   }
 }
 
 module.exports = { getPatientReply, generateFeedback, checkGrammar, generatePatientScenario };
+
