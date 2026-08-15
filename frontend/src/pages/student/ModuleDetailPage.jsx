@@ -201,11 +201,14 @@ export default function ModuleDetailPage() {
   const handleFinishChat = async () => {
     try {
       const res = await api.post(`/student/conversations/${conversation?.id}/complete`);
-      setFeedback(res.data.evaluation);
-      setOverallResult(res.data.evaluation);
+      const evalData = res.data?.evaluation || res.data;
+      setFeedback(evalData);
+      setOverallResult(evalData);
       completeAndGoNext(7);
+      toast.success(t('chat_eval_report') || 'Klinik baholash hisoboti tayyorlandi!');
     } catch (err) {
       console.error('Complete chat err:', err);
+      toast.error('Baholashni olishda xatolik yuz berdi');
     }
   };
 
@@ -1219,7 +1222,7 @@ export default function ModuleDetailPage() {
                       onClick={() => navigate(`/student/modules/${Number(id) + 1}`)}
                       className="px-6 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs shadow-md shadow-emerald-200 transition-all flex items-center gap-2 cursor-pointer"
                     >
-                      <span>{t('results_next_module_btn')}: #{Number(id) + 1}</span>
+                      <span>{String(t('results_next_module_btn') || 'Keyingi modul').replace(/#\{id\}/g, '').trim()} #{Number(id) + 1}</span>
                       <RiArrowRightLine />
                     </button>
                   ) : (

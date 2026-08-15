@@ -303,17 +303,43 @@ const getReports = async (req, res) => {
         }
         const testResults = await TestResult.findAll({ where: testWhere });
 
-        const count = convs.length;
-        const avgGrammar = count ? Math.round(convs.reduce((a, b) => a + (b.grammar_score || 0), 0) / count) : 0;
-        const avgVocab = count ? Math.round(convs.reduce((a, b) => a + (b.vocabulary_score || 0), 0) / count) : 0;
-        const avgFluency = count ? Math.round(convs.reduce((a, b) => a + (b.fluency_score || 0), 0) / count) : 0;
-        const avgPron = count ? Math.round(convs.reduce((a, b) => a + (b.pronunciation_score || 0), 0) / count) : 0;
-        const avgClinical = count ? Math.round(convs.reduce((a, b) => a + (b.clinical_score || 0), 0) / count) : 0;
-        const avgOverall = count ? Math.round(convs.reduce((a, b) => a + (b.overall_score || 0), 0) / count) : 0;
+        const modResWhere = { student_id: s.id };
+        if (module_id && module_id !== 'all') {
+          modResWhere.module_id = parseInt(module_id);
+        }
+        const moduleResults = await ModuleResult.findAll({ where: modResWhere });
 
-        const quizAvg = testResults.length
-          ? Math.round(testResults.reduce((a, b) => a + (b.score || 0), 0) / testResults.length)
-          : 0;
+        const count = Math.max(convs.length, moduleResults.length);
+        
+        let avgGrammar = 0;
+        let avgVocab = 0;
+        let avgFluency = 0;
+        let avgPron = 0;
+        let avgClinical = 0;
+        let avgOverall = 0;
+        let quizAvg = 0;
+
+        if (convs.length > 0) {
+          avgGrammar = Math.round(convs.reduce((a, b) => a + (b.grammar_score || 0), 0) / convs.length);
+          avgVocab = Math.round(convs.reduce((a, b) => a + (b.vocabulary_score || 0), 0) / convs.length);
+          avgFluency = Math.round(convs.reduce((a, b) => a + (b.fluency_score || 0), 0) / convs.length);
+          avgPron = Math.round(convs.reduce((a, b) => a + (b.pronunciation_score || 0), 0) / convs.length);
+          avgClinical = Math.round(convs.reduce((a, b) => a + (b.clinical_score || 0), 0) / convs.length);
+          avgOverall = Math.round(convs.reduce((a, b) => a + (b.overall_score || 0), 0) / convs.length);
+        } else if (moduleResults.length > 0) {
+          avgGrammar = Math.round(moduleResults.reduce((a, b) => a + (b.best_grammar || 0), 0) / moduleResults.length);
+          avgVocab = Math.round(moduleResults.reduce((a, b) => a + (b.best_vocab || 0), 0) / moduleResults.length);
+          avgFluency = Math.round(moduleResults.reduce((a, b) => a + (b.best_fluency || 0), 0) / moduleResults.length);
+          avgPron = Math.round(moduleResults.reduce((a, b) => a + (b.best_pronunciation || 0), 0) / moduleResults.length);
+          avgClinical = Math.round(moduleResults.reduce((a, b) => a + (b.best_clinical || 0), 0) / moduleResults.length);
+          avgOverall = Math.round(moduleResults.reduce((a, b) => a + (b.combined_score || b.best_chat_score || 0), 0) / moduleResults.length);
+        }
+
+        if (testResults.length > 0) {
+          quizAvg = Math.round(testResults.reduce((a, b) => a + (b.score || 0), 0) / testResults.length);
+        } else if (moduleResults.length > 0) {
+          quizAvg = Math.round(moduleResults.reduce((a, b) => a + (b.best_quiz_score || 0), 0) / moduleResults.length);
+        }
 
         const lastConv = convs.length
           ? convs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0]

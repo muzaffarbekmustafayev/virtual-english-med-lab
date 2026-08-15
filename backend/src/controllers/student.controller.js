@@ -211,6 +211,26 @@ const getModuleProgress = async (req, res) => {
     });
     if (next) nextModule = { id: next.id, title: next.title, order_index: next.order_index };
 
+    const evaluationObj = lastConversation ? {
+      score: lastConversation.overall_score || 0,
+      passed: (lastConversation.overall_score || 0) >= 60,
+      feedback: parsedFeedback.general_feedback || 'Klinik muloqot muvaffaqiyatli yakunlandi.',
+      details: {
+        grammar: lastConversation.grammar_score || 8,
+        vocabulary: lastConversation.vocabulary_score || 8,
+        fluency: lastConversation.fluency_score || 8,
+        pronunciation: lastConversation.pronunciation_score || 8,
+        clinical: lastConversation.clinical_score || 8,
+        target_vocab_used: parsedFeedback.target_vocab_used || [],
+        target_phrases_used: parsedFeedback.target_phrases_used || [],
+        errors: (parsedFeedback.errors || []).map(err => ({
+          original: err.original || err.incorrect || '',
+          correction: err.corrected || err.correction || '',
+          explanation: err.explanation || ''
+        }))
+      }
+    } : null;
+
     res.json({
       last_conversation: lastConversation ? {
         id: lastConversation.id,
@@ -223,10 +243,12 @@ const getModuleProgress = async (req, res) => {
         general_feedback: parsedFeedback.general_feedback || '',
         errors: parsedFeedback.errors || []
       } : null,
+      evaluation: evaluationObj,
       test_result: testResult ? {
         score: testResult.score,
         correct: testResult.correct,
-        total: testResult.total
+        total: testResult.total,
+        passed: (testResult.score || 0) >= 60
       } : null,
       module_result: moduleResult || null,
       next_module: nextModule
@@ -317,8 +339,8 @@ const startConversation = async (req, res) => {
 // Talabaning xabarini qabul qilib, Gemini AI bemor javobini qaytarish
 const sendMessage = async (req, res) => {
   try {
-    const { text } = req.body;
-    if (!text) return res.status(400).json({ error: 'Xabar matni bo\'sh bo\'lishi mumkin emas' });
+    const text = req.body.text || req.body.message || req.body.content || '';
+    if (!text.trim()) return res.status(400).json({ error: 'Xabar matni bo\'sh bo\'lishi mumkin emas' });
 
     const conversation = await Conversation.findByPk(req.params.id, {
       include: [{ model: Module, as: 'module' }],
@@ -333,7 +355,7 @@ const sendMessage = async (req, res) => {
     await Message.create({
       conversation_id: conversation.id,
       sender: 'student',
-      text_content: text,
+      text_content: text.trim(),
     });
 
     // Suhbat tarixini Gemini uchun shakllantirish
@@ -349,7 +371,7 @@ const sendMessage = async (req, res) => {
     }));
 
     // Gemini AI dan bemor javobini olish (dynamic_scenario bilan)
-    const patientReply = await getPatientReply(conversation.dynamic_scenario, history, text);
+    const patientReply = await getPatientReply(conversation.dynamic_scenario, history, text.trim());
 
     // AI bemor javobini saqlash
     await Message.create({
@@ -358,7 +380,7 @@ const sendMessage = async (req, res) => {
       text_content: patientReply,
     });
 
-    res.json({ reply: patientReply });
+    res.json({ reply: patientReply, message: patientReply });
   } catch (err) {
     console.error('sendMessage xato:', err);
     res.status(500).json({ error: err.message });
@@ -422,7 +444,33 @@ const finalizeConversation = async (req, res) => {
     // Modul yakuniy natijasini saqlash va yangilash
     await recalculateAndSaveModuleResult(conversation.student_id, conversation.module_id);
 
-    res.json(feedback);
+    const evaluationUnified = {
+      score: feedback.overall_score || 0,
+      passed: (feedback.overall_score || 0) >= 60,
+      feedback: feedback.general_feedback || 'Klinik muloqot muvaffaqiyatli yakunlandi.',
+      details: {
+        grammar: feedback.grammar_score || 8,
+        vocabulary: feedback.vocabulary_score || 8,
+        fluency: feedback.fluency_score || 8,
+        pronunciation: feedback.pronunciation_score || 8,
+        clinical: feedback.clinical_score || 8,
+        target_vocab_used: feedback.target_vocab_used || [],
+        target_phrases_used: feedback.target_phrases_used || [],
+        errors: (feedback.errors || []).map(err => ({
+          original: err.original || err.incorrect || '',
+          correction: err.corrected || err.correction || '',
+          explanation: err.explanation || ''
+        }))
+      }
+    };
+
+    res.json({
+      ...feedback,
+      evaluation: evaluationUnified,
+      details: evaluationUnified.details,
+      score: evaluationUnified.score,
+      passed: evaluationUnified.passed
+    });
   } catch (err) {
     console.error('finalize xato:', err);
     res.status(500).json({ error: err.message });
@@ -558,10 +606,11 @@ const getDashboard = async (req, res) => {
       }
     });
 
-    // Get all completed conversations
+    // Get all completed conversations within student specialty
     const allConvs = await Conversation.findAll({
       where: {
         student_id: req.user.id,
+        module_id: { [Op.in]: moduleIds },
         status: 'completed',
         overall_score: { [Op.gt]: 0 }
       },
@@ -572,18 +621,18 @@ const getDashboard = async (req, res) => {
     // Count unique completed modules (where score >= 60)
     const passedModuleIds = new Set();
     moduleResults.forEach(mr => {
-      if (mr.is_completed || mr.combined_score >= 60 || mr.best_chat_score >= 60) {
+      if ((mr.is_completed || mr.combined_score >= 60 || mr.best_chat_score >= 60) && moduleIds.includes(mr.module_id)) {
         passedModuleIds.add(mr.module_id);
       }
     });
     allConvs.forEach(c => {
-      if (c.overall_score >= 60) {
+      if (c.overall_score >= 60 && moduleIds.includes(c.module_id)) {
         passedModuleIds.add(c.module_id);
       }
     });
 
-    const completedCount = passedModuleIds.size;
     const totalCount = modules.length || 10;
+    const completedCount = Math.min(totalCount, passedModuleIds.size);
     const progressPercent = totalCount > 0 ? Math.min(100, Math.round((completedCount / totalCount) * 100)) : 0;
 
     // Calculate true average of best scores per attempted module

@@ -89,10 +89,10 @@ async function captureAllResults() {
     await page.goto(`${BASE_URL}/student/profile`, { waitUntil: 'networkidle0' });
     generatedScreenshots.push(await takeScreenshot('02_student_results_profile', true));
 
-    // Student Modules List with completion badges
-    console.log('Navigating to /student/modules...');
-    await page.goto(`${BASE_URL}/student/modules`, { waitUntil: 'networkidle0' });
-    generatedScreenshots.push(await takeScreenshot('03_student_modules_progress', false));
+    // Student Module 1 Results (Step 7 Evaluation Report)
+    console.log('Navigating to /student/modules/1...');
+    await page.goto(`${BASE_URL}/student/modules/1`, { waitUntil: 'networkidle0' });
+    generatedScreenshots.push(await takeScreenshot('03_student_module_evaluation', false));
 
     // ═══════════════════════════════════════════════════════
     // 2. O'QITUVCHI NATIJALARI (TEACHER REPORTS & DASHBOARD)
@@ -109,11 +109,6 @@ async function captureAllResults() {
     console.log('Navigating to /teacher/reports...');
     await page.goto(`${BASE_URL}/teacher/reports`, { waitUntil: 'networkidle0' });
     generatedScreenshots.push(await takeScreenshot('05_teacher_results_reports', true));
-
-    // Teacher Groups Overview
-    console.log('Navigating to /teacher/groups...');
-    await page.goto(`${BASE_URL}/teacher/groups`, { waitUntil: 'networkidle0' });
-    generatedScreenshots.push(await takeScreenshot('06_teacher_groups_overview', false));
 
     console.log('\n✅ All screenshots captured successfully:');
     console.log(JSON.stringify(generatedScreenshots, null, 2));
