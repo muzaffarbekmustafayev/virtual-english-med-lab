@@ -52,6 +52,13 @@ export const TRANSLATIONS = {
     chat_processing: "Bemor javobi shakllanmoqda...",
     chat_speaking: "Bemor javob bermoqda...",
     chat_ended: "Suhbat yakunlandi",
+    chat_input_placeholder: "Tibbiy savolingizni ingliz tilida yozing...",
+    chat_phrasebook_drawer: "Klinik Iboralar",
+    chat_replay_audio: "Qayta tinglash",
+    chat_eval_btn: "Klinik Baholash Hisoboti (7-bosqich)",
+    submit: "Yuborish",
+    finish: "Baholash olish",
+    retry: "Qayta urinish",
 
     // Flat results keys
     results_eval_report: "Rasmiy Klinik Baholash Hisoboti",

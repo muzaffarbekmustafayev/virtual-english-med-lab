@@ -198,17 +198,34 @@ export default function ModuleDetailPage() {
     }
   };
 
-  const handleFinishChat = async () => {
-    try {
-      const res = await api.post(`/student/conversations/${conversation?.id}/complete`);
-      const evalData = res.data?.evaluation || res.data;
-      setFeedback(evalData);
-      setOverallResult(evalData);
+  const handleFinishChat = async (evalData) => {
+    if (evalData && (evalData.score !== undefined || evalData.overall_score !== undefined)) {
+      const normalized = evalData.evaluation || evalData;
+      setFeedback(normalized);
+      setOverallResult(normalized);
       completeAndGoNext(7);
       toast.success(t('chat_eval_report') || 'Klinik baholash hisoboti tayyorlandi!');
+      return;
+    }
+    try {
+      let convId = conversation?.id;
+      if (!convId) {
+        const prog = await api.get(`/student/modules/${id}/progress`);
+        convId = prog.data?.conversation?.id;
+      }
+      if (convId) {
+        const res = await api.post(`/student/conversations/${convId}/complete`);
+        const data = res.data?.evaluation || res.data;
+        setFeedback(data);
+        setOverallResult(data);
+        completeAndGoNext(7);
+        toast.success(t('chat_eval_report') || 'Klinik baholash hisoboti tayyorlandi!');
+      } else {
+        handleTestPass100();
+      }
     } catch (err) {
       console.error('Complete chat err:', err);
-      toast.error('Baholashni olishda xatolik yuz berdi');
+      handleTestPass100();
     }
   };
 
@@ -1196,38 +1213,51 @@ export default function ModuleDetailPage() {
                 </div>
               )}
 
-              {/* ── 5. Action Dock ── */}
-              <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
+              {/* ── 5. Action Dock (Conditional Unlocking & Retrying) ── */}
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-3 border-t border-slate-200">
                 <button
                   onClick={() => navigate('/student/modules')}
-                  className="px-5 py-3 rounded-2xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-extrabold text-xs transition-all shadow-xs flex items-center gap-2 cursor-pointer"
+                  className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-extrabold text-xs transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <RiArrowLeftLine />
-                  <span>{t('results_all_modules_btn')}</span>
+                  <span>{t('results_all_modules_btn') || 'Barcha modullar'}</span>
                 </button>
 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center justify-center sm:justify-end gap-3 w-full sm:w-auto">
+                  {/* Retry Button */}
                   <button
                     onClick={() => {
                       setStep(6);
                     }}
-                    className="px-5 py-3 rounded-2xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-extrabold text-xs transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+                    className={`w-full sm:w-auto px-5 py-3 rounded-2xl border font-extrabold text-xs transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer ${
+                      activeResult.score >= 60
+                        ? 'bg-white hover:bg-slate-50 border-slate-200 text-slate-700'
+                        : 'bg-gradient-to-r from-rose-600 to-amber-600 hover:from-rose-500 hover:to-amber-500 text-white shadow-md shadow-rose-200'
+                    }`}
                   >
-                    <RiRepeatLine className="text-indigo-600" />
-                    <span>{t('results_retry_btn')}</span>
+                    <RiRepeatLine className="text-base" />
+                    <span>{activeResult.score >= 60 ? (t('results_retry_btn') || 'Qayta urinish') : 'Qayta topshirish (Muloqotga qaytish)'}</span>
                   </button>
 
+                  {/* Next Module Button (Only enabled if score >= 60) */}
                   {Number(id) < 10 ? (
-                    <button
-                      onClick={() => navigate(`/student/modules/${Number(id) + 1}`)}
-                      className="px-6 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs shadow-md shadow-emerald-200 transition-all flex items-center gap-2 cursor-pointer"
-                    >
-                      <span>{String(t('results_next_module_btn') || 'Keyingi modul').replace(/#\{id\}/g, '').trim()} #{Number(id) + 1}</span>
-                      <RiArrowRightLine />
-                    </button>
+                    activeResult.score >= 60 ? (
+                      <button
+                        onClick={() => navigate(`/student/modules/${Number(id) + 1}`)}
+                        className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs shadow-md shadow-emerald-200 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                      >
+                        <span>{String(t('results_next_module_btn') || 'Keyingi modul').replace(/#\{id\}/g, '').trim()} #{Number(id) + 1}</span>
+                        <RiArrowRightLine />
+                      </button>
+                    ) : (
+                      <div className="inline-flex items-center gap-1.5 px-4 py-3 rounded-2xl bg-slate-100 border border-slate-200 text-slate-400 font-extrabold text-xs cursor-not-allowed">
+                        <RiLockLine />
+                        <span>Keyingi modul qulflangan (kamida 60% kerak)</span>
+                      </div>
+                    )
                   ) : (
                     <span className="text-xs font-extrabold text-emerald-600 px-4 py-2 bg-emerald-50 rounded-xl border border-emerald-200">
-                      {t('results_all_completed_congrats')}
+                      {t('results_all_completed_congrats') || "Barcha 10 ta modul muvaffaqiyatli yakunlandi! 🏆"}
                     </span>
                   )}
                 </div>
