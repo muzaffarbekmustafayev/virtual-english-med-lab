@@ -1,0 +1,1256 @@
+{
+  "specialty_id": 2,
+  "specialty_name": "Davolash ishi",
+  "order_index": 7,
+  "title": "Acute Abdominal Pain Assessment",
+  "title_uz": "O'tkir qorin og'rig'i anamnezi",
+  "title_ru": "Острый живот и абдоминальная боль",
+  "title_en": "Acute Abdominal Pain Assessment",
+  "description": "Davolash ishi bo'yicha O'tkir qorin og'rig'i anamnezi mavzusida klinik muloqot va tibbiy ingliz tili darsi.",
+  "clinical_level": "B2 Medical English",
+  "target_role": "Dental Clinician / Attending Physician",
+  "scenario_prompt": "You are a virtual patient presenting with symptoms related to Acute Abdominal Pain Assessment. Speak in natural, everyday patient English.",
+  "patient_profile": {
+    "age": 51,
+    "gender": "Male",
+    "chief_complaint": "O'tkir qorin og'rig'i anamnezi",
+    "history": "Patient presents with complaints of acute abdominal pain assessment."
+  },
+  "grammar": [
+    {
+      "title": "GRAMMAR",
+      "title_uz": "GRAMMAR",
+      "title_ru": "GRAMMAR",
+      "title_en": "GRAMMAR",
+      "rule_explanation": "Bu modulda Past Perfect oldinroq sodir bo'lgan voqeani, Past Simple esa keyin sodir bo'lgan yoki klinik timeline'da asosiy voqeani ifodalash uchun ishlatiladi. Acute abdominal pain history-takingda shifokor simptomlardan oldin nima bo'lganini va og'riq qachon kuchayganini aniqlaydi.",
+      "rule_explanation_uz": "Bu modulda Past Perfect oldinroq sodir bo'lgan voqeani, Past Simple esa keyin sodir bo'lgan yoki klinik timeline'da asosiy voqeani ifodalash uchun ishlatiladi. Acute abdominal pain history-takingda shifokor simptomlardan oldin nima bo'lganini va og'riq qachon kuchayganini aniqlaydi.",
+      "rule_explanation_ru": "Past Perfect используется для действия, которое произошло раньше другого действия в прошлом. В этом диалоге он помогает врачу восстановить последовательность событий до усиления боли. Past Simple используется для основных завершённых событий в прошлом: когда боль усилилась, где она началась и куда переместилась.",
+      "rule_explanation_en": "Question: Did + subject + V1...? → When did the pain become severe? Why: Past Perfect is used consistently for the earlier event.",
+      "structure_pattern": "Subject + had + V3 (Past Perfect) + before / by the time + Subject + V2 (Past Simple)",
+      "examples": [
+        {
+          "sentence": "How long has this symptom been bothering you?",
+          "translation": "Bu simptom sizni qancha vaqtdan beri bezovta qilmoqda?",
+          "translation_uz": "Bu simptom sizni qancha vaqtdan beri bezovta qilmoqda?",
+          "translation_ru": "Как долго вас беспокоит этот симптом?",
+          "note": "Clinical duration inquiry"
+        },
+        {
+          "sentence": "Does the pain get worse with hot or cold temperatures?",
+          "translation": "Og'riq issiq yoki sovuq haroratda kuchayadimi?",
+          "translation_uz": "Og'riq issiq yoki sovuq haroratda kuchayadimi?",
+          "translation_ru": "Усиливается ли боль от горячего или холодного?",
+          "note": "Clinical trigger inquiry"
+        }
+      ],
+      "common_mistakes": [
+        {
+          "incorrect": "Since when you feel this pain?",
+          "correct": "How long have you had this pain?",
+          "explanation": "Davomiylikni so'rashda 'How long have you had...?' standarti ishlatiladi.",
+          "explanation_uz": "Davomiylikni so'rashda 'How long have you had...?' standarti ishlatiladi.",
+          "explanation_ru": "Для выяснения длительности используется конструкция 'How long have you had...?'.",
+          "explanation_en": "Use 'How long have you had...?' when asking about the duration of symptoms."
+        },
+        {
+          "incorrect": "Where is paining you?",
+          "correct": "Where exactly do you feel the pain?",
+          "explanation": "Lokatsiyani aniqlashda 'Where do you feel the pain?' to'g'ri grammatik shakl.",
+          "explanation_uz": "Lokatsiyani aniqlashda 'Where do you feel the pain?' to'g'ri grammatik shakl.",
+          "explanation_ru": "Правильный вопрос о локализации боли: 'Where exactly do you feel the pain?'.",
+          "explanation_en": "Ask 'Where exactly do you feel the pain?' to identify the specific anatomical site."
+        }
+      ],
+      "structure_pattern_en": "Subject + had + V3 (Past Perfect) + before / by the time + Subject + V2 (Past Simple)",
+      "structure_pattern_uz": "Ega + had + V3 (Oldinroq tugallangan) + before / by the time + Ega + V2 (Ketidan sodir bo'lgan)",
+      "structure_pattern_ru": "Подлежащее + had + V3 (Предпрошедшее) + before / by the time + Подлежащее + V2 (Прошедшее простое)"
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "acute abdominal pain",
+      "translation": "o'tkir qorin og'rig'i",
+      "translation_uz": "o'tkir qorin og'rig'i",
+      "translation_ru": "острая боль в животе",
+      "translation_en": "acute abdominal pain",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing acute abdominal pain.",
+      "definition_uz": "o'tkir qorin og'rig'i - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "острая боль в животе - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing acute abdominal pain.",
+      "example": "The doctor assessed the patient for acute abdominal pain."
+    },
+    {
+      "word": "abdominal pain",
+      "translation": "qorin og'rig'i",
+      "translation_uz": "qorin og'rig'i",
+      "translation_ru": "боль в животе",
+      "translation_en": "abdominal pain",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing abdominal pain.",
+      "definition_uz": "qorin og'rig'i - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "боль в животе - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing abdominal pain.",
+      "example": "The doctor assessed the patient for abdominal pain."
+    },
+    {
+      "word": "become severe",
+      "translation": "kuchayib ketmoq",
+      "translation_uz": "kuchayib ketmoq",
+      "translation_ru": "усилиться",
+      "translation_en": "become severe",
+      "definition": "Clinical medical condition and symptom associated with become severe.",
+      "definition_uz": "kuchayib ketmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "усилиться - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with become severe.",
+      "example": "The doctor assessed the patient for become severe."
+    },
+    {
+      "word": "large meal",
+      "translation": "katta miqdordagi ovqat",
+      "translation_uz": "katta miqdordagi ovqat",
+      "translation_ru": "большая порция еды",
+      "translation_en": "large meal",
+      "definition": "Clinical medical condition and symptom associated with large meal.",
+      "definition_uz": "katta miqdordagi ovqat - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "большая порция еды - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with large meal.",
+      "example": "The doctor assessed the patient for large meal."
+    },
+    {
+      "word": "slightly nauseated",
+      "translation": "biroz ko'ngli aynigan",
+      "translation_uz": "biroz ko'ngli aynigan",
+      "translation_ru": "слегка тошнит",
+      "translation_en": "slightly nauseated",
+      "definition": "Clinical medical condition and symptom associated with slightly nauseated.",
+      "definition_uz": "biroz ko'ngli aynigan - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "слегка тошнит - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with slightly nauseated.",
+      "example": "The doctor assessed the patient for slightly nauseated."
+    },
+    {
+      "word": "dull discomfort",
+      "translation": "tup og'riq / noqulaylik",
+      "translation_uz": "tup og'riq / noqulaylik",
+      "translation_ru": "тупой дискомфорт",
+      "translation_en": "dull discomfort",
+      "definition": "Clinical medical condition and symptom associated with dull discomfort.",
+      "definition_uz": "tup og'riq / noqulaylik - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "тупой дискомфорт - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with dull discomfort.",
+      "example": "The doctor assessed the patient for dull discomfort."
+    },
+    {
+      "word": "indigestion",
+      "translation": "hazm buzilishi",
+      "translation_uz": "hazm buzilishi",
+      "translation_ru": "несварение желудка",
+      "translation_en": "indigestion",
+      "definition": "Clinical medical condition and symptom associated with indigestion.",
+      "definition_uz": "hazm buzilishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "несварение желудка - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with indigestion.",
+      "example": "The doctor assessed the patient for indigestion."
+    },
+    {
+      "word": "at around midnight",
+      "translation": "taxminan yarim tunda",
+      "translation_uz": "taxminan yarim tunda",
+      "translation_ru": "около полуночи",
+      "translation_en": "at around midnight",
+      "definition": "Clinical medical condition and symptom associated with at around midnight.",
+      "definition_uz": "taxminan yarim tunda - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "около полуночи - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with at around midnight.",
+      "example": "The doctor assessed the patient for at around midnight."
+    },
+    {
+      "word": "upper abdomen",
+      "translation": "qorinning yuqori qismi",
+      "translation_uz": "qorinning yuqori qismi",
+      "translation_ru": "верхняя часть живота",
+      "translation_en": "upper abdomen",
+      "definition": "Clinical medical condition and symptom associated with upper abdomen.",
+      "definition_uz": "qorinning yuqori qismi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "верхняя часть живота - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with upper abdomen.",
+      "example": "The doctor assessed the patient for upper abdomen."
+    },
+    {
+      "word": "move towards the right side",
+      "translation": "o'ng tomonga ko'chmoq",
+      "translation_uz": "o'ng tomonga ko'chmoq",
+      "translation_ru": "переместиться вправо",
+      "translation_en": "move towards the right side",
+      "definition": "Clinical medical condition and symptom associated with move towards the right side.",
+      "definition_uz": "o'ng tomonga ko'chmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "переместиться вправо - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with move towards the right side.",
+      "example": "The doctor assessed the patient for move towards the right side."
+    },
+    {
+      "word": "vomit",
+      "translation": "qusmoq",
+      "translation_uz": "qusmoq",
+      "translation_ru": "рвать, испытывать рвоту",
+      "translation_en": "vomit",
+      "definition": "Clinical medical condition and symptom associated with vomit.",
+      "definition_uz": "qusmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "рвать, испытывать рвоту - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with vomit.",
+      "example": "The doctor assessed the patient for vomit."
+    },
+    {
+      "word": "tender",
+      "translation": "og'riqli / sezgir",
+      "translation_uz": "og'riqli / sezgir",
+      "translation_ru": "болезненный при пальпации",
+      "translation_en": "tender",
+      "definition": "Clinical medical condition and symptom associated with tender.",
+      "definition_uz": "og'riqli / sezgir - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "болезненный при пальпации - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with tender.",
+      "example": "The doctor assessed the patient for tender."
+    },
+    {
+      "word": "particularly tender",
+      "translation": "ayniqsa og'riqli",
+      "translation_uz": "ayniqsa og'riqli",
+      "translation_ru": "особенно болезненный при пальпации",
+      "translation_en": "particularly tender",
+      "definition": "Clinical medical condition and symptom associated with particularly tender.",
+      "definition_uz": "ayniqsa og'riqli - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "особенно болезненный при пальпации - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with particularly tender.",
+      "example": "The doctor assessed the patient for particularly tender."
+    },
+    {
+      "word": "right side",
+      "translation": "o'ng tomon",
+      "translation_uz": "o'ng tomon",
+      "translation_ru": "правая сторона",
+      "translation_en": "right side",
+      "definition": "Clinical medical condition and symptom associated with right side.",
+      "definition_uz": "o'ng tomon - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "правая сторона - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with right side.",
+      "example": "The doctor assessed the patient for right side."
+    },
+    {
+      "word": "radiate",
+      "translation": "tarqalmoq / boshqa joyga o'tmoq",
+      "translation_uz": "tarqalmoq / boshqa joyga o'tmoq",
+      "translation_ru": "иррадиировать, распространяться",
+      "translation_en": "radiate",
+      "definition": "Clinical medical condition and symptom associated with radiate.",
+      "definition_uz": "tarqalmoq / boshqa joyga o'tmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "иррадиировать, распространяться - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with radiate.",
+      "example": "The doctor assessed the patient for radiate."
+    },
+    {
+      "word": "go through to the back",
+      "translation": "orqaga tarqalmoq",
+      "translation_uz": "orqaga tarqalmoq",
+      "translation_ru": "отдавать в спину",
+      "translation_en": "go through to the back",
+      "definition": "Clinical medical condition and symptom associated with go through to the back.",
+      "definition_uz": "orqaga tarqalmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "отдавать в спину - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with go through to the back.",
+      "example": "The doctor assessed the patient for go through to the back."
+    },
+    {
+      "word": "shoulder",
+      "translation": "yelka",
+      "translation_uz": "yelka",
+      "translation_ru": "плечо",
+      "translation_en": "shoulder",
+      "definition": "Clinical medical condition and symptom associated with shoulder.",
+      "definition_uz": "yelka - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "плечо - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with shoulder.",
+      "example": "The doctor assessed the patient for shoulder."
+    },
+    {
+      "word": "previous abdominal surgery",
+      "translation": "avvalgi qorin bo'shlig'i operatsiyasi",
+      "translation_uz": "avvalgi qorin bo'shlig'i operatsiyasi",
+      "translation_ru": "предыдущая операция на брюшной полости",
+      "translation_en": "previous abdominal surgery",
+      "definition": "Clinical medical condition and symptom associated with previous abdominal surgery.",
+      "definition_uz": "avvalgi qorin bo'shlig'i operatsiyasi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "предыдущая операция на брюшной полости - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with previous abdominal surgery.",
+      "example": "The doctor assessed the patient for previous abdominal surgery."
+    },
+    {
+      "word": "gallbladder",
+      "translation": "o't pufagi",
+      "translation_uz": "o't pufagi",
+      "translation_ru": "желчный пузырь",
+      "translation_en": "gallbladder",
+      "definition": "Clinical medical condition and symptom associated with gallbladder.",
+      "definition_uz": "o't pufagi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "желчный пузырь - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with gallbladder.",
+      "example": "The doctor assessed the patient for gallbladder."
+    },
+    {
+      "word": "gallstones",
+      "translation": "o't pufagidagi toshlar",
+      "translation_uz": "o't pufagidagi toshlar",
+      "translation_ru": "камни в желчном пузыре",
+      "translation_en": "gallstones",
+      "definition": "Clinical medical condition and symptom associated with gallstones.",
+      "definition_uz": "o't pufagidagi toshlar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "камни в желчном пузыре - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with gallstones.",
+      "example": "The doctor assessed the patient for gallstones."
+    },
+    {
+      "word": "diagnosed with",
+      "translation": "tashxisi qo'yilgan",
+      "translation_uz": "tashxisi qo'yilgan",
+      "translation_ru": "диагностирован с",
+      "translation_en": "diagnosed with",
+      "definition": "Clinical medical condition and symptom associated with diagnosed with.",
+      "definition_uz": "tashxisi qo'yilgan - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "диагностирован с - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with diagnosed with.",
+      "example": "The doctor assessed the patient for diagnosed with."
+    },
+    {
+      "word": "unusual",
+      "translation": "odatiy bo'lmagan",
+      "translation_uz": "odatiy bo'lmagan",
+      "translation_ru": "необычный",
+      "translation_en": "unusual",
+      "definition": "Clinical medical condition and symptom associated with unusual.",
+      "definition_uz": "odatiy bo'lmagan - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "необычный - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with unusual.",
+      "example": "The doctor assessed the patient for unusual."
+    },
+    {
+      "word": "heavy meal",
+      "translation": "og'ir / juda to'yimli ovqat",
+      "translation_uz": "og'ir / juda to'yimli ovqat",
+      "translation_ru": "тяжёлая, очень плотная еда",
+      "translation_en": "heavy meal",
+      "definition": "Clinical medical condition and symptom associated with heavy meal.",
+      "definition_uz": "og'ir / juda to'yimli ovqat - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "тяжёлая, очень плотная еда - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with heavy meal.",
+      "example": "The doctor assessed the patient for heavy meal."
+    },
+    {
+      "word": "examine the abdomen",
+      "translation": "qorinni tekshirmoq",
+      "translation_uz": "qorinni tekshirmoq",
+      "translation_ru": "осмотреть живот",
+      "translation_en": "examine the abdomen",
+      "definition": "Clinical medical condition and symptom associated with examine the abdomen.",
+      "definition_uz": "qorinni tekshirmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "осмотреть живот - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with examine the abdomen.",
+      "example": "The doctor assessed the patient for examine the abdomen."
+    },
+    {
+      "word": "press",
+      "translation": "bosmoq",
+      "translation_uz": "bosmoq",
+      "translation_ru": "надавить",
+      "translation_en": "press",
+      "definition": "Clinical medical condition and symptom associated with press.",
+      "definition_uz": "bosmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "надавить - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with press.",
+      "example": "The doctor assessed the patient for press."
+    },
+    {
+      "word": "release",
+      "translation": "qo'yib yubormoq",
+      "translation_uz": "qo'yib yubormoq",
+      "translation_ru": "отпустить",
+      "translation_en": "release",
+      "definition": "Clinical medical condition and symptom associated with release.",
+      "definition_uz": "qo'yib yubormoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "отпустить - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with release.",
+      "example": "The doctor assessed the patient for release."
+    },
+    {
+      "word": "biliary disease",
+      "translation": "o't yo'llari/o't pufagi kasalligi",
+      "translation_uz": "o't yo'llari/o't pufagi kasalligi",
+      "translation_ru": "заболевание желчевыводящих путей",
+      "translation_en": "biliary disease",
+      "definition": "Clinical medical condition and symptom associated with biliary disease.",
+      "definition_uz": "o't yo'llari/o't pufagi kasalligi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "заболевание желчевыводящих путей - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with biliary disease.",
+      "example": "The doctor assessed the patient for biliary disease."
+    },
+    {
+      "word": "pancreatitis",
+      "translation": "pankreatit",
+      "translation_uz": "pankreatit",
+      "translation_ru": "панкреатит",
+      "translation_en": "pancreatitis",
+      "definition": "Clinical medical condition and symptom associated with pancreatitis.",
+      "definition_uz": "pankreatit - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "панкреатит - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with pancreatitis.",
+      "example": "The doctor assessed the patient for pancreatitis."
+    },
+    {
+      "word": "peptic pathology",
+      "translation": "oshqozon/duodenum bilan bog'liq peptik patologiya",
+      "translation_uz": "oshqozon/duodenum bilan bog'liq peptik patologiya",
+      "translation_ru": "пептическая патология",
+      "translation_en": "peptic pathology",
+      "definition": "Clinical medical condition and symptom associated with peptic pathology.",
+      "definition_uz": "oshqozon/duodenum bilan bog'liq peptik patologiya - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "пептическая патология - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with peptic pathology.",
+      "example": "The doctor assessed the patient for peptic pathology."
+    },
+    {
+      "word": "appendicitis",
+      "translation": "appenditsit",
+      "translation_uz": "appenditsit",
+      "translation_ru": "аппендицит",
+      "translation_en": "appendicitis",
+      "definition": "Clinical medical condition and symptom associated with appendicitis.",
+      "definition_uz": "appenditsit - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "аппендицит - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with appendicitis.",
+      "example": "The doctor assessed the patient for appendicitis."
+    },
+    {
+      "word": "less typical",
+      "translation": "kamroq xos",
+      "translation_uz": "kamroq xos",
+      "translation_ru": "менее типичный",
+      "translation_en": "less typical",
+      "definition": "Clinical medical condition and symptom associated with less typical.",
+      "definition_uz": "kamroq xos - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "менее типичный - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with less typical.",
+      "example": "The doctor assessed the patient for less typical."
+    },
+    {
+      "word": "exclude a diagnosis",
+      "translation": "tashxisni istisno qilmoq",
+      "translation_uz": "tashxisni istisno qilmoq",
+      "translation_ru": "исключить диагноз",
+      "translation_en": "exclude a diagnosis",
+      "definition": "Clinical medical condition and symptom associated with exclude a diagnosis.",
+      "definition_uz": "tashxisni istisno qilmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "исключить диагноз - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with exclude a diagnosis.",
+      "example": "The doctor assessed the patient for exclude a diagnosis."
+    },
+    {
+      "word": "solely on the basis of",
+      "translation": "faqat ... asosida",
+      "translation_uz": "faqat ... asosida",
+      "translation_ru": "исключительно на основании",
+      "translation_en": "solely on the basis of",
+      "definition": "Clinical medical condition and symptom associated with solely on the basis of.",
+      "definition_uz": "faqat ... asosida - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "исключительно на основании - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with solely on the basis of.",
+      "example": "The doctor assessed the patient for solely on the basis of."
+    },
+    {
+      "word": "blood samples",
+      "translation": "qon namunalari",
+      "translation_uz": "qon namunalari",
+      "translation_ru": "образцы крови",
+      "translation_en": "blood samples",
+      "definition": "Clinical medical condition and symptom associated with blood samples.",
+      "definition_uz": "qon namunalari - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "образцы крови - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with blood samples.",
+      "example": "The doctor assessed the patient for blood samples."
+    },
+    {
+      "word": "inflammatory markers",
+      "translation": "yallig'lanish markerlari",
+      "translation_uz": "yallig'lanish markerlari",
+      "translation_ru": "маркеры воспаления",
+      "translation_en": "inflammatory markers",
+      "definition": "Clinical medical condition and symptom associated with inflammatory markers.",
+      "definition_uz": "yallig'lanish markerlari - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "маркеры воспаления - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with inflammatory markers.",
+      "example": "The doctor assessed the patient for inflammatory markers."
+    },
+    {
+      "word": "liver enzymes",
+      "translation": "jigar fermentlari",
+      "translation_uz": "jigar fermentlari",
+      "translation_ru": "печёночные ферменты",
+      "translation_en": "liver enzymes",
+      "definition": "Clinical medical condition and symptom associated with liver enzymes.",
+      "definition_uz": "jigar fermentlari - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "печёночные ферменты - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with liver enzymes.",
+      "example": "The doctor assessed the patient for liver enzymes."
+    },
+    {
+      "word": "pancreatic enzymes",
+      "translation": "oshqozon osti bezi fermentlari",
+      "translation_uz": "oshqozon osti bezi fermentlari",
+      "translation_ru": "ферменты поджелудочной железы",
+      "translation_en": "pancreatic enzymes",
+      "definition": "Clinical medical condition and symptom associated with pancreatic enzymes.",
+      "definition_uz": "oshqozon osti bezi fermentlari - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "ферменты поджелудочной железы - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with pancreatic enzymes.",
+      "example": "The doctor assessed the patient for pancreatic enzymes."
+    },
+    {
+      "word": "renal function",
+      "translation": "buyrak faoliyati",
+      "translation_uz": "buyrak faoliyati",
+      "translation_ru": "функция почек",
+      "translation_en": "renal function",
+      "definition": "Clinical medical condition and symptom associated with renal function.",
+      "definition_uz": "buyrak faoliyati - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "функция почек - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with renal function.",
+      "example": "The doctor assessed the patient for renal function."
+    },
+    {
+      "word": "relevant investigations",
+      "translation": "tegishli tekshiruvlar",
+      "translation_uz": "tegishli tekshiruvlar",
+      "translation_ru": "соответствующие исследования",
+      "translation_en": "relevant investigations",
+      "definition": "Clinical medical condition and symptom associated with relevant investigations.",
+      "definition_uz": "tegishli tekshiruvlar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "соответствующие исследования - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with relevant investigations.",
+      "example": "The doctor assessed the patient for relevant investigations."
+    },
+    {
+      "word": "imaging pathway",
+      "translation": "tasviriy tekshiruv yo'nalishi",
+      "translation_uz": "tasviriy tekshiruv yo'nalishi",
+      "translation_ru": "маршрут/план визуализационных исследований",
+      "translation_en": "imaging pathway",
+      "definition": "Clinical medical condition and symptom associated with imaging pathway.",
+      "definition_uz": "tasviriy tekshiruv yo'nalishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "маршрут/план визуализационных исследований - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with imaging pathway.",
+      "example": "The doctor assessed the patient for imaging pathway."
+    },
+    {
+      "word": "premature to say",
+      "translation": "aytish uchun hali erta",
+      "translation_uz": "aytish uchun hali erta",
+      "translation_ru": "преждевременно говорить",
+      "translation_en": "premature to say",
+      "definition": "Clinical medical condition and symptom associated with premature to say.",
+      "definition_uz": "aytish uchun hali erta - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "преждевременно говорить - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with premature to say.",
+      "example": "The doctor assessed the patient for premature to say."
+    },
+    {
+      "word": "remain fasting",
+      "translation": "och qolish / ovqat va ichimlik qabul qilmaslik",
+      "translation_uz": "och qolish / ovqat va ichimlik qabul qilmaslik",
+      "translation_ru": "оставаться натощак",
+      "translation_en": "remain fasting",
+      "definition": "Clinical medical condition and symptom associated with remain fasting.",
+      "definition_uz": "och qolish / ovqat va ichimlik qabul qilmaslik - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "оставаться натощак - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with remain fasting.",
+      "example": "The doctor assessed the patient for remain fasting."
+    },
+    {
+      "word": "procedure",
+      "translation": "muolaja / protsedura",
+      "translation_uz": "muolaja / protsedura",
+      "translation_ru": "процедура",
+      "translation_en": "procedure",
+      "definition": "Clinical medical condition and symptom associated with procedure.",
+      "definition_uz": "muolaja / protsedura - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "процедура - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with procedure.",
+      "example": "The doctor assessed the patient for procedure."
+    },
+    {
+      "word": "differential diagnosis",
+      "translation": "differensial tashxis",
+      "translation_uz": "differensial tashxis",
+      "translation_ru": "дифференциальный диагноз",
+      "translation_en": "differential diagnosis",
+      "definition": "Clinical medical condition and symptom associated with differential diagnosis.",
+      "definition_uz": "differensial tashxis - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "дифференциальный диагноз - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with differential diagnosis.",
+      "example": "The doctor assessed the patient for differential diagnosis."
+    },
+    {
+      "word": "narrow the differential diagnosis",
+      "translation": "differensial tashxis doirasini toraytirmoq",
+      "translation_uz": "differensial tashxis doirasini toraytirmoq",
+      "translation_ru": "сузить дифференциальный диагноз",
+      "translation_en": "narrow the differential diagnosis",
+      "definition": "Clinical medical condition and symptom associated with narrow the differential diagnosis.",
+      "definition_uz": "differensial tashxis doirasini toraytirmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "сузить дифференциальный диагноз - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with narrow the differential diagnosis.",
+      "example": "The doctor assessed the patient for narrow the differential diagnosis."
+    },
+    {
+      "word": "safest treatment",
+      "translation": "eng xavfsiz davolash",
+      "translation_uz": "eng xavfsiz davolash",
+      "translation_ru": "наиболее безопасное лечение",
+      "translation_en": "safest treatment",
+      "definition": "Clinical medical condition and symptom associated with safest treatment.",
+      "definition_uz": "eng xavfsiz davolash - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "наиболее безопасное лечение - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with safest treatment.",
+      "example": "The doctor assessed the patient for safest treatment."
+    },
+    {
+      "word": "safety-netting",
+      "translation": "keyingi xavfsizlik bo'yicha ko'rsatmalar",
+      "translation_uz": "keyingi xavfsizlik bo'yicha ko'rsatmalar",
+      "translation_ru": "рекомендации по безопасности и дальнейшему наблюдению",
+      "translation_en": "safety-netting",
+      "definition": "Clinical medical condition and symptom associated with safety-netting.",
+      "definition_uz": "keyingi xavfsizlik bo'yicha ko'rsatmalar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "рекомендации по безопасности и дальнейшему наблюдению - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with safety-netting.",
+      "example": "The doctor assessed the patient for safety-netting."
+    }
+  ],
+  "phrasebook": [
+    {
+      "phrase": "acute abdominal pain",
+      "category": "Clinical Consultation",
+      "hint": "o'tkir qorin og'rig'i",
+      "hint_uz": "o'tkir qorin og'rig'i",
+      "hint_ru": "острая боль в животе",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "abdominal pain",
+      "category": "Clinical Consultation",
+      "hint": "qorin og'rig'i",
+      "hint_uz": "qorin og'rig'i",
+      "hint_ru": "боль в животе",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "become severe",
+      "category": "Clinical Consultation",
+      "hint": "kuchayib ketmoq",
+      "hint_uz": "kuchayib ketmoq",
+      "hint_ru": "усилиться",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "large meal",
+      "category": "Clinical Consultation",
+      "hint": "katta miqdordagi ovqat",
+      "hint_uz": "katta miqdordagi ovqat",
+      "hint_ru": "большая порция еды",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "slightly nauseated",
+      "category": "Clinical Consultation",
+      "hint": "biroz ko'ngli aynigan",
+      "hint_uz": "biroz ko'ngli aynigan",
+      "hint_ru": "слегка тошнит",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "dull discomfort",
+      "category": "Clinical Consultation",
+      "hint": "tup og'riq / noqulaylik",
+      "hint_uz": "tup og'riq / noqulaylik",
+      "hint_ru": "тупой дискомфорт",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "indigestion",
+      "category": "Clinical Consultation",
+      "hint": "hazm buzilishi",
+      "hint_uz": "hazm buzilishi",
+      "hint_ru": "несварение желудка",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "at around midnight",
+      "category": "Clinical Consultation",
+      "hint": "taxminan yarim tunda",
+      "hint_uz": "taxminan yarim tunda",
+      "hint_ru": "около полуночи",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "upper abdomen",
+      "category": "Clinical Consultation",
+      "hint": "qorinning yuqori qismi",
+      "hint_uz": "qorinning yuqori qismi",
+      "hint_ru": "верхняя часть живота",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "move towards the right side",
+      "category": "Clinical Consultation",
+      "hint": "o'ng tomonga ko'chmoq",
+      "hint_uz": "o'ng tomonga ko'chmoq",
+      "hint_ru": "переместиться вправо",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "vomit",
+      "category": "Clinical Consultation",
+      "hint": "qusmoq",
+      "hint_uz": "qusmoq",
+      "hint_ru": "рвать, испытывать рвоту",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "tender",
+      "category": "Clinical Consultation",
+      "hint": "og'riqli / sezgir",
+      "hint_uz": "og'riqli / sezgir",
+      "hint_ru": "болезненный при пальпации",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "particularly tender",
+      "category": "Clinical Consultation",
+      "hint": "ayniqsa og'riqli",
+      "hint_uz": "ayniqsa og'riqli",
+      "hint_ru": "особенно болезненный при пальпации",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "right side",
+      "category": "Clinical Consultation",
+      "hint": "o'ng tomon",
+      "hint_uz": "o'ng tomon",
+      "hint_ru": "правая сторона",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "radiate",
+      "category": "Clinical Consultation",
+      "hint": "Og'riq boshqa joyga (quloq, jag', bo'yin) tarqaladimi?",
+      "hint_uz": "Og'riq boshqa joyga (quloq, jag', bo'yin) tarqaladimi?",
+      "hint_ru": "Отдает (иррадиирует) ли боль в челюсть, ухо или шею?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "go through to the back",
+      "category": "Clinical Consultation",
+      "hint": "orqaga tarqalmoq",
+      "hint_uz": "orqaga tarqalmoq",
+      "hint_ru": "отдавать в спину",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "shoulder",
+      "category": "Clinical Consultation",
+      "hint": "yelka",
+      "hint_uz": "yelka",
+      "hint_ru": "плечо",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "previous abdominal surgery",
+      "category": "Clinical Consultation",
+      "hint": "avvalgi qorin bo'shlig'i operatsiyasi",
+      "hint_uz": "avvalgi qorin bo'shlig'i operatsiyasi",
+      "hint_ru": "предыдущая операция на брюшной полости",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "gallbladder",
+      "category": "Clinical Consultation",
+      "hint": "o't pufagi",
+      "hint_uz": "o't pufagi",
+      "hint_ru": "желчный пузырь",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "gallstones",
+      "category": "Clinical Consultation",
+      "hint": "o't pufagidagi toshlar",
+      "hint_uz": "o't pufagidagi toshlar",
+      "hint_ru": "камни в желчном пузыре",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "diagnosed with",
+      "category": "Clinical Consultation",
+      "hint": "tashxisi qo'yilgan",
+      "hint_uz": "tashxisi qo'yilgan",
+      "hint_ru": "диагностирован с",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "unusual",
+      "category": "Clinical Consultation",
+      "hint": "odatiy bo'lmagan",
+      "hint_uz": "odatiy bo'lmagan",
+      "hint_ru": "необычный",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "heavy meal",
+      "category": "Clinical Consultation",
+      "hint": "og'ir / juda to'yimli ovqat",
+      "hint_uz": "og'ir / juda to'yimli ovqat",
+      "hint_ru": "тяжёлая, очень плотная еда",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "examine the abdomen",
+      "category": "Clinical Consultation",
+      "hint": "qorinni tekshirmoq",
+      "hint_uz": "qorinni tekshirmoq",
+      "hint_ru": "осмотреть живот",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "press",
+      "category": "Clinical Consultation",
+      "hint": "bosmoq",
+      "hint_uz": "bosmoq",
+      "hint_ru": "надавить",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "release",
+      "category": "Clinical Consultation",
+      "hint": "qo'yib yubormoq",
+      "hint_uz": "qo'yib yubormoq",
+      "hint_ru": "отпустить",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "biliary disease",
+      "category": "Clinical Consultation",
+      "hint": "o't yo'llari/o't pufagi kasalligi",
+      "hint_uz": "o't yo'llari/o't pufagi kasalligi",
+      "hint_ru": "заболевание желчевыводящих путей",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "pancreatitis",
+      "category": "Clinical Consultation",
+      "hint": "pankreatit",
+      "hint_uz": "pankreatit",
+      "hint_ru": "панкреатит",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "peptic pathology",
+      "category": "Clinical Consultation",
+      "hint": "oshqozon/duodenum bilan bog'liq peptik patologiya",
+      "hint_uz": "oshqozon/duodenum bilan bog'liq peptik patologiya",
+      "hint_ru": "пептическая патология",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "appendicitis",
+      "category": "Clinical Consultation",
+      "hint": "appenditsit",
+      "hint_uz": "appenditsit",
+      "hint_ru": "аппендицит",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "less typical",
+      "category": "Clinical Consultation",
+      "hint": "kamroq xos",
+      "hint_uz": "kamroq xos",
+      "hint_ru": "менее типичный",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "exclude a diagnosis",
+      "category": "Clinical Consultation",
+      "hint": "tashxisni istisno qilmoq",
+      "hint_uz": "tashxisni istisno qilmoq",
+      "hint_ru": "исключить диагноз",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "solely on the basis of",
+      "category": "Clinical Consultation",
+      "hint": "faqat ... asosida",
+      "hint_uz": "faqat ... asosida",
+      "hint_ru": "исключительно на основании",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "blood samples",
+      "category": "Clinical Consultation",
+      "hint": "qon namunalari",
+      "hint_uz": "qon namunalari",
+      "hint_ru": "образцы крови",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "inflammatory markers",
+      "category": "Clinical Consultation",
+      "hint": "yallig'lanish markerlari",
+      "hint_uz": "yallig'lanish markerlari",
+      "hint_ru": "маркеры воспаления",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "liver enzymes",
+      "category": "Clinical Consultation",
+      "hint": "jigar fermentlari",
+      "hint_uz": "jigar fermentlari",
+      "hint_ru": "печёночные ферменты",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "pancreatic enzymes",
+      "category": "Clinical Consultation",
+      "hint": "oshqozon osti bezi fermentlari",
+      "hint_uz": "oshqozon osti bezi fermentlari",
+      "hint_ru": "ферменты поджелудочной железы",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "renal function",
+      "category": "Clinical Consultation",
+      "hint": "buyrak faoliyati",
+      "hint_uz": "buyrak faoliyati",
+      "hint_ru": "функция почек",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "relevant investigations",
+      "category": "Clinical Consultation",
+      "hint": "tegishli tekshiruvlar",
+      "hint_uz": "tegishli tekshiruvlar",
+      "hint_ru": "соответствующие исследования",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "imaging pathway",
+      "category": "Clinical Consultation",
+      "hint": "tasviriy tekshiruv yo'nalishi",
+      "hint_uz": "tasviriy tekshiruv yo'nalishi",
+      "hint_ru": "маршрут/план визуализационных исследований",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "premature to say",
+      "category": "Clinical Consultation",
+      "hint": "aytish uchun hali erta",
+      "hint_uz": "aytish uchun hali erta",
+      "hint_ru": "преждевременно говорить",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "remain fasting",
+      "category": "Clinical Consultation",
+      "hint": "och qolish / ovqat va ichimlik qabul qilmaslik",
+      "hint_uz": "och qolish / ovqat va ichimlik qabul qilmaslik",
+      "hint_ru": "оставаться натощак",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "procedure",
+      "category": "Clinical Consultation",
+      "hint": "muolaja / protsedura",
+      "hint_uz": "muolaja / protsedura",
+      "hint_ru": "процедура",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "differential diagnosis",
+      "category": "Clinical Consultation",
+      "hint": "differensial tashxis",
+      "hint_uz": "differensial tashxis",
+      "hint_ru": "дифференциальный диагноз",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "narrow the differential diagnosis",
+      "category": "Clinical Consultation",
+      "hint": "differensial tashxis doirasini toraytirmoq",
+      "hint_uz": "differensial tashxis doirasini toraytirmoq",
+      "hint_ru": "сузить дифференциальный диагноз",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "safest treatment",
+      "category": "Clinical Consultation",
+      "hint": "eng xavfsiz davolash",
+      "hint_uz": "eng xavfsiz davolash",
+      "hint_ru": "наиболее безопасное лечение",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "safety-netting",
+      "category": "Clinical Consultation",
+      "hint": "keyingi xavfsizlik bo'yicha ko'rsatmalar",
+      "hint_uz": "keyingi xavfsizlik bo'yicha ko'rsatmalar",
+      "hint_ru": "рекомендации по безопасности и дальнейшему наблюдению",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "When did the pain become severe?",
+      "category": "Location",
+      "hint": "Klinik muloqot iborasi",
+      "hint_uz": "Klinik muloqot iborasi",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Where did it begin?",
+      "category": "Location",
+      "hint": "Klinik muloqot iborasi",
+      "hint_uz": "Klinik muloqot iborasi",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Have you had any previous abdominal surgery or known gallbladder problems?",
+      "category": "Location",
+      "hint": "Klinik muloqot iborasi",
+      "hint_uz": "Klinik muloqot iborasi",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Does the pain radiate to your back or shoulder?",
+      "category": "Triggers",
+      "hint": "Og'riq boshqa joyga (quloq, jag', bo'yin) tarqaladimi?",
+      "hint_uz": "Og'riq boshqa joyga (quloq, jag', bo'yin) tarqaladimi?",
+      "hint_ru": "Отдает (иррадиирует) ли боль в челюсть, ухо или шею?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    }
+  ],
+  "dialogue": [
+    {
+      "speaker": "Doctor",
+      "text": "Tell me what happened before the abdominal pain became severe."
+    },
+    {
+      "speaker": "Patient",
+      "text": "I had eaten a large meal about two hours earlier, and I had gone to bed feeling slightly nauseated."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "What had you eaten?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I had eaten fried meat, potatoes, and a rich dessert."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Had you experienced abdominal pain before you went to bed?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I had already noticed a dull discomfort, but I thought it was indigestion."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "When did the pain become severe?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "It woke me at around midnight. The pain was much stronger than it had been earlier."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Where did it begin?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "It started in the upper abdomen and later moved towards the right side."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Had you vomited before the pain became severe?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "No, I hadn't. I felt nauseated, but I didn't vomit until later. Nurse: His temperature is 38.1°C, pulse 112, and he appears uncomfortable."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Have you had any previous abdominal surgery or known gallbladder problems?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "No previous surgery. I've never been diagnosed with gallstones."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Had you eaten anything unusual before the symptoms started?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "No, although the meal had been much heavier than usual."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Does the pain radiate to your back or shoulder?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "It seems to go through to my back at times."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "I'm going to examine your abdomen now. Tell me if the pain becomes significantly worse when I press or release."
+    },
+    {
+      "speaker": "Patient",
+      "text": "It's particularly tender in the upper right side."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "We need to consider several possibilities, including biliary disease, pancreatitis, peptic pathology and other causes of acute abdominal pain."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Could it be appendicitis?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "It is less typical given the location, but we cannot exclude diagnoses solely on the basis of one symptom. Nurse: I'll prepare blood samples for the requested tests and arrange the imaging pathway."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "We'll check inflammatory markers, liver enzymes, pancreatic enzymes, renal function and other relevant investigations."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Will I need surgery?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "That depends entirely on what we find. At this stage, it would be premature to say that an operation is necessary."
+    },
+    {
+      "speaker": "Patient",
+      "text": "What should I do while we're waiting?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Remain fasting until we have clarified whether a procedure may be required, and tell us immediately if the pain, vomiting, or weakness becomes significantly worse."
+    },
+    {
+      "speaker": "Patient",
+      "text": "All right. I understand."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Good. The examination and investigation results will help us narrow the differential diagnosis and decide on the safest treatment."
+    }
+  ],
+  "tests": [
+    {
+      "question": "What is the medical meaning of the term 'acute abdominal pain' in clinical consultation?",
+      "option_a": "o'tkir qorin og'rig'i",
+      "option_b": "qorin og'rig'i",
+      "option_c": "kuchayib ketmoq",
+      "option_d": "katta miqdordagi ovqat",
+      "correct_option": "A",
+      "explanation": "'acute abdominal pain' atamasining to'g'ri ma'nosi: o'tkir qorin og'rig'i."
+    },
+    {
+      "question": "Which term corresponds to 'biroz ko'ngli aynigan'?",
+      "option_a": "abdominal pain",
+      "option_b": "slightly nauseated",
+      "option_c": "become severe",
+      "option_d": "large meal",
+      "correct_option": "B",
+      "explanation": "'biroz ko'ngli aynigan' ma'nosiga mos keluvchi tibbiy termin 'slightly nauseated' hisoblanadi."
+    },
+    {
+      "question": "Which of the following is the grammatically and clinically standard question to ask about the duration of symptoms?",
+      "option_a": "How long do you having this symptom?",
+      "option_b": "How long has this condition been bothering you?",
+      "option_c": "Since what time you have this problem?",
+      "option_d": "How many days you are feeling pain?",
+      "correct_option": "B",
+      "explanation": "Klinik anamnezda davomiylikni so'rash uchun Present Perfect Continuous ('How long has... been bothering you?') to'g'ri shakl hisoblanadi."
+    },
+    {
+      "question": "When evaluating acute pain, what is the best phrasing to assess pain character?",
+      "option_a": "Is your pain bad or very bad?",
+      "option_b": "Can you describe the pain—is it sharp, dull, throbbing, or aching?",
+      "option_c": "Why do you have sharp pain today?",
+      "option_d": "Stop pain with pills immediately.",
+      "correct_option": "B",
+      "explanation": "Og'riq xarakterini aniqlashda shifokor ochiq va taklif qiluvchi variantlar (sharp, dull, throbbing, aching) beradi."
+    }
+  ]
+}

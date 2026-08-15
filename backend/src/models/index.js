@@ -4,6 +4,7 @@ const StudentGroup = require('./StudentGroup');
 const User         = require('./User');
 const TeacherGroup = require('./TeacherGroup');
 const Module       = require('./Module');
+const Grammar      = require('./Grammar');
 const Vocabulary   = require('./Vocabulary');
 const Phrasebook   = require('./Phrasebook');
 const Conversation = require('./Conversation');
@@ -32,6 +33,10 @@ StudentGroup.belongsToMany(User, { through: TeacherGroup, foreignKey: 'group_id'
 // Module ↔ Specialty
 Module.belongsTo(Specialty, { foreignKey: 'specialty_id', as: 'specialty' });
 Specialty.hasMany(Module,   { foreignKey: 'specialty_id'                  });
+
+// Grammar ↔ Module
+Grammar.belongsTo(Module, { foreignKey: 'module_id' });
+Module.hasMany(Grammar,   { foreignKey: 'module_id', as: 'grammars' });
 
 // Vocabulary ↔ Module
 Vocabulary.belongsTo(Module, { foreignKey: 'module_id' });
@@ -79,6 +84,7 @@ module.exports = {
   User,
   TeacherGroup,
   Module,
+  Grammar,
   Vocabulary,
   Phrasebook,
   Conversation,

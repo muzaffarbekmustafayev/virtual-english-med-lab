@@ -1,4 +1,4 @@
-const { Module, Vocabulary, Phrasebook, Conversation, Message, Test, TestResult, User, ModuleResult } = require('../models');
+const { Module, Grammar, Vocabulary, Phrasebook, Conversation, Message, Test, TestResult, User, ModuleResult } = require('../models');
 const { getPatientReply, generateFeedback, checkGrammar, generatePatientScenario } = require('../services/gemini.service');
 
 // Modul natijalarini har safar qayta hisoblab saqlash
@@ -21,31 +21,30 @@ const recalculateAndSaveModuleResult = async (studentId, moduleId) => {
     let bestClinical = 0;
 
     convs.forEach(c => {
-      if (c.overall_score > bestChatScore) bestChatScore = c.overall_score;
-      if (c.grammar_score > bestGrammar) bestGrammar = c.grammar_score;
-      if (c.vocabulary_score > bestVocab) bestVocab = c.vocabulary_score;
-      if (c.fluency_score > bestFluency) bestFluency = c.fluency_score;
-      if (c.pronunciation_score > bestPron) bestPron = c.pronunciation_score;
-      if (c.clinical_score > bestClinical) bestClinical = c.clinical_score;
+      if ((c.overall_score || 0) > bestChatScore) bestChatScore = c.overall_score;
+      if ((c.grammar_score || 0) > bestGrammar) bestGrammar = c.grammar_score;
+      if ((c.vocabulary_score || 0) > bestVocab) bestVocab = c.vocabulary_score;
+      if ((c.fluency_score || 0) > bestFluency) bestFluency = c.fluency_score;
+      if ((c.pronunciation_score || 0) > bestPron) bestPron = c.pronunciation_score;
+      if ((c.clinical_score || 0) > bestClinical) bestClinical = c.clinical_score;
     });
 
     let bestQuizScore = 0;
     tests.forEach(t => {
-      if (t.score > bestQuizScore) bestQuizScore = t.score;
+      if ((t.score || 0) > bestQuizScore) bestQuizScore = t.score;
     });
 
-    const hasChat = convs.length > 0;
-    const hasQuiz = tests.length > 0;
+    // Weighted composite score: 30% quiz + 70% clinical chat when both attempted
     let combinedScore = 0;
-    if (hasChat && hasQuiz) {
-      combinedScore = Math.round((bestChatScore + bestQuizScore) / 2);
-    } else if (hasChat) {
+    if (bestChatScore > 0 && bestQuizScore > 0) {
+      combinedScore = Math.round(bestQuizScore * 0.3 + bestChatScore * 0.7);
+    } else if (bestChatScore > 0) {
       combinedScore = bestChatScore;
-    } else if (hasQuiz) {
+    } else if (bestQuizScore > 0) {
       combinedScore = bestQuizScore;
     }
 
-    const isCompleted = (bestChatScore >= 60 && bestQuizScore >= 60) || combinedScore >= 70;
+    const isCompleted = combinedScore >= 60 || bestChatScore >= 60;
 
     let [modRes] = await ModuleResult.findOrCreate({
       where: { student_id: studentId, module_id: moduleId },
@@ -95,35 +94,60 @@ const getModules = async (req, res) => {
         where: { student_id: req.user.id, module_id: m.id, status: 'completed' },
         order: [['overall_score', 'DESC']],
       });
-      const testResult = await TestResult.findOne({
-        where: { student_id: req.user.id, module_id: m.id },
-        order: [['score', 'DESC']],
+      const modRes = await ModuleResult.findOne({
+        where: { student_id: req.user.id, module_id: m.id }
       });
       
-      const testScore = testResult ? testResult.score : 0;
-      const chatScore = conv ? conv.overall_score : 0;
-      const hasAnyScore = !!(testResult || conv);
-      const avg_score = hasAnyScore ? Math.round((testScore + chatScore) / 2) : null;
+      const chatScore = conv ? (conv.overall_score || 0) : 0;
+      const combinedScore = modRes ? (modRes.combined_score || 0) : chatScore;
+      const bestScore = Math.max(chatScore, combinedScore);
 
-      // 60% dan oshsa yakunlangan hisoblanadi
-      const is_completed = testScore >= 60 && chatScore >= 60;
+      const is_completed = bestScore >= 60 || (modRes && modRes.is_completed);
       const is_unlocked = prevPassed;
       
       results.push({
         ...m.toJSON(),
         is_completed: is_completed,
-        best_score: avg_score,
+        best_score: bestScore > 0 ? bestScore : null,
         is_unlocked: is_unlocked
       });
       
-      // Keyingi modul faqat ushbu modul kamida 60% bilan yakunlanganda ochiladi
-      prevPassed = is_completed && (avg_score !== null && avg_score >= 60);
+      prevPassed = is_completed;
     }
 
     res.json(results);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+};
+
+const { Op } = require('sequelize');
+
+// Modul talaba uchun ochiq ekanligini tekshirish (1-modul har doim ochiq, keyingilar avvalgilar 60%+ o'tilgan bo'lsa)
+const checkModuleUnlocked = async (studentId, specialtyId, targetModule) => {
+  if (!targetModule) return { unlocked: false };
+  if (targetModule.order_index <= 1) return { unlocked: true };
+
+  const prevModules = await Module.findAll({
+    where: {
+      specialty_id: specialtyId,
+      order_index: { [Op.lt]: targetModule.order_index }
+    },
+    order: [['order_index', 'ASC']]
+  });
+
+  for (let pm of prevModules) {
+    const conv = await Conversation.findOne({
+      where: { student_id: studentId, module_id: pm.id, status: 'completed' },
+      order: [['overall_score', 'DESC']]
+    });
+    const passed = conv && conv.overall_score >= 60;
+    if (!passed) {
+      return { unlocked: false };
+    }
+  }
+
+  return { unlocked: true };
 };
 
 // ── GET /api/student/modules/:id ────────────────────────────
@@ -133,6 +157,10 @@ const getModuleById = async (req, res) => {
       attributes: { exclude: ['patient_context', 'final_challenge_context'] },
     });
     if (!module) return res.status(404).json({ error: 'Modul topilmadi' });
+
+    const { unlocked } = await checkModuleUnlocked(req.user.id, req.user.specialty_id, module);
+    if (!unlocked) return res.status(403).json({ error: 'Modul qulflangan. Avvalgi modullarni kamida 60% ga yakunlang.' });
+
     res.json(module);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -142,6 +170,14 @@ const getModuleById = async (req, res) => {
 // ── GET /api/student/modules/:id/progress ───────────────────
 const getModuleProgress = async (req, res) => {
   try {
+    const currentModule = await Module.findByPk(req.params.id, {
+      attributes: ['id', 'order_index', 'specialty_id']
+    });
+    if (!currentModule) return res.status(404).json({ error: 'Modul topilmadi' });
+
+    const { unlocked } = await checkModuleUnlocked(req.user.id, req.user.specialty_id, currentModule);
+    if (!unlocked) return res.status(403).json({ error: 'Modul qulflangan. Avvalgi modullarni kamida 60% ga yakunlang.' });
+
     const lastConversation = await Conversation.findOne({
       where: { student_id: req.user.id, module_id: req.params.id, status: 'completed' },
       order: [['overall_score', 'DESC']],
@@ -163,6 +199,18 @@ const getModuleProgress = async (req, res) => {
       where: { student_id: req.user.id, module_id: req.params.id }
     });
 
+    // Keyingi modulni topish (Op.gt bilan eng birinchi tartibdagi)
+    let nextModule = null;
+    const next = await Module.findOne({
+      where: {
+        specialty_id: currentModule.specialty_id,
+        order_index: { [Op.gt]: currentModule.order_index }
+      },
+      order: [['order_index', 'ASC']],
+      attributes: ['id', 'title', 'order_index']
+    });
+    if (next) nextModule = { id: next.id, title: next.title, order_index: next.order_index };
+
     res.json({
       last_conversation: lastConversation ? {
         id: lastConversation.id,
@@ -176,10 +224,26 @@ const getModuleProgress = async (req, res) => {
         errors: parsedFeedback.errors || []
       } : null,
       test_result: testResult ? {
-        score: testResult.score
+        score: testResult.score,
+        correct: testResult.correct,
+        total: testResult.total
       } : null,
-      module_result: moduleResult || null
+      module_result: moduleResult || null,
+      next_module: nextModule
     });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ── GET /api/student/modules/:id/grammar ────────────────────
+const getGrammar = async (req, res) => {
+  try {
+    const items = await Grammar.findAll({
+      where: { module_id: req.params.id },
+      order: [['step_order', 'ASC'], ['id', 'ASC']],
+    });
+    res.json(items);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -318,16 +382,29 @@ const finalizeConversation = async (req, res) => {
     if (messages.length < 2 && !req.body.test_mode)
       return res.status(400).json({ error: 'Baholash uchun kamida bitta xabar kerak' });
 
+    // Modulning asosiy Vocabulary va Phrasebook iboralarini yuklash
+    const [vocabularies, phrases, currentMod] = await Promise.all([
+      Vocabulary.findAll({ where: { module_id: conversation.module_id } }),
+      Phrasebook.findAll({ where: { module_id: conversation.module_id } }),
+      Module.findByPk(conversation.module_id, { attributes: ['id', 'title'] }),
+    ]);
+
     // Gemini AI Feedback (yoki test rejim uchun 100%)
     let feedback;
     if (req.body.test_mode) {
       feedback = {
         grammar_score: 10, vocabulary_score: 10, fluency_score: 10, pronunciation_score: 10, clinical_score: 10, overall_score: 100,
+        target_vocab_used: vocabularies.slice(0, 3).map(v => v.word),
+        target_phrases_used: phrases.slice(0, 2).map(p => p.phrase),
         general_feedback: "Test rejimida muvaffaqiyatli (100%) yakunlandi.",
         errors: []
       };
     } else {
-      feedback = await generateFeedback(messages);
+      feedback = await generateFeedback(messages, {
+        vocabulary: vocabularies.map(v => v.word),
+        phrases: phrases.map(p => p.phrase),
+        moduleTitle: currentMod?.title || ''
+      });
     }
 
     // Natijalarni saqlash
@@ -413,12 +490,12 @@ const getTests = async (req, res) => {
 // ── POST /api/student/modules/:id/tests/submit ──────────────
 const submitTest = async (req, res) => {
   try {
-    const { answers } = req.body; // { questionId: 'A', ... }
+    const { answers = {} } = req.body; // { questionId: 'A', ... }
     const tests = await Test.findAll({ where: { module_id: req.params.id } });
 
     let correct = 0;
     const results = tests.map((t) => {
-      const isCorrect = String(answers[t.id]).toLowerCase() === String(t.correct_option).toLowerCase();
+      const isCorrect = String(answers[t.id] || '').toLowerCase().trim() === String(t.correct_option || '').toLowerCase().trim();
       if (isCorrect) correct++;
       return {
         question_id: t.id,
@@ -428,21 +505,23 @@ const submitTest = async (req, res) => {
       };
     });
 
-    const score = Math.round((correct / tests.length) * 100);
+    const total = tests.length || 1;
+    const score = Math.round((correct / total) * 100);
+    const passed = score >= 60;
 
     await TestResult.create({
       student_id: req.user.id,
       module_id: req.params.id,
       score,
       correct,
-      total: tests.length,
+      total,
       results
     });
 
     // Modul yakuniy natijasini saqlash va yangilash
     await recalculateAndSaveModuleResult(req.user.id, req.params.id);
 
-    res.json({ score, correct, total: tests.length, results });
+    res.json({ score, correct, total, passed, results });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -469,30 +548,71 @@ const getDashboard = async (req, res) => {
       attributes: ['id', 'title', 'order_index'],
     });
 
-    const completedModules = await TestResult.findAll({
-      where: { student_id: req.user.id },
+    const moduleIds = modules.map(m => m.id);
+
+    // Get all completed module results
+    const moduleResults = await ModuleResult.findAll({
+      where: {
+        student_id: req.user.id,
+        module_id: { [Op.in]: moduleIds }
+      }
     });
 
-    const { Op } = require('sequelize');
-    const conversations = await Conversation.findAll({
-      where: { student_id: req.user.id, status: 'completed', overall_score: { [Op.gt]: 0 } },
+    // Get all completed conversations
+    const allConvs = await Conversation.findAll({
+      where: {
+        student_id: req.user.id,
+        status: 'completed',
+        overall_score: { [Op.gt]: 0 }
+      },
       order: [['created_at', 'DESC']],
-      limit: 5,
-      include: [{ model: Module, as: 'module', attributes: ['title'] }],
+      include: [{ model: Module, as: 'module', attributes: ['title', 'order_index'] }],
     });
 
-    const avgScore = conversations.length
-      ? Math.round(conversations.reduce((s, c) => s + c.overall_score, 0) / conversations.length)
-      : 0;
+    // Count unique completed modules (where score >= 60)
+    const passedModuleIds = new Set();
+    moduleResults.forEach(mr => {
+      if (mr.is_completed || mr.combined_score >= 60 || mr.best_chat_score >= 60) {
+        passedModuleIds.add(mr.module_id);
+      }
+    });
+    allConvs.forEach(c => {
+      if (c.overall_score >= 60) {
+        passedModuleIds.add(c.module_id);
+      }
+    });
+
+    const completedCount = passedModuleIds.size;
+    const totalCount = modules.length || 10;
+    const progressPercent = totalCount > 0 ? Math.min(100, Math.round((completedCount / totalCount) * 100)) : 0;
+
+    // Calculate true average of best scores per attempted module
+    const moduleBestScores = new Map();
+    allConvs.forEach(c => {
+      const current = moduleBestScores.get(c.module_id) || 0;
+      if (c.overall_score > current) moduleBestScores.set(c.module_id, c.overall_score);
+    });
+    moduleResults.forEach(mr => {
+      const current = moduleBestScores.get(mr.module_id) || 0;
+      const best = Math.max(mr.combined_score || 0, mr.best_chat_score || 0);
+      if (best > current) moduleBestScores.set(mr.module_id, best);
+    });
+
+    let avgScore = 0;
+    if (moduleBestScores.size > 0) {
+      let sum = 0;
+      for (const val of moduleBestScores.values()) {
+        sum += val;
+      }
+      avgScore = Math.round(sum / moduleBestScores.size);
+    }
 
     res.json({
-      total_modules: modules.length,
-      completed_modules: completedModules.length,
-      progress_percent: modules.length
-        ? Math.round((completedModules.length / modules.length) * 100)
-        : 0,
+      total_modules: totalCount,
+      completed_modules: completedCount,
+      progress_percent: progressPercent,
       average_score: avgScore,
-      recent_activity: conversations,
+      recent_activity: allConvs.slice(0, 5),
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -500,7 +620,7 @@ const getDashboard = async (req, res) => {
 };
 
 module.exports = {
-  getModules, getModuleById, getVocabulary, getPhrasebook,
+  getModules, getModuleById, getGrammar, getVocabulary, getPhrasebook,
   startConversation, sendMessage, finalizeConversation,
   getFeedback, getMessages, getTests, submitTest,
   grammarCheck, getDashboard, getModuleProgress

@@ -1,0 +1,1109 @@
+{
+  "specialty_id": 1,
+  "specialty_name": "Stomatologiya",
+  "order_index": 2,
+  "title": "Tooth Extraction Consultation",
+  "title_uz": "Tishni sug'urish bo'yicha maslahat",
+  "title_ru": "Консультация по удалению зуба",
+  "title_en": "Tooth Extraction Consultation",
+  "description": "Stomatologiya bo'yicha Tishni sug'urish bo'yicha maslahat mavzusida klinik muloqot va tibbiy ingliz tili darsi.",
+  "clinical_level": "B2 Medical English",
+  "target_role": "Dental Clinician / Attending Physician",
+  "scenario_prompt": "You are a virtual patient presenting with symptoms related to Tooth Extraction Consultation. Speak in natural, everyday patient English.",
+  "patient_profile": {
+    "age": 36,
+    "gender": "Female",
+    "chief_complaint": "Tishni sug'urish bo'yicha maslahat",
+    "history": "Patient presents with complaints of tooth extraction consultation."
+  },
+  "grammar": [
+    {
+      "title": "GRAMMAR - Present Perfect Continuous & Future Simple",
+      "title_uz": "GRAMMAR - Present Perfect Continuous & Future Simple",
+      "title_ru": "GRAMMAR - Present Perfect Continuous & Future Simple",
+      "title_en": "GRAMMAR - Present Perfect Continuous & Future Simple",
+      "rule_explanation": "Klinik muloqotda aniq grammatik qoidalar bemor holatini to'g'ri baholashga yordam beradi.",
+      "rule_explanation_uz": "Klinik muloqotda aniq grammatik qoidalar bemor holatini to'g'ri baholashga yordam beradi.",
+      "rule_explanation_ru": "В клиническом диалоге точные грамматические структуры помогают быстрее понять жалобы пациента.",
+      "rule_explanation_en": "Using precise clinical grammatical structures enables clear patient history taking and assessment.",
+      "structure_pattern": "Subject + have / has + been + V-ing | Subject + will + V1",
+      "examples": [
+        {
+          "sentence": "I've been trying to use the other side of my mouth.",
+          "translation": "Og'zimning boshqa tomonidan foydalanishga harakat qilyapman.",
+          "translation_uz": "Og'zimning boshqa tomonidan foydalanishga harakat qilyapman.",
+          "translation_ru": "Я стараюсь пользоваться другой стороной рта.",
+          "note": "Clinical Dialogue Example"
+        },
+        {
+          "sentence": "Tooth Extraction",
+          "translation": "Примечание: Основные английские примеры в этом файле взяты непосредственно из диалога \"Tooth Extraction\".",
+          "translation_uz": "Примечание: Основные английские примеры в этом файле взяты непосредственно из диалога \"Tooth Extraction\".",
+          "translation_ru": "",
+          "note": "Clinical Dialogue Example"
+        },
+        {
+          "sentence": "I've been having severe pain...",
+          "translation": "…dan beri davom etmoqda",
+          "translation_uz": "…dan beri davom etmoqda",
+          "translation_ru": "продолжается уже некоторое время",
+          "note": "I've been having severe pain..."
+        },
+        {
+          "sentence": "I've been trying to use...",
+          "translation": "… qilishga harakat qilyapman",
+          "translation_uz": "… qilishga harakat qilyapman",
+          "translation_ru": "пытаюсь что-то делать в течение некоторого времени",
+          "note": "I've been trying to use..."
+        },
+        {
+          "sentence": "We'll use a local anaesthetic...",
+          "translation": "… qilamiz",
+          "translation_uz": "… qilamiz",
+          "translation_ru": "мы будем / сделаем",
+          "note": "We'll use a local anaesthetic..."
+        },
+        {
+          "sentence": "I'll give you the local anaesthetic...",
+          "translation": "… qilaman",
+          "translation_uz": "… qilaman",
+          "translation_ru": "я сделаю / я введу",
+          "note": "I'll give you the local anaesthetic..."
+        },
+        {
+          "sentence": "How long will the procedure take?",
+          "translation": "… qancha vaqt davom etadi?",
+          "translation_uz": "… qancha vaqt davom etadi?",
+          "translation_ru": "сколько времени займёт...?",
+          "note": "How long will the procedure take?"
+        },
+        {
+          "sentence": "Vaziyat / Ситуация",
+          "translation": "Kelajakda sodir bo'ladi yoki qilinadi.",
+          "translation_uz": "Kelajakda sodir bo'ladi yoki qilinadi.",
+          "translation_ru": "Началось в прошлом и продолжается сейчас. / Произойдёт или будет выполнено в будущем.",
+          "note": "Oldin boshlangan va hozirgacha davom etmoqda."
+        }
+      ],
+      "common_mistakes": [
+        {
+          "incorrect": "Since when you feel this pain?",
+          "correct": "How long have you had this pain?",
+          "explanation": "Davomiylikni so'rashda 'How long have you had...?' standarti ishlatiladi.",
+          "explanation_uz": "Davomiylikni so'rashda 'How long have you had...?' standarti ishlatiladi.",
+          "explanation_ru": "Для выяснения длительности используется конструкция 'How long have you had...?'.",
+          "explanation_en": "Use 'How long have you had...?' when asking about the duration of symptoms."
+        },
+        {
+          "incorrect": "Where is paining you?",
+          "correct": "Where exactly do you feel the pain?",
+          "explanation": "Lokatsiyani aniqlashda 'Where do you feel the pain?' to'g'ri grammatik shakl.",
+          "explanation_uz": "Lokatsiyani aniqlashda 'Where do you feel the pain?' to'g'ri grammatik shakl.",
+          "explanation_ru": "Правильный вопрос о локализации боли: 'Where exactly do you feel the pain?'.",
+          "explanation_en": "Ask 'Where exactly do you feel the pain?' to identify the specific anatomical site."
+        }
+      ],
+      "structure_pattern_en": "Subject + have / has + been + V-ing | Subject + will + V1",
+      "structure_pattern_uz": "Ega (Subject) + have / has + been + V-ing | Ega + will + V1 (Asosiy fe'l)",
+      "structure_pattern_ru": "Подлежащее (Subject) + have / has + been + V-ing | Подлежащее + will + V1"
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "severe pain",
+      "translation": "kuchli og'riq",
+      "translation_uz": "kuchli og'riq",
+      "translation_ru": "сильная боль",
+      "translation_en": "severe pain",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing severe pain.",
+      "definition_uz": "kuchli og'riq - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "сильная боль - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing severe pain.",
+      "example": "The doctor assessed the patient for severe pain."
+    },
+    {
+      "word": "lower right tooth",
+      "translation": "pastki o'ng tish",
+      "translation_uz": "pastki o'ng tish",
+      "translation_ru": "нижний правый зуб",
+      "translation_en": "lower right tooth",
+      "definition": "Clinical medical condition and symptom associated with lower right tooth.",
+      "definition_uz": "pastki o'ng tish - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "нижний правый зуб - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with lower right tooth.",
+      "example": "The doctor assessed the patient for lower right tooth."
+    },
+    {
+      "word": "toothache",
+      "translation": "tish og'rig'i",
+      "translation_uz": "tish og'rig'i",
+      "translation_ru": "зубная боль",
+      "translation_en": "toothache",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing toothache.",
+      "definition_uz": "tish og'rig'i - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "зубная боль - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing toothache.",
+      "example": "The doctor assessed the patient for toothache."
+    },
+    {
+      "word": "get worse",
+      "translation": "yomonlashmoq",
+      "translation_uz": "yomonlashmoq",
+      "translation_ru": "ухудшаться",
+      "translation_en": "get worse",
+      "definition": "Clinical medical condition and symptom associated with get worse.",
+      "definition_uz": "yomonlashmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "ухудшаться - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with get worse.",
+      "example": "The doctor assessed the patient for get worse."
+    },
+    {
+      "word": "chew",
+      "translation": "chaynamoq",
+      "translation_uz": "chaynamoq",
+      "translation_ru": "жевать",
+      "translation_en": "chew",
+      "definition": "Clinical medical condition and symptom associated with chew.",
+      "definition_uz": "chaynamoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "жевать - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with chew.",
+      "example": "The doctor assessed the patient for chew."
+    },
+    {
+      "word": "put pressure on the tooth",
+      "translation": "tishga bosim bermoq",
+      "translation_uz": "tishga bosim bermoq",
+      "translation_ru": "давить на зуб",
+      "translation_en": "put pressure on the tooth",
+      "definition": "Clinical medical condition and symptom associated with put pressure on the tooth.",
+      "definition_uz": "tishga bosim bermoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "давить на зуб - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with put pressure on the tooth.",
+      "example": "The doctor assessed the patient for put pressure on the tooth."
+    },
+    {
+      "word": "examine the tooth",
+      "translation": "tishni tekshirmoq",
+      "translation_uz": "tishni tekshirmoq",
+      "translation_ru": "осмотреть зуб",
+      "translation_en": "examine the tooth",
+      "definition": "Clinical medical condition and symptom associated with examine the tooth.",
+      "definition_uz": "tishni tekshirmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "осмотреть зуб - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with examine the tooth.",
+      "example": "The doctor assessed the patient for examine the tooth."
+    },
+    {
+      "word": "X-ray",
+      "translation": "rentgen",
+      "translation_uz": "rentgen",
+      "translation_ru": "рентген",
+      "translation_en": "X-ray",
+      "definition": "Clinical medical condition and symptom associated with x-ray.",
+      "definition_uz": "rentgen - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "рентген - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with x-ray.",
+      "example": "The doctor assessed the patient for x-ray."
+    },
+    {
+      "word": "underneath the gum",
+      "translation": "milk ostida",
+      "translation_uz": "milk ostida",
+      "translation_ru": "под десной",
+      "translation_en": "underneath the gum",
+      "definition": "Inflammatory disease affecting the gingival tissues and periodontal support of teeth.",
+      "definition_uz": "Milk to'qimalari va tishni ushlab turuvchi parodont to'qimalarining yallig'lanishi.",
+      "definition_ru": "Воспалительное поражение десен и удерживающих тканей пародонта.",
+      "definition_en": "Inflammatory disease affecting the gingival tissues and periodontal support of teeth.",
+      "example": "The doctor assessed the patient for underneath the gum."
+    },
+    {
+      "word": "badly damaged",
+      "translation": "qattiq shikastlangan",
+      "translation_uz": "qattiq shikastlangan",
+      "translation_ru": "сильно повреждённый",
+      "translation_en": "badly damaged",
+      "definition": "Clinical medical condition and symptom associated with badly damaged.",
+      "definition_uz": "qattiq shikastlangan - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "сильно повреждённый - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with badly damaged.",
+      "example": "The doctor assessed the patient for badly damaged."
+    },
+    {
+      "word": "infection",
+      "translation": "infeksiya",
+      "translation_uz": "infeksiya",
+      "translation_ru": "инфекция",
+      "translation_en": "infection",
+      "definition": "Clinical medical condition and symptom associated with infection.",
+      "definition_uz": "infeksiya - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "инфекция - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with infection.",
+      "example": "The doctor assessed the patient for infection."
+    },
+    {
+      "word": "surrounding area",
+      "translation": "atrofdagi soha",
+      "translation_uz": "atrofdagi soha",
+      "translation_ru": "окружающая область",
+      "translation_en": "surrounding area",
+      "definition": "Clinical medical condition and symptom associated with surrounding area.",
+      "definition_uz": "atrofdagi soha - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "окружающая область - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with surrounding area.",
+      "example": "The doctor assessed the patient for surrounding area."
+    },
+    {
+      "word": "tooth extraction",
+      "translation": "tish sug'urish",
+      "translation_uz": "tish sug'urish",
+      "translation_ru": "удаление зуба",
+      "translation_en": "tooth extraction",
+      "definition": "Surgical extraction of a non-restorable tooth from the alveolar bone socket.",
+      "definition_uz": "Davolash imkoni bo'lmagan tishni jag' suyagi katakchasidan jarrohlik yo'li bilan sug'urib olish.",
+      "definition_ru": "Хирургическое удаление зуба из костной альвеолы.",
+      "definition_en": "Surgical extraction of a non-restorable tooth from the alveolar bone socket.",
+      "example": "The doctor assessed the patient for tooth extraction."
+    },
+    {
+      "word": "safest option",
+      "translation": "eng xavfsiz variant",
+      "translation_uz": "eng xavfsiz variant",
+      "translation_ru": "самый безопасный вариант",
+      "translation_en": "safest option",
+      "definition": "Clinical medical condition and symptom associated with safest option.",
+      "definition_uz": "eng xavfsiz variant - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "самый безопасный вариант - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with safest option.",
+      "example": "The doctor assessed the patient for safest option."
+    },
+    {
+      "word": "local anaesthetic",
+      "translation": "mahalliy og'riqsizlantiruvchi",
+      "translation_uz": "mahalliy og'riqsizlantiruvchi",
+      "translation_ru": "местная анестезия",
+      "translation_en": "local anaesthetic",
+      "definition": "Clinical medical condition and symptom associated with local anaesthetic.",
+      "definition_uz": "mahalliy og'riqsizlantiruvchi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "местная анестезия - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with local anaesthetic.",
+      "example": "The doctor assessed the patient for local anaesthetic."
+    },
+    {
+      "word": "numb the area",
+      "translation": "joyni uvushtirmoq",
+      "translation_uz": "joyni uvushtirmoq",
+      "translation_ru": "обезболить область",
+      "translation_en": "numb the area",
+      "definition": "Clinical medical condition and symptom associated with numb the area.",
+      "definition_uz": "joyni uvushtirmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "обезболить область - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with numb the area.",
+      "example": "The doctor assessed the patient for numb the area."
+    },
+    {
+      "word": "sharp pain",
+      "translation": "o'tkir og'riq",
+      "translation_uz": "o'tkir og'riq",
+      "translation_ru": "резкая боль",
+      "translation_en": "sharp pain",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing sharp pain.",
+      "definition_uz": "o'tkir og'riq - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "резкая боль - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing sharp pain.",
+      "example": "The doctor assessed the patient for sharp pain."
+    },
+    {
+      "word": "pressure",
+      "translation": "bosim",
+      "translation_uz": "bosim",
+      "translation_ru": "давление",
+      "translation_en": "pressure",
+      "definition": "Clinical medical condition and symptom associated with pressure.",
+      "definition_uz": "bosim - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "давление - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with pressure.",
+      "example": "The doctor assessed the patient for pressure."
+    },
+    {
+      "word": "procedure",
+      "translation": "muolaja",
+      "translation_uz": "muolaja",
+      "translation_ru": "процедура",
+      "translation_en": "procedure",
+      "definition": "Clinical medical condition and symptom associated with procedure.",
+      "definition_uz": "muolaja - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "процедура - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with procedure.",
+      "example": "The doctor assessed the patient for procedure."
+    },
+    {
+      "word": "medication",
+      "translation": "dori-darmon",
+      "translation_uz": "dori-darmon",
+      "translation_ru": "лекарство",
+      "translation_en": "medication",
+      "definition": "Clinical medical condition and symptom associated with medication.",
+      "definition_uz": "dori-darmon - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "лекарство - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with medication.",
+      "example": "The doctor assessed the patient for medication."
+    },
+    {
+      "word": "allergic to medication",
+      "translation": "doriga allergiyasi bo'lmoq",
+      "translation_uz": "doriga allergiyasi bo'lmoq",
+      "translation_ru": "иметь аллергию на лекарство",
+      "translation_en": "allergic to medication",
+      "definition": "Clinical medical condition and symptom associated with allergic to medication.",
+      "definition_uz": "doriga allergiyasi bo'lmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "иметь аллергию на лекарство - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with allergic to medication.",
+      "example": "The doctor assessed the patient for allergic to medication."
+    },
+    {
+      "word": "gauze",
+      "translation": "doka",
+      "translation_uz": "doka",
+      "translation_ru": "марля",
+      "translation_en": "gauze",
+      "definition": "Clinical medical condition and symptom associated with gauze.",
+      "definition_uz": "doka - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "марля - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with gauze.",
+      "example": "The doctor assessed the patient for gauze."
+    },
+    {
+      "word": "extraction site",
+      "translation": "tish sug'urilgan joy",
+      "translation_uz": "tish sug'urilgan joy",
+      "translation_ru": "место удаления зуба",
+      "translation_en": "extraction site",
+      "definition": "Surgical extraction of a non-restorable tooth from the alveolar bone socket.",
+      "definition_uz": "Davolash imkoni bo'lmagan tishni jag' suyagi katakchasidan jarrohlik yo'li bilan sug'urib olish.",
+      "definition_ru": "Хирургическое удаление зуба из костной альвеолы.",
+      "definition_en": "Surgical extraction of a non-restorable tooth from the alveolar bone socket.",
+      "example": "The doctor assessed the patient for extraction site."
+    },
+    {
+      "word": "bite down",
+      "translation": "tishlab bosib turmoq",
+      "translation_uz": "tishlab bosib turmoq",
+      "translation_ru": "прикусить",
+      "translation_en": "bite down",
+      "definition": "Clinical medical condition and symptom associated with bite down.",
+      "definition_uz": "tishlab bosib turmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "прикусить - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with bite down.",
+      "example": "The doctor assessed the patient for bite down."
+    },
+    {
+      "word": "firmly",
+      "translation": "mahkam",
+      "translation_uz": "mahkam",
+      "translation_ru": "крепко",
+      "translation_en": "firmly",
+      "definition": "Clinical medical condition and symptom associated with firmly.",
+      "definition_uz": "mahkam - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "крепко - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with firmly.",
+      "example": "The doctor assessed the patient for firmly."
+    },
+    {
+      "word": "blood clot",
+      "translation": "qon ivig'i",
+      "translation_uz": "qon ivig'i",
+      "translation_ru": "сгусток крови",
+      "translation_en": "blood clot",
+      "definition": "Clinical medical condition and symptom associated with blood clot.",
+      "definition_uz": "qon ivig'i - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "сгусток крови - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with blood clot.",
+      "example": "The doctor assessed the patient for blood clot."
+    },
+    {
+      "word": "rinse your mouth",
+      "translation": "og'izni chaymoq",
+      "translation_uz": "og'izni chaymoq",
+      "translation_ru": "полоскать рот",
+      "translation_en": "rinse your mouth",
+      "definition": "Clinical medical condition and symptom associated with rinse your mouth.",
+      "definition_uz": "og'izni chaymoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "полоскать рот - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with rinse your mouth.",
+      "example": "The doctor assessed the patient for rinse your mouth."
+    },
+    {
+      "word": "vigorously",
+      "translation": "kuchli tarzda",
+      "translation_uz": "kuchli tarzda",
+      "translation_ru": "интенсивно",
+      "translation_en": "vigorously",
+      "definition": "Clinical medical condition and symptom associated with vigorously.",
+      "definition_uz": "kuchli tarzda - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "интенсивно - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with vigorously.",
+      "example": "The doctor assessed the patient for vigorously."
+    },
+    {
+      "word": "disturb",
+      "translation": "buzmoq / joyidan qo'zg'atmoq",
+      "translation_uz": "buzmoq / joyidan qo'zg'atmoq",
+      "translation_ru": "нарушить / сместить",
+      "translation_en": "disturb",
+      "definition": "Clinical medical condition and symptom associated with disturb.",
+      "definition_uz": "buzmoq / joyidan qo'zg'atmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "нарушить / сместить - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with disturb.",
+      "example": "The doctor assessed the patient for disturb."
+    },
+    {
+      "word": "brush your teeth",
+      "translation": "tishlarni yuvmoq",
+      "translation_uz": "tishlarni yuvmoq",
+      "translation_ru": "чистить зубы",
+      "translation_en": "brush your teeth",
+      "definition": "Clinical medical condition and symptom associated with brush your teeth.",
+      "definition_uz": "tishlarni yuvmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "чистить зубы - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with brush your teeth.",
+      "example": "The doctor assessed the patient for brush your teeth."
+    },
+    {
+      "word": "be gentle",
+      "translation": "ehtiyotkor bo'lmoq",
+      "translation_uz": "ehtiyotkor bo'lmoq",
+      "translation_ru": "быть осторожным",
+      "translation_en": "be gentle",
+      "definition": "Clinical medical condition and symptom associated with be gentle.",
+      "definition_uz": "ehtiyotkor bo'lmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "быть осторожным - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with be gentle.",
+      "example": "The doctor assessed the patient for be gentle."
+    },
+    {
+      "word": "painkiller",
+      "translation": "og'riq qoldiruvchi",
+      "translation_uz": "og'riq qoldiruvchi",
+      "translation_ru": "обезболивающее",
+      "translation_en": "painkiller",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing painkiller.",
+      "definition_uz": "og'riq qoldiruvchi - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "обезболивающее - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing painkiller.",
+      "example": "The doctor assessed the patient for painkiller."
+    },
+    {
+      "word": "swelling",
+      "translation": "shish",
+      "translation_uz": "shish",
+      "translation_ru": "отёк",
+      "translation_en": "swelling",
+      "definition": "Localized enlargement or accumulation of inflammatory fluid and pus in tissue spaces.",
+      "definition_uz": "To'qimalarda yallig'lanish, suyuqlik yoki yiring to'planishi tufayli yuzaga kelgan shish.",
+      "definition_ru": "Воспалительное увеличение или скопление гнойного экссудата в тканях.",
+      "definition_en": "Localized enlargement or accumulation of inflammatory fluid and pus in tissue spaces.",
+      "example": "The doctor assessed the patient for swelling."
+    },
+    {
+      "word": "severe swelling",
+      "translation": "kuchli shish",
+      "translation_uz": "kuchli shish",
+      "translation_ru": "сильный отёк",
+      "translation_en": "severe swelling",
+      "definition": "Localized enlargement or accumulation of inflammatory fluid and pus in tissue spaces.",
+      "definition_uz": "To'qimalarda yallig'lanish, suyuqlik yoki yiring to'planishi tufayli yuzaga kelgan shish.",
+      "definition_ru": "Воспалительное увеличение или скопление гнойного экссудата в тканях.",
+      "definition_en": "Localized enlargement or accumulation of inflammatory fluid and pus in tissue spaces.",
+      "example": "The doctor assessed the patient for severe swelling."
+    },
+    {
+      "word": "persistent bleeding",
+      "translation": "davomli qon ketishi",
+      "translation_uz": "davomli qon ketishi",
+      "translation_ru": "продолжающееся кровотечение",
+      "translation_en": "persistent bleeding",
+      "definition": "Escape of blood from damaged blood vessels or inflamed gingival margins.",
+      "definition_uz": "Shikastlangan qon tomirlari yoki yallig'langan milkdan qon ketishi.",
+      "definition_ru": "Кровоточивость из поврежденных сосудов или воспаленных десен.",
+      "definition_en": "Escape of blood from damaged blood vessels or inflamed gingival margins.",
+      "example": "The doctor assessed the patient for persistent bleeding."
+    },
+    {
+      "word": "fever",
+      "translation": "isitma",
+      "translation_uz": "isitma",
+      "translation_ru": "температура / лихорадка",
+      "translation_en": "fever",
+      "definition": "Systemic elevation of body core temperature in response to an infectious process.",
+      "definition_uz": "Infeksion yallig'lanish jarayoniga javoban tana haroratining ko'tarilishi.",
+      "definition_ru": "Повышение температуры тела в ответ на инфекционный процесс.",
+      "definition_en": "Systemic elevation of body core temperature in response to an infectious process.",
+      "example": "The doctor assessed the patient for fever."
+    },
+    {
+      "word": "increasing pain",
+      "translation": "kuchayib borayotgan og'riq",
+      "translation_uz": "kuchayib borayotgan og'riq",
+      "translation_ru": "усиливающаяся боль",
+      "translation_en": "increasing pain",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing increasing pain.",
+      "definition_uz": "kuchayib borayotgan og'riq - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "усиливающаяся боль - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing increasing pain.",
+      "example": "The doctor assessed the patient for increasing pain."
+    },
+    {
+      "word": "contact the clinic",
+      "translation": "klinikaga murojaat qilmoq",
+      "translation_uz": "klinikaga murojaat qilmoq",
+      "translation_ru": "связаться с клиникой",
+      "translation_en": "contact the clinic",
+      "definition": "Clinical medical condition and symptom associated with contact the clinic.",
+      "definition_uz": "klinikaga murojaat qilmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "связаться с клиникой - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with contact the clinic.",
+      "example": "The doctor assessed the patient for contact the clinic."
+    },
+    {
+      "word": "aftercare instructions",
+      "translation": "muolajadan keyingi ko'rsatmalar",
+      "translation_uz": "muolajadan keyingi ko'rsatmalar",
+      "translation_ru": "рекомендации после процедуры",
+      "translation_en": "aftercare instructions",
+      "definition": "Clinical medical condition and symptom associated with aftercare instructions.",
+      "definition_uz": "muolajadan keyingi ko'rsatmalar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "рекомендации после процедуры - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with aftercare instructions.",
+      "example": "The doctor assessed the patient for aftercare instructions."
+    },
+    {
+      "word": "recover",
+      "translation": "tuzalmoq",
+      "translation_uz": "tuzalmoq",
+      "translation_ru": "выздоравливать",
+      "translation_en": "recover",
+      "definition": "Clinical medical condition and symptom associated with recover.",
+      "definition_uz": "tuzalmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "выздоравливать - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with recover.",
+      "example": "The doctor assessed the patient for recover."
+    },
+    {
+      "word": "affected area",
+      "translation": "zararlangan joy",
+      "translation_uz": "zararlangan joy",
+      "translation_ru": "поражённая область",
+      "translation_en": "affected area",
+      "definition": "Clinical medical condition and symptom associated with affected area.",
+      "definition_uz": "zararlangan joy - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "поражённая область - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with affected area.",
+      "example": "The doctor assessed the patient for affected area."
+    },
+    {
+      "word": "healing process",
+      "translation": "tuzalish jarayoni",
+      "translation_uz": "tuzalish jarayoni",
+      "translation_ru": "процесс заживления",
+      "translation_en": "healing process",
+      "definition": "Clinical medical condition and symptom associated with healing process.",
+      "definition_uz": "tuzalish jarayoni - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "процесс заживления - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with healing process.",
+      "example": "The doctor assessed the patient for healing process."
+    },
+    {
+      "word": "follow instructions",
+      "translation": "ko'rsatmalarga amal qilmoq",
+      "translation_uz": "ko'rsatmalarga amal qilmoq",
+      "translation_ru": "следовать инструкциям",
+      "translation_en": "follow instructions",
+      "definition": "Clinical medical condition and symptom associated with follow instructions.",
+      "definition_uz": "ko'rsatmalarga amal qilmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "следовать инструкциям - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with follow instructions.",
+      "example": "The doctor assessed the patient for follow instructions."
+    },
+    {
+      "word": "avoid touching",
+      "translation": "tegishdan saqlanmoq",
+      "translation_uz": "tegishdan saqlanmoq",
+      "translation_ru": "избегать прикосновения",
+      "translation_en": "avoid touching",
+      "definition": "Clinical medical condition and symptom associated with avoid touching.",
+      "definition_uz": "tegishdan saqlanmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "избегать прикосновения - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with avoid touching.",
+      "example": "The doctor assessed the patient for avoid touching."
+    },
+    {
+      "word": "oral hygiene",
+      "translation": "og'iz gigiyenasi",
+      "translation_uz": "og'iz gigiyenasi",
+      "translation_ru": "гигиена полости рта",
+      "translation_en": "oral hygiene",
+      "definition": "Clinical medical condition and symptom associated with oral hygiene.",
+      "definition_uz": "og'iz gigiyenasi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "гигиена полости рта - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with oral hygiene.",
+      "example": "The doctor assessed the patient for oral hygiene."
+    },
+    {
+      "word": "follow-up appointment",
+      "translation": "qayta ko'rik",
+      "translation_uz": "qayta ko'rik",
+      "translation_ru": "повторный приём",
+      "translation_en": "follow-up appointment",
+      "definition": "Clinical medical condition and symptom associated with follow-up appointment.",
+      "definition_uz": "qayta ko'rik - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "повторный приём - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with follow-up appointment.",
+      "example": "The doctor assessed the patient for follow-up appointment."
+    },
+    {
+      "word": "I've been having severe pain in my lower right tooth for the last few days.",
+      "translation": "Bir necha kundan beri pastki o'ng tishimda kuchli og'riq bo'lyapti.",
+      "translation_uz": "Bir necha kundan beri pastki o'ng tishimda kuchli og'riq bo'lyapti.",
+      "translation_ru": "У меня уже несколько дней сильная боль в нижнем правом зубе.",
+      "translation_en": "I've been having severe pain in my lower right tooth for the last few days.",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing i've been having severe pain in my lower right tooth for the last few days..",
+      "definition_uz": "Bir necha kundan beri pastki o'ng tishimda kuchli og'riq bo'lyapti. - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "У меня уже несколько дней сильная боль в нижнем правом зубе. - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing i've been having severe pain in my lower right tooth for the last few days..",
+      "example": "The doctor assessed the patient for i've been having severe pain in my lower right tooth for the last few days.."
+    },
+    {
+      "word": "It started about three days ago, and it has become much worse since yesterday.",
+      "translation": "Taxminan uch kun oldin boshlandi va kechadan beri ancha kuchaydi.",
+      "translation_uz": "Taxminan uch kun oldin boshlandi va kechadan beri ancha kuchaydi.",
+      "translation_ru": "Она началась около трёх дней назад и с вчерашнего дня значительно усилилась.",
+      "translation_en": "It started about three days ago, and it has become much worse since yesterday.",
+      "definition": "Clinical medical condition and symptom associated with it started about three days ago, and it has become much worse since yesterday..",
+      "definition_uz": "Taxminan uch kun oldin boshlandi va kechadan beri ancha kuchaydi. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Она началась около трёх дней назад и с вчерашнего дня значительно усилилась. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with it started about three days ago, and it has become much worse since yesterday..",
+      "example": "The doctor assessed the patient for it started about three days ago, and it has become much worse since yesterday.."
+    },
+    {
+      "word": "It hurts a lot when I chew on that side.",
+      "translation": "Shu tomonda chaynasam, juda og'riydi.",
+      "translation_uz": "Shu tomonda chaynasam, juda og'riydi.",
+      "translation_ru": "Мне очень больно, когда я жую на этой стороне.",
+      "translation_en": "It hurts a lot when I chew on that side.",
+      "definition": "Clinical medical condition and symptom associated with it hurts a lot when i chew on that side..",
+      "definition_uz": "Shu tomonda chaynasam, juda og'riydi. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Мне очень больно, когда я жую на этой стороне. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with it hurts a lot when i chew on that side..",
+      "example": "The doctor assessed the patient for it hurts a lot when i chew on that side.."
+    },
+    {
+      "word": "Okay.",
+      "translation": "Xo'p.",
+      "translation_uz": "Xo'p.",
+      "translation_ru": "Хорошо.",
+      "translation_en": "Okay.",
+      "definition": "Clinical medical condition and symptom associated with okay..",
+      "definition_uz": "Xo'p. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Хорошо. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with okay..",
+      "example": "The doctor assessed the patient for okay.."
+    },
+    {
+      "word": "Okay. Do you think the tooth can be saved?",
+      "translation": "Xo'p. Sizningcha, tishni saqlab qolish mumkinmi?",
+      "translation_uz": "Xo'p. Sizningcha, tishni saqlab qolish mumkinmi?",
+      "translation_ru": "Хорошо. Как вы думаете, зуб можно спасти?",
+      "translation_en": "Okay. Do you think the tooth can be saved?",
+      "definition": "Clinical medical condition and symptom associated with okay. do you think the tooth can be saved?.",
+      "definition_uz": "Xo'p. Sizningcha, tishni saqlab qolish mumkinmi? - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Хорошо. Как вы думаете, зуб можно спасти? - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with okay. do you think the tooth can be saved?.",
+      "example": "The doctor assessed the patient for okay. do you think the tooth can be saved?."
+    },
+    {
+      "word": "I'm a little nervous about having it removed. Will it be painful?",
+      "translation": "Uni sug'urtirishdan biroz xavotirdaman. Og'riqli bo'ladimi?",
+      "translation_uz": "Uni sug'urtirishdan biroz xavotirdaman. Og'riqli bo'ladimi?",
+      "translation_ru": "Я немного переживаю из-за удаления. Это будет больно?",
+      "translation_en": "I'm a little nervous about having it removed. Will it be painful?",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing i'm a little nervous about having it removed. will it be painful?.",
+      "definition_uz": "Uni sug'urtirishdan biroz xavotirdaman. Og'riqli bo'ladimi? - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "Я немного переживаю из-за удаления. Это будет больно? - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing i'm a little nervous about having it removed. will it be painful?.",
+      "example": "The doctor assessed the patient for i'm a little nervous about having it removed. will it be painful?."
+    },
+    {
+      "word": "Will I feel anything during the extraction?",
+      "translation": "Tish sug'urilayotganda biror narsa his qilamanmi?",
+      "translation_uz": "Tish sug'urilayotganda biror narsa his qilamanmi?",
+      "translation_ru": "Я буду что-нибудь чувствовать во время удаления?",
+      "translation_en": "Will I feel anything during the extraction?",
+      "definition": "Surgical extraction of a non-restorable tooth from the alveolar bone socket.",
+      "definition_uz": "Davolash imkoni bo'lmagan tishni jag' suyagi katakchasidan jarrohlik yo'li bilan sug'urib olish.",
+      "definition_ru": "Хирургическое удаление зуба из костной альвеолы.",
+      "definition_en": "Surgical extraction of a non-restorable tooth from the alveolar bone socket.",
+      "example": "The doctor assessed the patient for will i feel anything during the extraction?."
+    },
+    {
+      "word": "All right, doctor.",
+      "translation": "Xo'p, doktor.",
+      "translation_uz": "Xo'p, doktor.",
+      "translation_ru": "Хорошо, доктор.",
+      "translation_en": "All right, doctor.",
+      "definition": "Clinical medical condition and symptom associated with all right, doctor..",
+      "definition_uz": "Xo'p, doktor. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Хорошо, доктор. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with all right, doctor..",
+      "example": "The doctor assessed the patient for all right, doctor.."
+    },
+    {
+      "word": "What should I do now?",
+      "translation": "Endi nima qilishim kerak?",
+      "translation_uz": "Endi nima qilishim kerak?",
+      "translation_ru": "Что мне теперь делать?",
+      "translation_en": "What should I do now?",
+      "definition": "Clinical medical condition and symptom associated with what should i do now?.",
+      "definition_uz": "Endi nima qilishim kerak? - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Что мне теперь делать? - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with what should i do now?.",
+      "example": "The doctor assessed the patient for what should i do now?."
+    },
+    {
+      "word": "How long should I keep the gauze in place?",
+      "translation": "Dokani qancha vaqt joyida ushlab turishim kerak?",
+      "translation_uz": "Dokani qancha vaqt joyida ushlab turishim kerak?",
+      "translation_ru": "Как долго мне держать марлю на месте?",
+      "translation_en": "How long should I keep the gauze in place?",
+      "definition": "Clinical medical condition and symptom associated with how long should i keep the gauze in place?.",
+      "definition_uz": "Dokani qancha vaqt joyida ushlab turishim kerak? - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Как долго мне держать марлю на месте? - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with how long should i keep the gauze in place?.",
+      "example": "The doctor assessed the patient for how long should i keep the gauze in place?."
+    },
+    {
+      "word": "Can I eat normally after the extraction?",
+      "translation": "Tish sug'urilgandan keyin odatdagidek ovqatlana olamanmi?",
+      "translation_uz": "Tish sug'urilgandan keyin odatdagidek ovqatlana olamanmi?",
+      "translation_ru": "Могу ли я нормально есть после удаления?",
+      "translation_en": "Can I eat normally after the extraction?",
+      "definition": "Surgical extraction of a non-restorable tooth from the alveolar bone socket.",
+      "definition_uz": "Davolash imkoni bo'lmagan tishni jag' suyagi katakchasidan jarrohlik yo'li bilan sug'urib olish.",
+      "definition_ru": "Хирургическое удаление зуба из костной альвеолы.",
+      "definition_en": "Surgical extraction of a non-restorable tooth from the alveolar bone socket.",
+      "example": "The doctor assessed the patient for can i eat normally after the extraction?."
+    },
+    {
+      "word": "Can I brush my teeth tonight?",
+      "translation": "Bugun kechqurun tishlarimni yuvsam bo'ladimi?",
+      "translation_uz": "Bugun kechqurun tishlarimni yuvsam bo'ladimi?",
+      "translation_ru": "Можно ли мне сегодня вечером почистить зубы?",
+      "translation_en": "Can I brush my teeth tonight?",
+      "definition": "Clinical medical condition and symptom associated with can i brush my teeth tonight?.",
+      "definition_uz": "Bugun kechqurun tishlarimni yuvsam bo'ladimi? - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Можно ли мне сегодня вечером почистить зубы? - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with can i brush my teeth tonight?.",
+      "example": "The doctor assessed the patient for can i brush my teeth tonight?."
+    },
+    {
+      "word": "What if the pain gets worse later?",
+      "translation": "Keyinroq og'riq kuchaysa nima bo'ladi?",
+      "translation_uz": "Keyinroq og'riq kuchaysa nima bo'ladi?",
+      "translation_ru": "Что делать, если позже боль усилится?",
+      "translation_en": "What if the pain gets worse later?",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing what if the pain gets worse later?.",
+      "definition_uz": "Keyinroq og'riq kuchaysa nima bo'ladi? - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "Что делать, если позже боль усилится? - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing what if the pain gets worse later?.",
+      "example": "The doctor assessed the patient for what if the pain gets worse later?."
+    },
+    {
+      "word": "Thank you, doctor. That makes me feel much more comfortable.",
+      "translation": "Rahmat, doktor. Endi o'zimni ancha xotirjam his qilyapman.",
+      "translation_uz": "Rahmat, doktor. Endi o'zimni ancha xotirjam his qilyapman.",
+      "translation_ru": "Спасибо, доктор. Теперь я чувствую себя намного спокойнее.",
+      "translation_en": "Thank you, doctor. That makes me feel much more comfortable.",
+      "definition": "Clinical medical condition and symptom associated with thank you, doctor. that makes me feel much more comfortable..",
+      "definition_uz": "Rahmat, doktor. Endi o'zimni ancha xotirjam his qilyapman. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Спасибо, доктор. Теперь я чувствую себя намного спокойнее. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with thank you, doctor. that makes me feel much more comfortable..",
+      "example": "The doctor assessed the patient for thank you, doctor. that makes me feel much more comfortable.."
+    }
+  ],
+  "phrasebook": [
+    {
+      "phrase": "What seems to be the problem?",
+      "category": "1. Opening",
+      "hint": "Muammo nimada?",
+      "hint_uz": "Muammo nimada?",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "I've been having severe pain in my lower right tooth for the last few days."
+    },
+    {
+      "phrase": "When did the pain first start, and has it been getting worse recently?",
+      "category": "2. Onset & Duration",
+      "hint": "Og'riq kuchaydimi yoki o'zgarmadimi?",
+      "hint_uz": "Og'riq kuchaydimi yoki o'zgarmadimi?",
+      "hint_ru": "Боль усилилась или осталась прежней?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "It started about three days ago, and it has become much worse since yesterday."
+    },
+    {
+      "phrase": "Does anything make the pain worse, such as chewing or putting pressure on the tooth?",
+      "category": "3. Trigger",
+      "hint": "Chaynash yoki tishga bosim berish kabi holatlar og'riqni kuchaytiradimi?",
+      "hint_uz": "Chaynash yoki tishga bosim berish kabi holatlar og'riqni kuchaytiradimi?",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "It hurts a lot when I chew on that side."
+    },
+    {
+      "phrase": "Let me examine the tooth.",
+      "category": "4. Examination",
+      "hint": "Endi tishni / sohani tekshirib ko'rmoqchiman.",
+      "hint_uz": "Endi tishni / sohani tekshirib ko'rmoqchiman.",
+      "hint_ru": "Сейчас я проведу осмотр беспокоящего зуба / области.",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "Okay."
+    },
+    {
+      "phrase": "I may also need to take an X-ray to see what is happening underneath the gum.",
+      "category": "5. X-ray",
+      "hint": "Milk ostida nima bo'layotganini ko'rish uchun rentgen ham olishim kerak bo'lishi mumkin.",
+      "hint_uz": "Milk ostida nima bo'layotganini ko'rish uchun rentgen ham olishim kerak bo'lishi mumkin.",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "Okay. Do you think the tooth can be saved?"
+    },
+    {
+      "phrase": "Unfortunately, the tooth is badly damaged, and the infection has affected the surrounding area.",
+      "category": "6. Treatment Decision",
+      "hint": "Afsuski, tish qattiq shikastlangan va infeksiya atrofdagi sohaga ta'sir qilgan.",
+      "hint_uz": "Afsuski, tish qattiq shikastlangan va infeksiya atrofdagi sohaga ta'sir qilgan.",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "I'm a little nervous about having it removed. Will it be painful?"
+    },
+    {
+      "phrase": "We'll use a local anaesthetic to numb the area.",
+      "category": "7. Explaining Anaesthetic",
+      "hint": "Joyni uvushtirish uchun mahalliy og'riqsizlantiruvchi ishlatamiz.",
+      "hint_uz": "Joyni uvushtirish uchun mahalliy og'riqsizlantiruvchi ishlatamiz.",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "Will I feel anything during the extraction?"
+    },
+    {
+      "phrase": "You may feel some pressure during the extraction, but you shouldn't feel any sharp pain.",
+      "category": "8. During the Procedure",
+      "hint": "Tish sug'urilayotganda biroz bosimni his qilishingiz mumkin, lekin o'tkir og'riq sezmasligingiz kerak.",
+      "hint_uz": "Tish sug'urilayotganda biroz bosimni his qilishingiz mumkin, lekin o'tkir og'riq sezmasligingiz kerak.",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "All right, doctor."
+    },
+    {
+      "phrase": "The tooth has been removed successfully. I'm placing a piece of gauze over the extraction site.",
+      "category": "9. After Extraction",
+      "hint": "Tish muvaffaqiyatli sug'urib olindi. Tish sug'urilgan joyga doka qo'yyapman.",
+      "hint_uz": "Tish muvaffaqiyatli sug'urib olindi. Tish sug'urilgan joyga doka qo'yyapman.",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "What should I do now?"
+    },
+    {
+      "phrase": "Bite down on it firmly for about 30 to 45 minutes.",
+      "category": "10. Gauze Instructions",
+      "hint": "Uni taxminan 30-45 daqiqa mahkam tishlab bosib turing.",
+      "hint_uz": "Uni taxminan 30-45 daqiqa mahkam tishlab bosib turing.",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "How long should I keep the gauze in place?"
+    },
+    {
+      "phrase": "What should I avoid after the extraction?",
+      "category": "11. Aftercare",
+      "hint": "Tish sug'urilgandan keyin nimalardan saqlanishim kerak?",
+      "hint_uz": "Tish sug'urilgandan keyin nimalardan saqlanishim kerak?",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "Can I eat normally after the extraction?"
+    },
+    {
+      "phrase": "Be very gentle around the extraction site.",
+      "category": "12. Oral Hygiene",
+      "hint": "Tish sug'urilgan joy atrofida juda ehtiyotkor bo'ling.",
+      "hint_uz": "Tish sug'urilgan joy atrofida juda ehtiyotkor bo'ling.",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "Can I brush my teeth tonight?"
+    },
+    {
+      "phrase": "If you develop severe swelling, persistent bleeding, fever, or increasing pain, contact the clinic immediately.",
+      "category": "13. Warning Signs",
+      "hint": "Qonash kuzatiladimi yoki milk shishganmi?",
+      "hint_uz": "Qonash kuzatiladimi yoki milk shishganmi?",
+      "hint_ru": "Наблюдается ли кровоточивость или припухлость десен?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "What if the pain gets worse later?"
+    },
+    {
+      "phrase": "Follow the aftercare instructions carefully, and you should recover well.",
+      "category": "14. Closing",
+      "hint": "Muolajadan keyingi ko'rsatmalarga diqqat bilan amal qiling, shunda yaxshi tuzalib ketasiz.",
+      "hint_uz": "Muolajadan keyingi ko'rsatmalarga diqqat bilan amal qiling, shunda yaxshi tuzalib ketasiz.",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "Thank you, doctor. That makes me feel much more comfortable."
+    }
+  ],
+  "dialogue": [
+    {
+      "speaker": "Doctor",
+      "text": "Good afternoon. Please have a seat. What seems to be the problem?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "Good afternoon, doctor. I've been having severe pain in my lower right tooth for the last few days. It has become difficult to eat and sleep."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "When did the pain first start, and has it been getting worse recently?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "It started about three days ago, and unfortunately, it has become much worse since yesterday."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Does anything make the pain worse, such as chewing or putting pressure on the tooth?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "Yes. It hurts a lot when I chew on that side, so I've been trying to use the other side of my mouth."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Let me examine the tooth. I may also need to take an X-ray to see what is happening underneath the gum."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Okay. Do you think the tooth can be saved?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Unfortunately, the tooth is badly damaged, and the infection has affected the surrounding area. In this case, extraction may be the safest option."
+    },
+    {
+      "speaker": "Patient",
+      "text": "I'm a little nervous about having it removed. Will it be painful?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Don't worry. We'll use a local anaesthetic to numb the area. You may feel some pressure during the extraction, but you shouldn't feel any sharp pain."
+    },
+    {
+      "speaker": "Patient",
+      "text": "How long will the procedure take?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "If everything goes as expected, it should take around 20 to 30 minutes. However, the exact time depends on the position and condition of the tooth."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Is there anything I need to do before the procedure?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Yes. Please tell me if you are taking any medications or if you have any allergies."
+    },
+    {
+      "speaker": "Patient",
+      "text": "I'm not allergic to any medication, and I'm not taking anything regularly."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Good. I'll give you the local anaesthetic now. Please let me know if you feel any pain during the procedure."
+    },
+    {
+      "speaker": "Patient",
+      "text": "All right, doctor."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "The tooth has been removed successfully. I'm placing a piece of gauze over the extraction site. Bite down on it firmly for about 30 to 45 minutes."
+    },
+    {
+      "speaker": "Patient",
+      "text": "What should I avoid after the extraction?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Avoid smoking, drinking alcohol, and eating very hot or hard food for at least the first 24 hours. Also, don't rinse your mouth vigorously because it can disturb the blood clot."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Can I brush my teeth tonight?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Yes, but be very gentle around the extraction site. You should also avoid touching the area with your tongue or fingers."
+    },
+    {
+      "speaker": "Patient",
+      "text": "What if the pain gets worse later?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Some pain and swelling are normal after an extraction. You can take the painkiller I recommend. However, if you develop severe swelling, persistent bleeding, fever, or increasing pain after a few days, contact the clinic immediately."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Thank you, doctor. That makes me feel much more comfortable."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "You're welcome. Follow the aftercare instructions carefully, and you should recover well."
+    }
+  ],
+  "tests": [
+    {
+      "question": "What is the medical meaning of the term 'severe pain' in clinical consultation?",
+      "option_a": "kuchli og'riq",
+      "option_b": "pastki o'ng tish",
+      "option_c": "tish og'rig'i",
+      "option_d": "yomonlashmoq",
+      "correct_option": "A",
+      "explanation": "'severe pain' atamasining to'g'ri ma'nosi: kuchli og'riq."
+    },
+    {
+      "question": "Which term corresponds to 'chaynamoq'?",
+      "option_a": "lower right tooth",
+      "option_b": "chew",
+      "option_c": "toothache",
+      "option_d": "get worse",
+      "correct_option": "B",
+      "explanation": "'chaynamoq' ma'nosiga mos keluvchi tibbiy termin 'chew' hisoblanadi."
+    },
+    {
+      "question": "Which of the following is the grammatically and clinically standard question to ask about the duration of symptoms?",
+      "option_a": "How long do you having this symptom?",
+      "option_b": "How long has this condition been bothering you?",
+      "option_c": "Since what time you have this problem?",
+      "option_d": "How many days you are feeling pain?",
+      "correct_option": "B",
+      "explanation": "Klinik anamnezda davomiylikni so'rash uchun Present Perfect Continuous ('How long has... been bothering you?') to'g'ri shakl hisoblanadi."
+    },
+    {
+      "question": "When evaluating acute pain, what is the best phrasing to assess pain character?",
+      "option_a": "Is your pain bad or very bad?",
+      "option_b": "Can you describe the pain—is it sharp, dull, throbbing, or aching?",
+      "option_c": "Why do you have sharp pain today?",
+      "option_d": "Stop pain with pills immediately.",
+      "correct_option": "B",
+      "explanation": "Og'riq xarakterini aniqlashda shifokor ochiq va taklif qiluvchi variantlar (sharp, dull, throbbing, aching) beradi."
+    }
+  ]
+}

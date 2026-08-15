@@ -1,0 +1,923 @@
+{
+  "specialty_id": 2,
+  "specialty_name": "Davolash ishi",
+  "order_index": 4,
+  "title": "Gastrointestinal & Peptic History",
+  "title_uz": "Oshqozon-ichak va me'da yarasi anamnezi",
+  "title_ru": "ЖКТ и анамнез язвенной болезни",
+  "title_en": "Gastrointestinal & Peptic History",
+  "description": "Davolash ishi bo'yicha Oshqozon-ichak va me'da yarasi anamnezi mavzusida klinik muloqot va tibbiy ingliz tili darsi.",
+  "clinical_level": "B2 Medical English",
+  "target_role": "Dental Clinician / Attending Physician",
+  "scenario_prompt": "You are a virtual patient presenting with symptoms related to Gastrointestinal & Peptic History. Speak in natural, everyday patient English.",
+  "patient_profile": {
+    "age": 42,
+    "gender": "Female",
+    "chief_complaint": "Oshqozon-ichak va me'da yarasi anamnezi",
+    "history": "Patient presents with complaints of gastrointestinal & peptic history."
+  },
+  "grammar": [
+    {
+      "title": "GRAMMAR",
+      "title_uz": "GRAMMAR",
+      "title_ru": "GRAMMAR",
+      "title_en": "GRAMMAR",
+      "rule_explanation": "Bu dialogda Present Perfect hozirgi vaziyat bilan bog'liq tajriba, yaqindagi o'zgarish va simptomlarni so'rash uchun; Past Simple esa aniq tugagan vaqt, tashxis qo'yilgan vaqt, simptom boshlanishi va oldingi voqealarni ifodalash uchun ishlatiladi.",
+      "rule_explanation_uz": "Bu dialogda Present Perfect hozirgi vaziyat bilan bog'liq tajriba, yaqindagi o'zgarish va simptomlarni so'rash uchun; Past Simple esa aniq tugagan vaqt, tashxis qo'yilgan vaqt, simptom boshlanishi va oldingi voqealarni ifodalash uchun ishlatiladi.",
+      "rule_explanation_ru": "Present Perfect связывает прошлое с настоящим. В этом диалоге он используется для недавних изменений, опыта и симптомов, которые важны для текущего состояния пациента. Past Simple используется для конкретного завершённого момента в прошлом: три года назад, на прошлой неделе, шесть месяцев назад, две недели назад.",
+      "rule_explanation_en": "I have. I missed several doses last week…\nWhy: Present Perfect confirms the recent experience; Past Simple then specifies when. WH-question: When did + subject + V1...? → When did those symptoms begin?",
+      "structure_pattern": "Have you ever had + Object / V3? | Subject + have / has + not + V3",
+      "examples": [
+        {
+          "sentence": "liq tajriba, yaqindagi o",
+          "translation": "2. PRESENT PERFECT - FORMULA & MEANING",
+          "translation_uz": "2. PRESENT PERFECT - FORMULA & MEANING",
+          "translation_ru": "Positive: have/has + V3 → They've been considerably higher over the past month.",
+          "note": "Clinical Dialogue Example"
+        },
+        {
+          "sentence": "Have your glucose readings changed recently?",
+          "translation": "Current/recent change vs specific completed measurement.",
+          "translation_uz": "Current/recent change vs specific completed measurement.",
+          "translation_ru": "",
+          "note": "I checked my glucose this morning."
+        },
+        {
+          "sentence": "Have you missed any doses recently?",
+          "translation": "Recent experience vs exact finished period.",
+          "translation_uz": "Recent experience vs exact finished period.",
+          "translation_ru": "",
+          "note": "I missed several doses last week."
+        },
+        {
+          "sentence": "Have you ever had an HbA1c above target?",
+          "translation": "Experience up to now vs specific past episode.",
+          "translation_uz": "Experience up to now vs specific past episode.",
+          "translation_ru": "",
+          "note": "It was high six months ago."
+        },
+        {
+          "sentence": "Have you noticed increased thirst?",
+          "translation": "Whether symptom occurred vs exact onset.",
+          "translation_uz": "Whether symptom occurred vs exact onset.",
+          "translation_ru": "",
+          "note": "When did those symptoms begin?"
+        }
+      ],
+      "common_mistakes": [
+        {
+          "incorrect": "Since when you feel this pain?",
+          "correct": "How long have you had this pain?",
+          "explanation": "Davomiylikni so'rashda 'How long have you had...?' standarti ishlatiladi.",
+          "explanation_uz": "Davomiylikni so'rashda 'How long have you had...?' standarti ishlatiladi.",
+          "explanation_ru": "Для выяснения длительности используется конструкция 'How long have you had...?'.",
+          "explanation_en": "Use 'How long have you had...?' when asking about the duration of symptoms."
+        },
+        {
+          "incorrect": "Where is paining you?",
+          "correct": "Where exactly do you feel the pain?",
+          "explanation": "Lokatsiyani aniqlashda 'Where do you feel the pain?' to'g'ri grammatik shakl.",
+          "explanation_uz": "Lokatsiyani aniqlashda 'Where do you feel the pain?' to'g'ri grammatik shakl.",
+          "explanation_ru": "Правильный вопрос о локализации боли: 'Where exactly do you feel the pain?'.",
+          "explanation_en": "Ask 'Where exactly do you feel the pain?' to identify the specific anatomical site."
+        }
+      ],
+      "structure_pattern_en": "Have you ever had + Object / V3? | Subject + have / has + not + V3",
+      "structure_pattern_uz": "Have you ever had + To'ldiruvchi / V3? (Boshdan kechirganmisiz?) | Ega + have / has + not + V3",
+      "structure_pattern_ru": "Have you ever had + Дополнение / V3? (Было ли у вас...?) | Подлежащее + have / has + not + V3"
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "type 2 diabetes",
+      "translation": "2-tur diabet",
+      "translation_uz": "2-tur diabet",
+      "translation_ru": "сахарный диабет 2 типа",
+      "translation_en": "type 2 diabetes",
+      "definition": "Clinical medical condition and symptom associated with type 2 diabetes.",
+      "definition_uz": "2-tur diabet - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "сахарный диабет 2 типа - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with type 2 diabetes.",
+      "example": "The doctor assessed the patient for type 2 diabetes."
+    },
+    {
+      "word": "hyperglycemia",
+      "translation": "giperglikemiya; qonda glyukoza yuqoriligi",
+      "translation_uz": "giperglikemiya; qonda glyukoza yuqoriligi",
+      "translation_ru": "гипергликемия",
+      "translation_en": "hyperglycemia",
+      "definition": "Clinical medical condition and symptom associated with hyperglycemia.",
+      "definition_uz": "giperglikemiya; qonda glyukoza yuqoriligi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "гипергликемия - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with hyperglycemia.",
+      "example": "The doctor assessed the patient for hyperglycemia."
+    },
+    {
+      "word": "routine health check",
+      "translation": "rejali tibbiy ko'rik",
+      "translation_uz": "rejali tibbiy ko'rik",
+      "translation_ru": "плановый медицинский осмотр",
+      "translation_en": "routine health check",
+      "definition": "Clinical medical condition and symptom associated with routine health check.",
+      "definition_uz": "rejali tibbiy ko'rik - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "плановый медицинский осмотр - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with routine health check.",
+      "example": "The doctor assessed the patient for routine health check."
+    },
+    {
+      "word": "obvious symptoms",
+      "translation": "aniq/sezilarli simptomlar",
+      "translation_uz": "aniq/sezilarli simptomlar",
+      "translation_ru": "явные симптомы",
+      "translation_en": "obvious symptoms",
+      "definition": "Clinical medical condition and symptom associated with obvious symptoms.",
+      "definition_uz": "aniq/sezilarli simptomlar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "явные симптомы - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with obvious symptoms.",
+      "example": "The doctor assessed the patient for obvious symptoms."
+    },
+    {
+      "word": "glucose levels",
+      "translation": "glyukoza darajalari",
+      "translation_uz": "glyukoza darajalari",
+      "translation_ru": "уровень глюкозы",
+      "translation_en": "glucose levels",
+      "definition": "Clinical medical condition and symptom associated with glucose levels.",
+      "definition_uz": "glyukoza darajalari - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "уровень глюкозы - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with glucose levels.",
+      "example": "The doctor assessed the patient for glucose levels."
+    },
+    {
+      "word": "glucose reading",
+      "translation": "glyukoza o'lchovi/natijasi",
+      "translation_uz": "glyukoza o'lchovi/natijasi",
+      "translation_ru": "показатель глюкозы",
+      "translation_en": "glucose reading",
+      "definition": "Clinical medical condition and symptom associated with glucose reading.",
+      "definition_uz": "glyukoza o'lchovi/natijasi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "показатель глюкозы - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with glucose reading.",
+      "example": "The doctor assessed the patient for glucose reading."
+    },
+    {
+      "word": "fasting capillary glucose",
+      "translation": "och qoringa kapillyar glyukoza",
+      "translation_uz": "och qoringa kapillyar glyukoza",
+      "translation_ru": "глюкоза капиллярной крови натощак",
+      "translation_en": "fasting capillary glucose",
+      "definition": "Clinical medical condition and symptom associated with fasting capillary glucose.",
+      "definition_uz": "och qoringa kapillyar glyukoza - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "глюкоза капиллярной крови натощак - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with fasting capillary glucose.",
+      "example": "The doctor assessed the patient for fasting capillary glucose."
+    },
+    {
+      "word": "increased thirst",
+      "translation": "chanqoqning kuchayishi",
+      "translation_uz": "chanqoqning kuchayishi",
+      "translation_ru": "повышенная жажда",
+      "translation_en": "increased thirst",
+      "definition": "Clinical medical condition and symptom associated with increased thirst.",
+      "definition_uz": "chanqoqning kuchayishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "повышенная жажда - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with increased thirst.",
+      "example": "The doctor assessed the patient for increased thirst."
+    },
+    {
+      "word": "urination",
+      "translation": "siyish; siydik chiqarish",
+      "translation_uz": "siyish; siydik chiqarish",
+      "translation_ru": "мочеиспускание",
+      "translation_en": "urination",
+      "definition": "Clinical medical condition and symptom associated with urination.",
+      "definition_uz": "siyish; siydik chiqarish - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "мочеиспускание - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with urination.",
+      "example": "The doctor assessed the patient for urination."
+    },
+    {
+      "word": "miss a dose",
+      "translation": "dozani o'tkazib yubormoq",
+      "translation_uz": "dozani o'tkazib yubormoq",
+      "translation_ru": "пропустить дозу",
+      "translation_en": "miss a dose",
+      "definition": "Clinical medical condition and symptom associated with miss a dose.",
+      "definition_uz": "dozani o'tkazib yubormoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "пропустить дозу - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with miss a dose.",
+      "example": "The doctor assessed the patient for miss a dose."
+    },
+    {
+      "word": "night shift",
+      "translation": "tungi smena",
+      "translation_uz": "tungi smena",
+      "translation_ru": "ночная смена",
+      "translation_en": "night shift",
+      "definition": "Clinical medical condition and symptom associated with night shift.",
+      "definition_uz": "tungi smena - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "ночная смена - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with night shift.",
+      "example": "The doctor assessed the patient for night shift."
+    },
+    {
+      "word": "eating habits",
+      "translation": "ovqatlanish odatlari",
+      "translation_uz": "ovqatlanish odatlari",
+      "translation_ru": "пищевые привычки",
+      "translation_en": "eating habits",
+      "definition": "Clinical medical condition and symptom associated with eating habits.",
+      "definition_uz": "ovqatlanish odatlari - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "пищевые привычки - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with eating habits.",
+      "example": "The doctor assessed the patient for eating habits."
+    },
+    {
+      "word": "fast food",
+      "translation": "tez tayyorlanadigan ovqat",
+      "translation_uz": "tez tayyorlanadigan ovqat",
+      "translation_ru": "фастфуд",
+      "translation_en": "fast food",
+      "definition": "Clinical medical condition and symptom associated with fast food.",
+      "definition_uz": "tez tayyorlanadigan ovqat - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "фастфуд - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with fast food.",
+      "example": "The doctor assessed the patient for fast food."
+    },
+    {
+      "word": "sweet snacks",
+      "translation": "shirin gazaklar",
+      "translation_uz": "shirin gazaklar",
+      "translation_ru": "сладкие перекусы",
+      "translation_en": "sweet snacks",
+      "definition": "Clinical medical condition and symptom associated with sweet snacks.",
+      "definition_uz": "shirin gazaklar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "сладкие перекусы - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with sweet snacks.",
+      "example": "The doctor assessed the patient for sweet snacks."
+    },
+    {
+      "word": "HbA1c",
+      "translation": "glikatsiyalangan gemoglobin",
+      "translation_uz": "glikatsiyalangan gemoglobin",
+      "translation_ru": "гликированный гемоглобин",
+      "translation_en": "HbA1c",
+      "definition": "Clinical medical condition and symptom associated with hba1c.",
+      "definition_uz": "glikatsiyalangan gemoglobin - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "гликированный гемоглобин - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with hba1c.",
+      "example": "The doctor assessed the patient for hba1c."
+    },
+    {
+      "word": "target",
+      "translation": "maqsadli ko'rsatkich",
+      "translation_uz": "maqsadli ko'rsatkich",
+      "translation_ru": "целевой показатель",
+      "translation_en": "target",
+      "definition": "Clinical medical condition and symptom associated with target.",
+      "definition_uz": "maqsadli ko'rsatkich - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "целевой показатель - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with target.",
+      "example": "The doctor assessed the patient for target."
+    },
+    {
+      "word": "renal function",
+      "translation": "buyrak faoliyati",
+      "translation_uz": "buyrak faoliyati",
+      "translation_ru": "функция почек",
+      "translation_en": "renal function",
+      "definition": "Clinical medical condition and symptom associated with renal function.",
+      "definition_uz": "buyrak faoliyati - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "функция почек - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with renal function.",
+      "example": "The doctor assessed the patient for renal function."
+    },
+    {
+      "word": "electrolytes",
+      "translation": "elektrolitlar",
+      "translation_uz": "elektrolitlar",
+      "translation_ru": "электролиты",
+      "translation_en": "electrolytes",
+      "definition": "Clinical medical condition and symptom associated with electrolytes.",
+      "definition_uz": "elektrolitlar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "электролиты - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with electrolytes.",
+      "example": "The doctor assessed the patient for electrolytes."
+    },
+    {
+      "word": "poor adherence",
+      "translation": "davolashga rioya qilmaslik",
+      "translation_uz": "davolashga rioya qilmaslik",
+      "translation_ru": "низкая приверженность лечению",
+      "translation_en": "poor adherence",
+      "definition": "Clinical medical condition and symptom associated with poor adherence.",
+      "definition_uz": "davolashga rioya qilmaslik - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "низкая приверженность лечению - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with poor adherence.",
+      "example": "The doctor assessed the patient for poor adherence."
+    },
+    {
+      "word": "dietary changes",
+      "translation": "ovqatlanishdagi o'zgarishlar",
+      "translation_uz": "ovqatlanishdagi o'zgarishlar",
+      "translation_ru": "изменения питания",
+      "translation_en": "dietary changes",
+      "definition": "Clinical medical condition and symptom associated with dietary changes.",
+      "definition_uz": "ovqatlanishdagi o'zgarishlar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "изменения питания - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with dietary changes.",
+      "example": "The doctor assessed the patient for dietary changes."
+    },
+    {
+      "word": "progression of diabetes",
+      "translation": "diabetning rivojlanib borishi",
+      "translation_uz": "diabetning rivojlanib borishi",
+      "translation_ru": "прогрессирование диабета",
+      "translation_en": "progression of diabetes",
+      "definition": "Clinical medical condition and symptom associated with progression of diabetes.",
+      "definition_uz": "diabetning rivojlanib borishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "прогрессирование диабета - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with progression of diabetes.",
+      "example": "The doctor assessed the patient for progression of diabetes."
+    },
+    {
+      "word": "overall clinical picture",
+      "translation": "umumiy klinik holat",
+      "translation_uz": "umumiy klinik holat",
+      "translation_ru": "общая клиническая картина",
+      "translation_en": "overall clinical picture",
+      "definition": "Clinical medical condition and symptom associated with overall clinical picture.",
+      "definition_uz": "umumiy klinik holat - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "общая клиническая картина - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with overall clinical picture.",
+      "example": "The doctor assessed the patient for overall clinical picture."
+    },
+    {
+      "word": "current treatment",
+      "translation": "hozirgi davolash",
+      "translation_uz": "hozirgi davolash",
+      "translation_ru": "текущее лечение",
+      "translation_en": "current treatment",
+      "definition": "Clinical medical condition and symptom associated with current treatment.",
+      "definition_uz": "hozirgi davolash - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "текущее лечение - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with current treatment.",
+      "example": "The doctor assessed the patient for current treatment."
+    },
+    {
+      "word": "remains appropriate",
+      "translation": "mosligicha qolmoq",
+      "translation_uz": "mosligicha qolmoq",
+      "translation_ru": "оставаться подходящим",
+      "translation_en": "remains appropriate",
+      "definition": "Clinical medical condition and symptom associated with remains appropriate.",
+      "definition_uz": "mosligicha qolmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "оставаться подходящим - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with remains appropriate.",
+      "example": "The doctor assessed the patient for remains appropriate."
+    },
+    {
+      "word": "marked weakness",
+      "translation": "yaqqol kuchsizlik",
+      "translation_uz": "yaqqol kuchsizlik",
+      "translation_ru": "выраженная слабость",
+      "translation_en": "marked weakness",
+      "definition": "Clinical medical condition and symptom associated with marked weakness.",
+      "definition_uz": "yaqqol kuchsizlik - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "выраженная слабость - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with marked weakness.",
+      "example": "The doctor assessed the patient for marked weakness."
+    },
+    {
+      "word": "abdominal pain",
+      "translation": "qorin og'rig'i",
+      "translation_uz": "qorin og'rig'i",
+      "translation_ru": "боль в животе",
+      "translation_en": "abdominal pain",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing abdominal pain.",
+      "definition_uz": "qorin og'rig'i - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "боль в животе - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing abdominal pain.",
+      "example": "The doctor assessed the patient for abdominal pain."
+    },
+    {
+      "word": "confusion",
+      "translation": "ong chalkashligi",
+      "translation_uz": "ong chalkashligi",
+      "translation_ru": "спутанность сознания",
+      "translation_en": "confusion",
+      "definition": "Clinical medical condition and symptom associated with confusion.",
+      "definition_uz": "ong chalkashligi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "спутанность сознания - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with confusion.",
+      "example": "The doctor assessed the patient for confusion."
+    },
+    {
+      "word": "adjust the management",
+      "translation": "davolash taktikasini moslashtirmoq",
+      "translation_uz": "davolash taktikasini moslashtirmoq",
+      "translation_ru": "скорректировать лечение",
+      "translation_en": "adjust the management",
+      "definition": "Clinical medical condition and symptom associated with adjust the management.",
+      "definition_uz": "davolash taktikasini moslashtirmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "скорректировать лечение - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with adjust the management.",
+      "example": "The doctor assessed the patient for adjust the management."
+    },
+    {
+      "word": "current medications",
+      "translation": "hozirgi dorilar",
+      "translation_uz": "hozirgi dorilar",
+      "translation_ru": "текущие лекарственные препараты",
+      "translation_en": "current medications",
+      "definition": "Clinical medical condition and symptom associated with current medications.",
+      "definition_uz": "hozirgi dorilar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "текущие лекарственные препараты - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with current medications.",
+      "example": "The doctor assessed the patient for current medications."
+    }
+  ],
+  "phrasebook": [
+    {
+      "phrase": "type 2 diabetes",
+      "category": "Clinical Consultation",
+      "hint": "2-tur diabet",
+      "hint_uz": "2-tur diabet",
+      "hint_ru": "сахарный диабет 2 типа",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "hyperglycemia",
+      "category": "Clinical Consultation",
+      "hint": "giperglikemiya; qonda glyukoza yuqoriligi",
+      "hint_uz": "giperglikemiya; qonda glyukoza yuqoriligi",
+      "hint_ru": "гипергликемия",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "routine health check",
+      "category": "Clinical Consultation",
+      "hint": "rejali tibbiy ko'rik",
+      "hint_uz": "rejali tibbiy ko'rik",
+      "hint_ru": "плановый медицинский осмотр",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "obvious symptoms",
+      "category": "Clinical Consultation",
+      "hint": "aniq/sezilarli simptomlar",
+      "hint_uz": "aniq/sezilarli simptomlar",
+      "hint_ru": "явные симптомы",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "glucose levels",
+      "category": "Clinical Consultation",
+      "hint": "glyukoza darajalari",
+      "hint_uz": "glyukoza darajalari",
+      "hint_ru": "уровень глюкозы",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "glucose reading",
+      "category": "Clinical Consultation",
+      "hint": "glyukoza o'lchovi/natijasi",
+      "hint_uz": "glyukoza o'lchovi/natijasi",
+      "hint_ru": "показатель глюкозы",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "fasting capillary glucose",
+      "category": "Clinical Consultation",
+      "hint": "och qoringa kapillyar glyukoza",
+      "hint_uz": "och qoringa kapillyar glyukoza",
+      "hint_ru": "глюкоза капиллярной крови натощак",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "increased thirst",
+      "category": "Clinical Consultation",
+      "hint": "chanqoqning kuchayishi",
+      "hint_uz": "chanqoqning kuchayishi",
+      "hint_ru": "повышенная жажда",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "urination",
+      "category": "Clinical Consultation",
+      "hint": "siyish; siydik chiqarish",
+      "hint_uz": "siyish; siydik chiqarish",
+      "hint_ru": "мочеиспускание",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "miss a dose",
+      "category": "Clinical Consultation",
+      "hint": "dozani o'tkazib yubormoq",
+      "hint_uz": "dozani o'tkazib yubormoq",
+      "hint_ru": "пропустить дозу",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "night shift",
+      "category": "Clinical Consultation",
+      "hint": "tungi smena",
+      "hint_uz": "tungi smena",
+      "hint_ru": "ночная смена",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "eating habits",
+      "category": "Clinical Consultation",
+      "hint": "ovqatlanish odatlari",
+      "hint_uz": "ovqatlanish odatlari",
+      "hint_ru": "пищевые привычки",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "fast food",
+      "category": "Clinical Consultation",
+      "hint": "tez tayyorlanadigan ovqat",
+      "hint_uz": "tez tayyorlanadigan ovqat",
+      "hint_ru": "фастфуд",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "sweet snacks",
+      "category": "Clinical Consultation",
+      "hint": "shirin gazaklar",
+      "hint_uz": "shirin gazaklar",
+      "hint_ru": "сладкие перекусы",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "HbA1c",
+      "category": "Clinical Consultation",
+      "hint": "glikatsiyalangan gemoglobin",
+      "hint_uz": "glikatsiyalangan gemoglobin",
+      "hint_ru": "гликированный гемоглобин",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "target",
+      "category": "Clinical Consultation",
+      "hint": "maqsadli ko'rsatkich",
+      "hint_uz": "maqsadli ko'rsatkich",
+      "hint_ru": "целевой показатель",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "renal function",
+      "category": "Clinical Consultation",
+      "hint": "buyrak faoliyati",
+      "hint_uz": "buyrak faoliyati",
+      "hint_ru": "функция почек",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "electrolytes",
+      "category": "Clinical Consultation",
+      "hint": "elektrolitlar",
+      "hint_uz": "elektrolitlar",
+      "hint_ru": "электролиты",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "poor adherence",
+      "category": "Clinical Consultation",
+      "hint": "davolashga rioya qilmaslik",
+      "hint_uz": "davolashga rioya qilmaslik",
+      "hint_ru": "низкая приверженность лечению",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "dietary changes",
+      "category": "Clinical Consultation",
+      "hint": "ovqatlanishdagi o'zgarishlar",
+      "hint_uz": "ovqatlanishdagi o'zgarishlar",
+      "hint_ru": "изменения питания",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "progression of diabetes",
+      "category": "Clinical Consultation",
+      "hint": "diabetning rivojlanib borishi",
+      "hint_uz": "diabetning rivojlanib borishi",
+      "hint_ru": "прогрессирование диабета",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "overall clinical picture",
+      "category": "Clinical Consultation",
+      "hint": "umumiy klinik holat",
+      "hint_uz": "umumiy klinik holat",
+      "hint_ru": "общая клиническая картина",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "current treatment",
+      "category": "Clinical Consultation",
+      "hint": "hozirgi davolash",
+      "hint_uz": "hozirgi davolash",
+      "hint_ru": "текущее лечение",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "remains appropriate",
+      "category": "Clinical Consultation",
+      "hint": "mosligicha qolmoq",
+      "hint_uz": "mosligicha qolmoq",
+      "hint_ru": "оставаться подходящим",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "marked weakness",
+      "category": "Clinical Consultation",
+      "hint": "yaqqol kuchsizlik",
+      "hint_uz": "yaqqol kuchsizlik",
+      "hint_ru": "выраженная слабость",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "abdominal pain",
+      "category": "Clinical Consultation",
+      "hint": "qorin og'rig'i",
+      "hint_uz": "qorin og'rig'i",
+      "hint_ru": "боль в животе",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "confusion",
+      "category": "Clinical Consultation",
+      "hint": "ong chalkashligi",
+      "hint_uz": "ong chalkashligi",
+      "hint_ru": "спутанность сознания",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "adjust the management",
+      "category": "Clinical Consultation",
+      "hint": "davolash taktikasini moslashtirmoq",
+      "hint_uz": "davolash taktikasini moslashtirmoq",
+      "hint_ru": "скорректировать лечение",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "current medications",
+      "category": "Clinical Consultation",
+      "hint": "hozirgi dorilar",
+      "hint_uz": "hozirgi dorilar",
+      "hint_ru": "текущие лекарственные препараты",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "When were you first diagnosed with type 2 diabetes?",
+      "category": "Clinical Inquiry",
+      "hint": "Sizga 2-tur diabet tashxisi birinchi marta qachon qo'yilgan?",
+      "hint_uz": "Sizga 2-tur diabet tashxisi birinchi marta qachon qo'yilgan?",
+      "hint_ru": "Когда вам впервые поставили диагноз сахарного диабета 2 типа?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Have your glucose readings changed recently?",
+      "category": "Clinical Inquiry",
+      "hint": "So'nggi paytlarda glyukoza ko'rsatkichlaringiz o'zgardimi?",
+      "hint_uz": "So'nggi paytlarda glyukoza ko'rsatkichlaringiz o'zgardimi?",
+      "hint_ru": "В последнее время показатели глюкозы изменились?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "When did you last check your blood glucose?",
+      "category": "Clinical Inquiry",
+      "hint": "Qachon oxirgi marta qondagi glyukozangizni tekshirdingiz?",
+      "hint_uz": "Qachon oxirgi marta qondagi glyukozangizni tekshirdingiz?",
+      "hint_ru": "Когда вы в последний раз проверяли глюкозу крови?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Have you noticed increased thirst or urination?",
+      "category": "Clinical Inquiry",
+      "hint": "Chanqoq yoki siyishning ko'payganini sezganmisiz?",
+      "hint_uz": "Chanqoq yoki siyishning ko'payganini sezganmisiz?",
+      "hint_ru": "Вы заметили усиление жажды или мочеиспускания?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Have you missed any doses of metformin recently?",
+      "category": "Clinical Inquiry",
+      "hint": "So'nggi paytlarda metformin dozalarini o'tkazib yubordingizmi?",
+      "hint_uz": "So'nggi paytlarda metformin dozalarini o'tkazib yubordingizmi?",
+      "hint_ru": "Вы пропускали дозы метформина в последнее время?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Have your eating habits changed as well?",
+      "category": "Clinical Inquiry",
+      "hint": "Ovqatlanish odatlaringiz ham o'zgardimi?",
+      "hint_uz": "Ovqatlanish odatlaringiz ham o'zgardimi?",
+      "hint_ru": "Ваши пищевые привычки тоже изменились?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Have you ever had an HbA1c above your target?",
+      "category": "Clinical Inquiry",
+      "hint": "HbA1c hech qachon maqsadli ko'rsatkichdan yuqori bo'lganmi?",
+      "hint_uz": "HbA1c hech qachon maqsadli ko'rsatkichdan yuqori bo'lganmi?",
+      "hint_ru": "У вас когда-нибудь был HbA1c выше целевого?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Have you experienced vomiting, abdominal pain, marked weakness, or confusion?",
+      "category": "Clinical Inquiry",
+      "hint": "Qusish, qorin og'rig'i, kuchli holsizlik yoki ong chalkashligini boshdan kechirdingizmi?",
+      "hint_uz": "Qusish, qorin og'rig'i, kuchli holsizlik yoki ong chalkashligini boshdan kechirdingizmi?",
+      "hint_ru": "У вас были рвота, боль в животе, выраженная слабость или спутанность сознания?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    }
+  ],
+  "dialogue": [
+    {
+      "speaker": "Doctor",
+      "text": "When were you first diagnosed with type 2 diabetes?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I was diagnosed three years ago during a routine health check. I wasn't experiencing obvious symptoms at the time."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "What treatment did you start after the diagnosis?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I started metformin and changed my diet. For a while, my glucose levels were fairly stable."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Have your glucose readings changed recently?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "Yes. They've been considerably higher over the past month."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "When did you last check your blood glucose?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I checked it this morning before breakfast. It was 12.6 millimoles per litre. Nurse: His fasting capillary glucose here is 13.1 millimoles per litre."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Have you noticed increased thirst or urination?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "Yes. I've been extremely thirsty and I've been getting up several times during the night to urinate."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "When did those symptoms begin?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "They started about two weeks ago."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Have you missed any doses of metformin recently?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I have. I missed several doses last week because I was working night shifts."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Have your eating habits changed as well?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "Unfortunately, yes. I've been eating more fast food and sweet snacks because I haven't had time to cook."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Have you ever had an HbA1c above your target?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "Yes. It was high six months ago, but it improved after I changed my diet."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Have you experienced vomiting, abdominal pain, marked weakness, or confusion?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "No vomiting or confusion, but I've been unusually tired."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "We need to repeat your HbA1c, check renal function and electrolytes, and assess whether your current treatment remains appropriate."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Does a high glucose reading mean that my medication has stopped working?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Not necessarily. Poor adherence, dietary changes, infection, stress, and progression of diabetes can all contribute to hyperglycemia. Nurse: I'll arrange the blood tests and record his current medications."
+    },
+    {
+      "speaker": "Patient",
+      "text": "If my HbA1c is very high, will I need insulin?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "It depends on the result and your overall clinical picture. We'll discuss the options once we have the full assessment."
+    },
+    {
+      "speaker": "Patient",
+      "text": "I'm worried because I thought I was managing my diabetes well."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "The important thing is that you've come in now. We can identify what has changed and adjust the management rather than simply increasing medication without understanding the cause."
+    }
+  ],
+  "tests": [
+    {
+      "question": "What is the medical meaning of the term 'type 2 diabetes' in clinical consultation?",
+      "option_a": "2-tur diabet",
+      "option_b": "giperglikemiya; qonda glyukoza yuqoriligi",
+      "option_c": "rejali tibbiy ko'rik",
+      "option_d": "aniq/sezilarli simptomlar",
+      "correct_option": "A",
+      "explanation": "'type 2 diabetes' atamasining to'g'ri ma'nosi: 2-tur diabet."
+    },
+    {
+      "question": "Which term corresponds to 'glyukoza darajalari'?",
+      "option_a": "hyperglycemia",
+      "option_b": "glucose levels",
+      "option_c": "routine health check",
+      "option_d": "obvious symptoms",
+      "correct_option": "B",
+      "explanation": "'glyukoza darajalari' ma'nosiga mos keluvchi tibbiy termin 'glucose levels' hisoblanadi."
+    },
+    {
+      "question": "Which of the following is the grammatically and clinically standard question to ask about the duration of symptoms?",
+      "option_a": "How long do you having this symptom?",
+      "option_b": "How long has this condition been bothering you?",
+      "option_c": "Since what time you have this problem?",
+      "option_d": "How many days you are feeling pain?",
+      "correct_option": "B",
+      "explanation": "Klinik anamnezda davomiylikni so'rash uchun Present Perfect Continuous ('How long has... been bothering you?') to'g'ri shakl hisoblanadi."
+    },
+    {
+      "question": "When evaluating acute pain, what is the best phrasing to assess pain character?",
+      "option_a": "Is your pain bad or very bad?",
+      "option_b": "Can you describe the pain—is it sharp, dull, throbbing, or aching?",
+      "option_c": "Why do you have sharp pain today?",
+      "option_d": "Stop pain with pills immediately.",
+      "correct_option": "B",
+      "explanation": "Og'riq xarakterini aniqlashda shifokor ochiq va taklif qiluvchi variantlar (sharp, dull, throbbing, aching) beradi."
+    }
+  ]
+}

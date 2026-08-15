@@ -2,10 +2,17 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../contexts/AuthContext';
-import { RiEyeLine, RiEyeOffLine, RiStethoscopeLine, RiLockPasswordLine, RiMailLine, RiUser3Line, RiUserStarLine, RiShieldUserLine, RiLoader4Line } from 'react-icons/ri';
+import { useLanguage } from '../../contexts/LanguageContext';
+import LanguageSelector from '../../components/LanguageSelector';
+import {
+  RiEyeLine, RiEyeOffLine, RiHeartPulseLine,
+  RiLockPasswordLine, RiMailLine, RiUser3Line,
+  RiUserStarLine, RiShieldCheckLine, RiLoader4Line
+} from 'react-icons/ri';
 
 export default function LoginPage() {
   const { login } = useAuth();
+  const { t } = useLanguage();
   const navigate  = useNavigate();
   const [form, setForm]       = useState({ email: '', password: '' });
   const [showPass, setShowPass] = useState(false);
@@ -14,13 +21,14 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); setError('');
+    setLoading(true);
+    setError('');
     try {
       const user = await login(form.email, form.password);
-      toast.success(`Xush kelibsiz, ${user.full_name || 'Foydalanuvchi'}!`);
+      toast.success(`${t('auth.welcome_back')}, ${user.full_name || ''}!`);
       navigate(`/${user.role}/dashboard`);
     } catch (err) {
-      const msg = err.response?.data?.error || 'Login muvaffaqiyatsiz';
+      const msg = err.response?.data?.error || t('auth.invalid_creds');
       setError(msg);
       toast.error(msg);
     } finally {
@@ -28,26 +36,36 @@ export default function LoginPage() {
     }
   };
 
+  const handleDemoFill = (email, pass) => {
+    setForm({ email, password: pass });
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4"
-      style={{ background: 'radial-gradient(ellipse at 20% 50%, rgba(99,102,241,0.08) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(6,182,212,0.05) 0%, transparent 60%), #f8fafc' }}>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 p-4 relative">
+      {/* Top right language toggle */}
+      <div className="absolute top-5 right-5 z-20">
+        <LanguageSelector variant="compact" />
+      </div>
 
       <div className="w-full max-w-md animate-scale-in">
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-cyan-500 mb-4 shadow-lg shadow-indigo-500/25">
-            <RiStethoscopeLine className="text-3xl text-white" />
+        <div className="text-center mb-6">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-3xl bg-gradient-to-tr from-blue-600 to-indigo-600 mb-3 shadow-lg shadow-blue-500/20 text-white">
+            <RiHeartPulseLine className="text-3xl" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">Virtual Patient English</h1>
-          <p className="text-gray-500 text-sm mt-1">Klinik ingliz tili mashq platformasi</p>
+          <h1 className="text-2xl font-black text-slate-900 tracking-tight">Virtual Patient English</h1>
+          <p className="text-slate-500 text-xs sm:text-sm mt-1 font-medium">{t('auth.login_subtitle')}</p>
         </div>
 
         {/* Card */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-xl">
-          <h2 className="text-lg font-semibold text-gray-900 mb-6">Tizimga kirish</h2>
+        <div className="card-standard p-7 sm:p-8 space-y-5">
+          <div>
+            <h2 className="text-lg font-black text-slate-900">{t('auth.login_title')}</h2>
+            <p className="text-xs text-slate-400 font-medium mt-0.5">Tizimga kirish uchun ma'lumotlaringizni kiriting</p>
+          </div>
 
           {error && (
-            <div className="mb-4 p-3 rounded-xl bg-red-50 border border-red-200 text-red-600 text-sm">
+            <div className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-bold">
               {error}
             </div>
           )}
@@ -55,68 +73,89 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Email */}
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1.5">Email</label>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">{t('auth.email')}</label>
               <div className="relative">
-                <RiMailLine className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-base" />
+                <RiMailLine className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-base" />
                 <input
                   type="email"
-                  placeholder="email@example.com"
+                  placeholder={t('auth.enter_email')}
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                   required
-                  className="w-full bg-white border border-gray-300 rounded-xl pl-10 pr-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all"
+                  className="input-standard pl-10 text-xs sm:text-sm"
                 />
               </div>
             </div>
 
             {/* Password */}
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1.5">Parol</label>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">{t('auth.password')}</label>
               <div className="relative">
-                <RiLockPasswordLine className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-base" />
+                <RiLockPasswordLine className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-base" />
                 <input
                   type={showPass ? 'text' : 'password'}
                   placeholder="••••••••"
                   value={form.password}
                   onChange={(e) => setForm({ ...form, password: e.target.value })}
                   required
-                  className="w-full bg-white border border-gray-300 rounded-xl pl-10 pr-10 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all"
+                  className="input-standard pl-10 pr-10 text-xs sm:text-sm"
                 />
-                <button type="button" onClick={() => setShowPass(!showPass)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors">
+                <button
+                  type="button"
+                  onClick={() => setShowPass(!showPass)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors p-1"
+                >
                   {showPass ? <RiEyeOffLine /> : <RiEyeLine />}
                 </button>
               </div>
             </div>
 
-            {/* Demo accounts */}
-            <div className="mt-8 bg-gray-50 border border-gray-200 rounded-xl p-4">
-              <h3 className="text-xs font-semibold text-gray-500 mb-2">Test akkauntlar:</h3>
-              <div className="space-y-1.5 text-xs">
-                <p className="text-gray-500 flex items-center gap-1.5"><RiUser3Line /> <span className="text-gray-700">student@vpe.uz</span> / student123</p>
-                <p className="text-gray-500 flex items-center gap-1.5"><RiUserStarLine /> <span className="text-gray-700">teacher@vpe.uz</span> / teacher123</p>
-                <p className="text-gray-500 flex items-center gap-1.5"><RiShieldUserLine /> <span className="text-gray-700">admin@vpe.uz</span> / admin123</p>
+            {/* Demo Accounts Quick-Pick */}
+            <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-3.5 space-y-2">
+              <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-wider">{t('auth.demo_hint')} (1-bosish bilan to'ldirish):</h3>
+              <div className="grid grid-cols-3 gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => handleDemoFill('student@vpe.uz', 'student123')}
+                  className="px-2 py-1.5 rounded-xl bg-white border border-slate-200 hover:border-blue-300 text-slate-700 text-[11px] font-bold transition-all shadow-2xs flex items-center justify-center gap-1 cursor-pointer"
+                >
+                  <RiUser3Line className="text-blue-600" /> Talaba
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleDemoFill('teacher@vpe.uz', 'teacher123')}
+                  className="px-2 py-1.5 rounded-xl bg-white border border-slate-200 hover:border-emerald-300 text-slate-700 text-[11px] font-bold transition-all shadow-2xs flex items-center justify-center gap-1 cursor-pointer"
+                >
+                  <RiUserStarLine className="text-emerald-600" /> O'qituvchi
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleDemoFill('admin@vpe.uz', 'admin123')}
+                  className="px-2 py-1.5 rounded-xl bg-white border border-slate-200 hover:border-purple-300 text-slate-700 text-[11px] font-bold transition-all shadow-2xs flex items-center justify-center gap-1 cursor-pointer"
+                >
+                  <RiShieldCheckLine className="text-purple-600" /> Admin
+                </button>
               </div>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-indigo-500 to-indigo-600 text-white transition-all shadow-lg shadow-indigo-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full btn-primary-gradient py-3 text-sm"
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
                   <RiLoader4Line className="animate-spin text-base" />
-                  Kirish...
+                  {t('auth.logging_in')}
                 </span>
-              ) : 'Kirish'}
+              ) : t('auth.sign_in_btn')}
             </button>
           </form>
 
-          <p className="text-center text-xs text-gray-500 mt-5">
-            Hisobingiz yo'qmi?{' '}
-            <Link to="/register" className="text-indigo-600 hover:text-indigo-700 font-medium">
-              Ro'yxatdan o'ting
+          <p className="text-center text-xs text-slate-500 font-medium">
+            {t('auth.no_account')}{' '}
+            <Link to="/register" className="text-blue-600 hover:text-blue-700 font-bold hover:underline">
+              {t('auth.sign_up_btn')}
             </Link>
           </p>
         </div>

@@ -34,6 +34,12 @@ router.post('/modules',                  isAdmin, c.createModule);
 router.put('/modules/:id',               isAdmin, c.updateModule);
 router.delete('/modules/:id',            isAdmin, c.deleteModule);
 
+// Grammar
+router.get('/grammar',                   isAdmin, c.getGrammar);
+router.post('/grammar',                  isAdmin, c.createGrammar);
+router.put('/grammar/:id',               isAdmin, c.updateGrammar);
+router.delete('/grammar/:id',            isAdmin, c.deleteGrammar);
+
 // Vocabulary
 router.get('/vocabulary',                isAdmin, c.getVocabulary);
 router.post('/vocabulary',               isAdmin, c.createVocabulary);

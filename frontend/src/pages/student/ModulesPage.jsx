@@ -2,59 +2,33 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import api from '../../lib/api';
+import { useLanguage } from '../../contexts/LanguageContext';
 import {
   RiBookOpenLine, RiCheckboxCircleLine, RiTimeLine, RiLockLine,
   RiArrowRightLine, RiTrophyLine, RiFirstAidKitLine, RiStethoscopeLine,
   RiMicroscopeLine, RiSyringeLine, RiHeartPulseLine, RiHospitalLine,
-  RiNurseLine, RiMedicineBottleLine, RiClipboardLine, RiHeartLine,
-  RiPlayLine, RiStarLine,
+  RiPlayLine, RiSearchLine
 } from 'react-icons/ri';
 
 const MODULE_ICONS = [
   RiFirstAidKitLine, RiStethoscopeLine, RiMicroscopeLine, RiSyringeLine,
-  RiHeartPulseLine, RiHospitalLine, RiNurseLine, RiMedicineBottleLine,
-  RiClipboardLine, RiHeartLine,
+  RiHeartPulseLine, RiHospitalLine, RiFirstAidKitLine, RiStethoscopeLine,
+  RiMicroscopeLine, RiHeartPulseLine,
 ];
-
-const STATUS_CONFIG = {
-  completed:    { bg: 'bg-emerald-50',  text: 'text-emerald-700',  border: 'border-emerald-200', label: 'Completed',    icon: RiCheckboxCircleLine, dot: 'bg-emerald-400' },
-  'in-progress':{ bg: 'bg-amber-50',    text: 'text-amber-700',    border: 'border-amber-200',   label: 'In Progress',  icon: RiTimeLine,           dot: 'bg-amber-400'  },
-  'not-started':{ bg: 'bg-slate-50',    text: 'text-slate-600',    border: 'border-slate-200',   label: 'Not Started',  icon: RiPlayLine,           dot: 'bg-slate-400'   },
-  locked:       { bg: 'bg-rose-50',     text: 'text-rose-600',     border: 'border-rose-200',    label: 'Locked',       icon: RiLockLine,           dot: 'bg-rose-400'    },
-};
-
-const GRADIENT_PAIRS = [
-  'from-indigo-500 to-purple-500',
-  'from-cyan-500 to-blue-500',
-  'from-emerald-500 to-teal-500',
-  'from-amber-500 to-orange-500',
-  'from-pink-500 to-rose-500',
-  'from-violet-500 to-indigo-500',
-  'from-teal-500 to-cyan-500',
-  'from-orange-500 to-amber-500',
-  'from-blue-500 to-indigo-500',
-  'from-rose-500 to-pink-500',
-];
-
-function SkeletonCard() {
-  return (
-    <div className="bg-white rounded-2xl border border-slate-200/80 p-5 space-y-3">
-      <div className="skeleton h-10 w-10 rounded-xl" />
-      <div className="skeleton h-4 w-2/3 rounded" />
-      <div className="skeleton h-3 w-full rounded" />
-      <div className="skeleton h-3 w-4/5 rounded" />
-    </div>
-  );
-}
 
 export default function ModulesPage() {
   const navigate = useNavigate();
+  const { t, getLocalized } = useLanguage();
   const [modules, setModules] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter]   = useState('all');
+  const [search, setSearch]   = useState('');
 
   useEffect(() => {
-    api.get('/student/modules').then(r => setModules(r.data)).finally(() => setLoading(false));
+    api.get('/student/modules')
+      .then(r => setModules(r.data))
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, []);
 
   const getStatus = (mod) => {
@@ -64,179 +38,179 @@ export default function ModulesPage() {
     return 'not-started';
   };
 
-  const filtered = filter === 'all'
-    ? modules
-    : modules.filter(m => getStatus(m) === filter);
+  const statusConfig = {
+    completed:    { badge: 'badge-emerald', label: t('student.modules.completed_badge'), icon: RiCheckboxCircleLine },
+    'in-progress':{ badge: 'badge-amber',   label: t('common.in_progress'),            icon: RiTimeLine },
+    'not-started':{ badge: 'badge-blue',    label: t('student.modules.start_btn'),            icon: RiPlayLine },
+    locked:       { badge: 'badge-slate',   label: t('student.modules.locked_badge'),                 icon: RiLockLine },
+  };
+
+  const filtered = modules
+    .filter(m => filter === 'all' ? true : getStatus(m) === filter)
+    .filter(m => search.trim() ? (m.title?.toLowerCase().includes(search.toLowerCase()) || m.description?.toLowerCase().includes(search.toLowerCase())) : true);
 
   const counts = {
     all:          modules.length,
-    completed:    modules.filter(m => getStatus(m) === 'completed').length,
-    'in-progress':modules.filter(m => getStatus(m) === 'in-progress').length,
     'not-started':modules.filter(m => getStatus(m) === 'not-started').length,
+    'in-progress':modules.filter(m => getStatus(m) === 'in-progress').length,
+    completed:    modules.filter(m => getStatus(m) === 'completed').length,
     locked:       modules.filter(m => getStatus(m) === 'locked').length,
   };
 
   const FILTERS = [
-    { key: 'all',          label: 'All' },
-    { key: 'not-started',  label: 'Not Started' },
-    { key: 'in-progress',  label: 'In Progress' },
-    { key: 'completed',    label: 'Completed' },
-    { key: 'locked',       label: 'Locked' },
+    { key: 'all',          label: t('common.all') },
+    { key: 'not-started',  label: t('student.modules.start_btn') },
+    { key: 'in-progress',  label: t('common.in_progress') },
+    { key: 'completed',    label: t('student.modules.completed_badge') },
+    { key: 'locked',       label: t('student.modules.locked_badge') },
   ];
 
   return (
     <Layout>
-      {/* ── Header ──────────────────────────────────────── */}
-      <div className="animate-fade-up mb-7">
-        <div className="flex items-start justify-between">
+      <div className="space-y-6">
+        {/* ── 1. Page Header ── */}
+        <div className="card-standard p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-5">
           <div>
-            <h1 className="text-2xl font-black text-slate-900 flex items-center gap-2">
-              <span className="w-9 h-9 rounded-xl flex items-center justify-center text-white text-base"
-                    style={{ background: 'linear-gradient(135deg, #6366f1, #4f46e5)' }}>
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className="badge-standard badge-blue">
+                {modules.length} {t('nav.modules')}
+              </span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
+              <span className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 border border-blue-200 flex items-center justify-center text-xl shrink-0">
                 <RiBookOpenLine />
               </span>
-              My Modules
+              {t('student.modules.title')}
             </h1>
-            <p className="text-slate-500 text-sm mt-1.5 ml-11">
-              {counts.completed} of {counts.all} modules completed
+            <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1 max-w-xl">
+              {t('student.modules.subtitle')}
             </p>
           </div>
-          {/* mini progress */}
-          <div className="text-right">
-            <p className="text-2xl font-black text-indigo-600">
-              {counts.all > 0 ? Math.round((counts.completed / counts.all) * 100) : 0}%
-            </p>
-            <p className="text-[11px] text-slate-400 font-medium">completion rate</p>
+
+          {/* Search Box */}
+          <div className="relative w-full md:w-72">
+            <RiSearchLine className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm" />
+            <input
+              type="text"
+              placeholder={t('common.search')}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="input-standard pl-10 text-xs"
+            />
           </div>
         </div>
 
-        {/* Progress bar */}
-        <div className="mt-4 h-2 bg-slate-100 rounded-full overflow-hidden">
-          <div
-            className="h-full rounded-full progress-fill"
-            style={{
-              width: `${counts.all > 0 ? (counts.completed / counts.all) * 100 : 0}%`,
-              background: 'linear-gradient(90deg, #6366f1, #06b6d4)',
-            }}
-          />
-        </div>
-      </div>
-
-      {/* ── Filter Tabs ─────────────────────────────────── */}
-      <div className="animate-fade-up delay-100 flex items-center gap-2 mb-6 overflow-x-auto pb-1">
-        {FILTERS.map(f => (
-          <button
-            key={f.key}
-            id={`filter-${f.key}`}
-            onClick={() => setFilter(f.key)}
-            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 border ${
-              filter === f.key
-                ? 'bg-indigo-600 text-white border-indigo-600 shadow-md shadow-indigo-500/25'
-                : 'bg-white text-slate-600 border-slate-200 hover:border-indigo-300 hover:text-indigo-600'
-            }`}
-          >
-            {f.label}
-            <span className={`w-4 h-4 rounded-full text-[10px] flex items-center justify-center font-black ${
-              filter === f.key ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-500'
-            }`}>
-              {counts[f.key]}
-            </span>
-          </button>
-        ))}
-      </div>
-
-      {/* ── Module Grid ─────────────────────────────────── */}
-      {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[...Array(6)].map((_, i) => <SkeletonCard key={i} />)}
-        </div>
-      ) : filtered.length === 0 ? (
-        <div className="text-center py-20 text-slate-400">
-          <RiBookOpenLine className="text-4xl mx-auto mb-2 opacity-30" />
-          <p className="text-sm font-medium">No modules found</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filtered.map((mod, i) => {
-            const status   = getStatus(mod);
-            const cfg      = STATUS_CONFIG[status];
-            const StatusIcon = cfg.icon;
-            const ModIcon  = MODULE_ICONS[(mod.order_index - 1) % MODULE_ICONS.length];
-            const gradient = GRADIENT_PAIRS[(mod.order_index - 1) % GRADIENT_PAIRS.length];
-            const isLocked = !mod.is_unlocked;
-            const score    = mod.best_score;
-            const scoreColor = score >= 80 ? 'text-emerald-600' : score >= 60 ? 'text-amber-600' : 'text-red-500';
-
+        {/* ── 2. Filter Pills ── */}
+        <div className="flex flex-wrap items-center gap-2">
+          {FILTERS.map(f => {
+            const isActive = filter === f.key;
+            const count = counts[f.key] || 0;
             return (
-              <div
-                key={mod.id}
-                id={`module-card-${mod.id}`}
-                onClick={() => { if (!isLocked) navigate(`/student/modules/${mod.id}`); }}
-                style={{ animationDelay: `${i * 0.05}s` }}
-                className={`animate-fade-up relative bg-white border rounded-2xl p-5 transition-all duration-250 group ${
-                  isLocked
-                    ? 'border-slate-200 opacity-60 cursor-not-allowed'
-                    : 'border-slate-200/80 cursor-pointer hover:border-indigo-300 hover:shadow-lg hover:shadow-indigo-500/10 hover:-translate-y-0.5'
+              <button
+                key={f.key}
+                onClick={() => setFilter(f.key)}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                  isActive
+                    ? 'bg-blue-600 text-white shadow-xs'
+                    : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:text-slate-900'
                 }`}
               >
-                <div className="flex items-start gap-4">
-                  {/* Icon */}
-                  <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${gradient} flex items-center justify-center text-white text-xl flex-shrink-0 shadow-lg ${!isLocked ? 'group-hover:scale-105 transition-transform duration-200' : ''}`}>
-                    {isLocked ? <RiLockLine /> : <ModIcon />}
-                  </div>
-
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-2 mb-1">
-                      <div>
-                        <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Module {mod.order_index}</p>
-                        <h3 className={`text-sm font-bold text-slate-900 leading-tight mt-0.5 ${!isLocked ? 'group-hover:text-indigo-600 transition-colors' : ''}`}>
-                          {mod.title}
-                        </h3>
-                      </div>
-                      {/* Status badge */}
-                      <span className={`flex-shrink-0 inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[10px] font-bold border ${cfg.bg} ${cfg.text} ${cfg.border}`}>
-                        <span className={`w-1.5 h-1.5 rounded-full ${cfg.dot}`} />
-                        {cfg.label}
-                      </span>
-                    </div>
-
-                    {mod.description && (
-                      <p className="text-[11px] text-slate-500 line-clamp-2 mt-1.5 leading-relaxed">{mod.description}</p>
-                    )}
-
-                    <div className="flex items-center justify-between mt-3">
-                      <div className="flex items-center gap-3">
-                        <span className="text-[11px] text-slate-400 flex items-center gap-1">
-                          <RiTimeLine className="text-[10px]" /> 90 min
-                        </span>
-                        {score !== null && (
-                          <span className={`text-[11px] font-bold flex items-center gap-1 ${scoreColor}`}>
-                            <RiTrophyLine className="text-[10px]" /> {score}%
-                          </span>
-                        )}
-                      </div>
-                      {!isLocked && (
-                        <RiArrowRightLine className="text-slate-300 group-hover:text-indigo-500 group-hover:translate-x-0.5 transition-all duration-200" />
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Locked overlay tooltip */}
-                {isLocked && mod.order_index > 1 && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-white/70 backdrop-blur-[1px] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    <div className="bg-rose-600 text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-2 shadow-lg">
-                      <RiLockLine /> Score 60%+ in previous module to unlock
-                    </div>
-                  </div>
-                )}
-              </div>
+                <span>{f.label}</span>
+                <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-black ${
+                  isActive ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'
+                }`}>
+                  {count}
+                </span>
+              </button>
             );
           })}
         </div>
-      )}
+
+        {/* ── 3. Modules Grid ── */}
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="h-64 bg-white rounded-3xl border border-slate-200 animate-pulse" />
+            ))}
+          </div>
+        ) : filtered.length === 0 ? (
+          <div className="card-standard p-12 text-center">
+            <p className="text-sm font-bold text-slate-700">{t('student.dashboard.no_recent')}</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {filtered.map((mod, idx) => {
+              const st = getStatus(mod);
+              const cfg = statusConfig[st];
+              const StatusIcon = cfg.icon;
+              const IconComponent = MODULE_ICONS[idx % MODULE_ICONS.length];
+              const description = getLocalized(mod, 'description');
+
+              return (
+                <div
+                  key={mod.id}
+                  onClick={() => mod.is_unlocked && navigate(`/student/modules/${mod.id}`)}
+                  className={`card-standard p-6 flex flex-col justify-between transition-all ${
+                    mod.is_unlocked
+                      ? 'hover:border-blue-300 hover:shadow-md cursor-pointer hover:-translate-y-1'
+                      : 'bg-slate-50/60 border-slate-200 opacity-70 cursor-not-allowed'
+                  }`}
+                >
+                  <div>
+                    {/* Top row */}
+                    <div className="flex items-center justify-between gap-2 mb-4">
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 border border-blue-200/80 flex items-center justify-center text-xl font-bold shrink-0">
+                          <IconComponent />
+                        </div>
+                        <span className="text-[11px] font-black uppercase tracking-wider text-slate-400">
+                          {t('student.modules.order')} #{mod.order_index}
+                        </span>
+                      </div>
+
+                      <span className={`badge-standard ${cfg.badge}`}>
+                        <StatusIcon className="text-xs" />
+                        <span>{cfg.label}</span>
+                      </span>
+                    </div>
+
+                    {/* Title & Description */}
+                    <h3 className="text-base font-extrabold text-slate-900 leading-snug mb-2">
+                      {mod.title}
+                    </h3>
+
+                    <p className="text-xs text-slate-500 line-clamp-3 leading-relaxed mb-4 font-medium">
+                      {description || mod.description}
+                    </p>
+                  </div>
+
+                  {/* Footer & CTA */}
+                  <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+                    {mod.best_score !== null && (
+                      <span className="badge-standard badge-amber">
+                        <RiTrophyLine /> {mod.best_score}%
+                      </span>
+                    )}
+
+                    {mod.is_unlocked ? (
+                      <button
+                        className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800 transition-colors ml-auto"
+                      >
+                        <span>{mod.is_completed ? t('student.modules.review_btn') : mod.best_score !== null ? t('student.modules.continue_btn') : t('student.modules.start_btn')}</span>
+                        <RiArrowRightLine />
+                      </button>
+                    ) : (
+                      <span className="text-[11px] text-slate-400 font-semibold flex items-center gap-1.5 ml-auto">
+                        <RiLockLine /> {t('student.modules.unlock_tip')}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </Layout>
   );
 }
-
-

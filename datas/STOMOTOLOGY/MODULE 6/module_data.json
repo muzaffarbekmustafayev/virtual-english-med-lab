@@ -1,0 +1,522 @@
+{
+  "specialty_id": 1,
+  "specialty_name": "Stomatologiya",
+  "order_index": 6,
+  "title": "Gum Problems & Periodontitis",
+  "title_uz": "Milk kasalliklari va parodontit",
+  "title_ru": "Заболевания десен и пародонтит",
+  "title_en": "Gum Problems & Periodontitis",
+  "description": "Stomatologiya bo'yicha Milk kasalliklari va parodontit mavzusida klinik muloqot va tibbiy ingliz tili darsi.",
+  "clinical_level": "B2 Medical English",
+  "target_role": "Dental Clinician / Attending Physician",
+  "scenario_prompt": "You are a virtual patient presenting with symptoms related to Gum Problems & Periodontitis. Speak in natural, everyday patient English.",
+  "patient_profile": {
+    "age": 48,
+    "gender": "Female",
+    "chief_complaint": "Milk kasalliklari va parodontit",
+    "history": "Patient presents with complaints of gum problems & periodontitis."
+  },
+  "grammar": [
+    {
+      "title": "GRAMMAR REVIEW - Previous Grammar + New Grammar",
+      "title_uz": "GRAMMAR REVIEW - Previous Grammar + New Grammar",
+      "title_ru": "GRAMMAR REVIEW - Previous Grammar + New Grammar",
+      "title_en": "GRAMMAR REVIEW - Previous Grammar + New Grammar",
+      "rule_explanation": "Present Simple odatiy holat, umumiy fakt yoki muntazam harakatlar uchun ishlatiladi. Past Simple o'tmishda sodir bo'lgan va tugagan voqealar uchun ishlatiladi.",
+      "rule_explanation_uz": "Present Simple odatiy holat, umumiy fakt yoki muntazam harakatlar uchun ishlatiladi. Past Simple o'tmishda sodir bo'lgan va tugagan voqealar uchun ishlatiladi.",
+      "rule_explanation_ru": "В клиническом диалоге точные грамматические структуры помогают быстрее понять жалобы пациента.",
+      "rule_explanation_en": "Using precise clinical grammatical structures enables clear patient history taking and assessment.",
+      "structure_pattern": "Subject + V1/V-s (Habitual) | Subject + am/is/are + V-ing (Current State)",
+      "examples": [
+        {
+          "sentence": "zi fe'llardan keyin boshqa fe",
+          "translation": "Example: You should avoid smoking.",
+          "translation_uz": "Example: You should avoid smoking.",
+          "translation_ru": "O'zbekcha: Chekishdan saqlanishingiz kerak.",
+          "note": "Clinical Dialogue Example"
+        },
+        {
+          "sentence": "limda oldingi modullardagi zamonlar faqat qisqa review qilinadi. Asosiy e",
+          "translation": "limda oldingi modullardagi zamonlar faqat qisqa review qilinadi. Asosiy e",
+          "translation_uz": "limda oldingi modullardagi zamonlar faqat qisqa review qilinadi. Asosiy e",
+          "translation_ru": "",
+          "note": "Clinical Dialogue Example"
+        }
+      ],
+      "common_mistakes": [
+        {
+          "incorrect": "Since when you feel this pain?",
+          "correct": "How long have you had this pain?",
+          "explanation": "Davomiylikni so'rashda 'How long have you had...?' standarti ishlatiladi.",
+          "explanation_uz": "Davomiylikni so'rashda 'How long have you had...?' standarti ishlatiladi.",
+          "explanation_ru": "Для выяснения длительности используется конструкция 'How long have you had...?'.",
+          "explanation_en": "Use 'How long have you had...?' when asking about the duration of symptoms."
+        },
+        {
+          "incorrect": "Where is paining you?",
+          "correct": "Where exactly do you feel the pain?",
+          "explanation": "Lokatsiyani aniqlashda 'Where do you feel the pain?' to'g'ri grammatik shakl.",
+          "explanation_uz": "Lokatsiyani aniqlashda 'Where do you feel the pain?' to'g'ri grammatik shakl.",
+          "explanation_ru": "Правильный вопрос о локализации боли: 'Where exactly do you feel the pain?'.",
+          "explanation_en": "Ask 'Where exactly do you feel the pain?' to identify the specific anatomical site."
+        }
+      ],
+      "structure_pattern_en": "Subject + V1/V-s (Habitual) | Subject + am/is/are + V-ing (Current State)",
+      "structure_pattern_uz": "Ega + V1/V-s (Odatiy holat) | Ega + am/is/are + V-ing (Ayni paytdagi holat)",
+      "structure_pattern_ru": "Подлежащее + V1/V-s (Регулярное действие) | Подлежащее + am/is/are + V-ing (Текущее состояние)"
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "gum problems",
+      "translation": "milk bilan bog'liq muammolar",
+      "translation_uz": "milk bilan bog'liq muammolar",
+      "translation_ru": "проблемы с дёснами",
+      "translation_en": "gum problems",
+      "definition": "Inflammatory disease affecting the gingival tissues and periodontal support of teeth.",
+      "definition_uz": "Milk to'qimalari va tishni ushlab turuvchi parodont to'qimalarining yallig'lanishi.",
+      "definition_ru": "Воспалительное поражение десен и удерживающих тканей пародонта.",
+      "definition_en": "Inflammatory disease affecting the gingival tissues and periodontal support of teeth.",
+      "example": "The doctor assessed the patient for gum problems."
+    },
+    {
+      "word": "gum",
+      "translation": "milk",
+      "translation_uz": "milk",
+      "translation_ru": "десна",
+      "translation_en": "gum",
+      "definition": "Inflammatory disease affecting the gingival tissues and periodontal support of teeth.",
+      "definition_uz": "Milk to'qimalari va tishni ushlab turuvchi parodont to'qimalarining yallig'lanishi.",
+      "definition_ru": "Воспалительное поражение десен и удерживающих тканей пародонта.",
+      "definition_en": "Inflammatory disease affecting the gingival tissues and periodontal support of teeth.",
+      "example": "The doctor assessed the patient for gum."
+    },
+    {
+      "word": "swollen gums",
+      "translation": "shishgan milklar",
+      "translation_uz": "shishgan milklar",
+      "translation_ru": "опухшие дёсны",
+      "translation_en": "swollen gums",
+      "definition": "Inflammatory disease affecting the gingival tissues and periodontal support of teeth.",
+      "definition_uz": "Milk to'qimalari va tishni ushlab turuvchi parodont to'qimalarining yallig'lanishi.",
+      "definition_ru": "Воспалительное поражение десен и удерживающих тканей пародонта.",
+      "definition_en": "Inflammatory disease affecting the gingival tissues and periodontal support of teeth.",
+      "example": "The doctor assessed the patient for swollen gums."
+    },
+    {
+      "word": "gum bleeding",
+      "translation": "milk qonashi",
+      "translation_uz": "milk qonashi",
+      "translation_ru": "кровоточивость дёсен",
+      "translation_en": "gum bleeding",
+      "definition": "Escape of blood from damaged blood vessels or inflamed gingival margins.",
+      "definition_uz": "Shikastlangan qon tomirlari yoki yallig'langan milkdan qon ketishi.",
+      "definition_ru": "Кровоточивость из поврежденных сосудов или воспаленных десен.",
+      "definition_en": "Escape of blood from damaged blood vessels or inflamed gingival margins.",
+      "example": "The doctor assessed the patient for gum bleeding."
+    },
+    {
+      "word": "sore gums",
+      "translation": "og'riqli milklar",
+      "translation_uz": "og'riqli milklar",
+      "translation_ru": "болезненные дёсны",
+      "translation_en": "sore gums",
+      "definition": "Inflammatory disease affecting the gingival tissues and periodontal support of teeth.",
+      "definition_uz": "Milk to'qimalari va tishni ushlab turuvchi parodont to'qimalarining yallig'lanishi.",
+      "definition_ru": "Воспалительное поражение десен и удерживающих тканей пародонта.",
+      "definition_en": "Inflammatory disease affecting the gingival tissues and periodontal support of teeth.",
+      "example": "The doctor assessed the patient for sore gums."
+    },
+    {
+      "word": "gum line",
+      "translation": "milk chizig'i",
+      "translation_uz": "milk chizig'i",
+      "translation_ru": "линия дёсен",
+      "translation_en": "gum line",
+      "definition": "Inflammatory disease affecting the gingival tissues and periodontal support of teeth.",
+      "definition_uz": "Milk to'qimalari va tishni ushlab turuvchi parodont to'qimalarining yallig'lanishi.",
+      "definition_ru": "Воспалительное поражение десен и удерживающих тканей пародонта.",
+      "definition_en": "Inflammatory disease affecting the gingival tissues and periodontal support of teeth.",
+      "example": "The doctor assessed the patient for gum line."
+    },
+    {
+      "word": "redness",
+      "translation": "qizarish",
+      "translation_uz": "qizarish",
+      "translation_ru": "покраснение",
+      "translation_en": "redness",
+      "definition": "Clinical medical condition and symptom associated with redness.",
+      "definition_uz": "qizarish - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "покраснение - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with redness.",
+      "example": "The doctor assessed the patient for redness."
+    },
+    {
+      "word": "inflammation",
+      "translation": "yallig'lanish",
+      "translation_uz": "yallig'lanish",
+      "translation_ru": "воспаление",
+      "translation_en": "inflammation",
+      "definition": "Clinical medical condition and symptom associated with inflammation.",
+      "definition_uz": "yallig'lanish - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "воспаление - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with inflammation.",
+      "example": "The doctor assessed the patient for inflammation."
+    },
+    {
+      "word": "plaque buildup",
+      "translation": "tish karashi to'planishi",
+      "translation_uz": "tish karashi to'planishi",
+      "translation_ru": "скопление зубного налёта",
+      "translation_en": "plaque buildup",
+      "definition": "Clinical medical condition and symptom associated with plaque buildup.",
+      "definition_uz": "tish karashi to'planishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "скопление зубного налёта - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with plaque buildup.",
+      "example": "The doctor assessed the patient for plaque buildup."
+    },
+    {
+      "word": "irritation",
+      "translation": "tirnash xususiyati",
+      "translation_uz": "tirnash xususiyati",
+      "translation_ru": "раздражение",
+      "translation_en": "irritation",
+      "definition": "Clinical medical condition and symptom associated with irritation.",
+      "definition_uz": "tirnash xususiyati - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "раздражение - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with irritation.",
+      "example": "The doctor assessed the patient for irritation."
+    },
+    {
+      "word": "food particles",
+      "translation": "oziq-ovqat qoldiqlari",
+      "translation_uz": "oziq-ovqat qoldiqlari",
+      "translation_ru": "частицы пищи",
+      "translation_en": "food particles",
+      "definition": "Clinical medical condition and symptom associated with food particles.",
+      "definition_uz": "oziq-ovqat qoldiqlari - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "частицы пищи - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with food particles.",
+      "example": "The doctor assessed the patient for food particles."
+    },
+    {
+      "word": "dental floss",
+      "translation": "tish ipi",
+      "translation_uz": "tish ipi",
+      "translation_ru": "зубная нить",
+      "translation_en": "dental floss",
+      "definition": "Clinical medical condition and symptom associated with dental floss.",
+      "definition_uz": "tish ipi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "зубная нить - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with dental floss.",
+      "example": "The doctor assessed the patient for dental floss."
+    },
+    {
+      "word": "interdental brush",
+      "translation": "tishlar orasini tozalovchi cho'tka",
+      "translation_uz": "tishlar orasini tozalovchi cho'tka",
+      "translation_ru": "межзубная щётка",
+      "translation_en": "interdental brush",
+      "definition": "Clinical medical condition and symptom associated with interdental brush.",
+      "definition_uz": "tishlar orasini tozalovchi cho'tka - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "межзубная щётка - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with interdental brush.",
+      "example": "The doctor assessed the patient for interdental brush."
+    },
+    {
+      "word": "professional cleaning",
+      "translation": "professional tozalash",
+      "translation_uz": "professional tozalash",
+      "translation_ru": "профессиональная чистка",
+      "translation_en": "professional cleaning",
+      "definition": "Clinical medical condition and symptom associated with professional cleaning.",
+      "definition_uz": "professional tozalash - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "профессиональная чистка - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with professional cleaning.",
+      "example": "The doctor assessed the patient for professional cleaning."
+    },
+    {
+      "word": "tartar",
+      "translation": "tish toshi",
+      "translation_uz": "tish toshi",
+      "translation_ru": "зубной камень",
+      "translation_en": "tartar",
+      "definition": "Clinical medical condition and symptom associated with tartar.",
+      "definition_uz": "tish toshi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "зубной камень - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with tartar.",
+      "example": "The doctor assessed the patient for tartar."
+    },
+    {
+      "word": "soft-bristled toothbrush",
+      "translation": "yumshoq tukli tish cho'tkasi",
+      "translation_uz": "yumshoq tukli tish cho'tkasi",
+      "translation_ru": "зубная щётка с мягкой щетиной",
+      "translation_en": "soft-bristled toothbrush",
+      "definition": "Clinical medical condition and symptom associated with soft-bristled toothbrush.",
+      "definition_uz": "yumshoq tukli tish cho'tkasi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "зубная щётка с мягкой щетиной - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with soft-bristled toothbrush.",
+      "example": "The doctor assessed the patient for soft-bristled toothbrush."
+    },
+    {
+      "word": "oral hygiene",
+      "translation": "og'iz gigiyenasi",
+      "translation_uz": "og'iz gigiyenasi",
+      "translation_ru": "гигиена полости рта",
+      "translation_en": "oral hygiene",
+      "definition": "Clinical medical condition and symptom associated with oral hygiene.",
+      "definition_uz": "og'iz gigiyenasi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "гигиена полости рта - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with oral hygiene.",
+      "example": "The doctor assessed the patient for oral hygiene."
+    },
+    {
+      "word": "gum disease",
+      "translation": "milk kasalligi",
+      "translation_uz": "milk kasalligi",
+      "translation_ru": "заболевание дёсен",
+      "translation_en": "gum disease",
+      "definition": "Inflammatory disease affecting the gingival tissues and periodontal support of teeth.",
+      "definition_uz": "Milk to'qimalari va tishni ushlab turuvchi parodont to'qimalarining yallig'lanishi.",
+      "definition_ru": "Воспалительное поражение десен и удерживающих тканей пародонта.",
+      "definition_en": "Inflammatory disease affecting the gingival tissues and periodontal support of teeth.",
+      "example": "The doctor assessed the patient for gum disease."
+    },
+    {
+      "word": "maintain",
+      "translation": "saqlab turmoq",
+      "translation_uz": "saqlab turmoq",
+      "translation_ru": "поддерживать",
+      "translation_en": "maintain",
+      "definition": "Clinical medical condition and symptom associated with maintain.",
+      "definition_uz": "saqlab turmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "поддерживать - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with maintain.",
+      "example": "The doctor assessed the patient for maintain."
+    },
+    {
+      "word": "prevent",
+      "translation": "oldini olmoq",
+      "translation_uz": "oldini olmoq",
+      "translation_ru": "предотвращать",
+      "translation_en": "prevent",
+      "definition": "Clinical medical condition and symptom associated with prevent.",
+      "definition_uz": "oldini olmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "предотвращать - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with prevent.",
+      "example": "The doctor assessed the patient for prevent."
+    }
+  ],
+  "phrasebook": [
+    {
+      "phrase": "Doctor: What seems to be bothering you?",
+      "category": "Opening",
+      "hint": "Klinik muloqot iborasi",
+      "hint_uz": "Klinik muloqot iborasi",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Doctor: Are you experiencing any pain at the moment?",
+      "category": "Opening",
+      "hint": "Klinik muloqot iborasi",
+      "hint_uz": "Klinik muloqot iborasi",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Doctor: Are you using dental floss or an interdental brush?",
+      "category": "Opening",
+      "hint": "Klinik muloqot iborasi",
+      "hint_uz": "Klinik muloqot iborasi",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Patient: What would you recommend?",
+      "category": "Opening",
+      "hint": "Klinik muloqot iborasi",
+      "hint_uz": "Klinik muloqot iborasi",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Patient: What should I do if my gums continue to bleed?",
+      "category": "Aftercare",
+      "hint": "Klinik muloqot iborasi",
+      "hint_uz": "Klinik muloqot iborasi",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    }
+  ],
+  "dialogue": [
+    {
+      "speaker": "Doctor",
+      "text": "Good afternoon. Please have a seat. What seems to be bothering you?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "Good afternoon, Doctor. My gums are becoming quite uncomfortable. They're bleeding whenever I brush my teeth, and the area around my front teeth feels swollen."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "I see. Are you experiencing any pain at the moment?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "There isn't much pain, but my gums feel sore, especially when I'm brushing."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "All right. I'm going to examine your gums and check for any signs of inflammation. Please open your mouth slightly wider."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Of course."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "I can see some redness and swelling along the gum line. Your gums are also bleeding quite easily when I touch them."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Is that something serious?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "It could become a serious problem if it isn't treated properly. At the moment, the symptoms are consistent with gum inflammation, which is often associated with plaque buildup."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Could poor brushing be the reason?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "It might be one of the reasons. Plaque can accumulate around the gum line when the teeth aren't being cleaned thoroughly, and this can lead to irritation and inflammation."
+    },
+    {
+      "speaker": "Patient",
+      "text": "I'm trying to brush regularly, but I sometimes rush through it because I'm in a hurry."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "That could explain why some areas aren't being cleaned effectively. Are you using dental floss or an interdental brush?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I'm not using either of them regularly. I usually just brush my teeth."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "In that case, food particles and plaque may be remaining between your teeth. These areas are difficult to clean with a toothbrush alone."
+    },
+    {
+      "speaker": "Patient",
+      "text": "What would you recommend?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "First, we'll carry out a professional cleaning to remove the plaque and tartar around your gums. After that, you'll need to improve your daily oral hygiene."
+    },
+    {
+      "speaker": "Patient",
+      "text": "What should I do if my gums continue to bleed after the cleaning?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Some mild bleeding may occur initially, but it should gradually decrease as the inflammation settles down. If the bleeding becomes heavier or continues for a long time, you should come back for another examination."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Should I stop brushing until the bleeding goes away?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "No. You shouldn't stop brushing. Instead, use a soft-bristled toothbrush and brush gently along the gum line."
+    },
+    {
+      "speaker": "Patient",
+      "text": "What about flossing?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "You should continue flossing carefully. It may feel uncomfortable at first, but regular cleaning between the teeth will help keep the gums healthier."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Is there anything else I should change?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "You should reduce sugary snacks and avoid smoking, as both can contribute to gum problems. Drinking enough water can also help maintain a healthier mouth."
+    },
+    {
+      "speaker": "Patient",
+      "text": "If I follow all these recommendations, will my gums return to normal?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "They should improve considerably if the inflammation is treated and you maintain good oral hygiene. However, if the condition progresses, deeper treatment may be required."
+    },
+    {
+      "speaker": "Patient",
+      "text": "I understand. I'm going to take better care of my gums from now on."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Good. We'll start with the professional cleaning today, and I'll show you the correct brushing and flossing techniques before you leave."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Thank you, Doctor."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "You're welcome. Taking action early can help prevent more serious gum disease in the future."
+    }
+  ],
+  "tests": [
+    {
+      "question": "What is the medical meaning of the term 'gum problems' in clinical consultation?",
+      "option_a": "milk bilan bog'liq muammolar",
+      "option_b": "milk",
+      "option_c": "shishgan milklar",
+      "option_d": "milk qonashi",
+      "correct_option": "A",
+      "explanation": "'gum problems' atamasining to'g'ri ma'nosi: milk bilan bog'liq muammolar."
+    },
+    {
+      "question": "Which term corresponds to 'og'riqli milklar'?",
+      "option_a": "gum",
+      "option_b": "sore gums",
+      "option_c": "swollen gums",
+      "option_d": "gum bleeding",
+      "correct_option": "B",
+      "explanation": "'og'riqli milklar' ma'nosiga mos keluvchi tibbiy termin 'sore gums' hisoblanadi."
+    },
+    {
+      "question": "Which of the following is the grammatically and clinically standard question to ask about the duration of symptoms?",
+      "option_a": "How long do you having this symptom?",
+      "option_b": "How long has this condition been bothering you?",
+      "option_c": "Since what time you have this problem?",
+      "option_d": "How many days you are feeling pain?",
+      "correct_option": "B",
+      "explanation": "Klinik anamnezda davomiylikni so'rash uchun Present Perfect Continuous ('How long has... been bothering you?') to'g'ri shakl hisoblanadi."
+    },
+    {
+      "question": "When evaluating acute pain, what is the best phrasing to assess pain character?",
+      "option_a": "Is your pain bad or very bad?",
+      "option_b": "Can you describe the pain—is it sharp, dull, throbbing, or aching?",
+      "option_c": "Why do you have sharp pain today?",
+      "option_d": "Stop pain with pills immediately.",
+      "correct_option": "B",
+      "explanation": "Og'riq xarakterini aniqlashda shifokor ochiq va taklif qiluvchi variantlar (sharp, dull, throbbing, aching) beradi."
+    }
+  ]
+}

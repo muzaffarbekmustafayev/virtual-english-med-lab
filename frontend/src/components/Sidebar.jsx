@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useAuth } from "../contexts/AuthContext";
+import { useLanguage } from "../contexts/LanguageContext";
 import {
   RiDashboardLine, RiBookOpenLine, RiQuillPenLine,
   RiChatSmile2Line, RiUser3Line, RiLogoutBoxLine,
@@ -9,41 +10,46 @@ import {
   RiShieldCheckLine, RiHeartPulseLine, RiCloseLine,
 } from "react-icons/ri";
 
-const STUDENT_NAV = [
-  { to: "/student/dashboard", icon: RiDashboardLine,  label: "Dashboard",       },
-  { to: "/student/modules",   icon: RiBookOpenLine,   label: "Modules",         },
-  { to: "/student/grammar",   icon: RiQuillPenLine,   label: "Grammar Checker", },
-  { to: "/student/forum",     icon: RiChatSmile2Line, label: "Forum",           },
-  { to: "/student/profile",   icon: RiUser3Line,      label: "Profile",         },
-];
-const TEACHER_NAV = [
-  { to: "/teacher/dashboard", icon: RiDashboardLine,  label: "Dashboard" },
-  { to: "/teacher/groups",    icon: RiGroupLine,      label: "Groups"    },
-  { to: "/teacher/reports",   icon: RiBarChartLine,   label: "Reports"   },
-  { to: "/teacher/forum",     icon: RiChatSmile2Line, label: "Forum"     },
-];
-const ADMIN_NAV = [
-  { to: "/admin/overview",  icon: RiDashboardLine, label: "Overview"  },
-  { to: "/admin/users",     icon: RiTeamLine,      label: "Users"     },
-  { to: "/admin/groups",    icon: RiGroupLine,     label: "Groups"    },
-  { to: "/admin/content",   icon: RiFileListLine,  label: "Content"   },
-  { to: "/admin/settings",  icon: RiSettings4Line, label: "Settings"  },
-];
-const NAV_MAP = { student: STUDENT_NAV, teacher: TEACHER_NAV, admin: ADMIN_NAV };
-const ROLE_CONFIG = {
-  student: { icon: RiUser3Line,       label: "Student", color: "#3b82f6" },
-  teacher: { icon: RiUserStarLine,    label: "Teacher", color: "#10b981" },
-  admin:   { icon: RiShieldCheckLine, label: "Admin",   color: "#a855f7" },
-};
-
 export default function Sidebar({ isOpen, onClose }) {
   const { user, logout } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
+
+  const STUDENT_NAV = [
+    { to: "/student/dashboard", icon: RiDashboardLine,  label: t('nav_dashboard') },
+    { to: "/student/modules",   icon: RiBookOpenLine,   label: t('nav_modules') },
+    { to: "/student/grammar",   icon: RiQuillPenLine,   label: t('nav_grammar') },
+    { to: "/student/forum",     icon: RiChatSmile2Line, label: t('nav_forum') },
+    { to: "/student/profile",   icon: RiUser3Line,      label: t('nav_profile') },
+  ];
+
+  const TEACHER_NAV = [
+    { to: "/teacher/dashboard", icon: RiDashboardLine,  label: t('nav_dashboard') },
+    { to: "/teacher/groups",    icon: RiGroupLine,      label: t('nav_groups') },
+    { to: "/teacher/reports",   icon: RiBarChartLine,   label: t('nav_reports') },
+    { to: "/teacher/forum",     icon: RiChatSmile2Line, label: t('nav_forum') },
+  ];
+
+  const ADMIN_NAV = [
+    { to: "/admin/overview",  icon: RiDashboardLine, label: t('nav_dashboard') },
+    { to: "/admin/users",     icon: RiTeamLine,      label: t('nav_users') },
+    { to: "/admin/groups",    icon: RiGroupLine,     label: t('nav_groups') },
+    { to: "/admin/content",   icon: RiFileListLine,  label: t('nav_content') },
+  ];
+
+  const NAV_MAP = { student: STUDENT_NAV, teacher: TEACHER_NAV, admin: ADMIN_NAV };
   const navItems = NAV_MAP[user?.role] || [];
+
+  const ROLE_CONFIG = {
+    student: { icon: RiUser3Line,       label: 'Talaba / Student',    bg: 'bg-blue-600', text: 'text-blue-700', border: 'border-blue-200' },
+    teacher: { icon: RiUserStarLine,    label: "O'qituvchi / Teacher", bg: 'bg-emerald-600', text: 'text-emerald-700', border: 'border-emerald-200' },
+    admin:   { icon: RiShieldCheckLine, label: 'Administrator',        bg: 'bg-purple-600', text: 'text-purple-700', border: 'border-purple-200' },
+  };
   const role = ROLE_CONFIG[user?.role] || ROLE_CONFIG.student;
+
   const handleLogout = () => { 
     logout(); 
-    toast.success("Tizimdan muvaffaqiyatli chiqdingiz");
+    toast.success(t('sign_out') + " muvaffaqiyatli!");
     if (onClose) onClose();
     navigate("/login"); 
   };
@@ -51,68 +57,78 @@ export default function Sidebar({ isOpen, onClose }) {
   return (
     <aside
       id="main-sidebar"
-      style={{ background: "#0f1c2e" }}
-      className={`fixed top-0 left-0 h-screen w-[260px] flex flex-col z-50 border-r border-white/10 transition-transform duration-300 ease-in-out md:translate-x-0 ${
+      className={`fixed top-0 left-0 h-screen w-[260px] flex flex-col z-50 bg-white border-r border-slate-200/90 shadow-xs transition-transform duration-300 ease-in-out md:translate-x-0 ${
         isOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full md:translate-x-0"
       }`}
     >
-      {/* Brand & Mobile Close */}
-      <div style={{ padding: "20px 16px", borderBottom: "1px solid rgba(255,255,255,0.06)" }} className="flex items-center justify-between">
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={{ width: 36, height: 36, borderRadius: 10, background: "#2563eb", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 12px rgba(37,99,235,0.35)", flexShrink: 0 }}>
-            <RiHeartPulseLine style={{ color: "white", fontSize: 18 }} />
+      {/* Brand Header */}
+      <div className="p-4 border-b border-slate-100 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center shadow-md shadow-blue-500/20 text-white flex-shrink-0">
+            <RiHeartPulseLine className="text-xl" />
           </div>
           <div>
-            <p style={{ color: "white", fontSize: 13, fontWeight: 700, letterSpacing: "-0.02em", lineHeight: 1.2 }}>Virtual Patient</p>
-            <p style={{ color: "rgba(255,255,255,0.32)", fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", marginTop: 2 }}>English Lab</p>
+            <p className="text-slate-900 text-sm font-extrabold tracking-tight leading-tight">{t('app_title')}</p>
+            <p className="text-blue-600 text-[10px] font-bold tracking-wider uppercase mt-0.5">{t('app_subtitle')}</p>
           </div>
         </div>
         <button
           onClick={onClose}
-          className="md:hidden text-gray-400 hover:text-white p-1.5 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+          className="md:hidden text-slate-400 hover:text-slate-700 p-1.5 rounded-lg hover:bg-slate-100 transition-colors"
           aria-label="Close Sidebar"
         >
           <RiCloseLine className="text-xl" />
         </button>
       </div>
 
-      {/* User */}
-      <div style={{ padding: "14px 12px 10px" }}>
-        <div style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, padding: "11px 13px", display: "flex", alignItems: "center", gap: 10 }}>
-          <div style={{ width: 34, height: 34, borderRadius: 9, background: role.color, display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: 13, fontWeight: 800, flexShrink: 0 }}>
+      {/* User Information Card */}
+      <div className="p-3">
+        <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-3 flex items-center gap-2.5 shadow-2xs">
+          <div
+            className={`w-9 h-9 rounded-xl ${role.bg} text-white font-black text-xs flex items-center justify-center shadow-2xs flex-shrink-0`}
+          >
             {user?.full_name?.[0]?.toUpperCase()}
           </div>
-          <div style={{ overflow: "hidden", flex: 1 }}>
-            <p style={{ color: "rgba(255,255,255,0.90)", fontSize: 12.5, fontWeight: 600, letterSpacing: "-0.01em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{user?.full_name}</p>
-            <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 2 }}>
-              <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#10b981" }} />
-              <p style={{ color: "rgba(255,255,255,0.38)", fontSize: 10.5, fontWeight: 500 }}>{role.label}{user?.specialty?.name ? " · " + user.specialty.name : ""}</p>
+          <div className="overflow-hidden flex-1">
+            <p className="text-slate-900 text-xs font-bold truncate">{user?.full_name}</p>
+            <div className="flex items-center gap-1.5 mt-0.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0" />
+              <p className="text-slate-500 text-[10.5px] font-semibold truncate">
+                {role.label}{user?.specialty?.name ? ` · ${user.specialty.name}` : ""}
+              </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Nav */}
-      <nav style={{ flex: 1, padding: "4px 10px", overflowY: "auto" }}>
-        <p style={{ color: "rgba(255,255,255,0.20)", fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", padding: "6px 8px 8px" }}>Navigation</p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
-          {navItems.map((item, i) => {
+      {/* Navigation List */}
+      <nav className="flex-1 px-3 py-2 overflow-y-auto space-y-1">
+        <p className="text-[10px] font-extrabold text-slate-400 tracking-wider uppercase px-2 pb-1 pt-1">
+          {t('navigation')}
+        </p>
+        <div className="flex flex-col gap-1">
+          {navItems.map((item) => {
             const Icon = item.icon;
             return (
               <NavLink
                 key={item.to}
                 to={item.to}
-                id={"nav-" + item.label.toLowerCase().replace(/\s+/g, "-")}
+                id={"nav-" + item.to.replace(/\//g, '-')}
                 onClick={() => onClose && onClose()}
-                style={{ animationDelay: i * 0.05 + "s" }}
-                className="sidebar-item"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                    isActive
+                      ? "bg-blue-50 text-blue-700 border border-blue-200/80 shadow-2xs"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/70"
+                  }`
+                }
               >
                 {({ isActive }) => (
-                  <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 10px 9px 8px", borderRadius: 9, borderLeft: isActive ? "3px solid #3b82f6" : "3px solid transparent", background: isActive ? "rgba(59,130,246,0.10)" : "transparent", transition: "all 0.15s ease", cursor: "pointer" }}>
-                    <Icon style={{ fontSize: 16.5, color: isActive ? "#60a5fa" : "rgba(255,255,255,0.42)", flexShrink: 0, transition: "color 0.15s" }} />
-                    <p style={{ fontSize: 13, fontWeight: isActive ? 600 : 450, color: isActive ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.55)", letterSpacing: "-0.01em", transition: "color 0.15s", flex: 1 }}>{item.label}</p>
-                    {isActive && <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#3b82f6", flexShrink: 0 }} />}
-                  </div>
+                  <>
+                    <Icon className={`text-base flex-shrink-0 transition-colors ${isActive ? "text-blue-600 font-black" : "text-slate-400"}`} />
+                    <span className="truncate flex-1">{item.label}</span>
+                    {isActive && <span className="w-1.5 h-1.5 rounded-full bg-blue-600 flex-shrink-0" />}
+                  </>
                 )}
               </NavLink>
             );
@@ -120,15 +136,15 @@ export default function Sidebar({ isOpen, onClose }) {
         </div>
       </nav>
 
-      {/* Logout */}
-      <div style={{ padding: "8px 10px 20px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-        <button id="sidebar-logout-btn" onClick={handleLogout}
-          style={{ width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "9px 12px", borderRadius: 9, border: "none", background: "transparent", cursor: "pointer", color: "rgba(255,255,255,0.32)", fontSize: 13, fontWeight: 500, transition: "all 0.15s ease" }}
-          onMouseEnter={e => { e.currentTarget.style.background = "rgba(220,38,38,0.10)"; e.currentTarget.style.color = "#f87171"; }}
-          onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "rgba(255,255,255,0.32)"; }}
+      {/* Logout Footer */}
+      <div className="p-3 border-t border-slate-100 bg-slate-50/50">
+        <button
+          id="sidebar-logout-btn"
+          onClick={handleLogout}
+          className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-slate-600 hover:text-rose-600 hover:bg-rose-50 text-xs font-bold transition-all border border-transparent hover:border-rose-100 cursor-pointer"
         >
-          <RiLogoutBoxLine style={{ fontSize: 16.5 }} />
-          <span>Sign out</span>
+          <RiLogoutBoxLine className="text-base text-slate-400" />
+          <span>{t('sign_out')}</span>
         </button>
       </div>
     </aside>

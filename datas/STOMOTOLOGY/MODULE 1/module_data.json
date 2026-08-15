@@ -1,0 +1,916 @@
+{
+  "specialty_id": 1,
+  "specialty_name": "Stomatologiya",
+  "order_index": 1,
+  "title": "Dental Pain & Sensitivity",
+  "title_uz": "Tish og'rig'i va sezgirligi",
+  "title_ru": "Зубная боль и чувствительность",
+  "title_en": "Dental Pain & Sensitivity",
+  "description": "Stomatologiya bo'yicha Tish og'rig'i va sezgirligi mavzusida klinik muloqot va tibbiy ingliz tili darsi.",
+  "clinical_level": "B2 Medical English",
+  "target_role": "Dental Clinician / Attending Physician",
+  "scenario_prompt": "You are a virtual patient presenting with symptoms related to Dental Pain & Sensitivity. Speak in natural, everyday patient English.",
+  "patient_profile": {
+    "age": 33,
+    "gender": "Male",
+    "chief_complaint": "Tish og'rig'i va sezgirligi",
+    "history": "Patient presents with complaints of dental pain & sensitivity."
+  },
+  "grammar": [
+    {
+      "title": "DENTAL PAIN & SENSITIVITY\n GRAMMAR",
+      "title_uz": "DENTAL PAIN & SENSITIVITY\n GRAMMAR",
+      "title_ru": "DENTAL PAIN & SENSITIVITY\n GRAMMAR",
+      "title_en": "DENTAL PAIN & SENSITIVITY\n GRAMMAR",
+      "rule_explanation": "Talaba grammatik qoidani chuqur yodlamasdan, bemorning gapidan vaqt va ma'noni tez tushunsin. Qachon ishlatiladi? Bemor og'riq odatda qanday bo'lishini yoki nima sababdan kuchayishini aytganda.",
+      "rule_explanation_uz": "Talaba grammatik qoidani chuqur yodlamasdan, bemorning gapidan vaqt va ma'noni tez tushunsin. Qachon ishlatiladi? Bemor og'riq odatda qanday bo'lishini yoki nima sababdan kuchayishini aytganda.",
+      "rule_explanation_ru": "Цель: студент должен быстро понимать время и смысл фразы пациента, не изучая сложную грамматику. Когда используется? Когда пациент говорит о том, что обычно происходит, или что обычно усиливает боль.",
+      "rule_explanation_en": "Using precise clinical grammatical structures enables clear patient history taking and assessment.",
+      "structure_pattern": "have / has + V3 (Past Participle)",
+      "examples": [
+        {
+          "sentence": "Cold drinks usually make it worse.",
+          "translation": "Sovuq ichimliklar odatda og'riqni kuchaytiradi.",
+          "translation_uz": "Sovuq ichimliklar odatda og'riqni kuchaytiradi.",
+          "translation_ru": "Холодные напитки обычно усиливают боль.",
+          "note": "Clinical Dialogue Example"
+        },
+        {
+          "sentence": "It comes and goes rather than being constant.",
+          "translation": "U doimiy emas, kelib-ketib turadi.",
+          "translation_uz": "U doimiy emas, kelib-ketib turadi.",
+          "translation_ru": "Она не постоянная, а периодически появляется и проходит.",
+          "note": "Clinical Dialogue Example"
+        },
+        {
+          "sentence": "I've had this pain for about three days.",
+          "translation": "Bu og'riq taxminan uch kundan beri bor.",
+          "translation_uz": "Bu og'riq taxminan uch kundan beri bor.",
+          "translation_ru": "Эта боль у меня около трёх дней.",
+          "note": "Clinical Dialogue Example"
+        },
+        {
+          "sentence": "It started gradually.",
+          "translation": "U asta-sekin boshlandi.",
+          "translation_uz": "U asta-sekin boshlandi.",
+          "translation_ru": "Она началась постепенно.",
+          "note": "Clinical Dialogue Example"
+        },
+        {
+          "sentence": "I had some spontaneous pain last night.",
+          "translation": "Kecha o'z-o'zidan og'riq bo'ldi.",
+          "translation_uz": "Kecha o'z-o'zidan og'riq bo'ldi.",
+          "translation_ru": "Вчера вечером у меня возникла самопроизвольная боль.",
+          "note": "Clinical Dialogue Example"
+        },
+        {
+          "sentence": "while I was resting",
+          "translation": "В диалоге используется в выражении \"while I was resting\". То есть в тот момент, когда появилась боль, пациент отдыхал.",
+          "translation_uz": "В диалоге используется в выражении \"while I was resting\". То есть в тот момент, когда появилась боль, пациент отдыхал.",
+          "translation_ru": "Formula / Формула: was / were + V-ing",
+          "note": "Clinical Dialogue Example"
+        },
+        {
+          "sentence": "usually / sometimes",
+          "translation": "odatda / ba'zan",
+          "translation_uz": "odatda / ba'zan",
+          "translation_ru": "обычно / иногда",
+          "note": "Present Simple"
+        },
+        {
+          "sentence": "for + vaqt",
+          "translation": "…dan beri",
+          "translation_uz": "…dan beri",
+          "translation_ru": "уже … / в течение …",
+          "note": "Present Perfect"
+        }
+      ],
+      "common_mistakes": [
+        {
+          "incorrect": "Since when you feel this pain?",
+          "correct": "How long have you had this pain?",
+          "explanation": "Davomiylikni so'rashda 'How long have you had...?' standarti ishlatiladi.",
+          "explanation_uz": "Davomiylikni so'rashda 'How long have you had...?' standarti ishlatiladi.",
+          "explanation_ru": "Для выяснения длительности используется конструкция 'How long have you had...?'.",
+          "explanation_en": "Use 'How long have you had...?' when asking about the duration of symptoms."
+        },
+        {
+          "incorrect": "Where is paining you?",
+          "correct": "Where exactly do you feel the pain?",
+          "explanation": "Lokatsiyani aniqlashda 'Where do you feel the pain?' to'g'ri grammatik shakl.",
+          "explanation_uz": "Lokatsiyani aniqlashda 'Where do you feel the pain?' to'g'ri grammatik shakl.",
+          "explanation_ru": "Правильный вопрос о локализации боли: 'Where exactly do you feel the pain?'.",
+          "explanation_en": "Ask 'Where exactly do you feel the pain?' to identify the specific anatomical site."
+        }
+      ],
+      "structure_pattern_en": "have / has + V3 (Past Participle)",
+      "structure_pattern_uz": "have / has + V3 (O'tgan zamon sifatdoshi)",
+      "structure_pattern_ru": "have / has + V3 (Причастие прошедшего времени)"
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "dental pain",
+      "translation": "tish og'rig'i",
+      "translation_uz": "tish og'rig'i",
+      "translation_ru": "зубная боль",
+      "translation_en": "dental pain",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing dental pain.",
+      "definition_uz": "tish og'rig'i - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "зубная боль - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing dental pain.",
+      "example": "The doctor assessed the patient for dental pain."
+    },
+    {
+      "word": "toothache",
+      "translation": "tish og'rig'i",
+      "translation_uz": "tish og'rig'i",
+      "translation_ru": "зубная боль",
+      "translation_en": "toothache",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing toothache.",
+      "definition_uz": "tish og'rig'i - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "зубная боль - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing toothache.",
+      "example": "The doctor assessed the patient for toothache."
+    },
+    {
+      "word": "tooth sensitivity",
+      "translation": "tish sezgirligi",
+      "translation_uz": "tish sezgirligi",
+      "translation_ru": "чувствительность зубов",
+      "translation_en": "tooth sensitivity",
+      "definition": "Discomfort or pain in teeth triggered by thermal (hot/cold), sweet, or tactile stimuli.",
+      "definition_uz": "Tishning issiq, sovuq, shirin yoki mexanik ta'sirlarga nisbatan o'ta sezgirligi.",
+      "definition_ru": "Повышенная чувствительность зубов к термическим или химическим раздражителям.",
+      "definition_en": "Discomfort or pain in teeth triggered by thermal (hot/cold), sweet, or tactile stimuli.",
+      "example": "The doctor assessed the patient for tooth sensitivity."
+    },
+    {
+      "word": "sensitive tooth",
+      "translation": "sezgir tish",
+      "translation_uz": "sezgir tish",
+      "translation_ru": "чувствительный зуб",
+      "translation_en": "sensitive tooth",
+      "definition": "Discomfort or pain in teeth triggered by thermal (hot/cold), sweet, or tactile stimuli.",
+      "definition_uz": "Tishning issiq, sovuq, shirin yoki mexanik ta'sirlarga nisbatan o'ta sezgirligi.",
+      "definition_ru": "Повышенная чувствительность зубов к термическим или химическим раздражителям.",
+      "definition_en": "Discomfort or pain in teeth triggered by thermal (hot/cold), sweet, or tactile stimuli.",
+      "example": "The doctor assessed the patient for sensitive tooth."
+    },
+    {
+      "word": "lower right side",
+      "translation": "pastki o'ng tomon",
+      "translation_uz": "pastki o'ng tomon",
+      "translation_ru": "нижняя правая сторона",
+      "translation_en": "lower right side",
+      "definition": "Clinical medical condition and symptom associated with lower right side.",
+      "definition_uz": "pastki o'ng tomon - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "нижняя правая сторона - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with lower right side.",
+      "example": "The doctor assessed the patient for lower right side."
+    },
+    {
+      "word": "sharp pain",
+      "translation": "o'tkir og'riq",
+      "translation_uz": "o'tkir og'riq",
+      "translation_ru": "острая боль",
+      "translation_en": "sharp pain",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing sharp pain.",
+      "definition_uz": "o'tkir og'riq - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "острая боль - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing sharp pain.",
+      "example": "The doctor assessed the patient for sharp pain."
+    },
+    {
+      "word": "throbbing pain",
+      "translation": "urib turadigan og'riq",
+      "translation_uz": "urib turadigan og'riq",
+      "translation_ru": "пульсирующая боль",
+      "translation_en": "throbbing pain",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing throbbing pain.",
+      "definition_uz": "urib turadigan og'riq - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "пульсирующая боль - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing throbbing pain.",
+      "example": "The doctor assessed the patient for throbbing pain."
+    },
+    {
+      "word": "constant pain",
+      "translation": "doimiy og'riq",
+      "translation_uz": "doimiy og'riq",
+      "translation_ru": "постоянная боль",
+      "translation_en": "constant pain",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing constant pain.",
+      "definition_uz": "doimiy og'riq - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "постоянная боль - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing constant pain.",
+      "example": "The doctor assessed the patient for constant pain."
+    },
+    {
+      "word": "come and go",
+      "translation": "kelib-ketib turmoq",
+      "translation_uz": "kelib-ketib turmoq",
+      "translation_ru": "приходить и проходить",
+      "translation_en": "come and go",
+      "definition": "Clinical medical condition and symptom associated with come and go.",
+      "definition_uz": "kelib-ketib turmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "приходить и проходить - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with come and go.",
+      "example": "The doctor assessed the patient for come and go."
+    },
+    {
+      "word": "gradually",
+      "translation": "asta-sekin",
+      "translation_uz": "asta-sekin",
+      "translation_ru": "постепенно",
+      "translation_en": "gradually",
+      "definition": "Clinical medical condition and symptom associated with gradually.",
+      "definition_uz": "asta-sekin - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "постепенно - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with gradually.",
+      "example": "The doctor assessed the patient for gradually."
+    },
+    {
+      "word": "become worse",
+      "translation": "kuchaymoq, yomonlashmoq",
+      "translation_uz": "kuchaymoq, yomonlashmoq",
+      "translation_ru": "усиливаться, становиться хуже",
+      "translation_en": "become worse",
+      "definition": "Clinical medical condition and symptom associated with become worse.",
+      "definition_uz": "kuchaymoq, yomonlashmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "усиливаться, становиться хуже - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with become worse.",
+      "example": "The doctor assessed the patient for become worse."
+    },
+    {
+      "word": "trigger",
+      "translation": "qo'zg'atuvchi omil",
+      "translation_uz": "qo'zg'atuvchi omil",
+      "translation_ru": "провоцирующий фактор",
+      "translation_en": "trigger",
+      "definition": "Clinical medical condition and symptom associated with trigger.",
+      "definition_uz": "qo'zg'atuvchi omil - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "провоцирующий фактор - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with trigger.",
+      "example": "The doctor assessed the patient for trigger."
+    },
+    {
+      "word": "severe pain",
+      "translation": "kuchli og'riq",
+      "translation_uz": "kuchli og'riq",
+      "translation_ru": "сильная боль",
+      "translation_en": "severe pain",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing severe pain.",
+      "definition_uz": "kuchli og'riq - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "сильная боль - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing severe pain.",
+      "example": "The doctor assessed the patient for severe pain."
+    },
+    {
+      "word": "radiate",
+      "translation": "tarqalmoq",
+      "translation_uz": "tarqalmoq",
+      "translation_ru": "распространяться, отдавать",
+      "translation_en": "radiate",
+      "definition": "Clinical medical condition and symptom associated with radiate.",
+      "definition_uz": "tarqalmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "распространяться, отдавать - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with radiate.",
+      "example": "The doctor assessed the patient for radiate."
+    },
+    {
+      "word": "jaw",
+      "translation": "jag'",
+      "translation_uz": "jag'",
+      "translation_ru": "челюсть",
+      "translation_en": "jaw",
+      "definition": "Clinical medical condition and symptom associated with jaw.",
+      "definition_uz": "jag' - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "челюсть - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with jaw.",
+      "example": "The doctor assessed the patient for jaw."
+    },
+    {
+      "word": "spontaneous pain",
+      "translation": "o'z-o'zidan paydo bo'ladigan og'riq",
+      "translation_uz": "o'z-o'zidan paydo bo'ladigan og'riq",
+      "translation_ru": "самопроизвольная боль",
+      "translation_en": "spontaneous pain",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing spontaneous pain.",
+      "definition_uz": "o'z-o'zidan paydo bo'ladigan og'riq - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "самопроизвольная боль - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing spontaneous pain.",
+      "example": "The doctor assessed the patient for spontaneous pain."
+    },
+    {
+      "word": "resting",
+      "translation": "dam olayotgan holat",
+      "translation_uz": "dam olayotgan holat",
+      "translation_ru": "состояние покоя",
+      "translation_en": "resting",
+      "definition": "Clinical medical condition and symptom associated with resting.",
+      "definition_uz": "dam olayotgan holat - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "состояние покоя - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with resting.",
+      "example": "The doctor assessed the patient for resting."
+    },
+    {
+      "word": "pain intensity",
+      "translation": "og'riq kuchi",
+      "translation_uz": "og'riq kuchi",
+      "translation_ru": "интенсивность боли",
+      "translation_en": "pain intensity",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing pain intensity.",
+      "definition_uz": "og'riq kuchi - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "интенсивность боли - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing pain intensity.",
+      "example": "The doctor assessed the patient for pain intensity."
+    },
+    {
+      "word": "rate the pain",
+      "translation": "og'riqni baholamoq",
+      "translation_uz": "og'riqni baholamoq",
+      "translation_ru": "оценивать боль",
+      "translation_en": "rate the pain",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing rate the pain.",
+      "definition_uz": "og'riqni baholamoq - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "оценивать боль - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing rate the pain.",
+      "example": "The doctor assessed the patient for rate the pain."
+    },
+    {
+      "word": "scale of 0 to 10",
+      "translation": "0 dan 10 gacha bo'lgan shkala",
+      "translation_uz": "0 dan 10 gacha bo'lgan shkala",
+      "translation_ru": "шкала от 0 до 10",
+      "translation_en": "scale of 0 to 10",
+      "definition": "Clinical medical condition and symptom associated with scale of 0 to 10.",
+      "definition_uz": "0 dan 10 gacha bo'lgan shkala - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "шкала от 0 до 10 - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with scale of 0 to 10.",
+      "example": "The doctor assessed the patient for scale of 0 to 10."
+    },
+    {
+      "word": "last",
+      "translation": "davom etmoq",
+      "translation_uz": "davom etmoq",
+      "translation_ru": "длиться",
+      "translation_en": "last",
+      "definition": "Clinical medical condition and symptom associated with last.",
+      "definition_uz": "davom etmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "длиться - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with last.",
+      "example": "The doctor assessed the patient for last."
+    },
+    {
+      "word": "trigger it",
+      "translation": "uni qo'zg'atmoq",
+      "translation_uz": "uni qo'zg'atmoq",
+      "translation_ru": "провоцировать её",
+      "translation_en": "trigger it",
+      "definition": "Clinical medical condition and symptom associated with trigger it.",
+      "definition_uz": "uni qo'zg'atmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "провоцировать её - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with trigger it.",
+      "example": "The doctor assessed the patient for trigger it."
+    },
+    {
+      "word": "gradually go away",
+      "translation": "asta-sekin yo'qolmoq",
+      "translation_uz": "asta-sekin yo'qolmoq",
+      "translation_ru": "постепенно проходить",
+      "translation_en": "gradually go away",
+      "definition": "Clinical medical condition and symptom associated with gradually go away.",
+      "definition_uz": "asta-sekin yo'qolmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "постепенно проходить - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with gradually go away.",
+      "example": "The doctor assessed the patient for gradually go away."
+    },
+    {
+      "word": "examine the tooth",
+      "translation": "tishni tekshirmoq",
+      "translation_uz": "tishni tekshirmoq",
+      "translation_ru": "осмотреть зуб",
+      "translation_en": "examine the tooth",
+      "definition": "Clinical medical condition and symptom associated with examine the tooth.",
+      "definition_uz": "tishni tekshirmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "осмотреть зуб - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with examine the tooth.",
+      "example": "The doctor assessed the patient for examine the tooth."
+    },
+    {
+      "word": "sensitivity to cold",
+      "translation": "sovuqqa sezgirlik",
+      "translation_uz": "sovuqqa sezgirlik",
+      "translation_ru": "чувствительность к холоду",
+      "translation_en": "sensitivity to cold",
+      "definition": "Discomfort or pain in teeth triggered by thermal (hot/cold), sweet, or tactile stimuli.",
+      "definition_uz": "Tishning issiq, sovuq, shirin yoki mexanik ta'sirlarga nisbatan o'ta sezgirligi.",
+      "definition_ru": "Повышенная чувствительность зубов к термическим или химическим раздражителям.",
+      "definition_en": "Discomfort or pain in teeth triggered by thermal (hot/cold), sweet, or tactile stimuli.",
+      "example": "The doctor assessed the patient for sensitivity to cold."
+    },
+    {
+      "word": "sensitivity to heat",
+      "translation": "issiqqa sezgirlik",
+      "translation_uz": "issiqqa sezgirlik",
+      "translation_ru": "чувствительность к теплу",
+      "translation_en": "sensitivity to heat",
+      "definition": "Discomfort or pain in teeth triggered by thermal (hot/cold), sweet, or tactile stimuli.",
+      "definition_uz": "Tishning issiq, sovuq, shirin yoki mexanik ta'sirlarga nisbatan o'ta sezgirligi.",
+      "definition_ru": "Повышенная чувствительность зубов к термическим или химическим раздражителям.",
+      "definition_en": "Discomfort or pain in teeth triggered by thermal (hot/cold), sweet, or tactile stimuli.",
+      "example": "The doctor assessed the patient for sensitivity to heat."
+    },
+    {
+      "word": "discomfort",
+      "translation": "noqulaylik",
+      "translation_uz": "noqulaylik",
+      "translation_ru": "дискомфорт",
+      "translation_en": "discomfort",
+      "definition": "Clinical medical condition and symptom associated with discomfort.",
+      "definition_uz": "noqulaylik - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "дискомфорт - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with discomfort.",
+      "example": "The doctor assessed the patient for discomfort."
+    },
+    {
+      "word": "I've had a toothache on the lower right side.",
+      "translation": "Pastki o'ng tomonda tishim og'riyapti.",
+      "translation_uz": "Pastki o'ng tomonda tishim og'riyapti.",
+      "translation_ru": "У меня болит зуб с правой нижней стороны.",
+      "translation_en": "I've had a toothache on the lower right side.",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing i've had a toothache on the lower right side..",
+      "definition_uz": "Pastki o'ng tomonda tishim og'riyapti. - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "У меня болит зуб с правой нижней стороны. - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing i've had a toothache on the lower right side..",
+      "example": "The doctor assessed the patient for i've had a toothache on the lower right side.."
+    },
+    {
+      "word": "The tooth has also become very sensitive.",
+      "translation": "Tishim juda sezgir bo'lib qoldi.",
+      "translation_uz": "Tishim juda sezgir bo'lib qoldi.",
+      "translation_ru": "Зуб также стал очень чувствительным.",
+      "translation_en": "The tooth has also become very sensitive.",
+      "definition": "Discomfort or pain in teeth triggered by thermal (hot/cold), sweet, or tactile stimuli.",
+      "definition_uz": "Tishning issiq, sovuq, shirin yoki mexanik ta'sirlarga nisbatan o'ta sezgirligi.",
+      "definition_ru": "Повышенная чувствительность зубов к термическим или химическим раздражителям.",
+      "definition_en": "Discomfort or pain in teeth triggered by thermal (hot/cold), sweet, or tactile stimuli.",
+      "example": "The doctor assessed the patient for the tooth has also become very sensitive.."
+    },
+    {
+      "word": "I've had this pain for about three days.",
+      "translation": "Bu og'riq taxminan uch kundan beri bor.",
+      "translation_uz": "Bu og'riq taxminan uch kundan beri bor.",
+      "translation_ru": "Эта боль у меня около трёх дней.",
+      "translation_en": "I've had this pain for about three days.",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing i've had this pain for about three days..",
+      "definition_uz": "Bu og'riq taxminan uch kundan beri bor. - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "Эта боль у меня около трёх дней. - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing i've had this pain for about three days..",
+      "example": "The doctor assessed the patient for i've had this pain for about three days.."
+    },
+    {
+      "word": "It started gradually.",
+      "translation": "U asta-sekin boshlandi.",
+      "translation_uz": "U asta-sekin boshlandi.",
+      "translation_ru": "Она началась постепенно.",
+      "translation_en": "It started gradually.",
+      "definition": "Clinical medical condition and symptom associated with it started gradually..",
+      "definition_uz": "U asta-sekin boshlandi. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Она началась постепенно. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with it started gradually..",
+      "example": "The doctor assessed the patient for it started gradually.."
+    },
+    {
+      "word": "It has become worse over the last day.",
+      "translation": "Oxirgi bir kun ichida kuchaydi.",
+      "translation_uz": "Oxirgi bir kun ichida kuchaydi.",
+      "translation_ru": "За последний день боль усилилась.",
+      "translation_en": "It has become worse over the last day.",
+      "definition": "Clinical medical condition and symptom associated with it has become worse over the last day..",
+      "definition_uz": "Oxirgi bir kun ichida kuchaydi. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "За последний день боль усилилась. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with it has become worse over the last day..",
+      "example": "The doctor assessed the patient for it has become worse over the last day.."
+    },
+    {
+      "word": "Both cold and hot food or drinks can cause a sharp pain.",
+      "translation": "Sovuq ham, issiq ovqat yoki ichimliklar ham o'tkir og'riq keltirib chiqaradi.",
+      "translation_uz": "Sovuq ham, issiq ovqat yoki ichimliklar ham o'tkir og'riq keltirib chiqaradi.",
+      "translation_ru": "И холодная, и горячая еда или напитки могут вызвать острую боль.",
+      "translation_en": "Both cold and hot food or drinks can cause a sharp pain.",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing both cold and hot food or drinks can cause a sharp pain..",
+      "definition_uz": "Sovuq ham, issiq ovqat yoki ichimliklar ham o'tkir og'riq keltirib chiqaradi. - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "И холодная, и горячая еда или напитки могут вызвать острую боль. - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing both cold and hot food or drinks can cause a sharp pain..",
+      "example": "The doctor assessed the patient for both cold and hot food or drinks can cause a sharp pain.."
+    },
+    {
+      "word": "Cold drinks usually make it worse.",
+      "translation": "Sovuq ichimliklar odatda og'riqni kuchaytiradi.",
+      "translation_uz": "Sovuq ichimliklar odatda og'riqni kuchaytiradi.",
+      "translation_ru": "Холодные напитки обычно усиливают боль.",
+      "translation_en": "Cold drinks usually make it worse.",
+      "definition": "Clinical medical condition and symptom associated with cold drinks usually make it worse..",
+      "definition_uz": "Sovuq ichimliklar odatda og'riqni kuchaytiradi. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Холодные напитки обычно усиливают боль. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with cold drinks usually make it worse..",
+      "example": "The doctor assessed the patient for cold drinks usually make it worse.."
+    },
+    {
+      "word": "It's usually a sharp pain, but sometimes it becomes throbbing.",
+      "translation": "Odatda o'tkir og'riq, ba'zan esa urib turadi.",
+      "translation_uz": "Odatda o'tkir og'riq, ba'zan esa urib turadi.",
+      "translation_ru": "Обычно боль острая, но иногда она становится пульсирующей.",
+      "translation_en": "It's usually a sharp pain, but sometimes it becomes throbbing.",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing it's usually a sharp pain, but sometimes it becomes throbbing..",
+      "definition_uz": "Odatda o'tkir og'riq, ba'zan esa urib turadi. - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "Обычно боль острая, но иногда она становится пульсирующей. - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing it's usually a sharp pain, but sometimes it becomes throbbing..",
+      "example": "The doctor assessed the patient for it's usually a sharp pain, but sometimes it becomes throbbing.."
+    },
+    {
+      "word": "It comes and goes rather than being constant.",
+      "translation": "U doimiy emas, kelib-ketib turadi.",
+      "translation_uz": "U doimiy emas, kelib-ketib turadi.",
+      "translation_ru": "Она не постоянная, а периодически появляется и проходит.",
+      "translation_en": "It comes and goes rather than being constant.",
+      "definition": "Clinical medical condition and symptom associated with it comes and goes rather than being constant..",
+      "definition_uz": "U doimiy emas, kelib-ketib turadi. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Она не постоянная, а периодически появляется и проходит. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with it comes and goes rather than being constant..",
+      "example": "The doctor assessed the patient for it comes and goes rather than being constant.."
+    },
+    {
+      "word": "Around 7 out of 10.",
+      "translation": "Taxminan 10 dan 7.",
+      "translation_uz": "Taxminan 10 dan 7.",
+      "translation_ru": "Примерно 7 из 10.",
+      "translation_en": "Around 7 out of 10.",
+      "definition": "Clinical medical condition and symptom associated with around 7 out of 10..",
+      "definition_uz": "Taxminan 10 dan 7. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Примерно 7 из 10. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with around 7 out of 10..",
+      "example": "The doctor assessed the patient for around 7 out of 10.."
+    },
+    {
+      "word": "The pain can be quite severe.",
+      "translation": "Og'riq ancha kuchli bo'lishi mumkin.",
+      "translation_uz": "Og'riq ancha kuchli bo'lishi mumkin.",
+      "translation_ru": "Боль может быть довольно сильной.",
+      "translation_en": "The pain can be quite severe.",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing the pain can be quite severe..",
+      "definition_uz": "Og'riq ancha kuchli bo'lishi mumkin. - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "Боль может быть довольно сильной. - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing the pain can be quite severe..",
+      "example": "The doctor assessed the patient for the pain can be quite severe.."
+    },
+    {
+      "word": "It's around this tooth.",
+      "translation": "Mana shu tish atrofida.",
+      "translation_uz": "Mana shu tish atrofida.",
+      "translation_ru": "Болит вокруг этого зуба.",
+      "translation_en": "It's around this tooth.",
+      "definition": "Clinical medical condition and symptom associated with it's around this tooth..",
+      "definition_uz": "Mana shu tish atrofida. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Болит вокруг этого зуба. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with it's around this tooth..",
+      "example": "The doctor assessed the patient for it's around this tooth.."
+    },
+    {
+      "word": "Sometimes the pain radiates toward my jaw.",
+      "translation": "Ba'zan og'riq jag'im tomon tarqaladi.",
+      "translation_uz": "Ba'zan og'riq jag'im tomon tarqaladi.",
+      "translation_ru": "Иногда боль отдаёт в сторону челюсти.",
+      "translation_en": "Sometimes the pain radiates toward my jaw.",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing sometimes the pain radiates toward my jaw..",
+      "definition_uz": "Ba'zan og'riq jag'im tomon tarqaladi. - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "Иногда боль отдаёт в сторону челюсти. - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing sometimes the pain radiates toward my jaw..",
+      "example": "The doctor assessed the patient for sometimes the pain radiates toward my jaw.."
+    },
+    {
+      "word": "I had some spontaneous pain last night while I was resting.",
+      "translation": "Kecha dam olayotganimda o'z-o'zidan og'riq bo'ldi.",
+      "translation_uz": "Kecha dam olayotganimda o'z-o'zidan og'riq bo'ldi.",
+      "translation_ru": "Вчера вечером во время отдыха у меня возникла самопроизвольная боль.",
+      "translation_en": "I had some spontaneous pain last night while I was resting.",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing i had some spontaneous pain last night while i was resting..",
+      "definition_uz": "Kecha dam olayotganimda o'z-o'zidan og'riq bo'ldi. - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "Вчера вечером во время отдыха у меня возникла самопроизвольная боль. - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing i had some spontaneous pain last night while i was resting..",
+      "example": "The doctor assessed the patient for i had some spontaneous pain last night while i was resting.."
+    },
+    {
+      "word": "Usually a few minutes. Then it gradually goes away.",
+      "translation": "Odatda bir necha daqiqa. Keyin asta-sekin yo'qoladi.",
+      "translation_uz": "Odatda bir necha daqiqa. Keyin asta-sekin yo'qoladi.",
+      "translation_ru": "Обычно несколько минут. Затем боль постепенно проходит.",
+      "translation_en": "Usually a few minutes. Then it gradually goes away.",
+      "definition": "Clinical medical condition and symptom associated with usually a few minutes. then it gradually goes away..",
+      "definition_uz": "Odatda bir necha daqiqa. Keyin asta-sekin yo'qoladi. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Обычно несколько минут. Затем боль постепенно проходит. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with usually a few minutes. then it gradually goes away..",
+      "example": "The doctor assessed the patient for usually a few minutes. then it gradually goes away.."
+    },
+    {
+      "word": "Okay, Doctor.",
+      "translation": "Xo'p, doktor.",
+      "translation_uz": "Xo'p, doktor.",
+      "translation_ru": "Хорошо, доктор.",
+      "translation_en": "Okay, Doctor.",
+      "definition": "Clinical medical condition and symptom associated with okay, doctor..",
+      "definition_uz": "Xo'p, doktor. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Хорошо, доктор. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with okay, doctor..",
+      "example": "The doctor assessed the patient for okay, doctor.."
+    },
+    {
+      "word": "Of course.",
+      "translation": "Albatta.",
+      "translation_uz": "Albatta.",
+      "translation_ru": "Конечно.",
+      "translation_en": "Of course.",
+      "definition": "Clinical medical condition and symptom associated with of course..",
+      "definition_uz": "Albatta. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Конечно. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with of course..",
+      "example": "The doctor assessed the patient for of course.."
+    }
+  ],
+  "phrasebook": [
+    {
+      "phrase": "What brings you in today?",
+      "category": "1. Opening",
+      "hint": "Bugun sizni nima bezovta qilib, olib keldi?",
+      "hint_uz": "Bugun sizni nima bezovta qilib, olib keldi?",
+      "hint_ru": "Что привело вас к нам сегодня? На что жалуетесь?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "I've had a toothache on the lower right side."
+    },
+    {
+      "phrase": "Can you tell me about your tooth pain?",
+      "category": "Clinical Consultation",
+      "hint": "Tish / shikoyatingiz haqida batafsil aytib bera olasizmi?",
+      "hint_uz": "Tish / shikoyatingiz haqida batafsil aytib bera olasizmi?",
+      "hint_ru": "Расскажите подробнее о вашей боли / проблеме?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "The tooth has also become very sensitive."
+    },
+    {
+      "phrase": "How long have you had this pain?",
+      "category": "2. Onset & Duration",
+      "hint": "Bu og'riq / simptom qachondan beri bor?",
+      "hint_uz": "Bu og'riq / simptom qachondan beri bor?",
+      "hint_ru": "Как долго вас беспокоит эта боль / симптом?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "I've had this pain for about three days."
+    },
+    {
+      "phrase": "When did the pain start?",
+      "category": "Clinical Consultation",
+      "hint": "Og'riq qachon boshlandi?",
+      "hint_uz": "Og'riq qachon boshlandi?",
+      "hint_ru": "Когда именно началась боль?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "It started gradually."
+    },
+    {
+      "phrase": "Has it become worse?",
+      "category": "Clinical Consultation",
+      "hint": "Og'riq kuchaydimi yoki o'zgarmadimi?",
+      "hint_uz": "Og'riq kuchaydimi yoki o'zgarmadimi?",
+      "hint_ru": "Боль усилилась или осталась прежней?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "It has become worse over the last day."
+    },
+    {
+      "phrase": "Does it hurt when you eat or drink something cold or hot?",
+      "category": "3. Triggers",
+      "hint": "Sovuq yoki issiq narsa yeb-ichganingizda og'riydimi?",
+      "hint_uz": "Sovuq yoki issiq narsa yeb-ichganingizda og'riydimi?",
+      "hint_ru": "Болит ли при употреблении холодного или горячего?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "Both cold and hot food or drinks can cause a sharp pain."
+    },
+    {
+      "phrase": "What usually makes the pain worse?",
+      "category": "Clinical Consultation",
+      "hint": "Odatda og'riqni nima kuchaytiradi?",
+      "hint_uz": "Odatda og'riqni nima kuchaytiradi?",
+      "hint_ru": "Что обычно провоцирует или усиливает боль?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "Cold drinks usually make it worse."
+    },
+    {
+      "phrase": "How would you describe the pain?",
+      "category": "4. Pain Character",
+      "hint": "Og'riqni qanday ta'riflaysiz (o'tkir, simillovchi, urib turuvchi)?",
+      "hint_uz": "Og'riqni qanday ta'riflaysiz (o'tkir, simillovchi, urib turuvchi)?",
+      "hint_ru": "Как бы вы описали боль (острая, ноющая, пульсирующая)?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "It's usually a sharp pain, but sometimes it becomes throbbing."
+    },
+    {
+      "phrase": "Is the pain constant?",
+      "category": "Clinical Consultation",
+      "hint": "Og'riq doimiymi yoki kelib-ketib turadimi?",
+      "hint_uz": "Og'riq doimiymi yoki kelib-ketib turadimi?",
+      "hint_ru": "Боль постоянная или периодическая?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "It comes and goes rather than being constant."
+    },
+    {
+      "phrase": "How would you rate the worst pain on a scale of 0 to 10?",
+      "category": "5. Severity",
+      "hint": "Eng kuchli og'riqni 0 dan 10 gacha necha ballga baholaysiz?",
+      "hint_uz": "Eng kuchli og'riqni 0 dan 10 gacha necha ballga baholaysiz?",
+      "hint_ru": "Оцените интенсивность боли по шкале от 0 до 10?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "Around 7 out of 10."
+    },
+    {
+      "phrase": "How severe is the pain?",
+      "category": "Clinical Consultation",
+      "hint": "Og'riq qanchalik kuchli?",
+      "hint_uz": "Og'riq qanchalik kuchli?",
+      "hint_ru": "Насколько сильна эта боль?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "The pain can be quite severe."
+    },
+    {
+      "phrase": "Where exactly do you feel the pain?",
+      "category": "6. Location",
+      "hint": "Og'riqni aynan qayerda his qilasiz?",
+      "hint_uz": "Og'riqni aynan qayerda his qilasiz?",
+      "hint_ru": "Где именно вы ощущаете боль?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "It's around this tooth."
+    },
+    {
+      "phrase": "Does the pain spread anywhere else?",
+      "category": "Clinical Consultation",
+      "hint": "Og'riq boshqa joyga (quloq, jag', bo'yin) tarqaladimi?",
+      "hint_uz": "Og'riq boshqa joyga (quloq, jag', bo'yin) tarqaladimi?",
+      "hint_ru": "Отдает (иррадиирует) ли боль в челюсть, ухо или шею?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "Sometimes the pain radiates toward my jaw."
+    },
+    {
+      "phrase": "Have you had any pain without eating or drinking anything?",
+      "category": "7. Spontaneous Pain",
+      "hint": "Hech narsa yemay-ichmay turganda ham o'z-o'zidan og'riq bo'ladimi?",
+      "hint_uz": "Hech narsa yemay-ichmay turganda ham o'z-o'zidan og'riq bo'ladimi?",
+      "hint_ru": "Возникает ли самопроизвольная боль в покое, без еды?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "I had some spontaneous pain last night while I was resting."
+    },
+    {
+      "phrase": "How long does the pain usually last after something triggers it?",
+      "category": "8. Duration",
+      "hint": "Qo'zg'atuvchidan keyin og'riq qancha vaqt davom etadi?",
+      "hint_uz": "Qo'zg'atuvchidan keyin og'riq qancha vaqt davom etadi?",
+      "hint_ru": "Как долго длится боль после воздействия раздражителя?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "Usually a few minutes. Then it gradually goes away."
+    },
+    {
+      "phrase": "Please let me know if you feel any discomfort during the examination.",
+      "category": "9. Examination",
+      "hint": "Tekshiruv vaqtida noqulaylik sezsangiz, darhol menga ayting.",
+      "hint_uz": "Tekshiruv vaqtida noqulaylik sezsangiz, darhol menga ayting.",
+      "hint_ru": "Пожалуйста, дайте знать, если почувствуете дискомфорт при осмотре.",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "Okay, Doctor."
+    },
+    {
+      "phrase": "I'd like to examine the tooth now.",
+      "category": "Clinical Consultation",
+      "hint": "Endi tishni / sohani tekshirib ko'rmoqchiman.",
+      "hint_uz": "Endi tishni / sohani tekshirib ko'rmoqchiman.",
+      "hint_ru": "Сейчас я проведу осмотр беспокоящего зуба / области.",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "Of course."
+    }
+  ],
+  "dialogue": [
+    {
+      "speaker": "Doctor",
+      "text": "Good morning. What brings you in today?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "Good morning, Doctor. I've a toothache on the lower right side. The tooth has also become very sensitive."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "I see. Can you tell me about your tooth pain?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "It's usually a sharp pain, but sometimes it becomes throbbing. It comes and goes rather than being constant."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "How long have you had this pain?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I've had this pain for about three days. It started gradually and has become worse over the last day."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Does it hurt when you eat or drink something cold or hot?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Where exactly do you feel the pain, and does it spread anywhere else?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "It's around this tooth. Sometimes the pain radiates toward my jaw."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Have you had any pain without eating or drinking anything?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "Yes. I had some spontaneous pain last night while I was resting."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "How would you rate the worst pain on a scale of 0 to 10?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "Around 7 out of 10."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "How long does the pain usually last after something triggers it?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "Usually a few minutes. Then it gradually goes away."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Thank you. That gives me a clear picture of your symptoms. I'd like to examine the tooth now and check its sensitivity to cold and heat. I'll also check the area around the tooth to find the cause of the pain."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Okay, Doctor."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Please let me know if you feel any discomfort during the examination."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Of course."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Good. Let's take a look."
+    }
+  ],
+  "tests": [
+    {
+      "question": "What is the medical meaning of the term 'dental pain' in clinical consultation?",
+      "option_a": "tish og'rig'i",
+      "option_b": "tish og'rig'i",
+      "option_c": "tish sezgirligi",
+      "option_d": "sezgir tish",
+      "correct_option": "A",
+      "explanation": "'dental pain' atamasining to'g'ri ma'nosi: tish og'rig'i."
+    },
+    {
+      "question": "Which term corresponds to 'pastki o'ng tomon'?",
+      "option_a": "toothache",
+      "option_b": "lower right side",
+      "option_c": "tooth sensitivity",
+      "option_d": "sensitive tooth",
+      "correct_option": "B",
+      "explanation": "'pastki o'ng tomon' ma'nosiga mos keluvchi tibbiy termin 'lower right side' hisoblanadi."
+    },
+    {
+      "question": "Which of the following is the grammatically and clinically standard question to ask about the duration of symptoms?",
+      "option_a": "How long do you having this symptom?",
+      "option_b": "How long has this condition been bothering you?",
+      "option_c": "Since what time you have this problem?",
+      "option_d": "How many days you are feeling pain?",
+      "correct_option": "B",
+      "explanation": "Klinik anamnezda davomiylikni so'rash uchun Present Perfect Continuous ('How long has... been bothering you?') to'g'ri shakl hisoblanadi."
+    },
+    {
+      "question": "When evaluating acute pain, what is the best phrasing to assess pain character?",
+      "option_a": "Is your pain bad or very bad?",
+      "option_b": "Can you describe the pain—is it sharp, dull, throbbing, or aching?",
+      "option_c": "Why do you have sharp pain today?",
+      "option_d": "Stop pain with pills immediately.",
+      "correct_option": "B",
+      "explanation": "Og'riq xarakterini aniqlashda shifokor ochiq va taklif qiluvchi variantlar (sharp, dull, throbbing, aching) beradi."
+    }
+  ]
+}

@@ -1,0 +1,1020 @@
+{
+  "specialty_id": 2,
+  "specialty_name": "Davolash ishi",
+  "order_index": 10,
+  "title": "Metabolic & Endocrine Review",
+  "title_uz": "Endokrin va metabolik ko'rik (Qandli diabet)",
+  "title_ru": "Метаболический и эндокринный скрининг",
+  "title_en": "Metabolic & Endocrine Review",
+  "description": "Davolash ishi bo'yicha Endokrin va metabolik ko'rik (Qandli diabet) mavzusida klinik muloqot va tibbiy ingliz tili darsi.",
+  "clinical_level": "B2 Medical English",
+  "target_role": "Dental Clinician / Attending Physician",
+  "scenario_prompt": "You are a virtual patient presenting with symptoms related to Metabolic & Endocrine Review. Speak in natural, everyday patient English.",
+  "patient_profile": {
+    "age": 60,
+    "gender": "Female",
+    "chief_complaint": "Endokrin va metabolik ko'rik (Qandli diabet)",
+    "history": "Patient presents with complaints of metabolic & endocrine review."
+  },
+  "grammar": [
+    {
+      "title": "GRAMMAR",
+      "title_uz": "GRAMMAR",
+      "title_ru": "GRAMMAR",
+      "title_en": "GRAMMAR",
+      "rule_explanation": "Bu modulda Mixed Grammar / Revision ishlatiladi. Asosiy maqsad - klinik konsultatsiyada avval o'tilgan grammatik strukturalarni birgalikda va tabiiy qo'llash: Present Perfect, Present Perfect Continuous, Past Simple, Past Perfect, Past Perfect Continuous, modal verbs, First Conditional, Passive Voice va \"would rather\". Why: Bemorning avval shunga o'xshash holatni boshdan kechirgan-kechirmaganini so'raydi.",
+      "rule_explanation_uz": "Bu modulda Mixed Grammar / Revision ishlatiladi. Asosiy maqsad - klinik konsultatsiyada avval o'tilgan grammatik strukturalarni birgalikda va tabiiy qo'llash: Present Perfect, Present Perfect Continuous, Past Simple, Past Perfect, Past Perfect Continuous, modal verbs, First Conditional, Passive Voice va \"would rather\". Why: Bemorning avval shunga o'xshash holatni boshdan kechirgan-kechirmaganini so'raydi.",
+      "rule_explanation_ru": "Present Perfect используется для опыта или состояния, связанного с настоящим: I haven't noticed bleeding. Present Perfect Continuous используется для действия, которое началось в прошлом и продолжается до настоящего момента: I've been feeling increasingly tired for a month.",
+      "rule_explanation_en": "Using precise clinical grammatical structures enables clear patient history taking and assessment.",
+      "structure_pattern": "How often do you + V1? | Have you been checking...? | You will need to + V1",
+      "examples": [
+        {
+          "sentence": "I haven't noticed bleeding.",
+          "translation": "Hozirgacha kuzatilmagan holat.",
+          "translation_uz": "Hozirgacha kuzatilmagan holat.",
+          "translation_ru": "",
+          "note": "I haven't noticed bleeding."
+        },
+        {
+          "sentence": "I've been feeling increasingly tired for a month.",
+          "translation": "O'tmishda boshlangan va hozirgacha davom etayotgan simptom.",
+          "translation_uz": "O'tmishda boshlangan va hozirgacha davom etayotgan simptom.",
+          "translation_ru": "",
+          "note": "I've been feeling increasingly tired for a month."
+        },
+        {
+          "sentence": "I first noticed it four weeks ago.",
+          "translation": "Aniq o'tgan vaqtdagi tugallangan voqea.",
+          "translation_uz": "Aniq o'tgan vaqtdagi tugallangan voqea.",
+          "translation_ru": "",
+          "note": "I first noticed it four weeks ago."
+        },
+        {
+          "sentence": "I hadn't had any major infection.",
+          "translation": "O'tmishdagi boshqa voqeadan oldingi holat.",
+          "translation_uz": "O'tmishdagi boshqa voqeadan oldingi holat.",
+          "translation_ru": "",
+          "note": "I hadn't had any major infection."
+        },
+        {
+          "sentence": "I had been experiencing stress before the symptoms began.",
+          "translation": "O'tmishdagi boshqa voqeadan oldin davom etgan jarayon.",
+          "translation_uz": "O'tmishdagi boshqa voqeadan oldin davom etgan jarayon.",
+          "translation_ru": "",
+          "note": "I had been experiencing stress before the symptoms began."
+        },
+        {
+          "sentence": "He should avoid strenuous activity.",
+          "translation": "Tavsiya.",
+          "translation_uz": "Tavsiya.",
+          "translation_ru": "",
+          "note": "He should avoid strenuous activity."
+        },
+        {
+          "sentence": "If he develops severe chest pain, he must seek emergency care.",
+          "translation": "Real kelajakdagi xavfli vaziyat.",
+          "translation_uz": "Real kelajakdagi xavfli vaziyat.",
+          "translation_ru": "",
+          "note": "If he develops severe chest pain, he must seek emergency care."
+        },
+        {
+          "sentence": "Blood samples will be taken.",
+          "translation": "Tibbiy jarayonga urg'u.",
+          "translation_uz": "Tibbiy jarayonga urg'u.",
+          "translation_ru": "",
+          "note": "Blood samples will be taken."
+        }
+      ],
+      "common_mistakes": [
+        {
+          "incorrect": "Since when you feel this pain?",
+          "correct": "How long have you had this pain?",
+          "explanation": "Davomiylikni so'rashda 'How long have you had...?' standarti ishlatiladi.",
+          "explanation_uz": "Davomiylikni so'rashda 'How long have you had...?' standarti ishlatiladi.",
+          "explanation_ru": "Для выяснения длительности используется конструкция 'How long have you had...?'.",
+          "explanation_en": "Use 'How long have you had...?' when asking about the duration of symptoms."
+        },
+        {
+          "incorrect": "Where is paining you?",
+          "correct": "Where exactly do you feel the pain?",
+          "explanation": "Lokatsiyani aniqlashda 'Where do you feel the pain?' to'g'ri grammatik shakl.",
+          "explanation_uz": "Lokatsiyani aniqlashda 'Where do you feel the pain?' to'g'ri grammatik shakl.",
+          "explanation_ru": "Правильный вопрос о локализации боли: 'Where exactly do you feel the pain?'.",
+          "explanation_en": "Ask 'Where exactly do you feel the pain?' to identify the specific anatomical site."
+        }
+      ],
+      "structure_pattern_en": "How often do you + V1? | Have you been checking...? | You will need to + V1",
+      "structure_pattern_uz": "How often do you + V1? (Qanchalik tez-tez...?) | Have you been checking...? | You will need to + V1",
+      "structure_pattern_ru": "How often do you + V1? (Как часто вы...?) | Have you been checking...? | You will need to + V1"
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "increasingly tired",
+      "translation": "tobora ko'proq charchagan",
+      "translation_uz": "tobora ko'proq charchagan",
+      "translation_ru": "всё более уставший",
+      "translation_en": "increasingly tired",
+      "definition": "Clinical medical condition and symptom associated with increasingly tired.",
+      "definition_uz": "tobora ko'proq charchagan - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "всё более уставший - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with increasingly tired.",
+      "example": "The doctor assessed the patient for increasingly tired."
+    },
+    {
+      "word": "short of breath",
+      "translation": "nafasi qisilgan",
+      "translation_uz": "nafasi qisilgan",
+      "translation_ru": "испытывающий одышку",
+      "translation_en": "short of breath",
+      "definition": "Subjective clinical sensation of difficult, labored, or uncomfortable breathing.",
+      "definition_uz": "Nafas olishning qiyinlashishi, havo yetishmasligi hissi (nafas qisishi).",
+      "definition_ru": "Субъективное ощущение нехватки воздуха и затруднения дыхания (одышка).",
+      "definition_en": "Subjective clinical sensation of difficult, labored, or uncomfortable breathing.",
+      "example": "The doctor assessed the patient for short of breath."
+    },
+    {
+      "word": "breathlessness",
+      "translation": "nafas qisishi",
+      "translation_uz": "nafas qisishi",
+      "translation_ru": "одышка",
+      "translation_en": "breathlessness",
+      "definition": "Subjective clinical sensation of difficult, labored, or uncomfortable breathing.",
+      "definition_uz": "Nafas olishning qiyinlashishi, havo yetishmasligi hissi (nafas qisishi).",
+      "definition_ru": "Субъективное ощущение нехватки воздуха и затруднения дыхания (одышка).",
+      "definition_en": "Subjective clinical sensation of difficult, labored, or uncomfortable breathing.",
+      "example": "The doctor assessed the patient for breathlessness."
+    },
+    {
+      "word": "exertion",
+      "translation": "jismoniy zo'riqish",
+      "translation_uz": "jismoniy zo'riqish",
+      "translation_ru": "физическая нагрузка",
+      "translation_en": "exertion",
+      "definition": "Clinical medical condition and symptom associated with exertion.",
+      "definition_uz": "jismoniy zo'riqish - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "физическая нагрузка - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with exertion.",
+      "example": "The doctor assessed the patient for exertion."
+    },
+    {
+      "word": "light-headed",
+      "translation": "boshi yengil / aylangandek",
+      "translation_uz": "boshi yengil / aylangandek",
+      "translation_ru": "головокружение, ощущение дурноты",
+      "translation_en": "light-headed",
+      "definition": "Clinical medical condition and symptom associated with light-headed.",
+      "definition_uz": "boshi yengil / aylangandek - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "головокружение, ощущение дурноты - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with light-headed.",
+      "example": "The doctor assessed the patient for light-headed."
+    },
+    {
+      "word": "tachycardia",
+      "translation": "taxikardiya, yurak urishining tezlashishi",
+      "translation_uz": "taxikardiya, yurak urishining tezlashishi",
+      "translation_ru": "тахикардия",
+      "translation_en": "tachycardia",
+      "definition": "Clinical medical condition and symptom associated with tachycardia.",
+      "definition_uz": "taxikardiya, yurak urishining tezlashishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "тахикардия - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with tachycardia.",
+      "example": "The doctor assessed the patient for tachycardia."
+    },
+    {
+      "word": "chronic condition",
+      "translation": "surunkali kasallik",
+      "translation_uz": "surunkali kasallik",
+      "translation_ru": "хроническое заболевание",
+      "translation_en": "chronic condition",
+      "definition": "Clinical medical condition and symptom associated with chronic condition.",
+      "definition_uz": "surunkali kasallik - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "хроническое заболевание - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with chronic condition.",
+      "example": "The doctor assessed the patient for chronic condition."
+    },
+    {
+      "word": "hypertension",
+      "translation": "gipertoniya",
+      "translation_uz": "gipertoniya",
+      "translation_ru": "гипертония",
+      "translation_en": "hypertension",
+      "definition": "Clinical medical condition and symptom associated with hypertension.",
+      "definition_uz": "gipertoniya - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "гипертония - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with hypertension.",
+      "example": "The doctor assessed the patient for hypertension."
+    },
+    {
+      "word": "miss a dose",
+      "translation": "dori dozasini o'tkazib yubormoq",
+      "translation_uz": "dori dozasini o'tkazib yubormoq",
+      "translation_ru": "пропустить дозу",
+      "translation_en": "miss a dose",
+      "definition": "Clinical medical condition and symptom associated with miss a dose.",
+      "definition_uz": "dori dozasini o'tkazib yubormoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "пропустить дозу - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with miss a dose.",
+      "example": "The doctor assessed the patient for miss a dose."
+    },
+    {
+      "word": "pallor",
+      "translation": "rangparlik",
+      "translation_uz": "rangparlik",
+      "translation_ru": "бледность",
+      "translation_en": "pallor",
+      "definition": "Clinical medical condition and symptom associated with pallor.",
+      "definition_uz": "rangparlik - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "бледность - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with pallor.",
+      "example": "The doctor assessed the patient for pallor."
+    },
+    {
+      "word": "weight loss",
+      "translation": "vazn yo'qotish",
+      "translation_uz": "vazn yo'qotish",
+      "translation_ru": "потеря веса",
+      "translation_en": "weight loss",
+      "definition": "Clinical medical condition and symptom associated with weight loss.",
+      "definition_uz": "vazn yo'qotish - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "потеря веса - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with weight loss.",
+      "example": "The doctor assessed the patient for weight loss."
+    },
+    {
+      "word": "black stools",
+      "translation": "qora najas",
+      "translation_uz": "qora najas",
+      "translation_ru": "чёрный стул",
+      "translation_en": "black stools",
+      "definition": "Clinical medical condition and symptom associated with black stools.",
+      "definition_uz": "qora najas - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "чёрный стул - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with black stools.",
+      "example": "The doctor assessed the patient for black stools."
+    },
+    {
+      "word": "fluid retention",
+      "translation": "suyuqlik to'planishi",
+      "translation_uz": "suyuqlik to'planishi",
+      "translation_ru": "задержка жидкости",
+      "translation_en": "fluid retention",
+      "definition": "Clinical medical condition and symptom associated with fluid retention.",
+      "definition_uz": "suyuqlik to'planishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "задержка жидкости - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with fluid retention.",
+      "example": "The doctor assessed the patient for fluid retention."
+    },
+    {
+      "word": "peripheral circulation",
+      "translation": "periferik qon aylanishi",
+      "translation_uz": "periferik qon aylanishi",
+      "translation_ru": "периферическое кровообращение",
+      "translation_en": "peripheral circulation",
+      "definition": "Clinical medical condition and symptom associated with peripheral circulation.",
+      "definition_uz": "periferik qon aylanishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "периферическое кровообращение - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with peripheral circulation.",
+      "example": "The doctor assessed the patient for peripheral circulation."
+    },
+    {
+      "word": "hematological",
+      "translation": "gematologik",
+      "translation_uz": "gematologik",
+      "translation_ru": "гематологический",
+      "translation_en": "hematological",
+      "definition": "Clinical medical condition and symptom associated with hematological.",
+      "definition_uz": "gematologik - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "гематологический - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with hematological.",
+      "example": "The doctor assessed the patient for hematological."
+    },
+    {
+      "word": "cardiovascular",
+      "translation": "yurak-qon tomirga oid",
+      "translation_uz": "yurak-qon tomirga oid",
+      "translation_ru": "сердечно-сосудистый",
+      "translation_en": "cardiovascular",
+      "definition": "Clinical medical condition and symptom associated with cardiovascular.",
+      "definition_uz": "yurak-qon tomirga oid - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "сердечно-сосудистый - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with cardiovascular.",
+      "example": "The doctor assessed the patient for cardiovascular."
+    },
+    {
+      "word": "endocrine",
+      "translation": "endokrin",
+      "translation_uz": "endokrin",
+      "translation_ru": "эндокринный",
+      "translation_en": "endocrine",
+      "definition": "Clinical medical condition and symptom associated with endocrine.",
+      "definition_uz": "endokrin - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "эндокринный - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with endocrine.",
+      "example": "The doctor assessed the patient for endocrine."
+    },
+    {
+      "word": "metabolic",
+      "translation": "metabolik",
+      "translation_uz": "metabolik",
+      "translation_ru": "метаболический",
+      "translation_en": "metabolic",
+      "definition": "Clinical medical condition and symptom associated with metabolic.",
+      "definition_uz": "metabolik - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "метаболический - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with metabolic.",
+      "example": "The doctor assessed the patient for metabolic."
+    },
+    {
+      "word": "exclude a cause",
+      "translation": "sababni istisno qilmoq",
+      "translation_uz": "sababni istisno qilmoq",
+      "translation_ru": "исключить причину",
+      "translation_en": "exclude a cause",
+      "definition": "Clinical medical condition and symptom associated with exclude a cause.",
+      "definition_uz": "sababni istisno qilmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "исключить причину - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with exclude a cause.",
+      "example": "The doctor assessed the patient for exclude a cause."
+    },
+    {
+      "word": "differential diagnosis",
+      "translation": "differensial tashxis",
+      "translation_uz": "differensial tashxis",
+      "translation_ru": "дифференциальный диагноз",
+      "translation_en": "differential diagnosis",
+      "definition": "Clinical medical condition and symptom associated with differential diagnosis.",
+      "definition_uz": "differensial tashxis - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "дифференциальный диагноз - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with differential diagnosis.",
+      "example": "The doctor assessed the patient for differential diagnosis."
+    },
+    {
+      "word": "full blood count",
+      "translation": "umumiy qon tahlili",
+      "translation_uz": "umumiy qon tahlili",
+      "translation_ru": "общий анализ крови",
+      "translation_en": "full blood count",
+      "definition": "Clinical medical condition and symptom associated with full blood count.",
+      "definition_uz": "umumiy qon tahlili - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "общий анализ крови - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with full blood count.",
+      "example": "The doctor assessed the patient for full blood count."
+    },
+    {
+      "word": "ferritin",
+      "translation": "ferritin",
+      "translation_uz": "ferritin",
+      "translation_ru": "ферритин",
+      "translation_en": "ferritin",
+      "definition": "Clinical medical condition and symptom associated with ferritin.",
+      "definition_uz": "ferritin - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "ферритин - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with ferritin.",
+      "example": "The doctor assessed the patient for ferritin."
+    },
+    {
+      "word": "iron studies",
+      "translation": "temir almashinuvi tekshiruvlari",
+      "translation_uz": "temir almashinuvi tekshiruvlari",
+      "translation_ru": "исследования обмена железа",
+      "translation_en": "iron studies",
+      "definition": "Clinical medical condition and symptom associated with iron studies.",
+      "definition_uz": "temir almashinuvi tekshiruvlari - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "исследования обмена железа - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with iron studies.",
+      "example": "The doctor assessed the patient for iron studies."
+    },
+    {
+      "word": "renal function",
+      "translation": "buyrak faoliyati",
+      "translation_uz": "buyrak faoliyati",
+      "translation_ru": "функция почек",
+      "translation_en": "renal function",
+      "definition": "Clinical medical condition and symptom associated with renal function.",
+      "definition_uz": "buyrak faoliyati - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "функция почек - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with renal function.",
+      "example": "The doctor assessed the patient for renal function."
+    },
+    {
+      "word": "thyroid function",
+      "translation": "qalqonsimon bez faoliyati",
+      "translation_uz": "qalqonsimon bez faoliyati",
+      "translation_ru": "функция щитовидной железы",
+      "translation_en": "thyroid function",
+      "definition": "Clinical medical condition and symptom associated with thyroid function.",
+      "definition_uz": "qalqonsimon bez faoliyati - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "функция щитовидной железы - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with thyroid function.",
+      "example": "The doctor assessed the patient for thyroid function."
+    },
+    {
+      "word": "electrolytes",
+      "translation": "elektrolitlar",
+      "translation_uz": "elektrolitlar",
+      "translation_ru": "электролиты",
+      "translation_en": "electrolytes",
+      "definition": "Clinical medical condition and symptom associated with electrolytes.",
+      "definition_uz": "elektrolitlar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "электролиты - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with electrolytes.",
+      "example": "The doctor assessed the patient for electrolytes."
+    },
+    {
+      "word": "ECG",
+      "translation": "EKG",
+      "translation_uz": "EKG",
+      "translation_ru": "ЭКГ",
+      "translation_en": "ECG",
+      "definition": "Clinical medical condition and symptom associated with ecg.",
+      "definition_uz": "EKG - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "ЭКГ - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with ecg.",
+      "example": "The doctor assessed the patient for ecg."
+    },
+    {
+      "word": "strenuous activity",
+      "translation": "og'ir jismoniy faoliyat",
+      "translation_uz": "og'ir jismoniy faoliyat",
+      "translation_ru": "интенсивная физическая нагрузка",
+      "translation_en": "strenuous activity",
+      "definition": "Clinical medical condition and symptom associated with strenuous activity.",
+      "definition_uz": "og'ir jismoniy faoliyat - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "интенсивная физическая нагрузка - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with strenuous activity.",
+      "example": "The doctor assessed the patient for strenuous activity."
+    },
+    {
+      "word": "fainting",
+      "translation": "hushdan ketish",
+      "translation_uz": "hushdan ketish",
+      "translation_ru": "обморок",
+      "translation_en": "fainting",
+      "definition": "Clinical medical condition and symptom associated with fainting.",
+      "definition_uz": "hushdan ketish - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "обморок - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with fainting.",
+      "example": "The doctor assessed the patient for fainting."
+    },
+    {
+      "word": "underlying cause",
+      "translation": "asosiy sabab",
+      "translation_uz": "asosiy sabab",
+      "translation_ru": "основная причина",
+      "translation_en": "underlying cause",
+      "definition": "Clinical medical condition and symptom associated with underlying cause.",
+      "definition_uz": "asosiy sabab - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "основная причина - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with underlying cause.",
+      "example": "The doctor assessed the patient for underlying cause."
+    },
+    {
+      "word": "evidence-based management",
+      "translation": "dalillarga asoslangan davolash/boshqaruv",
+      "translation_uz": "dalillarga asoslangan davolash/boshqaruv",
+      "translation_ru": "лечение, основанное на доказательствах",
+      "translation_en": "evidence-based management",
+      "definition": "Clinical medical condition and symptom associated with evidence-based management.",
+      "definition_uz": "dalillarga asoslangan davolash/boshqaruv - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "лечение, основанное на доказательствах - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with evidence-based management.",
+      "example": "The doctor assessed the patient for evidence-based management."
+    },
+    {
+      "word": "become breathless",
+      "translation": "nafas qisadigan bo'lmoq",
+      "translation_uz": "nafas qisadigan bo'lmoq",
+      "translation_ru": "становиться одышливым",
+      "translation_en": "become breathless",
+      "definition": "Subjective clinical sensation of difficult, labored, or uncomfortable breathing.",
+      "definition_uz": "Nafas olishning qiyinlashishi, havo yetishmasligi hissi (nafas qisishi).",
+      "definition_ru": "Субъективное ощущение нехватки воздуха и затруднения дыхания (одышка).",
+      "definition_en": "Subjective clinical sensation of difficult, labored, or uncomfortable breathing.",
+      "example": "The doctor assessed the patient for become breathless."
+    },
+    {
+      "word": "feel light-headed",
+      "translation": "boshi aylangandek bo'lmoq",
+      "translation_uz": "boshi aylangandek bo'lmoq",
+      "translation_ru": "чувствовать головокружение",
+      "translation_en": "feel light-headed",
+      "definition": "Clinical medical condition and symptom associated with feel light-headed.",
+      "definition_uz": "boshi aylangandek bo'lmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "чувствовать головокружение - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with feel light-headed.",
+      "example": "The doctor assessed the patient for feel light-headed."
+    },
+    {
+      "word": "miss several doses",
+      "translation": "bir necha dozani o'tkazib yubormoq",
+      "translation_uz": "bir necha dozani o'tkazib yubormoq",
+      "translation_ru": "пропустить несколько доз",
+      "translation_en": "miss several doses",
+      "definition": "Clinical medical condition and symptom associated with miss several doses.",
+      "definition_uz": "bir necha dozani o'tkazib yubormoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "пропустить несколько доз - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with miss several doses.",
+      "example": "The doctor assessed the patient for miss several doses."
+    },
+    {
+      "word": "notice weight loss",
+      "translation": "vazn yo'qotganini sezmoq",
+      "translation_uz": "vazn yo'qotganini sezmoq",
+      "translation_ru": "заметить потерю веса",
+      "translation_en": "notice weight loss",
+      "definition": "Clinical medical condition and symptom associated with notice weight loss.",
+      "definition_uz": "vazn yo'qotganini sezmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "заметить потерю веса - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with notice weight loss.",
+      "example": "The doctor assessed the patient for notice weight loss."
+    },
+    {
+      "word": "look unusually pale",
+      "translation": "odatdagidan rangpar ko'rinmoq",
+      "translation_uz": "odatdagidan rangpar ko'rinmoq",
+      "translation_ru": "выглядеть необычно бледным",
+      "translation_en": "look unusually pale",
+      "definition": "Clinical medical condition and symptom associated with look unusually pale.",
+      "definition_uz": "odatdagidan rangpar ko'rinmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "выглядеть необычно бледным - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with look unusually pale.",
+      "example": "The doctor assessed the patient for look unusually pale."
+    },
+    {
+      "word": "exclude a cardiovascular cause",
+      "translation": "yurak-qon tomir sababini istisno qilmoq",
+      "translation_uz": "yurak-qon tomir sababini istisno qilmoq",
+      "translation_ru": "исключить сердечно-сосудистую причину",
+      "translation_en": "exclude a cardiovascular cause",
+      "definition": "Clinical medical condition and symptom associated with exclude a cardiovascular cause.",
+      "definition_uz": "yurak-qon tomir sababini istisno qilmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "исключить сердечно-сосудистую причину - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with exclude a cardiovascular cause.",
+      "example": "The doctor assessed the patient for exclude a cardiovascular cause."
+    },
+    {
+      "word": "request blood tests",
+      "translation": "qon tahlillarini buyurmoq",
+      "translation_uz": "qon tahlillarini buyurmoq",
+      "translation_ru": "назначить анализы крови",
+      "translation_en": "request blood tests",
+      "definition": "Clinical medical condition and symptom associated with request blood tests.",
+      "definition_uz": "qon tahlillarini buyurmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "назначить анализы крови - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with request blood tests.",
+      "example": "The doctor assessed the patient for request blood tests."
+    },
+    {
+      "word": "review the findings",
+      "translation": "topilmalarni ko'rib chiqmoq",
+      "translation_uz": "topilmalarni ko'rib chiqmoq",
+      "translation_ru": "рассмотреть результаты",
+      "translation_en": "review the findings",
+      "definition": "Clinical medical condition and symptom associated with review the findings.",
+      "definition_uz": "topilmalarni ko'rib chiqmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "рассмотреть результаты - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with review the findings.",
+      "example": "The doctor assessed the patient for review the findings."
+    },
+    {
+      "word": "narrow the differential diagnosis",
+      "translation": "differensial tashxisni toraytirmoq",
+      "translation_uz": "differensial tashxisni toraytirmoq",
+      "translation_ru": "сузить дифференциальный диагноз",
+      "translation_en": "narrow the differential diagnosis",
+      "definition": "Clinical medical condition and symptom associated with narrow the differential diagnosis.",
+      "definition_uz": "differensial tashxisni toraytirmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "сузить дифференциальный диагноз - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with narrow the differential diagnosis.",
+      "example": "The doctor assessed the patient for narrow the differential diagnosis."
+    },
+    {
+      "word": "seek emergency medical attention",
+      "translation": "shoshilinch tibbiy yordamga murojaat qilmoq",
+      "translation_uz": "shoshilinch tibbiy yordamga murojaat qilmoq",
+      "translation_ru": "обратиться за экстренной медицинской помощью",
+      "translation_en": "seek emergency medical attention",
+      "definition": "Clinical medical condition and symptom associated with seek emergency medical attention.",
+      "definition_uz": "shoshilinch tibbiy yordamga murojaat qilmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "обратиться за экстренной медицинской помощью - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with seek emergency medical attention.",
+      "example": "The doctor assessed the patient for seek emergency medical attention."
+    },
+    {
+      "word": "We need to determine whether + clause",
+      "translation": "Alomatlarning sababini professional tarzda muhokama qilish.",
+      "translation_uz": "Alomatlarning sababini professional tarzda muhokama qilish.",
+      "translation_ru": "",
+      "translation_en": "We need to determine whether + clause",
+      "definition": "Clinical medical condition and symptom associated with we need to determine whether + clause.",
+      "definition_uz": "Alomatlarning sababini professional tarzda muhokama qilish. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "We need to determine whether + clause - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with we need to determine whether + clause.",
+      "example": "We need to determine whether the symptoms are cardiovascular or respiratory."
+    },
+    {
+      "word": "Given + noun phrase, we need to + verb",
+      "translation": "Klinik dalil asosida qaror berish.",
+      "translation_uz": "Klinik dalil asosida qaror berish.",
+      "translation_ru": "",
+      "translation_en": "Given + noun phrase, we need to + verb",
+      "definition": "Clinical medical condition and symptom associated with given + noun phrase, we need to + verb.",
+      "definition_uz": "Klinik dalil asosida qaror berish. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Given + noun phrase, we need to + verb - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with given + noun phrase, we need to + verb.",
+      "example": "Given the tachycardia, we need to exclude a cardiovascular cause."
+    },
+    {
+      "word": "Once + present simple, will + verb",
+      "translation": "Natija kelgandan keyingi reja.",
+      "translation_uz": "Natija kelgandan keyingi reja.",
+      "translation_ru": "",
+      "translation_en": "Once + present simple, will + verb",
+      "definition": "Clinical medical condition and symptom associated with once + present simple, will + verb.",
+      "definition_uz": "Natija kelgandan keyingi reja. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Once + present simple, will + verb - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with once + present simple, will + verb.",
+      "example": "Once we have the results, we'll review the findings."
+    },
+    {
+      "word": "If + present simple, must/should + verb",
+      "translation": "Safety-netting / shoshilinch vaziyat.",
+      "translation_uz": "Safety-netting / shoshilinch vaziyat.",
+      "translation_ru": "",
+      "translation_en": "If + present simple, must/should + verb",
+      "definition": "Clinical medical condition and symptom associated with if + present simple, must/should + verb.",
+      "definition_uz": "Safety-netting / shoshilinch vaziyat. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "If + present simple, must/should + verb - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with if + present simple, must/should + verb.",
+      "example": "If he develops severe chest pain, he must seek emergency care."
+    },
+    {
+      "word": "I'd rather + verb + than + verb",
+      "translation": "Afzallikni bildirish.",
+      "translation_uz": "Afzallikni bildirish.",
+      "translation_ru": "",
+      "translation_en": "I'd rather + verb + than + verb",
+      "definition": "Clinical medical condition and symptom associated with i'd rather + verb + than + verb.",
+      "definition_uz": "Afzallikni bildirish. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "I'd rather + verb + than + verb - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with i'd rather + verb + than + verb.",
+      "example": "I'd rather find the cause than simply treat the symptoms."
+    }
+  ],
+  "phrasebook": [
+    {
+      "phrase": "What brings you in today?",
+      "category": "Clinical Consultation",
+      "hint": "Bugun sizni nima bezovta qilib, olib keldi?",
+      "hint_uz": "Bugun sizni nima bezovta qilib, olib keldi?",
+      "hint_ru": "Что привело вас к нам сегодня? На что жалуетесь?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "When did you first notice the problem?",
+      "category": "Clinical Consultation",
+      "hint": "Muammoni birinchi marta qachon sezdingiz?",
+      "hint_uz": "Muammoni birinchi marta qachon sezdingiz?",
+      "hint_ru": "Когда вы впервые заметили проблему?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Has it been getting worse with exertion?",
+      "category": "Clinical Consultation",
+      "hint": "Og'riq kuchaydimi yoki o'zgarmadimi?",
+      "hint_uz": "Og'riq kuchaydimi yoki o'zgarmadimi?",
+      "hint_ru": "Боль усилилась или осталась прежней?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "What happens during an episode?",
+      "category": "Clinical Consultation",
+      "hint": "Xuruj paytida nima sodir bo'ladi?",
+      "hint_uz": "Xuruj paytida nima sodir bo'ladi?",
+      "hint_ru": "Что происходит во время приступа?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Have you ever experienced anything similar?",
+      "category": "Clinical Consultation",
+      "hint": "Avval shunga o'xshash holat bo'lganmi?",
+      "hint_uz": "Avval shunga o'xshash holat bo'lganmi?",
+      "hint_ru": "У вас раньше было что-то подобное?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Do you have any chronic conditions?",
+      "category": "Clinical Consultation",
+      "hint": "Sizda surunkali kasalliklar bormi?",
+      "hint_uz": "Sizda surunkali kasalliklar bormi?",
+      "hint_ru": "У вас есть хронические заболевания?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Are you taking your medication regularly?",
+      "category": "Clinical Consultation",
+      "hint": "Dorilaringizni muntazam qabul qilyapsizmi?",
+      "hint_uz": "Dorilaringizni muntazam qabul qilyapsizmi?",
+      "hint_ru": "Вы регулярно принимаете лекарства?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "That is clinically relevant.",
+      "category": "Clinical Consultation",
+      "hint": "Bu klinik jihatdan muhim.",
+      "hint_uz": "Bu klinik jihatdan muhim.",
+      "hint_ru": "Это имеет клиническое значение.",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "I'm going to examine your heart and lungs.",
+      "category": "Clinical Consultation",
+      "hint": "Endi tishni / sohani tekshirib ko'rmoqchiman.",
+      "hint_uz": "Endi tishni / sohani tekshirib ko'rmoqchiman.",
+      "hint_ru": "Сейчас я проведу осмотр беспокоящего зуба / области.",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "What conditions are you considering?",
+      "category": "Clinical Consultation",
+      "hint": "Qaysi kasalliklarni ko'rib chiqyapsiz?",
+      "hint_uz": "Qaysi kasalliklarni ko'rib chiqyapsiz?",
+      "hint_ru": "Какие заболевания вы рассматриваете?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "We need to determine whether the symptoms are related to...",
+      "category": "Clinical Consultation",
+      "hint": "Alomatlar ... bilan bog'liqligini aniqlashimiz kerak.",
+      "hint_uz": "Alomatlar ... bilan bog'liqligini aniqlashimiz kerak.",
+      "hint_ru": "Нам нужно определить, связаны ли симптомы с...",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "We also need to exclude a cardiovascular cause.",
+      "category": "Clinical Consultation",
+      "hint": "Yurak-qon tomir sababini ham istisno qilishimiz kerak.",
+      "hint_uz": "Yurak-qon tomir sababini ham istisno qilishimiz kerak.",
+      "hint_ru": "Нам также необходимо исключить сердечно-сосудистую причину.",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Could this be anemia?",
+      "category": "Clinical Consultation",
+      "hint": "Bu kamqonlik bo'lishi mumkinmi?",
+      "hint_uz": "Bu kamqonlik bo'lishi mumkinmi?",
+      "hint_ru": "Это может быть анемия?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "We shouldn't make assumptions before the results are available.",
+      "category": "Clinical Consultation",
+      "hint": "Natijalar chiqmaguncha taxmin qilmasligimiz kerak.",
+      "hint_uz": "Natijalar chiqmaguncha taxmin qilmasligimiz kerak.",
+      "hint_ru": "Не следует делать предположений до получения результатов.",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "We'll request a full blood count and an ECG.",
+      "category": "Clinical Consultation",
+      "hint": "Umumiy qon tahlili va EKG buyuramiz.",
+      "hint_uz": "Umumiy qon tahlili va EKG buyuramiz.",
+      "hint_ru": "Мы назначим общий анализ крови и ЭКГ.",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "He should avoid strenuous activity.",
+      "category": "Clinical Consultation",
+      "hint": "U og'ir jismoniy faoliyatdan saqlanishi kerak.",
+      "hint_uz": "U og'ir jismoniy faoliyatdan saqlanishi kerak.",
+      "hint_ru": "Ему следует избегать интенсивной физической нагрузки.",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "If he develops severe chest pain, he must seek emergency medical attention.",
+      "category": "Clinical Consultation",
+      "hint": "Agar kuchli ko'krak og'rig'i paydo bo'lsa, shoshilinch yordamga murojaat qilishi kerak.",
+      "hint_uz": "Agar kuchli ko'krak og'rig'i paydo bo'lsa, shoshilinch yordamga murojaat qilishi kerak.",
+      "hint_ru": "При сильной боли в груди необходимо срочно обратиться за медицинской помощью.",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Once we have the results, we'll review the findings together.",
+      "category": "Clinical Consultation",
+      "hint": "Natijalar chiqqach, ularni birgalikda ko'rib chiqamiz.",
+      "hint_uz": "Natijalar chiqqach, ularni birgalikda ko'rib chiqamiz.",
+      "hint_ru": "Когда результаты будут готовы, мы вместе их рассмотрим.",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "We'll narrow the differential diagnosis.",
+      "category": "Clinical Consultation",
+      "hint": "Differensial tashxisni toraytiramiz.",
+      "hint_uz": "Differensial tashxisni toraytiramiz.",
+      "hint_ru": "Мы сузим дифференциальный диагноз.",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "I'd rather find the cause than simply treat the symptoms.",
+      "category": "Clinical Consultation",
+      "hint": "Faqat alomatlarni davolashdan ko'ra sababini aniqlashni afzal ko'raman.",
+      "hint_uz": "Faqat alomatlarni davolashdan ko'ra sababini aniqlashni afzal ko'raman.",
+      "hint_ru": "Я предпочёл бы найти причину, а не просто лечить симптомы.",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Identifying the underlying cause is essential.",
+      "category": "Clinical Consultation",
+      "hint": "Asosiy sababni aniqlash juda muhim.",
+      "hint_uz": "Asosiy sababni aniqlash juda muhim.",
+      "hint_ru": "Выявить основную причину крайне важно.",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    }
+  ],
+  "dialogue": [
+    {
+      "speaker": "Doctor",
+      "text": "Good morning. Please take a seat. What brings you in for a full assessment today?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I've been feeling increasingly tired and short of breath for about a month, and the symptoms have become much more noticeable over the last week."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "When did you first notice the problem?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I first noticed it about four weeks ago. At that stage, I could still do everything normally, but I was getting tired earlier than usual."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Has the breathlessness been getting worse with exertion?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "Yes. I've been becoming breathless much more easily, particularly when I climb stairs or walk quickly."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "What happens during an episode?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "My heart starts beating faster, I feel light-headed, and I sometimes need to stop and rest."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Have you ever experienced anything similar?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "No, I haven't."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Did anything happen before the symptoms began?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I had been under considerable stress at work, but I hadn't had any major infection or acute illness."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Do you have any chronic conditions?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I have hypertension, which has generally been controlled well."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Are you taking your medication regularly?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I usually take it every morning, although I've missed several doses recently. Nurse: His blood pressure is 148 over 88, pulse 102, respiratory rate 20, and oxygen saturation 96% on room air."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Have you noticed weight loss, bleeding, black stools, fever, cough, or swelling of your legs?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I've lost about two kilograms without trying. I haven't noticed bleeding, black stools, or fever. Relative: He has also looked unusually pale over the last few weeks."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Thank you. That is clinically relevant. I'm going to examine your heart, lungs, abdomen and peripheral circulation, and I'll check for pallor and signs of fluid retention."
+    },
+    {
+      "speaker": "Patient",
+      "text": "What conditions are you considering?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "We need to determine whether the symptoms are cardiovascular, hematological, respiratory, endocrine, metabolic, or related to another condition. Nurse: Should I prepare blood samples and an ECG?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Yes. We'll request a full blood count, ferritin and iron studies, renal and thyroid function, glucose, electrolytes, and an ECG."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Could this be anemia?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "It could be. However, given the exertional symptoms and tachycardia, we also need to exclude a cardiovascular cause."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Could it be something serious?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "It could be, but we shouldn't make assumptions before we have the examination and investigation results. Relative: What should he do while we're waiting?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "He should avoid strenuous activity until we have a clearer picture. If he develops severe chest pain, fainting, or significant difficulty breathing, he must seek emergency medical attention."
+    },
+    {
+      "speaker": "Patient",
+      "text": "And once the results are available?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Once we have the results, we'll review the findings together, narrow the differential diagnosis, and decide whether you need treatment, specialist referral, or further investigation."
+    },
+    {
+      "speaker": "Patient",
+      "text": "That makes sense. I'd rather find the cause than simply treat the symptoms."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Exactly. A good clinical assessment is about identifying the underlying cause and choosing the safest evidence-based management."
+    }
+  ],
+  "tests": [
+    {
+      "question": "What is the medical meaning of the term 'increasingly tired' in clinical consultation?",
+      "option_a": "tobora ko'proq charchagan",
+      "option_b": "nafasi qisilgan",
+      "option_c": "nafas qisishi",
+      "option_d": "jismoniy zo'riqish",
+      "correct_option": "A",
+      "explanation": "'increasingly tired' atamasining to'g'ri ma'nosi: tobora ko'proq charchagan."
+    },
+    {
+      "question": "Which term corresponds to 'boshi yengil / aylangandek'?",
+      "option_a": "short of breath",
+      "option_b": "light-headed",
+      "option_c": "breathlessness",
+      "option_d": "exertion",
+      "correct_option": "B",
+      "explanation": "'boshi yengil / aylangandek' ma'nosiga mos keluvchi tibbiy termin 'light-headed' hisoblanadi."
+    },
+    {
+      "question": "Which of the following is the grammatically and clinically standard question to ask about the duration of symptoms?",
+      "option_a": "How long do you having this symptom?",
+      "option_b": "How long has this condition been bothering you?",
+      "option_c": "Since what time you have this problem?",
+      "option_d": "How many days you are feeling pain?",
+      "correct_option": "B",
+      "explanation": "Klinik anamnezda davomiylikni so'rash uchun Present Perfect Continuous ('How long has... been bothering you?') to'g'ri shakl hisoblanadi."
+    },
+    {
+      "question": "When evaluating acute pain, what is the best phrasing to assess pain character?",
+      "option_a": "Is your pain bad or very bad?",
+      "option_b": "Can you describe the pain—is it sharp, dull, throbbing, or aching?",
+      "option_c": "Why do you have sharp pain today?",
+      "option_d": "Stop pain with pills immediately.",
+      "correct_option": "B",
+      "explanation": "Og'riq xarakterini aniqlashda shifokor ochiq va taklif qiluvchi variantlar (sharp, dull, throbbing, aching) beradi."
+    }
+  ]
+}

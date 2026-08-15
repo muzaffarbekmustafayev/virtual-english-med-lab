@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { LanguageProvider } from './contexts/LanguageContext';
 
 // Auth
 import LoginPage    from './pages/auth/LoginPage';
@@ -38,8 +39,9 @@ function RoleRedirect() {
 export default function App() {
   return (
     <AuthProvider>
-      <Toaster position="top-right" toastOptions={{ duration: 3500, style: { background: '#0f1c2e', color: '#fff', borderRadius: '10px' } }} />
-      <BrowserRouter>
+      <LanguageProvider>
+        <Toaster position="top-right" toastOptions={{ duration: 3500, style: { background: '#1e293b', color: '#fff', borderRadius: '10px' } }} />
+        <BrowserRouter>
         <Routes>
           {/* Public */}
           <Route path="/login"    element={<LoginPage />} />
@@ -99,6 +101,7 @@ export default function App() {
           <Route path="*" element={<Navigate to="/login" replace />}/>
         </Routes>
       </BrowserRouter>
+      </LanguageProvider>
     </AuthProvider>
   );
 }

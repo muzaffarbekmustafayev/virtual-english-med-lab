@@ -18,7 +18,8 @@ async function startServer() {
       console.log(`📋 Muhit: ${process.env.NODE_ENV || 'development'}`);
     });
   } catch (error) {
-    console.error('❌ Server ishga tushmadi:', error.message);
+    console.error('❌ Server ishga tushmadi:', error.message || error);
+    if (error.original) console.error('  Asl xato:', error.original.message || error.original);
     process.exit(1);
   }
 }

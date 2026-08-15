@@ -1,0 +1,955 @@
+{
+  "specialty_id": 2,
+  "specialty_name": "Davolash ishi",
+  "order_index": 3,
+  "title": "Respiratory Symptoms & Dyspnea",
+  "title_uz": "Nafas qisishi va o'pka simptomlari",
+  "title_ru": "Одышка и респираторные симптомы",
+  "title_en": "Respiratory Symptoms & Dyspnea",
+  "description": "Davolash ishi bo'yicha Nafas qisishi va o'pka simptomlari mavzusida klinik muloqot va tibbiy ingliz tili darsi.",
+  "clinical_level": "B2 Medical English",
+  "target_role": "Dental Clinician / Attending Physician",
+  "scenario_prompt": "You are a virtual patient presenting with symptoms related to Respiratory Symptoms & Dyspnea. Speak in natural, everyday patient English.",
+  "patient_profile": {
+    "age": 39,
+    "gender": "Male",
+    "chief_complaint": "Nafas qisishi va o'pka simptomlari",
+    "history": "Patient presents with complaints of respiratory symptoms & dyspnea."
+  },
+  "grammar": [
+    {
+      "title": "GRAMMAR",
+      "title_uz": "GRAMMAR",
+      "title_ru": "GRAMMAR",
+      "title_en": "GRAMMAR",
+      "rule_explanation": "Bu dialogda Present Perfect va Present Perfect Continuous asosan o'tmishda boshlangan, hozirgacha davom etayotgan simptomlar, yaqinda sodir bo'lgan o'zgarishlar, bemorning oldingi tajribasi va hozirgi klinik vaziyat bilan bog'liq natijalarni ifodalash uchun ishlatilgan. Present Perfect Continuous o'tmishda boshlangan va hozirgacha davom etayotgan yoki yaqinda davom etib kelgan jarayonni, ayniqsa uning davomiyligi yoki takrorlanishini ta'kidlash uchun ishlatiladi.",
+      "rule_explanation_uz": "Bu dialogda Present Perfect va Present Perfect Continuous asosan o'tmishda boshlangan, hozirgacha davom etayotgan simptomlar, yaqinda sodir bo'lgan o'zgarishlar, bemorning oldingi tajribasi va hozirgi klinik vaziyat bilan bog'liq natijalarni ifodalash uchun ishlatilgan. Present Perfect Continuous o'tmishda boshlangan va hozirgacha davom etayotgan yoki yaqinda davom etib kelgan jarayonni, ayniqsa uning davomiyligi yoki takrorlanishini ta'kidlash uchun ishlatiladi.",
+      "rule_explanation_ru": "Present Perfect связывает прошлое с настоящим. Он часто используется для опыта, недавних изменений и результатов, которые важны сейчас. Present Perfect Continuous подчёркивает процесс или длительность действия, начавшегося в прошлом и продолжающегося до настоящего момента.",
+      "rule_explanation_en": "have used → qancha yoki qanday natija bo'lgani muhim bo'lishi mumkin 3. She ___ (has been using / has used) her reliever four or five times a day.",
+      "structure_pattern": "How long + have / has + Subject + been + V-ing? | Subject + have / has + V3",
+      "examples": [
+        {
+          "sentence": "tmishda boshlangan, hozirgacha davom etayotgan simptomlar, yaqinda sodir bo",
+          "translation": "2. PRESENT PERFECT - ASOSIY MA'NO",
+          "translation_uz": "2. PRESENT PERFECT - ASOSIY MA'NO",
+          "translation_ru": "o'tmishda sodir bo'lgan, lekin hozirgi vaziyat bilan bog'liq natija yoki tajriba",
+          "note": "Clinical Dialogue Example"
+        },
+        {
+          "sentence": "lsa-da, tabiiy clinical dialogue boshqa tense va constructionslarni ham o",
+          "translation": "13. COMMON MISTAKES",
+          "translation_uz": "13. COMMON MISTAKES",
+          "translation_ru": "❌ I am struggling to breathe for five days.\n✅ I've been struggling to breathe for five days.\nWhy: for + duration from past to now → Present Perfect Continuous.",
+          "note": "Clinical Dialogue Example"
+        },
+        {
+          "sentence": "It has helped for a short time.",
+          "translation": "It has helped for a short time.",
+          "translation_uz": "It has helped for a short time.",
+          "translation_ru": "",
+          "note": "have/has + V3"
+        },
+        {
+          "sentence": "I haven't had a fever.",
+          "translation": "I haven't had a fever.",
+          "translation_uz": "I haven't had a fever.",
+          "translation_ru": "",
+          "note": "have/has + not + V3"
+        },
+        {
+          "sentence": "Have you ever been admitted to hospital?",
+          "translation": "Have you ever been admitted to hospital?",
+          "translation_uz": "Have you ever been admitted to hospital?",
+          "translation_ru": "",
+          "note": "Have/Has + subject + V3...?"
+        },
+        {
+          "sentence": "Have you noticed any particular triggers?",
+          "translation": "Have you noticed any particular triggers?",
+          "translation_uz": "Have you noticed any particular triggers?",
+          "translation_ru": "",
+          "note": "Have/Has + subject + V3...?"
+        },
+        {
+          "sentence": "I've been struggling to breathe for about five days.",
+          "translation": "I've been struggling to breathe for about five days.",
+          "translation_uz": "I've been struggling to breathe for about five days.",
+          "translation_ru": "",
+          "note": "have/has been + V-ing"
+        },
+        {
+          "sentence": "Have you been wheezing as well?",
+          "translation": "Have you been wheezing as well?",
+          "translation_uz": "Have you been wheezing as well?",
+          "translation_ru": "",
+          "note": "Have/Has + subject + been + V-ing...?"
+        }
+      ],
+      "common_mistakes": [
+        {
+          "incorrect": "Since when you feel this pain?",
+          "correct": "How long have you had this pain?",
+          "explanation": "Davomiylikni so'rashda 'How long have you had...?' standarti ishlatiladi.",
+          "explanation_uz": "Davomiylikni so'rashda 'How long have you had...?' standarti ishlatiladi.",
+          "explanation_ru": "Для выяснения длительности используется конструкция 'How long have you had...?'.",
+          "explanation_en": "Use 'How long have you had...?' when asking about the duration of symptoms."
+        },
+        {
+          "incorrect": "Where is paining you?",
+          "correct": "Where exactly do you feel the pain?",
+          "explanation": "Lokatsiyani aniqlashda 'Where do you feel the pain?' to'g'ri grammatik shakl.",
+          "explanation_uz": "Lokatsiyani aniqlashda 'Where do you feel the pain?' to'g'ri grammatik shakl.",
+          "explanation_ru": "Правильный вопрос о локализации боли: 'Where exactly do you feel the pain?'.",
+          "explanation_en": "Ask 'Where exactly do you feel the pain?' to identify the specific anatomical site."
+        }
+      ],
+      "structure_pattern_en": "How long + have / has + Subject + been + V-ing? | Subject + have / has + V3",
+      "structure_pattern_uz": "How long + have / has + Ega + been + V-ing? | Ega + have / has + V3",
+      "structure_pattern_ru": "How long + have / has + Подлежащее + been + V-ing? | Подлежащее + have / has + V3"
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "struggle to breathe",
+      "translation": "nafas olishda qiynalmoq",
+      "translation_uz": "nafas olishda qiynalmoq",
+      "translation_ru": "испытывать затруднение дыхания",
+      "translation_en": "struggle to breathe",
+      "definition": "Subjective clinical sensation of difficult, labored, or uncomfortable breathing.",
+      "definition_uz": "Nafas olishning qiyinlashishi, havo yetishmasligi hissi (nafas qisishi).",
+      "definition_ru": "Субъективное ощущение нехватки воздуха и затруднения дыхания (одышка).",
+      "definition_en": "Subjective clinical sensation of difficult, labored, or uncomfortable breathing.",
+      "example": "The doctor assessed the patient for struggle to breathe."
+    },
+    {
+      "word": "wheeze",
+      "translation": "xirillab nafas olmoq",
+      "translation_uz": "xirillab nafas olmoq",
+      "translation_ru": "свистящее дыхание",
+      "translation_en": "wheeze",
+      "definition": "Clinical medical condition and symptom associated with wheeze.",
+      "definition_uz": "xirillab nafas olmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "свистящее дыхание - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with wheeze.",
+      "example": "The doctor assessed the patient for wheeze."
+    },
+    {
+      "word": "repeatedly",
+      "translation": "qayta-qayta",
+      "translation_uz": "qayta-qayta",
+      "translation_ru": "неоднократно",
+      "translation_en": "repeatedly",
+      "definition": "Clinical medical condition and symptom associated with repeatedly.",
+      "definition_uz": "qayta-qayta - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "неоднократно - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with repeatedly.",
+      "example": "The doctor assessed the patient for repeatedly."
+    },
+    {
+      "word": "unable to get enough air",
+      "translation": "yetarli havo ololmaslik",
+      "translation_uz": "yetarli havo ololmaslik",
+      "translation_ru": "невозможность вдохнуть достаточно воздуха",
+      "translation_en": "unable to get enough air",
+      "definition": "Clinical medical condition and symptom associated with unable to get enough air.",
+      "definition_uz": "yetarli havo ololmaslik - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "невозможность вдохнуть достаточно воздуха - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with unable to get enough air.",
+      "example": "The doctor assessed the patient for unable to get enough air."
+    },
+    {
+      "word": "productive cough",
+      "translation": "balg'amli yo'tal",
+      "translation_uz": "balg'amli yo'tal",
+      "translation_ru": "продуктивный кашель",
+      "translation_en": "productive cough",
+      "definition": "Clinical medical condition and symptom associated with productive cough.",
+      "definition_uz": "balg'amli yo'tal - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "продуктивный кашель - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with productive cough.",
+      "example": "The doctor assessed the patient for productive cough."
+    },
+    {
+      "word": "chest tightness",
+      "translation": "ko'krakda siqilish",
+      "translation_uz": "ko'krakda siqilish",
+      "translation_ru": "стеснение в груди",
+      "translation_en": "chest tightness",
+      "definition": "Discomfort or constricting pressure localized in the thoracic region.",
+      "definition_uz": "Ko'krak qafasi sohasida siquvchi yoki bosuvchi og'riq hissi.",
+      "definition_ru": "Сдавливающая или давящая боль в области грудной клетки.",
+      "definition_en": "Discomfort or constricting pressure localized in the thoracic region.",
+      "example": "The doctor assessed the patient for chest tightness."
+    },
+    {
+      "word": "reliever inhaler",
+      "translation": "tez yordam beruvchi inhaler",
+      "translation_uz": "tez yordam beruvchi inhaler",
+      "translation_ru": "ингалятор для облегчения симптомов",
+      "translation_en": "reliever inhaler",
+      "definition": "Clinical medical condition and symptom associated with reliever inhaler.",
+      "definition_uz": "tez yordam beruvchi inhaler - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "ингалятор для облегчения симптомов - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with reliever inhaler.",
+      "example": "The doctor assessed the patient for reliever inhaler."
+    },
+    {
+      "word": "lasting relief",
+      "translation": "uzoq davom etuvchi yengillik",
+      "translation_uz": "uzoq davom etuvchi yengillik",
+      "translation_ru": "длительное облегчение",
+      "translation_en": "lasting relief",
+      "definition": "Clinical medical condition and symptom associated with lasting relief.",
+      "definition_uz": "uzoq davom etuvchi yengillik - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "длительное облегчение - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with lasting relief.",
+      "example": "The doctor assessed the patient for lasting relief."
+    },
+    {
+      "word": "respiratory rate",
+      "translation": "nafas olish tezligi",
+      "translation_uz": "nafas olish tezligi",
+      "translation_ru": "частота дыхания",
+      "translation_en": "respiratory rate",
+      "definition": "Clinical medical condition and symptom associated with respiratory rate.",
+      "definition_uz": "nafas olish tezligi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "частота дыхания - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with respiratory rate.",
+      "example": "The doctor assessed the patient for respiratory rate."
+    },
+    {
+      "word": "short sentences",
+      "translation": "qisqa gaplarda gapirish",
+      "translation_uz": "qisqa gaplarda gapirish",
+      "translation_ru": "говорить короткими фразами",
+      "translation_en": "short sentences",
+      "definition": "Clinical medical condition and symptom associated with short sentences.",
+      "definition_uz": "qisqa gaplarda gapirish - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "говорить короткими фразами - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with short sentences.",
+      "example": "The doctor assessed the patient for short sentences."
+    },
+    {
+      "word": "on room air",
+      "translation": "qo'shimcha kislorodsiz",
+      "translation_uz": "qo'shimcha kislorodsiz",
+      "translation_ru": "на атмосферном воздухе",
+      "translation_en": "on room air",
+      "definition": "Clinical medical condition and symptom associated with on room air.",
+      "definition_uz": "qo'shimcha kislorodsiz - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "на атмосферном воздухе - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with on room air.",
+      "example": "The doctor assessed the patient for on room air."
+    },
+    {
+      "word": "emergency visit",
+      "translation": "shoshilinch murojaat",
+      "translation_uz": "shoshilinch murojaat",
+      "translation_ru": "обращение в неотложную помощь",
+      "translation_en": "emergency visit",
+      "definition": "Clinical medical condition and symptom associated with emergency visit.",
+      "definition_uz": "shoshilinch murojaat - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "обращение в неотложную помощь - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with emergency visit.",
+      "example": "The doctor assessed the patient for emergency visit."
+    },
+    {
+      "word": "preventer inhaler",
+      "translation": "nazorat qiluvchi/preventer inhaler",
+      "translation_uz": "nazorat qiluvchi/preventer inhaler",
+      "translation_ru": "профилактический ингалятор",
+      "translation_en": "preventer inhaler",
+      "definition": "Clinical medical condition and symptom associated with preventer inhaler.",
+      "definition_uz": "nazorat qiluvchi/preventer inhaler - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "профилактический ингалятор - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with preventer inhaler.",
+      "example": "The doctor assessed the patient for preventer inhaler."
+    },
+    {
+      "word": "miss a dose",
+      "translation": "dozani o'tkazib yubormoq",
+      "translation_uz": "dozani o'tkazib yubormoq",
+      "translation_ru": "пропустить дозу",
+      "translation_en": "miss a dose",
+      "definition": "Clinical medical condition and symptom associated with miss a dose.",
+      "definition_uz": "dozani o'tkazib yubormoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "пропустить дозу - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with miss a dose.",
+      "example": "The doctor assessed the patient for miss a dose."
+    },
+    {
+      "word": "trigger",
+      "translation": "qo'zg'atuvchi omil",
+      "translation_uz": "qo'zg'atuvchi omil",
+      "translation_ru": "провоцирующий фактор",
+      "translation_en": "trigger",
+      "definition": "Clinical medical condition and symptom associated with trigger.",
+      "definition_uz": "qo'zg'atuvchi omil - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "провоцирующий фактор - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with trigger.",
+      "example": "The doctor assessed the patient for trigger."
+    },
+    {
+      "word": "exposed to dust",
+      "translation": "chang ta'siriga duchor bo'lmoq",
+      "translation_uz": "chang ta'siriga duchor bo'lmoq",
+      "translation_ru": "подвергаться воздействию пыли",
+      "translation_en": "exposed to dust",
+      "definition": "Clinical medical condition and symptom associated with exposed to dust.",
+      "definition_uz": "chang ta'siriga duchor bo'lmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "подвергаться воздействию пыли - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with exposed to dust.",
+      "example": "The doctor assessed the patient for exposed to dust."
+    },
+    {
+      "word": "respiratory infection",
+      "translation": "nafas yo'llari infeksiyasi",
+      "translation_uz": "nafas yo'llari infeksiyasi",
+      "translation_ru": "респираторная инфекция",
+      "translation_en": "respiratory infection",
+      "definition": "Clinical medical condition and symptom associated with respiratory infection.",
+      "definition_uz": "nafas yo'llari infeksiyasi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "респираторная инфекция - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with respiratory infection.",
+      "example": "The doctor assessed the patient for respiratory infection."
+    },
+    {
+      "word": "deteriorate",
+      "translation": "yomonlashmoq",
+      "translation_uz": "yomonlashmoq",
+      "translation_ru": "ухудшаться",
+      "translation_en": "deteriorate",
+      "definition": "Clinical medical condition and symptom associated with deteriorate.",
+      "definition_uz": "yomonlashmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "ухудшаться - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with deteriorate.",
+      "example": "The doctor assessed the patient for deteriorate."
+    },
+    {
+      "word": "exacerbation",
+      "translation": "kasallik zo'rayishi",
+      "translation_uz": "kasallik zo'rayishi",
+      "translation_ru": "обострение",
+      "translation_en": "exacerbation",
+      "definition": "Clinical medical condition and symptom associated with exacerbation.",
+      "definition_uz": "kasallik zo'rayishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "обострение - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with exacerbation.",
+      "example": "The doctor assessed the patient for exacerbation."
+    },
+    {
+      "word": "increased work of breathing",
+      "translation": "nafas olishga kuchaygan zo'riqish",
+      "translation_uz": "nafas olishga kuchaygan zo'riqish",
+      "translation_ru": "усиленная работа дыхания",
+      "translation_en": "increased work of breathing",
+      "definition": "Subjective clinical sensation of difficult, labored, or uncomfortable breathing.",
+      "definition_uz": "Nafas olishning qiyinlashishi, havo yetishmasligi hissi (nafas qisishi).",
+      "definition_ru": "Субъективное ощущение нехватки воздуха и затруднения дыхания (одышка).",
+      "definition_en": "Subjective clinical sensation of difficult, labored, or uncomfortable breathing.",
+      "example": "The doctor assessed the patient for increased work of breathing."
+    },
+    {
+      "word": "monitor closely",
+      "translation": "yaqindan kuzatmoq",
+      "translation_uz": "yaqindan kuzatmoq",
+      "translation_ru": "тщательно наблюдать",
+      "translation_en": "monitor closely",
+      "definition": "Clinical medical condition and symptom associated with monitor closely.",
+      "definition_uz": "yaqindan kuzatmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "тщательно наблюдать - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with monitor closely.",
+      "example": "The doctor assessed the patient for monitor closely."
+    },
+    {
+      "word": "bronchodilator",
+      "translation": "bronxlarni kengaytiruvchi dori",
+      "translation_uz": "bronxlarni kengaytiruvchi dori",
+      "translation_ru": "бронходилататор",
+      "translation_en": "bronchodilator",
+      "definition": "Clinical medical condition and symptom associated with bronchodilator.",
+      "definition_uz": "bronxlarni kengaytiruvchi dori - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "бронходилататор - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with bronchodilator.",
+      "example": "The doctor assessed the patient for bronchodilator."
+    },
+    {
+      "word": "peak expiratory flow (PEF)",
+      "translation": "maksimal ekspirator oqim tezligi",
+      "translation_uz": "maksimal ekspirator oqim tezligi",
+      "translation_ru": "пиковая скорость выдоха",
+      "translation_en": "peak expiratory flow (PEF)",
+      "definition": "Clinical medical condition and symptom associated with peak expiratory flow (pef).",
+      "definition_uz": "maksimal ekspirator oqim tezligi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "пиковая скорость выдоха - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with peak expiratory flow (pef).",
+      "example": "The doctor assessed the patient for peak expiratory flow (pef)."
+    },
+    {
+      "word": "systemic corticosteroids",
+      "translation": "tizimli kortikosteroidlar",
+      "translation_uz": "tizimli kortikosteroidlar",
+      "translation_ru": "системные кортикостероиды",
+      "translation_en": "systemic corticosteroids",
+      "definition": "Clinical medical condition and symptom associated with systemic corticosteroids.",
+      "definition_uz": "tizimli kortikosteroidlar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "системные кортикостероиды - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with systemic corticosteroids.",
+      "example": "The doctor assessed the patient for systemic corticosteroids."
+    },
+    {
+      "word": "oxygenation",
+      "translation": "qonni kislorod bilan ta'minlash",
+      "translation_uz": "qonni kislorod bilan ta'minlash",
+      "translation_ru": "оксигенация",
+      "translation_en": "oxygenation",
+      "definition": "Clinical medical condition and symptom associated with oxygenation.",
+      "definition_uz": "qonni kislorod bilan ta'minlash - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "оксигенация - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with oxygenation.",
+      "example": "The doctor assessed the patient for oxygenation."
+    },
+    {
+      "word": "settle",
+      "translation": "bosilmoq, tinchimoq",
+      "translation_uz": "bosilmoq, tinchimoq",
+      "translation_ru": "стабилизироваться, утихнуть",
+      "translation_en": "settle",
+      "definition": "Clinical medical condition and symptom associated with settle.",
+      "definition_uz": "bosilmoq, tinchimoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "стабилизироваться, утихнуть - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with settle.",
+      "example": "The doctor assessed the patient for settle."
+    },
+    {
+      "word": "discharge",
+      "translation": "uyga javob bermoq",
+      "translation_uz": "uyga javob bermoq",
+      "translation_ru": "выписать",
+      "translation_en": "discharge",
+      "definition": "Clinical medical condition and symptom associated with discharge.",
+      "definition_uz": "uyga javob bermoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "выписать - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with discharge.",
+      "example": "The doctor assessed the patient for discharge."
+    },
+    {
+      "word": "inhaler adherence",
+      "translation": "inhalerdan belgilanganidek foydalanishga rioya",
+      "translation_uz": "inhalerdan belgilanganidek foydalanishga rioya",
+      "translation_ru": "приверженность использованию ингалятора",
+      "translation_en": "inhaler adherence",
+      "definition": "Clinical medical condition and symptom associated with inhaler adherence.",
+      "definition_uz": "inhalerdan belgilanganidek foydalanishga rioya - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "приверженность использованию ингалятора - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with inhaler adherence.",
+      "example": "The doctor assessed the patient for inhaler adherence."
+    },
+    {
+      "word": "underlying asthma",
+      "translation": "asosiy astma holati",
+      "translation_uz": "asosiy astma holati",
+      "translation_ru": "основное заболевание астмой",
+      "translation_en": "underlying asthma",
+      "definition": "Clinical medical condition and symptom associated with underlying asthma.",
+      "definition_uz": "asosiy astma holati - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "основное заболевание астмой - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with underlying asthma.",
+      "example": "The doctor assessed the patient for underlying asthma."
+    },
+    {
+      "word": "stabilise",
+      "translation": "barqarorlashtirmoq",
+      "translation_uz": "barqarorlashtirmoq",
+      "translation_ru": "стабилизировать",
+      "translation_en": "stabilise",
+      "definition": "Clinical medical condition and symptom associated with stabilise.",
+      "definition_uz": "barqarorlashtirmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "стабилизировать - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with stabilise.",
+      "example": "The doctor assessed the patient for stabilise."
+    }
+  ],
+  "phrasebook": [
+    {
+      "phrase": "struggle to breathe",
+      "category": "Clinical Consultation",
+      "hint": "nafas olishda qiynalmoq",
+      "hint_uz": "nafas olishda qiynalmoq",
+      "hint_ru": "испытывать затруднение дыхания",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "wheeze",
+      "category": "Clinical Consultation",
+      "hint": "xirillab nafas olmoq",
+      "hint_uz": "xirillab nafas olmoq",
+      "hint_ru": "свистящее дыхание",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "repeatedly",
+      "category": "Clinical Consultation",
+      "hint": "qayta-qayta",
+      "hint_uz": "qayta-qayta",
+      "hint_ru": "неоднократно",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "unable to get enough air",
+      "category": "Clinical Consultation",
+      "hint": "yetarli havo ololmaslik",
+      "hint_uz": "yetarli havo ololmaslik",
+      "hint_ru": "невозможность вдохнуть достаточно воздуха",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "productive cough",
+      "category": "Clinical Consultation",
+      "hint": "balg'amli yo'tal",
+      "hint_uz": "balg'amli yo'tal",
+      "hint_ru": "продуктивный кашель",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "chest tightness",
+      "category": "Clinical Consultation",
+      "hint": "ko'krakda siqilish",
+      "hint_uz": "ko'krakda siqilish",
+      "hint_ru": "стеснение в груди",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "reliever inhaler",
+      "category": "Clinical Consultation",
+      "hint": "tez yordam beruvchi inhaler",
+      "hint_uz": "tez yordam beruvchi inhaler",
+      "hint_ru": "ингалятор для облегчения симптомов",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "lasting relief",
+      "category": "Clinical Consultation",
+      "hint": "uzoq davom etuvchi yengillik",
+      "hint_uz": "uzoq davom etuvchi yengillik",
+      "hint_ru": "длительное облегчение",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "respiratory rate",
+      "category": "Clinical Consultation",
+      "hint": "nafas olish tezligi",
+      "hint_uz": "nafas olish tezligi",
+      "hint_ru": "частота дыхания",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "short sentences",
+      "category": "Clinical Consultation",
+      "hint": "qisqa gaplarda gapirish",
+      "hint_uz": "qisqa gaplarda gapirish",
+      "hint_ru": "говорить короткими фразами",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "on room air",
+      "category": "Clinical Consultation",
+      "hint": "qo'shimcha kislorodsiz",
+      "hint_uz": "qo'shimcha kislorodsiz",
+      "hint_ru": "на атмосферном воздухе",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "emergency visit",
+      "category": "Clinical Consultation",
+      "hint": "shoshilinch murojaat",
+      "hint_uz": "shoshilinch murojaat",
+      "hint_ru": "обращение в неотложную помощь",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "preventer inhaler",
+      "category": "Clinical Consultation",
+      "hint": "nazorat qiluvchi/preventer inhaler",
+      "hint_uz": "nazorat qiluvchi/preventer inhaler",
+      "hint_ru": "профилактический ингалятор",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "miss a dose",
+      "category": "Clinical Consultation",
+      "hint": "dozani o'tkazib yubormoq",
+      "hint_uz": "dozani o'tkazib yubormoq",
+      "hint_ru": "пропустить дозу",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "trigger",
+      "category": "Clinical Consultation",
+      "hint": "qo'zg'atuvchi omil",
+      "hint_uz": "qo'zg'atuvchi omil",
+      "hint_ru": "провоцирующий фактор",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "exposed to dust",
+      "category": "Clinical Consultation",
+      "hint": "chang ta'siriga duchor bo'lmoq",
+      "hint_uz": "chang ta'siriga duchor bo'lmoq",
+      "hint_ru": "подвергаться воздействию пыли",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "respiratory infection",
+      "category": "Clinical Consultation",
+      "hint": "nafas yo'llari infeksiyasi",
+      "hint_uz": "nafas yo'llari infeksiyasi",
+      "hint_ru": "респираторная инфекция",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "deteriorate",
+      "category": "Clinical Consultation",
+      "hint": "yomonlashmoq",
+      "hint_uz": "yomonlashmoq",
+      "hint_ru": "ухудшаться",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "exacerbation",
+      "category": "Clinical Consultation",
+      "hint": "kasallik zo'rayishi",
+      "hint_uz": "kasallik zo'rayishi",
+      "hint_ru": "обострение",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "increased work of breathing",
+      "category": "Clinical Consultation",
+      "hint": "nafas olishga kuchaygan zo'riqish",
+      "hint_uz": "nafas olishga kuchaygan zo'riqish",
+      "hint_ru": "усиленная работа дыхания",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "monitor closely",
+      "category": "Clinical Consultation",
+      "hint": "yaqindan kuzatmoq",
+      "hint_uz": "yaqindan kuzatmoq",
+      "hint_ru": "тщательно наблюдать",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "bronchodilator",
+      "category": "Clinical Consultation",
+      "hint": "bronxlarni kengaytiruvchi dori",
+      "hint_uz": "bronxlarni kengaytiruvchi dori",
+      "hint_ru": "бронходилататор",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "peak expiratory flow (PEF)",
+      "category": "Clinical Consultation",
+      "hint": "maksimal ekspirator oqim tezligi",
+      "hint_uz": "maksimal ekspirator oqim tezligi",
+      "hint_ru": "пиковая скорость выдоха",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "systemic corticosteroids",
+      "category": "Clinical Consultation",
+      "hint": "tizimli kortikosteroidlar",
+      "hint_uz": "tizimli kortikosteroidlar",
+      "hint_ru": "системные кортикостероиды",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "oxygenation",
+      "category": "Clinical Consultation",
+      "hint": "qonni kislorod bilan ta'minlash",
+      "hint_uz": "qonni kislorod bilan ta'minlash",
+      "hint_ru": "оксигенация",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "settle",
+      "category": "Clinical Consultation",
+      "hint": "bosilmoq, tinchimoq",
+      "hint_uz": "bosilmoq, tinchimoq",
+      "hint_ru": "стабилизироваться, утихнуть",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "discharge",
+      "category": "Clinical Consultation",
+      "hint": "uyga javob bermoq",
+      "hint_uz": "uyga javob bermoq",
+      "hint_ru": "выписать",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "inhaler adherence",
+      "category": "Clinical Consultation",
+      "hint": "inhalerdan belgilanganidek foydalanishga rioya",
+      "hint_uz": "inhalerdan belgilanganidek foydalanishga rioya",
+      "hint_ru": "приверженность использованию ингалятора",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "underlying asthma",
+      "category": "Clinical Consultation",
+      "hint": "asosiy astma holati",
+      "hint_uz": "asosiy astma holati",
+      "hint_ru": "основное заболевание астмой",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "stabilise",
+      "category": "Clinical Consultation",
+      "hint": "barqarorlashtirmoq",
+      "hint_uz": "barqarorlashtirmoq",
+      "hint_ru": "стабилизировать",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "What has been happening with your breathing?",
+      "category": "Severity",
+      "hint": "Nafasingiz bilan nima sodir bo'lyapti?",
+      "hint_uz": "Nafasingiz bilan nima sodir bo'lyapti?",
+      "hint_ru": "Что происходит с вашим дыханием?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Have you been wheezing as well?",
+      "category": "Severity",
+      "hint": "Sizda xirillab nafas olish ham bo'lyaptimi?",
+      "hint_uz": "Sizda xirillab nafas olish ham bo'lyaptimi?",
+      "hint_ru": "У вас также наблюдается свистящее дыхание?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Have you developed a productive cough, fever, or chest pain?",
+      "category": "Severity",
+      "hint": "Harorat (isitma) yoki qaltirash bormi?",
+      "hint_uz": "Harorat (isitma) yoki qaltirash bormi?",
+      "hint_ru": "Есть ли повышенная температура или озноб?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "How often have you been using your reliever inhaler?",
+      "category": "Severity",
+      "hint": "Tez yordam beruvchi inhalerdan qanchalik tez-tez foydalanyapsiz?",
+      "hint_uz": "Tez yordam beruvchi inhalerdan qanchalik tez-tez foydalanyapsiz?",
+      "hint_ru": "Как часто вы используете ингалятор для облегчения симптомов?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Have you ever been admitted to hospital because of asthma?",
+      "category": "Severity",
+      "hint": "Astma sababli hech qachon shifoxonaga yotqizilganmisiz?",
+      "hint_uz": "Astma sababli hech qachon shifoxonaga yotqizilganmisiz?",
+      "hint_ru": "Вас когда-нибудь госпитализировали из-за астмы?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Have you been taking your preventer inhaler regularly?",
+      "category": "Severity",
+      "hint": "Preventer inhaleringizni muntazam qabul qilib kelganmisiz?",
+      "hint_uz": "Preventer inhaleringizni muntazam qabul qilib kelganmisiz?",
+      "hint_ru": "Вы регулярно использовали профилактический ингалятор?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    }
+  ],
+  "dialogue": [
+    {
+      "speaker": "Doctor",
+      "text": "What has been happening with your breathing?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I've been struggling to breathe for about five days, but it has become considerably worse since yesterday evening."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Have you been wheezing as well?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "Yes. I've been wheezing repeatedly, particularly at night, and I've woken up twice feeling unable to get enough air."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Have you developed a productive cough, fever, or chest pain?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I haven't had a fever. The cough has remained mostly dry, but my chest has felt very tight."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "How often have you been using your reliever inhaler?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I've been using it four or five times a day, whereas I normally use it only occasionally."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Has it been providing lasting relief?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "It has helped for a short time, but the symptoms have kept returning. Nurse: Her respiratory rate is 26. Oxygen saturation is 91% on room air, and she is speaking in short sentences."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Thank you. Have you ever been admitted to hospital because of asthma?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "No, but I had an emergency visit about two years ago."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Have you been taking your preventer inhaler regularly?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "Not consistently. I've missed quite a few doses recently because I've been travelling."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Have you noticed any particular triggers?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "Cold air has been making it worse, and I've also been exposed to a lot of dust at work."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Have you recently had a cold or another respiratory infection?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I had a mild cold last week, but I thought I had recovered."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "It sounds as though your asthma control has deteriorated. We need to assess the severity of this exacerbation rather than assuming it is simply another mild attack."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Could I be having a serious asthma attack?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Your oxygen saturation and increased work of breathing are concerning, so we need to monitor you closely. Nurse: I'll start continuous oxygen saturation monitoring and prepare the prescribed bronchodilator treatment."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "We'll also check your peak expiratory flow if you are able to perform the test safely."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Will I need steroids?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "You may need systemic corticosteroids depending on your response to the initial treatment and the severity of the exacerbation."
+    },
+    {
+      "speaker": "Patient",
+      "text": "How long will I have to stay here?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "That depends on how your breathing responds. If your oxygenation improves and your symptoms settle, we may be able to discharge you with a revised asthma plan. Relative: She has been coughing at night for several weeks, even before this attack."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "That suggests her underlying asthma may not have been well controlled for some time. We'll review her long-term treatment as well."
+    },
+    {
+      "speaker": "Patient",
+      "text": "I understand. I don't want this to happen again."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Exactly. The immediate priority is stabilising your breathing; afterwards, we'll address prevention and inhaler adherence."
+    }
+  ],
+  "tests": [
+    {
+      "question": "What is the medical meaning of the term 'struggle to breathe' in clinical consultation?",
+      "option_a": "nafas olishda qiynalmoq",
+      "option_b": "xirillab nafas olmoq",
+      "option_c": "qayta-qayta",
+      "option_d": "yetarli havo ololmaslik",
+      "correct_option": "A",
+      "explanation": "'struggle to breathe' atamasining to'g'ri ma'nosi: nafas olishda qiynalmoq."
+    },
+    {
+      "question": "Which term corresponds to 'balg'amli yo'tal'?",
+      "option_a": "wheeze",
+      "option_b": "productive cough",
+      "option_c": "repeatedly",
+      "option_d": "unable to get enough air",
+      "correct_option": "B",
+      "explanation": "'balg'amli yo'tal' ma'nosiga mos keluvchi tibbiy termin 'productive cough' hisoblanadi."
+    },
+    {
+      "question": "Which of the following is the grammatically and clinically standard question to ask about the duration of symptoms?",
+      "option_a": "How long do you having this symptom?",
+      "option_b": "How long has this condition been bothering you?",
+      "option_c": "Since what time you have this problem?",
+      "option_d": "How many days you are feeling pain?",
+      "correct_option": "B",
+      "explanation": "Klinik anamnezda davomiylikni so'rash uchun Present Perfect Continuous ('How long has... been bothering you?') to'g'ri shakl hisoblanadi."
+    },
+    {
+      "question": "When evaluating acute pain, what is the best phrasing to assess pain character?",
+      "option_a": "Is your pain bad or very bad?",
+      "option_b": "Can you describe the pain—is it sharp, dull, throbbing, or aching?",
+      "option_c": "Why do you have sharp pain today?",
+      "option_d": "Stop pain with pills immediately.",
+      "correct_option": "B",
+      "explanation": "Og'riq xarakterini aniqlashda shifokor ochiq va taklif qiluvchi variantlar (sharp, dull, throbbing, aching) beradi."
+    }
+  ]
+}

@@ -1,0 +1,860 @@
+{
+  "specialty_id": 1,
+  "specialty_name": "Stomatologiya",
+  "order_index": 4,
+  "title": "Dental Abscess & Swelling",
+  "title_uz": "Dental abssess va shish",
+  "title_ru": "Дентальный абсцесс и отек",
+  "title_en": "Dental Abscess & Swelling",
+  "description": "Stomatologiya bo'yicha Dental abssess va shish mavzusida klinik muloqot va tibbiy ingliz tili darsi.",
+  "clinical_level": "B2 Medical English",
+  "target_role": "Dental Clinician / Attending Physician",
+  "scenario_prompt": "You are a virtual patient presenting with symptoms related to Dental Abscess & Swelling. Speak in natural, everyday patient English.",
+  "patient_profile": {
+    "age": 42,
+    "gender": "Female",
+    "chief_complaint": "Dental abssess va shish",
+    "history": "Patient presents with complaints of dental abscess & swelling."
+  },
+  "grammar": [
+    {
+      "title": "GRAMMAR GUIDE",
+      "title_uz": "GRAMMAR GUIDE",
+      "title_ru": "GRAMMAR GUIDE",
+      "title_en": "GRAMMAR GUIDE",
+      "rule_explanation": "Bu gapda bemorning tishidagi og'riq uch kun oldin boshlangan va hozir ham davom etmoqda. Tibbiy suhbatlarda bu zamon bemorning davom etayotgan simptomlarini tasvirlashda juda foydali.",
+      "rule_explanation_uz": "Bu gapda bemorning tishidagi og'riq uch kun oldin boshlangan va hozir ham davom etmoqda. Tibbiy suhbatlarda bu zamon bemorning davom etayotgan simptomlarini tasvirlashda juda foydali.",
+      "rule_explanation_ru": "Present Perfect используется для ситуации, которая началась в прошлом и связана с настоящим. В медицинском английском эта форма часто используется для описания продолжающихся симптомов.",
+      "rule_explanation_en": "A dental abscess is caused by a bacterial infection. A dental abscess is caused by a bacterial infection.",
+      "structure_pattern": "Subject + have / has + V3 / been + for / since + Duration",
+      "examples": [
+        {
+          "sentence": "I've had pain for three days.",
+          "translation": "I've had pain for three days.",
+          "translation_uz": "I've had pain for three days.",
+          "translation_ru": "O'tmish → hozir",
+          "note": "have/has + V3"
+        },
+        {
+          "sentence": "I've been feeling feverish.",
+          "translation": "I've been feeling feverish.",
+          "translation_uz": "I've been feeling feverish.",
+          "translation_ru": "Davom etayotgan simptom",
+          "note": "have/has been + V-ing"
+        },
+        {
+          "sentence": "The infection typically originates...",
+          "translation": "The infection typically originates...",
+          "translation_uz": "The infection typically originates...",
+          "translation_ru": "Tibbiy fakt",
+          "note": "V1 / V-s"
+        },
+        {
+          "sentence": "is caused by...",
+          "translation": "is caused by...",
+          "translation_uz": "is caused by...",
+          "translation_ru": "Jarayon / holat",
+          "note": "be + V3"
+        },
+        {
+          "sentence": "Could that explain...?",
+          "translation": "Could that explain...?",
+          "translation_uz": "Could that explain...?",
+          "translation_ru": "Ehtimol / taxmin",
+          "note": "could + V1"
+        },
+        {
+          "sentence": "difficulty opening...",
+          "translation": "difficulty opening...",
+          "translation_uz": "difficulty opening...",
+          "translation_ru": "Biror ishni qilishda qiyinchilik",
+          "note": "difficulty + V-ing"
+        },
+        {
+          "sentence": "to check the roots",
+          "translation": "to check the roots",
+          "translation_uz": "to check the roots",
+          "translation_ru": "Maqsad",
+          "note": "to + V1"
+        },
+        {
+          "sentence": "If the structure is intact...",
+          "translation": "If the structure is intact...",
+          "translation_uz": "If the structure is intact...",
+          "translation_ru": "Real shart",
+          "note": "If + Present, can/will..."
+        }
+      ],
+      "common_mistakes": [
+        {
+          "incorrect": "Since when you feel this pain?",
+          "correct": "How long have you had this pain?",
+          "explanation": "Davomiylikni so'rashda 'How long have you had...?' standarti ishlatiladi.",
+          "explanation_uz": "Davomiylikni so'rashda 'How long have you had...?' standarti ishlatiladi.",
+          "explanation_ru": "Для выяснения длительности используется конструкция 'How long have you had...?'.",
+          "explanation_en": "Use 'How long have you had...?' when asking about the duration of symptoms."
+        },
+        {
+          "incorrect": "Where is paining you?",
+          "correct": "Where exactly do you feel the pain?",
+          "explanation": "Lokatsiyani aniqlashda 'Where do you feel the pain?' to'g'ri grammatik shakl.",
+          "explanation_uz": "Lokatsiyani aniqlashda 'Where do you feel the pain?' to'g'ri grammatik shakl.",
+          "explanation_ru": "Правильный вопрос о локализации боли: 'Where exactly do you feel the pain?'.",
+          "explanation_en": "Ask 'Where exactly do you feel the pain?' to identify the specific anatomical site."
+        }
+      ],
+      "structure_pattern_en": "Subject + have / has + V3 / been + for / since + Duration",
+      "structure_pattern_uz": "Ega + have / has + V3 / been + for / since + Vaqt davomiyligi",
+      "structure_pattern_ru": "Подлежащее + have / has + V3 / been + for / since + Период времени"
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "dental abscess",
+      "translation": "tish abssessi",
+      "translation_uz": "tish abssessi",
+      "translation_ru": "зубной абсцесс",
+      "translation_en": "dental abscess",
+      "definition": "Localized enlargement or accumulation of inflammatory fluid and pus in tissue spaces.",
+      "definition_uz": "To'qimalarda yallig'lanish, suyuqlik yoki yiring to'planishi tufayli yuzaga kelgan shish.",
+      "definition_ru": "Воспалительное увеличение или скопление гнойного экссудата в тканях.",
+      "definition_en": "Localized enlargement or accumulation of inflammatory fluid and pus in tissue spaces.",
+      "example": "The doctor assessed the patient for dental abscess."
+    },
+    {
+      "word": "throbbing pain",
+      "translation": "urib turadigan / simillaydigan og'riq",
+      "translation_uz": "urib turadigan / simillaydigan og'riq",
+      "translation_ru": "пульсирующая боль",
+      "translation_en": "throbbing pain",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing throbbing pain.",
+      "definition_uz": "urib turadigan / simillaydigan og'riq - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "пульсирующая боль - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing throbbing pain.",
+      "example": "The doctor assessed the patient for throbbing pain."
+    },
+    {
+      "word": "swollen cheek",
+      "translation": "shishgan yonoq",
+      "translation_uz": "shishgan yonoq",
+      "translation_ru": "опухшая щека",
+      "translation_en": "swollen cheek",
+      "definition": "Clinical medical condition and symptom associated with swollen cheek.",
+      "definition_uz": "shishgan yonoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "опухшая щека - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with swollen cheek.",
+      "example": "The doctor assessed the patient for swollen cheek."
+    },
+    {
+      "word": "inflammation",
+      "translation": "yallig'lanish",
+      "translation_uz": "yallig'lanish",
+      "translation_ru": "воспаление",
+      "translation_en": "inflammation",
+      "definition": "Clinical medical condition and symptom associated with inflammation.",
+      "definition_uz": "yallig'lanish - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "воспаление - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with inflammation.",
+      "example": "The doctor assessed the patient for inflammation."
+    },
+    {
+      "word": "gum tissue",
+      "translation": "milk to'qimasi",
+      "translation_uz": "milk to'qimasi",
+      "translation_ru": "ткань десны",
+      "translation_en": "gum tissue",
+      "definition": "Inflammatory disease affecting the gingival tissues and periodontal support of teeth.",
+      "definition_uz": "Milk to'qimalari va tishni ushlab turuvchi parodont to'qimalarining yallig'lanishi.",
+      "definition_ru": "Воспалительное поражение десен и удерживающих тканей пародонта.",
+      "definition_en": "Inflammatory disease affecting the gingival tissues and periodontal support of teeth.",
+      "example": "The doctor assessed the patient for gum tissue."
+    },
+    {
+      "word": "bacterial infection",
+      "translation": "bakterial infeksiya",
+      "translation_uz": "bakterial infeksiya",
+      "translation_ru": "бактериальная инфекция",
+      "translation_en": "bacterial infection",
+      "definition": "Clinical medical condition and symptom associated with bacterial infection.",
+      "definition_uz": "bakterial infeksiya - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "бактериальная инфекция - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with bacterial infection.",
+      "example": "The doctor assessed the patient for bacterial infection."
+    },
+    {
+      "word": "pus",
+      "translation": "yiring",
+      "translation_uz": "yiring",
+      "translation_ru": "гной",
+      "translation_en": "pus",
+      "definition": "Clinical medical condition and symptom associated with pus.",
+      "definition_uz": "yiring - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "гной - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with pus.",
+      "example": "The doctor assessed the patient for pus."
+    },
+    {
+      "word": "feverish",
+      "translation": "isitmalagan",
+      "translation_uz": "isitmalagan",
+      "translation_ru": "лихорадящий",
+      "translation_en": "feverish",
+      "definition": "Systemic elevation of body core temperature in response to an infectious process.",
+      "definition_uz": "Infeksion yallig'lanish jarayoniga javoban tana haroratining ko'tarilishi.",
+      "definition_ru": "Повышение температуры тела в ответ на инфекционный процесс.",
+      "definition_en": "Systemic elevation of body core temperature in response to an infectious process.",
+      "example": "The doctor assessed the patient for feverish."
+    },
+    {
+      "word": "difficulty opening the mouth",
+      "translation": "og'izni ochishda qiyinchilik",
+      "translation_uz": "og'izni ochishda qiyinchilik",
+      "translation_ru": "затруднение при открывании рта",
+      "translation_en": "difficulty opening the mouth",
+      "definition": "Clinical medical condition and symptom associated with difficulty opening the mouth.",
+      "definition_uz": "og'izni ochishda qiyinchilik - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "затруднение при открывании рта - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with difficulty opening the mouth.",
+      "example": "The doctor assessed the patient for difficulty opening the mouth."
+    },
+    {
+      "word": "adjacent tissues",
+      "translation": "qo'shni to'qimalar",
+      "translation_uz": "qo'shni to'qimalar",
+      "translation_ru": "соседние ткани",
+      "translation_en": "adjacent tissues",
+      "definition": "Clinical medical condition and symptom associated with adjacent tissues.",
+      "definition_uz": "qo'shni to'qimalar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "соседние ткани - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with adjacent tissues.",
+      "example": "The doctor assessed the patient for adjacent tissues."
+    },
+    {
+      "word": "deep decay",
+      "translation": "chuqur kariyes",
+      "translation_uz": "chuqur kariyes",
+      "translation_ru": "глубокий кариес",
+      "translation_en": "deep decay",
+      "definition": "Bacterial demineralization and progressive destruction of hard tooth structure.",
+      "definition_uz": "Bakteriyalar ta'sirida tish qattiq to'qimalarining emirilishi va kovak hosil bo'lishi.",
+      "definition_ru": "Бактериальное разрушение твердых тканей зуба с образованием кариозной полости.",
+      "definition_en": "Bacterial demineralization and progressive destruction of hard tooth structure.",
+      "example": "The doctor assessed the patient for deep decay."
+    },
+    {
+      "word": "micro-crack",
+      "translation": "mikroyoriq",
+      "translation_uz": "mikroyoriq",
+      "translation_ru": "микротрещина",
+      "translation_en": "micro-crack",
+      "definition": "Clinical medical condition and symptom associated with micro-crack.",
+      "definition_uz": "mikroyoriq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "микротрещина - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with micro-crack.",
+      "example": "The doctor assessed the patient for micro-crack."
+    },
+    {
+      "word": "tooth pulp",
+      "translation": "tish pulpasi",
+      "translation_uz": "tish pulpasi",
+      "translation_ru": "пульпа зуба",
+      "translation_en": "tooth pulp",
+      "definition": "Clinical medical condition and symptom associated with tooth pulp.",
+      "definition_uz": "tish pulpasi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "пульпа зуба - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with tooth pulp.",
+      "example": "The doctor assessed the patient for tooth pulp."
+    },
+    {
+      "word": "root tip",
+      "translation": "ildiz uchi",
+      "translation_uz": "ildiz uchi",
+      "translation_ru": "верхушка корня",
+      "translation_en": "root tip",
+      "definition": "Clinical medical condition and symptom associated with root tip.",
+      "definition_uz": "ildiz uchi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "верхушка корня - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with root tip.",
+      "example": "The doctor assessed the patient for root tip."
+    },
+    {
+      "word": "digital X-ray",
+      "translation": "raqamli rentgen",
+      "translation_uz": "raqamli rentgen",
+      "translation_ru": "цифровой рентген",
+      "translation_en": "digital X-ray",
+      "definition": "Clinical medical condition and symptom associated with digital x-ray.",
+      "definition_uz": "raqamli rentgen - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "цифровой рентген - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with digital x-ray.",
+      "example": "The doctor assessed the patient for digital x-ray."
+    },
+    {
+      "word": "bone and roots",
+      "translation": "suyak va ildizlar",
+      "translation_uz": "suyak va ildizlar",
+      "translation_ru": "кость и корни",
+      "translation_en": "bone and roots",
+      "definition": "Clinical medical condition and symptom associated with bone and roots.",
+      "definition_uz": "suyak va ildizlar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "кость и корни - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with bone and roots.",
+      "example": "The doctor assessed the patient for bone and roots."
+    },
+    {
+      "word": "root canal procedure",
+      "translation": "ildiz kanalini davolash muolajasi",
+      "translation_uz": "ildiz kanalini davolash muolajasi",
+      "translation_ru": "лечение корневого канала",
+      "translation_en": "root canal procedure",
+      "definition": "Clinical medical condition and symptom associated with root canal procedure.",
+      "definition_uz": "ildiz kanalini davolash muolajasi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "лечение корневого канала - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with root canal procedure.",
+      "example": "The doctor assessed the patient for root canal procedure."
+    },
+    {
+      "word": "infected tissue",
+      "translation": "zararlangan to'qima",
+      "translation_uz": "zararlangan to'qima",
+      "translation_ru": "инфицированная ткань",
+      "translation_en": "infected tissue",
+      "definition": "Clinical medical condition and symptom associated with infected tissue.",
+      "definition_uz": "zararlangan to'qima - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "инфицированная ткань - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with infected tissue.",
+      "example": "The doctor assessed the patient for infected tissue."
+    },
+    {
+      "word": "seal the canals",
+      "translation": "kanallarni berkitmoq",
+      "translation_uz": "kanallarni berkitmoq",
+      "translation_ru": "запечатать каналы",
+      "translation_en": "seal the canals",
+      "definition": "Clinical medical condition and symptom associated with seal the canals.",
+      "definition_uz": "kanallarni berkitmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "запечатать каналы - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with seal the canals.",
+      "example": "The doctor assessed the patient for seal the canals."
+    },
+    {
+      "word": "preserve natural tooth",
+      "translation": "tabiiy tishni saqlab qolmoq",
+      "translation_uz": "tabiiy tishni saqlab qolmoq",
+      "translation_ru": "сохранить естественный зуб",
+      "translation_en": "preserve natural tooth",
+      "definition": "Clinical medical condition and symptom associated with preserve natural tooth.",
+      "definition_uz": "tabiiy tishni saqlab qolmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "сохранить естественный зуб - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with preserve natural tooth.",
+      "example": "The doctor assessed the patient for preserve natural tooth."
+    },
+    {
+      "word": "antibiotics",
+      "translation": "antibiotiklar",
+      "translation_uz": "antibiotiklar",
+      "translation_ru": "антибиотики",
+      "translation_en": "antibiotics",
+      "definition": "Clinical medical condition and symptom associated with antibiotics.",
+      "definition_uz": "antibiotiklar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "антибиотики - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with antibiotics.",
+      "example": "The doctor assessed the patient for antibiotics."
+    },
+    {
+      "word": "anti-inflammatory pain relievers",
+      "translation": "yallig'lanishga qarshi og'riq qoldiruvchilar",
+      "translation_uz": "yallig'lanishga qarshi og'riq qoldiruvchilar",
+      "translation_ru": "противовоспалительные обезболивающие",
+      "translation_en": "anti-inflammatory pain relievers",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing anti-inflammatory pain relievers.",
+      "definition_uz": "yallig'lanishga qarshi og'riq qoldiruvchilar - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "противовоспалительные обезболивающие - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing anti-inflammatory pain relievers.",
+      "example": "The doctor assessed the patient for anti-inflammatory pain relievers."
+    },
+    {
+      "word": "warm salt water",
+      "translation": "iliq sho'r suv",
+      "translation_uz": "iliq sho'r suv",
+      "translation_ru": "тёплая солёная вода",
+      "translation_en": "warm salt water",
+      "definition": "Clinical medical condition and symptom associated with warm salt water.",
+      "definition_uz": "iliq sho'r suv - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "тёплая солёная вода - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with warm salt water.",
+      "example": "The doctor assessed the patient for warm salt water."
+    },
+    {
+      "word": "emergency department",
+      "translation": "shoshilinch yordam bo'limi",
+      "translation_uz": "shoshilinch yordam bo'limi",
+      "translation_ru": "отделение неотложной помощи",
+      "translation_en": "emergency department",
+      "definition": "Clinical medical condition and symptom associated with emergency department.",
+      "definition_uz": "shoshilinch yordam bo'limi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "отделение неотложной помощи - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with emergency department.",
+      "example": "The doctor assessed the patient for emergency department."
+    },
+    {
+      "word": "I've had a severe, throbbing pain in my lower left tooth.",
+      "translation": "Pastki chap tishimda kuchli, urib turadigan og'riq bor.",
+      "translation_uz": "Pastki chap tishimda kuchli, urib turadigan og'riq bor.",
+      "translation_ru": "У меня сильная пульсирующая боль в нижнем левом зубе.",
+      "translation_en": "I've had a severe, throbbing pain in my lower left tooth.",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing i've had a severe, throbbing pain in my lower left tooth..",
+      "definition_uz": "Pastki chap tishimda kuchli, urib turadigan og'riq bor. - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "У меня сильная пульсирующая боль в нижнем левом зубе. - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing i've had a severe, throbbing pain in my lower left tooth..",
+      "example": "The doctor assessed the patient for i've had a severe, throbbing pain in my lower left tooth.."
+    },
+    {
+      "word": "My cheek is noticeably swollen.",
+      "translation": "Yonoğim sezilarli darajada shishgan.",
+      "translation_uz": "Yonoğim sezilarli darajada shishgan.",
+      "translation_ru": "Моя щека заметно опухла.",
+      "translation_en": "My cheek is noticeably swollen.",
+      "definition": "Clinical medical condition and symptom associated with my cheek is noticeably swollen..",
+      "definition_uz": "Yonoğim sezilarli darajada shishgan. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Моя щека заметно опухла. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with my cheek is noticeably swollen..",
+      "example": "The doctor assessed the patient for my cheek is noticeably swollen.."
+    },
+    {
+      "word": "I've had this pain for three days now.",
+      "translation": "Bu og'riq uch kundan beri bor.",
+      "translation_uz": "Bu og'riq uch kundan beri bor.",
+      "translation_ru": "Эта боль у меня уже три дня.",
+      "translation_en": "I've had this pain for three days now.",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing i've had this pain for three days now..",
+      "definition_uz": "Bu og'riq uch kundan beri bor. - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "Эта боль у меня уже три дня. - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing i've had this pain for three days now..",
+      "example": "The doctor assessed the patient for i've had this pain for three days now.."
+    },
+    {
+      "word": "I've been feeling slightly feverish.",
+      "translation": "Biroz isitmalayotganimni sezdim.",
+      "translation_uz": "Biroz isitmalayotganimni sezdim.",
+      "translation_ru": "Я чувствую небольшой жар.",
+      "translation_en": "I've been feeling slightly feverish.",
+      "definition": "Systemic elevation of body core temperature in response to an infectious process.",
+      "definition_uz": "Infeksion yallig'lanish jarayoniga javoban tana haroratining ko'tarilishi.",
+      "definition_ru": "Повышение температуры тела в ответ на инфекционный процесс.",
+      "definition_en": "Systemic elevation of body core temperature in response to an infectious process.",
+      "example": "The doctor assessed the patient for i've been feeling slightly feverish.."
+    },
+    {
+      "word": "Yes, I'm having trouble opening my mouth fully.",
+      "translation": "Ha, og'zimni to'liq ochishda qiynalayapman.",
+      "translation_uz": "Ha, og'zimni to'liq ochishda qiynalayapman.",
+      "translation_ru": "Да, мне трудно полностью открыть рот.",
+      "translation_en": "Yes, I'm having trouble opening my mouth fully.",
+      "definition": "Clinical medical condition and symptom associated with yes, i'm having trouble opening my mouth fully..",
+      "definition_uz": "Ha, og'zimni to'liq ochishda qiynalayapman. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Да, мне трудно полностью открыть рот. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with yes, i'm having trouble opening my mouth fully..",
+      "example": "The doctor assessed the patient for yes, i'm having trouble opening my mouth fully.."
+    },
+    {
+      "word": "It has become more noticeable.",
+      "translation": "U yanada sezilarli bo'ldi.",
+      "translation_uz": "U yanada sezilarli bo'ldi.",
+      "translation_ru": "Отёк стал более заметным.",
+      "translation_en": "It has become more noticeable.",
+      "definition": "Clinical medical condition and symptom associated with it has become more noticeable..",
+      "definition_uz": "U yanada sezilarli bo'ldi. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Отёк стал более заметным. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with it has become more noticeable..",
+      "example": "The doctor assessed the patient for it has become more noticeable.."
+    },
+    {
+      "word": "Okay, Doctor.",
+      "translation": "Xo'p, doktor.",
+      "translation_uz": "Xo'p, doktor.",
+      "translation_ru": "Хорошо, доктор.",
+      "translation_en": "Okay, Doctor.",
+      "definition": "Clinical medical condition and symptom associated with okay, doctor..",
+      "definition_uz": "Xo'p, doktor. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Хорошо, доктор. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with okay, doctor..",
+      "example": "The doctor assessed the patient for okay, doctor.."
+    },
+    {
+      "word": "Of course.",
+      "translation": "Albatta.",
+      "translation_uz": "Albatta.",
+      "translation_ru": "Конечно.",
+      "translation_en": "Of course.",
+      "definition": "Clinical medical condition and symptom associated with of course..",
+      "definition_uz": "Albatta. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Конечно. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with of course..",
+      "example": "The doctor assessed the patient for of course.."
+    },
+    {
+      "word": "A dental abscess? That sounds alarming.",
+      "translation": "Tish abssessi? Bu xavotirli eshitilyapti.",
+      "translation_uz": "Tish abssessi? Bu xavotirli eshitilyapti.",
+      "translation_ru": "Зубной абсцесс? Это звучит тревожно.",
+      "translation_en": "A dental abscess? That sounds alarming.",
+      "definition": "Localized enlargement or accumulation of inflammatory fluid and pus in tissue spaces.",
+      "definition_uz": "To'qimalarda yallig'lanish, suyuqlik yoki yiring to'planishi tufayli yuzaga kelgan shish.",
+      "definition_ru": "Воспалительное увеличение или скопление гнойного экссудата в тканях.",
+      "definition_en": "Localized enlargement or accumulation of inflammatory fluid and pus in tissue spaces.",
+      "example": "The doctor assessed the patient for a dental abscess? that sounds alarming.."
+    },
+    {
+      "word": "I see.",
+      "translation": "Tushundim.",
+      "translation_uz": "Tushundim.",
+      "translation_ru": "Понятно.",
+      "translation_en": "I see.",
+      "definition": "Clinical medical condition and symptom associated with i see..",
+      "definition_uz": "Tushundim. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Понятно. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with i see..",
+      "example": "The doctor assessed the patient for i see.."
+    },
+    {
+      "word": "Will I need an X-ray?",
+      "translation": "Menga rentgen kerak bo'ladimi?",
+      "translation_uz": "Menga rentgen kerak bo'ladimi?",
+      "translation_ru": "Мне понадобится рентген?",
+      "translation_en": "Will I need an X-ray?",
+      "definition": "Clinical medical condition and symptom associated with will i need an x-ray?.",
+      "definition_uz": "Menga rentgen kerak bo'ladimi? - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Мне понадобится рентген? - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with will i need an x-ray?.",
+      "example": "The doctor assessed the patient for will i need an x-ray?."
+    },
+    {
+      "word": "Can the tooth still be saved?",
+      "translation": "Tishni hali saqlab qolish mumkinmi?",
+      "translation_uz": "Tishni hali saqlab qolish mumkinmi?",
+      "translation_ru": "Можно ли ещё спасти зуб?",
+      "translation_en": "Can the tooth still be saved?",
+      "definition": "Clinical medical condition and symptom associated with can the tooth still be saved?.",
+      "definition_uz": "Tishni hali saqlab qolish mumkinmi? - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Можно ли ещё спасти зуб? - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with can the tooth still be saved?.",
+      "example": "The doctor assessed the patient for can the tooth still be saved?."
+    },
+    {
+      "word": "I understand.",
+      "translation": "Tushundim.",
+      "translation_uz": "Tushundim.",
+      "translation_ru": "Я понимаю.",
+      "translation_en": "I understand.",
+      "definition": "Clinical medical condition and symptom associated with i understand..",
+      "definition_uz": "Tushundim. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Я понимаю. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with i understand..",
+      "example": "The doctor assessed the patient for i understand.."
+    },
+    {
+      "word": "That makes sense.",
+      "translation": "Bu tushunarli.",
+      "translation_uz": "Bu tushunarli.",
+      "translation_ru": "Это понятно.",
+      "translation_en": "That makes sense.",
+      "definition": "Clinical medical condition and symptom associated with that makes sense..",
+      "definition_uz": "Bu tushunarli. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Это понятно. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with that makes sense..",
+      "example": "The doctor assessed the patient for that makes sense.."
+    },
+    {
+      "word": "Will I need antibiotics as well?",
+      "translation": "Menga antibiotik ham kerakmi?",
+      "translation_uz": "Menga antibiotik ham kerakmi?",
+      "translation_ru": "Мне также понадобятся антибиотики?",
+      "translation_en": "Will I need antibiotics as well?",
+      "definition": "Clinical medical condition and symptom associated with will i need antibiotics as well?.",
+      "definition_uz": "Menga antibiotik ham kerakmi? - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Мне также понадобятся антибиотики? - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with will i need antibiotics as well?.",
+      "example": "The doctor assessed the patient for will i need antibiotics as well?."
+    },
+    {
+      "word": "Understood.",
+      "translation": "Tushundim.",
+      "translation_uz": "Tushundim.",
+      "translation_ru": "Понятно.",
+      "translation_en": "Understood.",
+      "definition": "Clinical medical condition and symptom associated with understood..",
+      "definition_uz": "Tushundim. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Понятно. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with understood..",
+      "example": "The doctor assessed the patient for understood.."
+    },
+    {
+      "word": "Okay, I will.",
+      "translation": "Xo'p, shunday qilaman.",
+      "translation_uz": "Xo'p, shunday qilaman.",
+      "translation_ru": "Хорошо, я так и сделаю.",
+      "translation_en": "Okay, I will.",
+      "definition": "Clinical medical condition and symptom associated with okay, i will..",
+      "definition_uz": "Xo'p, shunday qilaman. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Хорошо, я так и сделаю. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with okay, i will..",
+      "example": "The doctor assessed the patient for okay, i will.."
+    },
+    {
+      "word": "Let's go ahead with the X-ray.",
+      "translation": "Keling, rentgenni qilamiz.",
+      "translation_uz": "Keling, rentgenni qilamiz.",
+      "translation_ru": "Давайте сделаем рентген.",
+      "translation_en": "Let's go ahead with the X-ray.",
+      "definition": "Clinical medical condition and symptom associated with let's go ahead with the x-ray..",
+      "definition_uz": "Keling, rentgenni qilamiz. - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "Давайте сделаем рентген. - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with let's go ahead with the x-ray..",
+      "example": "The doctor assessed the patient for let's go ahead with the x-ray.."
+    }
+  ],
+  "phrasebook": [
+    {
+      "phrase": "What brings you in today?",
+      "category": "1. Opening",
+      "hint": "Bugun sizni nima bezovta qilib, olib keldi?",
+      "hint_uz": "Bugun sizni nima bezovta qilib, olib keldi?",
+      "hint_ru": "Что привело вас к нам сегодня? На что жалуетесь?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "I've had a severe, throbbing pain in my lower left tooth."
+    },
+    {
+      "phrase": "How long have you had this pain?",
+      "category": "2. Onset & Duration",
+      "hint": "Bu og'riq / simptom qachondan beri bor?",
+      "hint_uz": "Bu og'riq / simptom qachondan beri bor?",
+      "hint_ru": "Как долго вас беспокоит эта боль / симптом?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "I've had this pain for three days now."
+    },
+    {
+      "phrase": "Have you been feeling feverish?",
+      "category": "Clinical Consultation",
+      "hint": "Harorat (isitma) yoki qaltirash bormi?",
+      "hint_uz": "Harorat (isitma) yoki qaltirash bormi?",
+      "hint_ru": "Есть ли повышенная температура или озноб?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "I've been feeling slightly feverish."
+    },
+    {
+      "phrase": "Are you having trouble opening your mouth fully?",
+      "category": "3. Symptoms & Progression",
+      "hint": "Og'zingizni to'liq ochishda qiynalayapsizmi?",
+      "hint_uz": "Og'zingizni to'liq ochishda qiynalayapsizmi?",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "Yes, I'm having trouble opening my mouth fully."
+    },
+    {
+      "phrase": "Does the swelling seem to be getting worse?",
+      "category": "Clinical Consultation",
+      "hint": "Og'riq kuchaydimi yoki o'zgarmadimi?",
+      "hint_uz": "Og'riq kuchaydimi yoki o'zgarmadimi?",
+      "hint_ru": "Боль усилилась или осталась прежней?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "It has become more noticeable."
+    },
+    {
+      "phrase": "Let's take a look.",
+      "category": "4. Clinical Assessment",
+      "hint": "Endi tishni / sohani tekshirib ko'rmoqchiman.",
+      "hint_uz": "Endi tishni / sohani tekshirib ko'rmoqchiman.",
+      "hint_ru": "Сейчас я проведу осмотр беспокоящего зуба / области.",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "Okay, Doctor."
+    },
+    {
+      "phrase": "Please open wide.",
+      "category": "Clinical Consultation",
+      "hint": "Iltimos, og'zingizni kattaroq oching.",
+      "hint_uz": "Iltimos, og'zingizni kattaroq oching.",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "Of course."
+    },
+    {
+      "phrase": "It appears you have a dental abscess.",
+      "category": "5. Diagnosis",
+      "hint": "Sizda tish abssessi bor ko'rinadi.",
+      "hint_uz": "Sizda tish abssessi bor ko'rinadi.",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "A dental abscess? That sounds alarming."
+    },
+    {
+      "phrase": "The infection is caused by bacteria.",
+      "category": "Clinical Consultation",
+      "hint": "Infeksiya bakteriyalar sababli yuzaga keladi.",
+      "hint_uz": "Infeksiya bakteriyalar sababli yuzaga keladi.",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "I see."
+    },
+    {
+      "phrase": "I'll order a digital X-ray right away.",
+      "category": "6. X-ray & Treatment Plan",
+      "hint": "Men darhol raqamli rentgen buyuraman.",
+      "hint_uz": "Men darhol raqamli rentgen buyuraman.",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "Will I need an X-ray?"
+    },
+    {
+      "phrase": "We can perform a root canal procedure if the structure is intact.",
+      "category": "Clinical Consultation",
+      "hint": "Agar tuzilma saqlangan bo'lsa, ildiz kanalini davolashimiz mumkin.",
+      "hint_uz": "Agar tuzilma saqlangan bo'lsa, ildiz kanalini davolashimiz mumkin.",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "Can the tooth still be saved?"
+    },
+    {
+      "phrase": "Our main priority is to eliminate the infection.",
+      "category": "7. Treatment Recommendation",
+      "hint": "Asosiy maqsadimiz infeksiyani yo'qotish.",
+      "hint_uz": "Asosiy maqsadimiz infeksiyani yo'qotish.",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "I understand."
+    },
+    {
+      "phrase": "We can clean out the infected tissue and seal the canals.",
+      "category": "Clinical Consultation",
+      "hint": "Zararlangan to'qimani tozalab, kanallarni berkitishimiz mumkin.",
+      "hint_uz": "Zararlangan to'qimani tozalab, kanallarni berkitishimiz mumkin.",
+      "hint_ru": "Клиническая фраза для сбора анамнеза",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "That makes sense."
+    },
+    {
+      "phrase": "Given the facial swelling and fever, I'll prescribe antibiotics.",
+      "category": "8. Medication & Reassurance",
+      "hint": "Shish yoki yiringli ajralma bormi?",
+      "hint_uz": "Shish yoki yiringli ajralma bormi?",
+      "hint_ru": "Есть ли припухлость или гнойные выделения?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "Will I need antibiotics as well?"
+    },
+    {
+      "phrase": "Antibiotics only control the spread; the dental procedure is necessary.",
+      "category": "Clinical Consultation",
+      "hint": "Og'riq boshqa joyga (quloq, jag', bo'yin) tarqaladimi?",
+      "hint_uz": "Og'riq boshqa joyga (quloq, jag', bo'yin) tarqaladimi?",
+      "hint_ru": "Отдает (иррадиирует) ли боль в челюсть, ухо или шею?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "Understood."
+    },
+    {
+      "phrase": "Gently rinse with warm salt water and avoid extreme temperatures.",
+      "category": "9. Aftercare & Closing",
+      "hint": "Harorat (isitma) yoki qaltirash bormi?",
+      "hint_uz": "Harorat (isitma) yoki qaltirash bormi?",
+      "hint_ru": "Есть ли повышенная температура или озноб?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "Okay, I will."
+    },
+    {
+      "phrase": "If you have difficulty breathing or sudden swelling toward your eye or neck, go straight to the emergency department.",
+      "category": "Clinical Consultation",
+      "hint": "Shish yoki yiringli ajralma bormi?",
+      "hint_uz": "Shish yoki yiringli ajralma bormi?",
+      "hint_ru": "Есть ли припухлость или гнойные выделения?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": "Let's go ahead with the X-ray."
+    }
+  ],
+  "dialogue": [
+    {
+      "speaker": "Doctor",
+      "text": "Good morning. Please, sit down. What brings you in today?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "Good morning, Doctor. I've had a severe, throbbing pain in my lower left tooth for three days now, and my cheek is noticeably swollen."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Let's take a look. Please open wide. Ah, yes, I can see significant inflammation and swelling in the surrounding gum tissue. It appears you have a dental abscess, which is a localized accumulation of pus caused by a bacterial infection."
+    },
+    {
+      "speaker": "Patient",
+      "text": "A dental abscess? That sounds alarming. Could that explain why I've also been feeling slightly feverish and having trouble opening my mouth fully?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Exactly. A low-grade fever and difficulty opening your mouth are classic signs that the infection is spreading to adjacent tissues. The infection typically originates in the tooth's pulp-usually from deep decay or a micro-crack-and extends down to the root tip."
+    },
+    {
+      "speaker": "Patient",
+      "text": "I see. Does this mean the tooth has to be extracted, or can it still be saved?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Our main priority is to eliminate the infection while preserving your natural tooth if possible. I'll order a digital X-ray right away to check the condition of the bone and roots. If the structure is intact, we can perform a root canal procedure to clean out the infected tissue and seal the canals."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Will I need a prescription for antibiotics as well?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Absolutely. Given the facial swelling and your fever, I'll prescribe a course of antibiotics along with anti-inflammatory pain relievers. However, please remember that antibiotics only control the spread-the dental procedure itself is necessary to permanently resolve the issue."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Understood. Is there anything I should do to manage this until the procedure?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Gently rinse with warm salt water and avoid extreme hot or cold temperatures. Most importantly, if you experience any difficulty breathing or sudden swelling towards your eye or neck, head straight to the emergency department."
+    },
+    {
+      "speaker": "Patient",
+      "text": "That makes total sense. Thank you for the clear explanation, Doctor. Let's go ahead with the X-ray."
+    }
+  ],
+  "tests": [
+    {
+      "question": "What is the medical meaning of the term 'dental abscess' in clinical consultation?",
+      "option_a": "tish abssessi",
+      "option_b": "urib turadigan / simillaydigan og'riq",
+      "option_c": "shishgan yonoq",
+      "option_d": "yallig'lanish",
+      "correct_option": "A",
+      "explanation": "'dental abscess' atamasining to'g'ri ma'nosi: tish abssessi."
+    },
+    {
+      "question": "Which term corresponds to 'milk to'qimasi'?",
+      "option_a": "throbbing pain",
+      "option_b": "gum tissue",
+      "option_c": "swollen cheek",
+      "option_d": "inflammation",
+      "correct_option": "B",
+      "explanation": "'milk to'qimasi' ma'nosiga mos keluvchi tibbiy termin 'gum tissue' hisoblanadi."
+    },
+    {
+      "question": "Which of the following is the grammatically and clinically standard question to ask about the duration of symptoms?",
+      "option_a": "How long do you having this symptom?",
+      "option_b": "How long has this condition been bothering you?",
+      "option_c": "Since what time you have this problem?",
+      "option_d": "How many days you are feeling pain?",
+      "correct_option": "B",
+      "explanation": "Klinik anamnezda davomiylikni so'rash uchun Present Perfect Continuous ('How long has... been bothering you?') to'g'ri shakl hisoblanadi."
+    },
+    {
+      "question": "When evaluating acute pain, what is the best phrasing to assess pain character?",
+      "option_a": "Is your pain bad or very bad?",
+      "option_b": "Can you describe the pain—is it sharp, dull, throbbing, or aching?",
+      "option_c": "Why do you have sharp pain today?",
+      "option_d": "Stop pain with pills immediately.",
+      "correct_option": "B",
+      "explanation": "Og'riq xarakterini aniqlashda shifokor ochiq va taklif qiluvchi variantlar (sharp, dull, throbbing, aching) beradi."
+    }
+  ]
+}

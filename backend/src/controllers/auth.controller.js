@@ -17,7 +17,9 @@ const register = async (req, res) => {
     if (existing) return res.status(400).json({ error: 'Bu email allaqachon ro\'yxatda bor' });
 
     const password_hash = await bcrypt.hash(password, 10);
-    const user = await User.create({ full_name, email, password_hash, role, specialty_id, group_id });
+    const clean_specialty_id = specialty_id ? parseInt(specialty_id) : null;
+    const clean_group_id     = group_id ? parseInt(group_id) : null;
+    const user = await User.create({ full_name, email, password_hash, role, specialty_id: clean_specialty_id, group_id: clean_group_id });
 
     const token = generateToken(user);
     res.status(201).json({ token, user: { id: user.id, full_name, email, role } });

@@ -1,0 +1,1071 @@
+{
+  "specialty_id": 2,
+  "specialty_name": "Davolash ishi",
+  "order_index": 9,
+  "title": "Anemia & Fatigue Investigation",
+  "title_uz": "Anemiya va surunkali holsizlik",
+  "title_ru": "Анемия и хроническая усталость",
+  "title_en": "Anemia & Fatigue Investigation",
+  "description": "Davolash ishi bo'yicha Anemiya va surunkali holsizlik mavzusida klinik muloqot va tibbiy ingliz tili darsi.",
+  "clinical_level": "B2 Medical English",
+  "target_role": "Dental Clinician / Attending Physician",
+  "scenario_prompt": "You are a virtual patient presenting with symptoms related to Anemia & Fatigue Investigation. Speak in natural, everyday patient English.",
+  "patient_profile": {
+    "age": 57,
+    "gender": "Male",
+    "chief_complaint": "Anemiya va surunkali holsizlik",
+    "history": "Patient presents with complaints of anemia & fatigue investigation."
+  },
+  "grammar": [
+    {
+      "title": "GRAMMAR",
+      "title_uz": "GRAMMAR",
+      "title_ru": "GRAMMAR",
+      "title_en": "GRAMMAR",
+      "rule_explanation": "First Conditional haqiqiy yoki kelajakda yuz berishi mumkin bo'lgan holatlar uchun ishlatiladi: Agar qon ketishi davom etsa, sababini tekshiramiz. Second Conditional faraziy yoki hozircha aniq bo'lmagan holatlar uchun ishlatiladi: Agar temir darajasi normal bo'lganida, kamqonlikning boshqa sabablarini izlagan bo'lardik.",
+      "rule_explanation_uz": "First Conditional haqiqiy yoki kelajakda yuz berishi mumkin bo'lgan holatlar uchun ishlatiladi: Agar qon ketishi davom etsa, sababini tekshiramiz. Second Conditional faraziy yoki hozircha aniq bo'lmagan holatlar uchun ishlatiladi: Agar temir darajasi normal bo'lganida, kamqonlikning boshqa sabablarini izlagan bo'lardik.",
+      "rule_explanation_ru": "First Conditional: If + Present Simple, will + infinitive. Используется для реального или возможного будущего: If the bleeding continues, we'll investigate the cause. Second Conditional: If + Past Simple, would + infinitive. Используется для гипотетической или менее вероятной ситуации: If your iron levels were normal, we would look for other causes.",
+      "rule_explanation_en": "Conditional sentences describe a condition and its result. In this dialogue, First Conditional is used for realistic or possible future clinical outcomes, while Second Conditional is used for hypothetical or less certain situations.",
+      "structure_pattern": "If + Subject + Present Simple (V1/Vs), Subject + will + Base Verb (V1)",
+      "examples": [
+        {
+          "sentence": "If the bleeding continues, we'll investigate.",
+          "translation": "Realistic / possible future",
+          "translation_uz": "Realistic / possible future",
+          "translation_ru": "If the bleeding continues, we'll investigate.",
+          "note": "If + present, will + V1"
+        },
+        {
+          "sentence": "If iron levels were normal, we would look for other causes.",
+          "translation": "Hypothetical / less certain",
+          "translation_uz": "Hypothetical / less certain",
+          "translation_ru": "If iron levels were normal, we would look for other causes.",
+          "note": "If + past, would + V1"
+        }
+      ],
+      "common_mistakes": [
+        {
+          "incorrect": "Since when you feel this pain?",
+          "correct": "How long have you had this pain?",
+          "explanation": "Davomiylikni so'rashda 'How long have you had...?' standarti ishlatiladi.",
+          "explanation_uz": "Davomiylikni so'rashda 'How long have you had...?' standarti ishlatiladi.",
+          "explanation_ru": "Для выяснения длительности используется конструкция 'How long have you had...?'.",
+          "explanation_en": "Use 'How long have you had...?' when asking about the duration of symptoms."
+        },
+        {
+          "incorrect": "Where is paining you?",
+          "correct": "Where exactly do you feel the pain?",
+          "explanation": "Lokatsiyani aniqlashda 'Where do you feel the pain?' to'g'ri grammatik shakl.",
+          "explanation_uz": "Lokatsiyani aniqlashda 'Where do you feel the pain?' to'g'ri grammatik shakl.",
+          "explanation_ru": "Правильный вопрос о локализации боли: 'Where exactly do you feel the pain?'.",
+          "explanation_en": "Ask 'Where exactly do you feel the pain?' to identify the specific anatomical site."
+        }
+      ],
+      "structure_pattern_en": "If + Subject + Present Simple (V1/Vs), Subject + will + Base Verb (V1)",
+      "structure_pattern_uz": "If + Ega + Present Simple (V1/Vs), Ega + will + Asosiy fe'l (V1)",
+      "structure_pattern_ru": "If + Подлежащее + Present Simple (V1/Vs), Подлежащее + will + Начальная форма (V1)"
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "anemia",
+      "translation": "kamqonlik",
+      "translation_uz": "kamqonlik",
+      "translation_ru": "анемия",
+      "translation_en": "anemia",
+      "definition": "Clinical medical condition and symptom associated with anemia.",
+      "definition_uz": "kamqonlik - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "анемия - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with anemia.",
+      "example": "The doctor assessed the patient for anemia."
+    },
+    {
+      "word": "menorrhagia",
+      "translation": "ko'p hayz qon ketishi",
+      "translation_uz": "ko'p hayz qon ketishi",
+      "translation_ru": "меноррагия / обильные менструальные кровотечения",
+      "translation_en": "menorrhagia",
+      "definition": "Clinical medical condition and symptom associated with menorrhagia.",
+      "definition_uz": "ko'p hayz qon ketishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "меноррагия / обильные менструальные кровотечения - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with menorrhagia.",
+      "example": "The doctor assessed the patient for menorrhagia."
+    },
+    {
+      "word": "abnormal bleeding",
+      "translation": "g'ayritabiiy qon ketishi",
+      "translation_uz": "g'ayritabiiy qon ketishi",
+      "translation_ru": "аномальное кровотечение",
+      "translation_en": "abnormal bleeding",
+      "definition": "Escape of blood from damaged blood vessels or inflamed gingival margins.",
+      "definition_uz": "Shikastlangan qon tomirlari yoki yallig'langan milkdan qon ketishi.",
+      "definition_ru": "Кровоточивость из поврежденных сосудов или воспаленных десен.",
+      "definition_en": "Escape of blood from damaged blood vessels or inflamed gingival margins.",
+      "example": "The doctor assessed the patient for abnormal bleeding."
+    },
+    {
+      "word": "heavy periods",
+      "translation": "ko'p hayz ko'rish",
+      "translation_uz": "ko'p hayz ko'rish",
+      "translation_ru": "обильные месячные",
+      "translation_en": "heavy periods",
+      "definition": "Clinical medical condition and symptom associated with heavy periods.",
+      "definition_uz": "ko'p hayz ko'rish - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "обильные месячные - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with heavy periods.",
+      "example": "The doctor assessed the patient for heavy periods."
+    },
+    {
+      "word": "sanitary products",
+      "translation": "gigiyenik vositalar",
+      "translation_uz": "gigiyenik vositalar",
+      "translation_ru": "средства женской гигиены",
+      "translation_en": "sanitary products",
+      "definition": "Clinical medical condition and symptom associated with sanitary products.",
+      "definition_uz": "gigiyenik vositalar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "средства женской гигиены - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with sanitary products.",
+      "example": "The doctor assessed the patient for sanitary products."
+    },
+    {
+      "word": "exhausted",
+      "translation": "juda charchagan / holsiz",
+      "translation_uz": "juda charchagan / holsiz",
+      "translation_ru": "изнурённый, крайне уставший",
+      "translation_en": "exhausted",
+      "definition": "Clinical medical condition and symptom associated with exhausted.",
+      "definition_uz": "juda charchagan / holsiz - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "изнурённый, крайне уставший - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with exhausted.",
+      "example": "The doctor assessed the patient for exhausted."
+    },
+    {
+      "word": "breathless",
+      "translation": "nafas qisgan",
+      "translation_uz": "nafas qisgan",
+      "translation_ru": "задыхающийся",
+      "translation_en": "breathless",
+      "definition": "Subjective clinical sensation of difficult, labored, or uncomfortable breathing.",
+      "definition_uz": "Nafas olishning qiyinlashishi, havo yetishmasligi hissi (nafas qisishi).",
+      "definition_ru": "Субъективное ощущение нехватки воздуха и затруднения дыхания (одышка).",
+      "definition_en": "Subjective clinical sensation of difficult, labored, or uncomfortable breathing.",
+      "example": "The doctor assessed the patient for breathless."
+    },
+    {
+      "word": "light-headed",
+      "translation": "boshi aylanayotgan / hushsizlanishga yaqin",
+      "translation_uz": "boshi aylanayotgan / hushsizlanishga yaqin",
+      "translation_ru": "испытывающий головокружение",
+      "translation_en": "light-headed",
+      "definition": "Clinical medical condition and symptom associated with light-headed.",
+      "definition_uz": "boshi aylanayotgan / hushsizlanishga yaqin - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "испытывающий головокружение - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with light-headed.",
+      "example": "The doctor assessed the patient for light-headed."
+    },
+    {
+      "word": "palpitations",
+      "translation": "yurak urishini kuchli sezish",
+      "translation_uz": "yurak urishini kuchli sezish",
+      "translation_ru": "сердцебиение",
+      "translation_en": "palpitations",
+      "definition": "Clinical medical condition and symptom associated with palpitations.",
+      "definition_uz": "yurak urishini kuchli sezish - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "сердцебиение - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with palpitations.",
+      "example": "The doctor assessed the patient for palpitations."
+    },
+    {
+      "word": "chest discomfort",
+      "translation": "ko'krakdagi noqulaylik",
+      "translation_uz": "ko'krakdagi noqulaylik",
+      "translation_ru": "дискомфорт в груди",
+      "translation_en": "chest discomfort",
+      "definition": "Discomfort or constricting pressure localized in the thoracic region.",
+      "definition_uz": "Ko'krak qafasi sohasida siquvchi yoki bosuvchi og'riq hissi.",
+      "definition_ru": "Сдавливающая или давящая боль в области грудной клетки.",
+      "definition_en": "Discomfort or constricting pressure localized in the thoracic region.",
+      "example": "The doctor assessed the patient for chest discomfort."
+    },
+    {
+      "word": "heart racing",
+      "translation": "yurakning tez urishi",
+      "translation_uz": "yurakning tez urishi",
+      "translation_ru": "сильное учащённое сердцебиение",
+      "translation_en": "heart racing",
+      "definition": "Clinical medical condition and symptom associated with heart racing.",
+      "definition_uz": "yurakning tez urishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "сильное учащённое сердцебиение - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with heart racing.",
+      "example": "The doctor assessed the patient for heart racing."
+    },
+    {
+      "word": "pale",
+      "translation": "rangi oqarib ketgan",
+      "translation_uz": "rangi oqarib ketgan",
+      "translation_ru": "бледный",
+      "translation_en": "pale",
+      "definition": "Clinical medical condition and symptom associated with pale.",
+      "definition_uz": "rangi oqarib ketgan - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "бледный - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with pale.",
+      "example": "The doctor assessed the patient for pale."
+    },
+    {
+      "word": "hemoglobin",
+      "translation": "gemoglobin",
+      "translation_uz": "gemoglobin",
+      "translation_ru": "гемоглобин",
+      "translation_en": "hemoglobin",
+      "definition": "Clinical medical condition and symptom associated with hemoglobin.",
+      "definition_uz": "gemoglobin - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "гемоглобин - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with hemoglobin.",
+      "example": "The doctor assessed the patient for hemoglobin."
+    },
+    {
+      "word": "iron-deficiency anemia",
+      "translation": "temir tanqisligi kamqonligi",
+      "translation_uz": "temir tanqisligi kamqonligi",
+      "translation_ru": "железодефицитная анемия",
+      "translation_en": "iron-deficiency anemia",
+      "definition": "Clinical medical condition and symptom associated with iron-deficiency anemia.",
+      "definition_uz": "temir tanqisligi kamqonligi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "железодефицитная анемия - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with iron-deficiency anemia.",
+      "example": "The doctor assessed the patient for iron-deficiency anemia."
+    },
+    {
+      "word": "iron stores",
+      "translation": "temir zaxiralari",
+      "translation_uz": "temir zaxiralari",
+      "translation_ru": "запасы железа",
+      "translation_en": "iron stores",
+      "definition": "Clinical medical condition and symptom associated with iron stores.",
+      "definition_uz": "temir zaxiralari - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "запасы железа - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with iron stores.",
+      "example": "The doctor assessed the patient for iron stores."
+    },
+    {
+      "word": "blood loss",
+      "translation": "qon yo'qotish",
+      "translation_uz": "qon yo'qotish",
+      "translation_ru": "кровопотеря",
+      "translation_en": "blood loss",
+      "definition": "Clinical medical condition and symptom associated with blood loss.",
+      "definition_uz": "qon yo'qotish - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "кровопотеря - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with blood loss.",
+      "example": "The doctor assessed the patient for blood loss."
+    },
+    {
+      "word": "iron replacement",
+      "translation": "temir o'rnini to'ldirish davolashi",
+      "translation_uz": "temir o'rnini to'ldirish davolashi",
+      "translation_ru": "заместительная терапия железом",
+      "translation_en": "iron replacement",
+      "definition": "Clinical medical condition and symptom associated with iron replacement.",
+      "definition_uz": "temir o'rnini to'ldirish davolashi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "заместительная терапия железом - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with iron replacement.",
+      "example": "The doctor assessed the patient for iron replacement."
+    },
+    {
+      "word": "blood transfusion",
+      "translation": "qon quyish",
+      "translation_uz": "qon quyish",
+      "translation_ru": "переливание крови",
+      "translation_en": "blood transfusion",
+      "definition": "Clinical medical condition and symptom associated with blood transfusion.",
+      "definition_uz": "qon quyish - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "переливание крови - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with blood transfusion.",
+      "example": "The doctor assessed the patient for blood transfusion."
+    },
+    {
+      "word": "clinically unstable",
+      "translation": "klinik jihatdan beqaror",
+      "translation_uz": "klinik jihatdan beqaror",
+      "translation_ru": "клинически нестабильный",
+      "translation_en": "clinically unstable",
+      "definition": "Clinical medical condition and symptom associated with clinically unstable.",
+      "definition_uz": "klinik jihatdan beqaror - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "клинически нестабильный - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with clinically unstable.",
+      "example": "The doctor assessed the patient for clinically unstable."
+    },
+    {
+      "word": "underlying cause",
+      "translation": "asosiy sabab",
+      "translation_uz": "asosiy sabab",
+      "translation_ru": "основная причина",
+      "translation_en": "underlying cause",
+      "definition": "Clinical medical condition and symptom associated with underlying cause.",
+      "definition_uz": "asosiy sabab - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "основная причина - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with underlying cause.",
+      "example": "The doctor assessed the patient for underlying cause."
+    },
+    {
+      "word": "fibroids",
+      "translation": "bachadon miomalari",
+      "translation_uz": "bachadon miomalari",
+      "translation_ru": "миомы матки",
+      "translation_en": "fibroids",
+      "definition": "Clinical medical condition and symptom associated with fibroids.",
+      "definition_uz": "bachadon miomalari - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "миомы матки - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with fibroids.",
+      "example": "The doctor assessed the patient for fibroids."
+    },
+    {
+      "word": "hormonal causes",
+      "translation": "gormonal sabablar",
+      "translation_uz": "gormonal sabablar",
+      "translation_ru": "гормональные причины",
+      "translation_en": "hormonal causes",
+      "definition": "Clinical medical condition and symptom associated with hormonal causes.",
+      "definition_uz": "gormonal sabablar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "гормональные причины - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with hormonal causes.",
+      "example": "The doctor assessed the patient for hormonal causes."
+    },
+    {
+      "word": "gynecological conditions",
+      "translation": "ginekologik kasalliklar",
+      "translation_uz": "ginekologik kasalliklar",
+      "translation_ru": "гинекологические заболевания",
+      "translation_en": "gynecological conditions",
+      "definition": "Clinical medical condition and symptom associated with gynecological conditions.",
+      "definition_uz": "ginekologik kasalliklar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "гинекологические заболевания - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with gynecological conditions.",
+      "example": "The doctor assessed the patient for gynecological conditions."
+    },
+    {
+      "word": "iron deficiency",
+      "translation": "temir tanqisligi",
+      "translation_uz": "temir tanqisligi",
+      "translation_ru": "дефицит железа",
+      "translation_en": "iron deficiency",
+      "definition": "Clinical medical condition and symptom associated with iron deficiency.",
+      "definition_uz": "temir tanqisligi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "дефицит железа - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with iron deficiency.",
+      "example": "The doctor assessed the patient for iron deficiency."
+    },
+    {
+      "word": "vitamin deficiency",
+      "translation": "vitamin tanqisligi",
+      "translation_uz": "vitamin tanqisligi",
+      "translation_ru": "дефицит витаминов",
+      "translation_en": "vitamin deficiency",
+      "definition": "Clinical medical condition and symptom associated with vitamin deficiency.",
+      "definition_uz": "vitamin tanqisligi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "дефицит витаминов - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with vitamin deficiency.",
+      "example": "The doctor assessed the patient for vitamin deficiency."
+    },
+    {
+      "word": "chronic disease",
+      "translation": "surunkali kasallik",
+      "translation_uz": "surunkali kasallik",
+      "translation_ru": "хроническое заболевание",
+      "translation_en": "chronic disease",
+      "definition": "Clinical medical condition and symptom associated with chronic disease.",
+      "definition_uz": "surunkali kasallik - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "хроническое заболевание - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with chronic disease.",
+      "example": "The doctor assessed the patient for chronic disease."
+    },
+    {
+      "word": "hematological disorder",
+      "translation": "gematologik kasallik",
+      "translation_uz": "gematologik kasallik",
+      "translation_ru": "гематологическое заболевание",
+      "translation_en": "hematological disorder",
+      "definition": "Clinical medical condition and symptom associated with hematological disorder.",
+      "definition_uz": "gematologik kasallik - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "гематологическое заболевание - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with hematological disorder.",
+      "example": "The doctor assessed the patient for hematological disorder."
+    },
+    {
+      "word": "full blood count (FBC)",
+      "translation": "umumiy qon tahlili",
+      "translation_uz": "umumiy qon tahlili",
+      "translation_ru": "общий анализ крови",
+      "translation_en": "full blood count (FBC)",
+      "definition": "Clinical medical condition and symptom associated with full blood count (fbc).",
+      "definition_uz": "umumiy qon tahlili - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "общий анализ крови - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with full blood count (fbc).",
+      "example": "The doctor assessed the patient for full blood count (fbc)."
+    },
+    {
+      "word": "ferritin",
+      "translation": "ferritin",
+      "translation_uz": "ferritin",
+      "translation_ru": "ферритин",
+      "translation_en": "ferritin",
+      "definition": "Clinical medical condition and symptom associated with ferritin.",
+      "definition_uz": "ferritin - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "ферритин - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with ferritin.",
+      "example": "The doctor assessed the patient for ferritin."
+    },
+    {
+      "word": "iron studies",
+      "translation": "temir almashinuviga oid tahlillar",
+      "translation_uz": "temir almashinuviga oid tahlillar",
+      "translation_ru": "исследования обмена железа",
+      "translation_en": "iron studies",
+      "definition": "Clinical medical condition and symptom associated with iron studies.",
+      "definition_uz": "temir almashinuviga oid tahlillar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "исследования обмена железа - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with iron studies.",
+      "example": "The doctor assessed the patient for iron studies."
+    },
+    {
+      "word": "exertional breathlessness",
+      "translation": "jismoniy zo'riqishda nafas qisishi",
+      "translation_uz": "jismoniy zo'riqishda nafas qisishi",
+      "translation_ru": "одышка при нагрузке",
+      "translation_en": "exertional breathlessness",
+      "definition": "Subjective clinical sensation of difficult, labored, or uncomfortable breathing.",
+      "definition_uz": "Nafas olishning qiyinlashishi, havo yetishmasligi hissi (nafas qisishi).",
+      "definition_ru": "Субъективное ощущение нехватки воздуха и затруднения дыхания (одышка).",
+      "definition_en": "Subjective clinical sensation of difficult, labored, or uncomfortable breathing.",
+      "example": "The doctor assessed the patient for exertional breathlessness."
+    },
+    {
+      "word": "fatigue",
+      "translation": "charchoq / holsizlik",
+      "translation_uz": "charchoq / holsizlik",
+      "translation_ru": "утомляемость",
+      "translation_en": "fatigue",
+      "definition": "Clinical medical condition and symptom associated with fatigue.",
+      "definition_uz": "charchoq / holsizlik - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "утомляемость - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with fatigue.",
+      "example": "The doctor assessed the patient for fatigue."
+    },
+    {
+      "word": "gradual improvement",
+      "translation": "asta-sekin yaxshilanish",
+      "translation_uz": "asta-sekin yaxshilanish",
+      "translation_ru": "постепенное улучшение",
+      "translation_en": "gradual improvement",
+      "definition": "Clinical medical condition and symptom associated with gradual improvement.",
+      "definition_uz": "asta-sekin yaxshilanish - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "постепенное улучшение - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with gradual improvement.",
+      "example": "The doctor assessed the patient for gradual improvement."
+    },
+    {
+      "word": "immediate response",
+      "translation": "darholgi ta'sir",
+      "translation_uz": "darholgi ta'sir",
+      "translation_ru": "немедленный эффект",
+      "translation_en": "immediate response",
+      "definition": "Clinical medical condition and symptom associated with immediate response.",
+      "definition_uz": "darholgi ta'sir - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "немедленный эффект - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with immediate response.",
+      "example": "The doctor assessed the patient for immediate response."
+    },
+    {
+      "word": "soaking through pads",
+      "translation": "prokladkalarni to'liq ho'l qiladigan darajada qon ketishi",
+      "translation_uz": "prokladkalarni to'liq ho'l qiladigan darajada qon ketishi",
+      "translation_ru": "промокание прокладок насквозь",
+      "translation_en": "soaking through pads",
+      "definition": "Clinical medical condition and symptom associated with soaking through pads.",
+      "definition_uz": "prokladkalarni to'liq ho'l qiladigan darajada qon ketishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "промокание прокладок насквозь - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with soaking through pads.",
+      "example": "The doctor assessed the patient for soaking through pads."
+    },
+    {
+      "word": "faint",
+      "translation": "hushidan ketmoq / hushsizlanmoq",
+      "translation_uz": "hushidan ketmoq / hushsizlanmoq",
+      "translation_ru": "терять сознание / чувствовать предобморок",
+      "translation_en": "faint",
+      "definition": "Clinical medical condition and symptom associated with faint.",
+      "definition_uz": "hushidan ketmoq / hushsizlanmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "терять сознание / чувствовать предобморок - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with faint.",
+      "example": "The doctor assessed the patient for faint."
+    },
+    {
+      "word": "severe weakness",
+      "translation": "kuchli holsizlik",
+      "translation_uz": "kuchli holsizlik",
+      "translation_ru": "сильная слабость",
+      "translation_en": "severe weakness",
+      "definition": "Clinical medical condition and symptom associated with severe weakness.",
+      "definition_uz": "kuchli holsizlik - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "сильная слабость - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with severe weakness.",
+      "example": "The doctor assessed the patient for severe weakness."
+    },
+    {
+      "word": "urgent assessment",
+      "translation": "shoshilinch baholash",
+      "translation_uz": "shoshilinch baholash",
+      "translation_ru": "срочная медицинская оценка",
+      "translation_en": "urgent assessment",
+      "definition": "Clinical medical condition and symptom associated with urgent assessment.",
+      "definition_uz": "shoshilinch baholash - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "срочная медицинская оценка - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with urgent assessment.",
+      "example": "The doctor assessed the patient for urgent assessment."
+    },
+    {
+      "word": "control the cause",
+      "translation": "sababni nazorat qilmoq",
+      "translation_uz": "sababni nazorat qilmoq",
+      "translation_ru": "контролировать причину",
+      "translation_en": "control the cause",
+      "definition": "Clinical medical condition and symptom associated with control the cause.",
+      "definition_uz": "sababni nazorat qilmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "контролировать причину - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with control the cause.",
+      "example": "The doctor assessed the patient for control the cause."
+    },
+    {
+      "word": "correct the anemia",
+      "translation": "kamqonlikni tuzatmoq",
+      "translation_uz": "kamqonlikni tuzatmoq",
+      "translation_ru": "корректировать анемию",
+      "translation_en": "correct the anemia",
+      "definition": "Clinical medical condition and symptom associated with correct the anemia.",
+      "definition_uz": "kamqonlikni tuzatmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "корректировать анемию - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with correct the anemia.",
+      "example": "The doctor assessed the patient for correct the anemia."
+    }
+  ],
+  "phrasebook": [
+    {
+      "phrase": "anemia",
+      "category": "Clinical Consultation",
+      "hint": "kamqonlik",
+      "hint_uz": "kamqonlik",
+      "hint_ru": "анемия",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "menorrhagia",
+      "category": "Clinical Consultation",
+      "hint": "ko'p hayz qon ketishi",
+      "hint_uz": "ko'p hayz qon ketishi",
+      "hint_ru": "меноррагия / обильные менструальные кровотечения",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "abnormal bleeding",
+      "category": "Clinical Consultation",
+      "hint": "Qonash kuzatiladimi yoki milk shishganmi?",
+      "hint_uz": "Qonash kuzatiladimi yoki milk shishganmi?",
+      "hint_ru": "Наблюдается ли кровоточивость или припухлость десен?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "heavy periods",
+      "category": "Clinical Consultation",
+      "hint": "ko'p hayz ko'rish",
+      "hint_uz": "ko'p hayz ko'rish",
+      "hint_ru": "обильные месячные",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "sanitary products",
+      "category": "Clinical Consultation",
+      "hint": "gigiyenik vositalar",
+      "hint_uz": "gigiyenik vositalar",
+      "hint_ru": "средства женской гигиены",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "exhausted",
+      "category": "Clinical Consultation",
+      "hint": "juda charchagan / holsiz",
+      "hint_uz": "juda charchagan / holsiz",
+      "hint_ru": "изнурённый, крайне уставший",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "breathless",
+      "category": "Clinical Consultation",
+      "hint": "nafas qisgan",
+      "hint_uz": "nafas qisgan",
+      "hint_ru": "задыхающийся",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "light-headed",
+      "category": "Clinical Consultation",
+      "hint": "boshi aylanayotgan / hushsizlanishga yaqin",
+      "hint_uz": "boshi aylanayotgan / hushsizlanishga yaqin",
+      "hint_ru": "испытывающий головокружение",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "palpitations",
+      "category": "Clinical Consultation",
+      "hint": "yurak urishini kuchli sezish",
+      "hint_uz": "yurak urishini kuchli sezish",
+      "hint_ru": "сердцебиение",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "chest discomfort",
+      "category": "Clinical Consultation",
+      "hint": "ko'krakdagi noqulaylik",
+      "hint_uz": "ko'krakdagi noqulaylik",
+      "hint_ru": "дискомфорт в груди",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "heart racing",
+      "category": "Clinical Consultation",
+      "hint": "yurakning tez urishi",
+      "hint_uz": "yurakning tez urishi",
+      "hint_ru": "сильное учащённое сердцебиение",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "pale",
+      "category": "Clinical Consultation",
+      "hint": "rangi oqarib ketgan",
+      "hint_uz": "rangi oqarib ketgan",
+      "hint_ru": "бледный",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "hemoglobin",
+      "category": "Clinical Consultation",
+      "hint": "gemoglobin",
+      "hint_uz": "gemoglobin",
+      "hint_ru": "гемоглобин",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "iron-deficiency anemia",
+      "category": "Clinical Consultation",
+      "hint": "temir tanqisligi kamqonligi",
+      "hint_uz": "temir tanqisligi kamqonligi",
+      "hint_ru": "железодефицитная анемия",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "iron stores",
+      "category": "Clinical Consultation",
+      "hint": "temir zaxiralari",
+      "hint_uz": "temir zaxiralari",
+      "hint_ru": "запасы железа",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "blood loss",
+      "category": "Clinical Consultation",
+      "hint": "qon yo'qotish",
+      "hint_uz": "qon yo'qotish",
+      "hint_ru": "кровопотеря",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "iron replacement",
+      "category": "Clinical Consultation",
+      "hint": "temir o'rnini to'ldirish davolashi",
+      "hint_uz": "temir o'rnini to'ldirish davolashi",
+      "hint_ru": "заместительная терапия железом",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "blood transfusion",
+      "category": "Clinical Consultation",
+      "hint": "qon quyish",
+      "hint_uz": "qon quyish",
+      "hint_ru": "переливание крови",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "clinically unstable",
+      "category": "Clinical Consultation",
+      "hint": "klinik jihatdan beqaror",
+      "hint_uz": "klinik jihatdan beqaror",
+      "hint_ru": "клинически нестабильный",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "underlying cause",
+      "category": "Clinical Consultation",
+      "hint": "asosiy sabab",
+      "hint_uz": "asosiy sabab",
+      "hint_ru": "основная причина",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "fibroids",
+      "category": "Clinical Consultation",
+      "hint": "bachadon miomalari",
+      "hint_uz": "bachadon miomalari",
+      "hint_ru": "миомы матки",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "hormonal causes",
+      "category": "Clinical Consultation",
+      "hint": "gormonal sabablar",
+      "hint_uz": "gormonal sabablar",
+      "hint_ru": "гормональные причины",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "gynecological conditions",
+      "category": "Clinical Consultation",
+      "hint": "ginekologik kasalliklar",
+      "hint_uz": "ginekologik kasalliklar",
+      "hint_ru": "гинекологические заболевания",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "iron deficiency",
+      "category": "Clinical Consultation",
+      "hint": "temir tanqisligi",
+      "hint_uz": "temir tanqisligi",
+      "hint_ru": "дефицит железа",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "vitamin deficiency",
+      "category": "Clinical Consultation",
+      "hint": "vitamin tanqisligi",
+      "hint_uz": "vitamin tanqisligi",
+      "hint_ru": "дефицит витаминов",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "chronic disease",
+      "category": "Clinical Consultation",
+      "hint": "surunkali kasallik",
+      "hint_uz": "surunkali kasallik",
+      "hint_ru": "хроническое заболевание",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "hematological disorder",
+      "category": "Clinical Consultation",
+      "hint": "gematologik kasallik",
+      "hint_uz": "gematologik kasallik",
+      "hint_ru": "гематологическое заболевание",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "full blood count (FBC)",
+      "category": "Clinical Consultation",
+      "hint": "umumiy qon tahlili",
+      "hint_uz": "umumiy qon tahlili",
+      "hint_ru": "общий анализ крови",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "ferritin",
+      "category": "Clinical Consultation",
+      "hint": "ferritin",
+      "hint_uz": "ferritin",
+      "hint_ru": "ферритин",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "iron studies",
+      "category": "Clinical Consultation",
+      "hint": "temir almashinuviga oid tahlillar",
+      "hint_uz": "temir almashinuviga oid tahlillar",
+      "hint_ru": "исследования обмена железа",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "exertional breathlessness",
+      "category": "Clinical Consultation",
+      "hint": "jismoniy zo'riqishda nafas qisishi",
+      "hint_uz": "jismoniy zo'riqishda nafas qisishi",
+      "hint_ru": "одышка при нагрузке",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "fatigue",
+      "category": "Clinical Consultation",
+      "hint": "charchoq / holsizlik",
+      "hint_uz": "charchoq / holsizlik",
+      "hint_ru": "утомляемость",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "gradual improvement",
+      "category": "Clinical Consultation",
+      "hint": "asta-sekin yaxshilanish",
+      "hint_uz": "asta-sekin yaxshilanish",
+      "hint_ru": "постепенное улучшение",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "immediate response",
+      "category": "Clinical Consultation",
+      "hint": "darholgi ta'sir",
+      "hint_uz": "darholgi ta'sir",
+      "hint_ru": "немедленный эффект",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "soaking through pads",
+      "category": "Clinical Consultation",
+      "hint": "prokladkalarni to'liq ho'l qiladigan darajada qon ketishi",
+      "hint_uz": "prokladkalarni to'liq ho'l qiladigan darajada qon ketishi",
+      "hint_ru": "промокание прокладок насквозь",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "faint",
+      "category": "Clinical Consultation",
+      "hint": "hushidan ketmoq / hushsizlanmoq",
+      "hint_uz": "hushidan ketmoq / hushsizlanmoq",
+      "hint_ru": "терять сознание / чувствовать предобморок",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "severe weakness",
+      "category": "Clinical Consultation",
+      "hint": "kuchli holsizlik",
+      "hint_uz": "kuchli holsizlik",
+      "hint_ru": "сильная слабость",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "urgent assessment",
+      "category": "Clinical Consultation",
+      "hint": "shoshilinch baholash",
+      "hint_uz": "shoshilinch baholash",
+      "hint_ru": "срочная медицинская оценка",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "control the cause",
+      "category": "Clinical Consultation",
+      "hint": "sababni nazorat qilmoq",
+      "hint_uz": "sababni nazorat qilmoq",
+      "hint_ru": "контролировать причину",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "correct the anemia",
+      "category": "Clinical Consultation",
+      "hint": "kamqonlikni tuzatmoq",
+      "hint_uz": "kamqonlikni tuzatmoq",
+      "hint_ru": "корректировать анемию",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Can you tell me about your menstrual bleeding?",
+      "category": "Clinical Inquiry",
+      "hint": "Tish / shikoyatingiz haqida batafsil aytib bera olasizmi?",
+      "hint_uz": "Tish / shikoyatingiz haqida batafsil aytib bera olasizmi?",
+      "hint_ru": "Расскажите подробнее о вашей боли / проблеме?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    },
+    {
+      "phrase": "If the bleeding continues at this level, does it interfere with your daily activities?",
+      "category": "Severity",
+      "hint": "Qonash kuzatiladimi yoki milk shishganmi?",
+      "hint_uz": "Qonash kuzatiladimi yoki milk shishganmi?",
+      "hint_ru": "Наблюдается ли кровоточивость или припухлость десен?",
+      "hint_en": "Clinical consultation inquiry",
+      "patient_response": ""
+    }
+  ],
+  "dialogue": [
+    {
+      "speaker": "Doctor",
+      "text": "You've been feeling exhausted for several months. Can you tell me about your menstrual bleeding?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "My periods have become much heavier over the last six months, and I'm exhausted most of the time."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "How would you describe the bleeding?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I need to change sanitary products very frequently, and the first two days are particularly heavy."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "If the bleeding continues at this level, does it interfere with your daily activities?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "Yes. I sometimes have to sit down after walking a short distance because I become breathless and light-headed."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Have you experienced palpitations or chest discomfort?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I sometimes feel my heart racing, especially when I climb stairs. Nurse: Her pulse is 106. She appears pale, although her blood pressure is stable."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "If your hemoglobin is significantly reduced, these symptoms could be related to iron-deficiency anemia."
+    },
+    {
+      "speaker": "Patient",
+      "text": "What will happen if the blood tests confirm anemia?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "If your iron stores are depleted, we'll investigate the source of the blood loss and discuss iron replacement."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Will I automatically need a blood transfusion?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "No. If your hemoglobin is severely low and you are clinically unstable, transfusion may be considered, but it is not automatically required."
+    },
+    {
+      "speaker": "Patient",
+      "text": "What if the bleeding continues despite treatment?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "If the bleeding continues, we'll need to investigate the underlying cause, including possible fibroids, hormonal causes or other gynecological conditions."
+    },
+    {
+      "speaker": "Patient",
+      "text": "And what would happen if my iron levels were normal?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "If iron deficiency were excluded, we would look for other causes of anemia, such as vitamin deficiency, chronic disease or a hematological disorder. Nurse: I'll arrange a full blood count, ferritin, iron studies and the other tests requested by the doctor."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Could anemia explain my shortness of breath?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Yes. If your hemoglobin is significantly reduced, your blood carries less oxygen, which can cause exertional breathlessness and fatigue."
+    },
+    {
+      "speaker": "Patient",
+      "text": "If I start taking iron, will I feel better immediately?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "You may notice gradual improvement, but the response is not usually immediate. More importantly, we need to identify and control the cause of the blood loss."
+    },
+    {
+      "speaker": "Patient",
+      "text": "What would you do if the bleeding became much heavier?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "If you were soaking through pads repeatedly, became faint, developed severe weakness, or experienced significant shortness of breath, you would need urgent assessment."
+    },
+    {
+      "speaker": "Patient",
+      "text": "I understand. I want to find out why this is happening."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "That is exactly the right approach. Correcting the anemia is important, but treating the underlying cause is equally important."
+    }
+  ],
+  "tests": [
+    {
+      "question": "What is the medical meaning of the term 'anemia' in clinical consultation?",
+      "option_a": "kamqonlik",
+      "option_b": "ko'p hayz qon ketishi",
+      "option_c": "g'ayritabiiy qon ketishi",
+      "option_d": "ko'p hayz ko'rish",
+      "correct_option": "A",
+      "explanation": "'anemia' atamasining to'g'ri ma'nosi: kamqonlik."
+    },
+    {
+      "question": "Which term corresponds to 'gigiyenik vositalar'?",
+      "option_a": "menorrhagia",
+      "option_b": "sanitary products",
+      "option_c": "abnormal bleeding",
+      "option_d": "heavy periods",
+      "correct_option": "B",
+      "explanation": "'gigiyenik vositalar' ma'nosiga mos keluvchi tibbiy termin 'sanitary products' hisoblanadi."
+    },
+    {
+      "question": "Which of the following is the grammatically and clinically standard question to ask about the duration of symptoms?",
+      "option_a": "How long do you having this symptom?",
+      "option_b": "How long has this condition been bothering you?",
+      "option_c": "Since what time you have this problem?",
+      "option_d": "How many days you are feeling pain?",
+      "correct_option": "B",
+      "explanation": "Klinik anamnezda davomiylikni so'rash uchun Present Perfect Continuous ('How long has... been bothering you?') to'g'ri shakl hisoblanadi."
+    },
+    {
+      "question": "When evaluating acute pain, what is the best phrasing to assess pain character?",
+      "option_a": "Is your pain bad or very bad?",
+      "option_b": "Can you describe the pain—is it sharp, dull, throbbing, or aching?",
+      "option_c": "Why do you have sharp pain today?",
+      "option_d": "Stop pain with pills immediately.",
+      "correct_option": "B",
+      "explanation": "Og'riq xarakterini aniqlashda shifokor ochiq va taklif qiluvchi variantlar (sharp, dull, throbbing, aching) beradi."
+    }
+  ]
+}

@@ -2,10 +2,17 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import api from '../../lib/api';
-import { RiStethoscopeLine, RiUser3Line, RiMailLine, RiLockPasswordLine, RiEyeLine, RiEyeOffLine } from 'react-icons/ri';
+import { useLanguage } from '../../contexts/LanguageContext';
+import LanguageSelector from '../../components/LanguageSelector';
+import {
+  RiHeartPulseLine, RiUser3Line, RiMailLine,
+  RiLockPasswordLine, RiEyeLine, RiEyeOffLine,
+  RiLoader4Line, RiStethoscopeLine, RiGroupLine
+} from 'react-icons/ri';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [form, setForm] = useState({ full_name: '', email: '', password: '', specialty_id: '', group_id: '' });
   const [specialties, setSpecialties] = useState([]);
   const [groups,      setGroups]      = useState([]);
@@ -14,8 +21,8 @@ export default function RegisterPage() {
   const [error,     setError]     = useState('');
 
   useEffect(() => {
-    api.get('/auth/specialties').then(r => setSpecialties(r.data)).catch(() => {});
-    api.get('/auth/groups').then(r => setGroups(r.data)).catch(() => {});
+    api.get('/auth/specialties').then(r => setSpecialties(r.data || [])).catch(() => {});
+    api.get('/auth/groups').then(r => setGroups(r.data || [])).catch(() => {});
   }, []);
 
   const handleSubmit = async (e) => {
@@ -23,10 +30,10 @@ export default function RegisterPage() {
     setLoading(true); setError('');
     try {
       await api.post('/auth/register', { ...form, role: 'student' });
-      toast.success("Muvaffaqiyatli ro'yxatdan o'tdingiz! Endi tizimga kiring.");
+      toast.success(t('common.success') + '! ' + t('auth.login_title'));
       navigate('/login');
     } catch (err) {
-      const msg = err.response?.data?.error || "Ro'yxatdan o'tish muvaffaqiyatsiz";
+      const msg = err.response?.data?.error || t('common.error');
       setError(msg);
       toast.error(msg);
     } finally {
@@ -34,63 +41,82 @@ export default function RegisterPage() {
     }
   };
 
-  const inputCls = "w-full bg-white border border-gray-300 rounded-xl pl-10 pr-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all";
-  const selectCls = "w-full bg-white border border-gray-300 rounded-xl px-4 py-2.5 text-sm text-gray-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all";
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4"
-      style={{ background: 'radial-gradient(ellipse at 80% 50%, rgba(99,102,241,0.08) 0%, transparent 60%), #f8fafc' }}>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 p-4 relative">
+      {/* Top right language toggle */}
+      <div className="absolute top-5 right-5 z-20">
+        <LanguageSelector variant="compact" />
+      </div>
 
       <div className="w-full max-w-md animate-scale-in">
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-cyan-500 mb-4 shadow-lg shadow-indigo-500/25">
-            <RiStethoscopeLine className="text-3xl text-white" />
+        <div className="text-center mb-6">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-3xl bg-gradient-to-tr from-blue-600 to-indigo-600 mb-3 shadow-lg shadow-blue-500/20 text-white">
+            <RiHeartPulseLine className="text-3xl" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">Ro'yxatdan o'tish</h1>
-          <p className="text-gray-500 text-sm mt-1">Talaba sifatida hisob yarating</p>
+          <h1 className="text-2xl font-black text-slate-900 tracking-tight">{t('auth.register_title')}</h1>
+          <p className="text-slate-500 text-xs sm:text-sm mt-1 font-medium">{t('auth.register_subtitle')}</p>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-xl">
+        <div className="card-standard p-7 sm:p-8 space-y-5">
           {error && (
-            <div className="mb-4 p-3 rounded-xl bg-red-50 border border-red-200 text-red-600 text-sm">
+            <div className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-bold">
               {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3.5">
             {/* Full name */}
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1.5">Ism-Familiya</label>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">{t('auth.full_name')} *</label>
               <div className="relative">
-                <RiUser3Line className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                <input type="text" placeholder="Jasur Toshmatov" required
-                  className={inputCls} value={form.full_name}
-                  onChange={e => setForm({ ...form, full_name: e.target.value })} />
+                <RiUser3Line className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-base" />
+                <input
+                  type="text"
+                  placeholder={t('auth.enter_full_name')}
+                  required
+                  value={form.full_name}
+                  onChange={e => setForm({ ...form, full_name: e.target.value })}
+                  className="input-standard pl-10 text-xs sm:text-sm"
+                />
               </div>
             </div>
 
             {/* Email */}
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1.5">Email</label>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">{t('auth.email')} *</label>
               <div className="relative">
-                <RiMailLine className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                <input type="email" placeholder="email@example.com" required
-                  className={inputCls} value={form.email}
-                  onChange={e => setForm({ ...form, email: e.target.value })} />
+                <RiMailLine className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-base" />
+                <input
+                  type="email"
+                  placeholder={t('auth.enter_email')}
+                  required
+                  value={form.email}
+                  onChange={e => setForm({ ...form, email: e.target.value })}
+                  className="input-standard pl-10 text-xs sm:text-sm"
+                />
               </div>
             </div>
 
             {/* Password */}
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1.5">Parol</label>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">{t('auth.password')} *</label>
               <div className="relative">
-                <RiLockPasswordLine className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                <input type={showPass ? 'text' : 'password'} placeholder="••••••••" required minLength={6}
-                  className={inputCls.replace('pr-4', 'pr-10')} value={form.password}
-                  onChange={e => setForm({ ...form, password: e.target.value })} />
-                <button type="button" onClick={() => setShowPass(!showPass)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors">
+                <RiLockPasswordLine className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-base" />
+                <input
+                  type={showPass ? 'text' : 'password'}
+                  placeholder="••••••••"
+                  required
+                  minLength={6}
+                  value={form.password}
+                  onChange={e => setForm({ ...form, password: e.target.value })}
+                  className="input-standard pl-10 pr-10 text-xs sm:text-sm"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPass(!showPass)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors p-1"
+                >
                   {showPass ? <RiEyeOffLine /> : <RiEyeLine />}
                 </button>
               </div>
@@ -98,35 +124,49 @@ export default function RegisterPage() {
 
             {/* Specialty */}
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1.5">Mutaxassislik</label>
-              <select className={selectCls} value={form.specialty_id}
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">{t('auth.specialty')}</label>
+              <select
+                value={form.specialty_id}
                 onChange={e => setForm({ ...form, specialty_id: e.target.value })}
-                style={{ background: 'white' }}>
-                <option value="">Tanlang...</option>
+                className="input-standard text-xs sm:text-sm"
+              >
+                <option value="">{t('auth.select_specialty')}</option>
                 {specialties.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
               </select>
             </div>
 
             {/* Group */}
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1.5">Akademik guruh</label>
-              <select className={selectCls} value={form.group_id}
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">{t('auth.group')}</label>
+              <select
+                value={form.group_id}
                 onChange={e => setForm({ ...form, group_id: e.target.value })}
-                style={{ background: 'white' }}>
-                <option value="">Tanlang...</option>
+                className="input-standard text-xs sm:text-sm"
+              >
+                <option value="">{t('auth.select_group')}</option>
                 {groups.map(g => <option key={g.id} value={g.id}>{g.name}</option>)}
               </select>
             </div>
 
-            <button type="submit" disabled={loading}
-              className="w-full py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-indigo-500 to-indigo-600 text-white transition-all shadow-lg shadow-indigo-500/25 disabled:opacity-50 mt-2">
-              {loading ? 'Yaratilmoqda...' : "Hisob yaratish"}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full btn-primary-gradient py-3 text-sm mt-2"
+            >
+              {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <RiLoader4Line className="animate-spin text-base" />
+                  {t('auth.registering')}
+                </span>
+              ) : t('auth.sign_up_btn')}
             </button>
           </form>
 
-          <p className="text-center text-xs text-gray-500 mt-5">
-            Hisobingiz bormi?{' '}
-            <Link to="/login" className="text-indigo-600 hover:text-indigo-700 font-medium">Kirish</Link>
+          <p className="text-center text-xs text-slate-500 font-medium">
+            {t('auth.have_account')}{' '}
+            <Link to="/login" className="text-blue-600 hover:text-blue-700 font-bold hover:underline">
+              {t('auth.sign_in_btn')}
+            </Link>
           </p>
         </div>
       </div>
