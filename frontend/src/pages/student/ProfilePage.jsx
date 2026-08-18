@@ -428,7 +428,7 @@ export default function ProfilePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in">
             
             {/* Form 1: Personal Info */}
-            <div className="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-xs space-y-4">
+            <div className="card-standard p-6 sm:p-7 space-y-4">
               <h3 className="text-sm font-black text-slate-900 flex items-center gap-2 pb-3 border-b border-slate-100">
                 <RiUser3Line className="text-blue-600 text-base" />
                 <span>{t('student.profile.personal_info') || "Shaxsiy ma'lumotlar"}</span>
@@ -439,31 +439,39 @@ export default function ProfilePage() {
                   <label className="block text-xs font-bold text-slate-700 mb-1.5">
                     {t('auth.full_name') || "F.I.Sh"}
                   </label>
-                  <input
-                    type="text"
-                    value={profileForm.full_name}
-                    onChange={(e) => setProfileForm({ ...profileForm, full_name: e.target.value })}
-                    className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-hidden focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all"
-                  />
+                  <div className="relative flex items-center">
+                    <RiUser3Line className="absolute left-3.5 text-slate-400 text-base pointer-events-none" />
+                    <input
+                      type="text"
+                      value={profileForm.full_name}
+                      onChange={(e) => setProfileForm({ ...profileForm, full_name: e.target.value })}
+                      className="input-standard has-icon-left text-xs sm:text-sm"
+                      style={{ paddingLeft: '2.75rem' }}
+                    />
+                  </div>
                 </div>
 
                 <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1.5">
                     {t('auth.email') || "Elektron pochta"}
                   </label>
-                  <input
-                    type="email"
-                    value={profileForm.email}
-                    disabled
-                    className="w-full bg-slate-100 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-400 font-medium cursor-not-allowed"
-                  />
+                  <div className="relative flex items-center">
+                    <RiMailLine className="absolute left-3.5 text-slate-400 text-base pointer-events-none" />
+                    <input
+                      type="email"
+                      value={profileForm.email}
+                      disabled
+                      className="input-standard has-icon-left text-xs sm:text-sm bg-slate-100/70 text-slate-400 cursor-not-allowed border-slate-200"
+                      style={{ paddingLeft: '2.75rem' }}
+                    />
+                  </div>
                 </div>
 
                 <div className="pt-2">
                   <button
                     type="submit"
                     disabled={profileSaving}
-                    className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs shadow-md shadow-blue-200 transition-all flex items-center gap-2 disabled:opacity-50 cursor-pointer"
+                    className="btn-primary py-2.5 px-5 text-xs font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-2 disabled:opacity-50"
                   >
                     <RiSave3Line />
                     <span>{profileSaving ? (t('common.loading') || 'Saqlanmoqda...') : (t('common.save') || 'Saqlash')}</span>
@@ -473,7 +481,7 @@ export default function ProfilePage() {
             </div>
 
             {/* Form 2: Password Security */}
-            <div className="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-xs space-y-4">
+            <div className="card-standard p-6 sm:p-7 space-y-4">
               <h3 className="text-sm font-black text-slate-900 flex items-center gap-2 pb-3 border-b border-slate-100">
                 <RiKey2Line className="text-purple-600 text-base" />
                 <span>{t('auth.password') || "Xavfsizlik va Parolni o'zgartirish"}</span>
@@ -484,33 +492,41 @@ export default function ProfilePage() {
                   <label className="block text-xs font-bold text-slate-700 mb-1.5">
                     Yangi parol
                   </label>
-                  <input
-                    type="password"
-                    placeholder="••••••••"
-                    value={passwordForm.new_password}
-                    onChange={(e) => setPasswordForm({ ...passwordForm, new_password: e.target.value })}
-                    className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-hidden focus:border-purple-500 focus:ring-2 focus:ring-purple-100 transition-all"
-                  />
+                  <div className="relative flex items-center">
+                    <RiLockPasswordLine className="absolute left-3.5 text-slate-400 text-base pointer-events-none" />
+                    <input
+                      type="password"
+                      placeholder="••••••••"
+                      value={passwordForm.new_password}
+                      onChange={(e) => setPasswordForm({ ...passwordForm, new_password: e.target.value })}
+                      className="input-standard has-icon-left text-xs sm:text-sm"
+                      style={{ paddingLeft: '2.75rem' }}
+                    />
+                  </div>
                 </div>
 
                 <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1.5">
                     Parolni tasdiqlash
                   </label>
-                  <input
-                    type="password"
-                    placeholder="••••••••"
-                    value={passwordForm.confirm_password}
-                    onChange={(e) => setPasswordForm({ ...passwordForm, confirm_password: e.target.value })}
-                    className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-hidden focus:border-purple-500 focus:ring-2 focus:ring-purple-100 transition-all"
-                  />
+                  <div className="relative flex items-center">
+                    <RiLockPasswordLine className="absolute left-3.5 text-slate-400 text-base pointer-events-none" />
+                    <input
+                      type="password"
+                      placeholder="••••••••"
+                      value={passwordForm.confirm_password}
+                      onChange={(e) => setPasswordForm({ ...passwordForm, confirm_password: e.target.value })}
+                      className="input-standard has-icon-left text-xs sm:text-sm"
+                      style={{ paddingLeft: '2.75rem' }}
+                    />
+                  </div>
                 </div>
 
                 <div className="pt-2">
                   <button
                     type="submit"
                     disabled={passwordSaving}
-                    className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs shadow-md shadow-purple-200 transition-all flex items-center gap-2 disabled:opacity-50 cursor-pointer"
+                    className="btn-primary py-2.5 px-5 text-xs font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-2 disabled:opacity-50"
                   >
                     <RiRefreshLine />
                     <span>{passwordSaving ? (t('common.loading') || 'Yangilanmoqda...') : (t('common.update') || 'Parolni yangilash')}</span>

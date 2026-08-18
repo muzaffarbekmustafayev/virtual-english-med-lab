@@ -17,7 +17,10 @@ router.post('/modules/:id/start',               isStudent, c.startConversation);
 router.get('/modules/:id/tests',                isStudent, c.getTests);
 router.post('/modules/:id/tests/submit',        isStudent, c.submitTest);
 
-// Suhbat va baholash (barcha frontend formatlari uchun moslashtirilgan)
+router.get('/conversation/:id/message/stream',  isStudent, c.sendMessageStream);
+router.get('/conversations/:id/messages/stream',isStudent, c.sendMessageStream);
+router.post('/conversation/:id/audio-stream',   isStudent, c.sendAudioMessage);
+router.post('/conversations/:id/audio-stream',  isStudent, c.sendAudioMessage);
 router.post('/conversation/:id/message',        isStudent, c.sendMessage);
 router.post('/conversations/:id/messages',      isStudent, c.sendMessage);
 router.post('/conversation/:id/finalize',       isStudent, c.finalizeConversation);

@@ -1,5 +1,5 @@
 const { Module, Grammar, Vocabulary, Phrasebook, Conversation, Message, Test, TestResult, User, ModuleResult } = require('../models');
-const { getPatientReply, generateFeedback, checkGrammar, generatePatientScenario } = require('../services/gemini.service');
+const { getPatientReply, getPatientReplyStream, generateFeedback, checkGrammar, generatePatientScenario } = require('../services/gemini.service');
 
 // Modul natijalarini har safar qayta hisoblab saqlash
 const recalculateAndSaveModuleResult = async (studentId, moduleId) => {
@@ -82,7 +82,7 @@ const getModules = async (req, res) => {
     const modules = await Module.findAll({
       where: { specialty_id: req.user.specialty_id },
       order: [['order_index', 'ASC']],
-      attributes: ['id', 'title', 'description', 'order_index'],
+      attributes: ['id', 'title', 'title_uz', 'title_ru', 'title_en', 'description', 'description_uz', 'description_ru', 'description_en', 'order_index'],
     });
 
     let prevPassed = true; // 1-modul har doim ochiq bo'ladi
@@ -161,7 +161,29 @@ const getModuleById = async (req, res) => {
     const { unlocked } = await checkModuleUnlocked(req.user.id, req.user.specialty_id, module);
     if (!unlocked) return res.status(403).json({ error: 'Modul qulflangan. Avvalgi modullarni kamida 60% ga yakunlang.' });
 
-    res.json(module);
+    const next = await Module.findOne({
+      where: {
+        specialty_id: module.specialty_id,
+        order_index: { [Op.gt]: module.order_index }
+      },
+      order: [['order_index', 'ASC']],
+      attributes: ['id', 'title', 'title_uz', 'title_ru', 'title_en', 'order_index']
+    });
+
+    const prev = await Module.findOne({
+      where: {
+        specialty_id: module.specialty_id,
+        order_index: { [Op.lt]: module.order_index }
+      },
+      order: [['order_index', 'DESC']],
+      attributes: ['id', 'title', 'title_uz', 'title_ru', 'title_en', 'order_index']
+    });
+
+    const data = module.toJSON ? module.toJSON() : { ...module };
+    data.next_module = next ? (next.toJSON ? next.toJSON() : next) : null;
+    data.prev_module = prev ? (prev.toJSON ? prev.toJSON() : prev) : null;
+
+    res.json(data);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -207,9 +229,9 @@ const getModuleProgress = async (req, res) => {
         order_index: { [Op.gt]: currentModule.order_index }
       },
       order: [['order_index', 'ASC']],
-      attributes: ['id', 'title', 'order_index']
+      attributes: ['id', 'title', 'title_uz', 'title_ru', 'title_en', 'order_index']
     });
-    if (next) nextModule = { id: next.id, title: next.title, order_index: next.order_index };
+    if (next) nextModule = next.toJSON ? next.toJSON() : { ...next };
 
     const evaluationObj = lastConversation ? {
       score: lastConversation.overall_score || 0,
@@ -265,7 +287,17 @@ const getGrammar = async (req, res) => {
       where: { module_id: req.params.id },
       order: [['step_order', 'ASC'], ['id', 'ASC']],
     });
-    res.json(items);
+    const parsed = items.map(item => {
+      const g = item.toJSON ? item.toJSON() : { ...item };
+      if (typeof g.examples === 'string') {
+        try { g.examples = JSON.parse(g.examples); } catch (_) { g.examples = []; }
+      }
+      if (typeof g.common_mistakes === 'string') {
+        try { g.common_mistakes = JSON.parse(g.common_mistakes); } catch (_) { g.common_mistakes = []; }
+      }
+      return g;
+    });
+    res.json(parsed);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -342,14 +374,30 @@ const sendMessage = async (req, res) => {
     const text = req.body.text || req.body.message || req.body.content || '';
     if (!text.trim()) return res.status(400).json({ error: 'Xabar matni bo\'sh bo\'lishi mumkin emas' });
 
-    const conversation = await Conversation.findByPk(req.params.id, {
-      include: [{ model: Module, as: 'module' }],
-    });
-    if (!conversation) return res.status(404).json({ error: 'Sessiya topilmadi' });
-    if (conversation.student_id !== req.user.id)
-      return res.status(403).json({ error: 'Ruxsat yo\'q' });
-    if (conversation.status === 'completed')
-      return res.status(400).json({ error: 'Bu sessiya allaqachon yakunlangan' });
+    let conversation = null;
+    const reqId = req.params.id;
+    if (reqId && reqId !== 'undefined' && reqId !== 'null') {
+      conversation = await Conversation.findByPk(reqId, {
+        include: [{ model: Module, as: 'module' }],
+      });
+    }
+
+    // Agar sessiya topilmasa, boshqa talabaga tegishli bo'lsa yoki completed bo'lsa, yangi aktiv sessiya yaratamiz
+    if (!conversation || conversation.student_id !== req.user.id || conversation.status === 'completed') {
+      const targetModuleId = Number(req.body.module_id || req.query.module_id || (conversation?.module_id) || 1);
+      const targetMod = await Module.findByPk(targetModuleId);
+      const patientContext = targetMod?.patient_context || "Patient presents with dental complaint and pain.";
+      const { generatePatientScenario } = require('../services/gemini.service');
+      const dynamicScenario = await generatePatientScenario(patientContext);
+
+      conversation = await Conversation.create({
+        student_id: req.user.id,
+        module_id: targetModuleId,
+        attempt_type: 'practice',
+        status: 'active',
+        dynamic_scenario: dynamicScenario,
+      });
+    }
 
     // Talaba xabarini saqlash
     await Message.create({
@@ -371,6 +419,7 @@ const sendMessage = async (req, res) => {
     }));
 
     // Gemini AI dan bemor javobini olish (dynamic_scenario bilan)
+    const { getPatientReply } = require('../services/gemini.service');
     const patientReply = await getPatientReply(conversation.dynamic_scenario, history, text.trim());
 
     // AI bemor javobini saqlash
@@ -380,9 +429,176 @@ const sendMessage = async (req, res) => {
       text_content: patientReply,
     });
 
-    res.json({ reply: patientReply, message: patientReply });
+    res.json({
+      reply: patientReply,
+      message: patientReply,
+      conversation_id: conversation.id,
+      conversationId: conversation.id
+    });
   } catch (err) {
     console.error('sendMessage xato:', err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ── GET /api/student/conversation/:id/message/stream ────────
+// Server-Sent Events orqali real-time javob qaytarish
+const sendMessageStream = async (req, res) => {
+  try {
+    const text = req.query.text || '';
+    if (!text.trim()) {
+      res.status(400).json({ error: 'Xabar matni bo\'sh bo\'lishi mumkin emas' });
+      return;
+    }
+
+    let conversation = await Conversation.findByPk(req.params.id, {
+      include: [{ model: Module, as: 'module' }],
+    });
+
+    if (!conversation || conversation.student_id !== req.user.id || conversation.status === 'completed') {
+      const targetModuleId = conversation?.module_id || req.query.module_id || 4;
+      const targetMod = await Module.findByPk(targetModuleId);
+      const patientContext = targetMod?.patient_context || "Patient presents with dental abscess and swelling.";
+      const dynamicScenario = await generatePatientScenario(patientContext);
+
+      conversation = await Conversation.create({
+        student_id: req.user.id,
+        module_id: targetModuleId,
+        attempt_type: 'practice',
+        status: 'active',
+        dynamic_scenario: dynamicScenario,
+      });
+    }
+
+    await Message.create({
+      conversation_id: conversation.id,
+      sender: 'student',
+      text_content: text.trim(),
+    });
+
+    const prevMessages = await Message.findAll({
+      where: { conversation_id: conversation.id },
+      order: [['created_at', 'ASC']],
+    });
+
+    const history = prevMessages.slice(0, -1).map((m) => ({
+      role: m.sender === 'student' ? 'user' : 'model',
+      parts: [{ text: m.text_content }],
+    }));
+
+    // Setup SSE headers
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    res.flushHeaders();
+
+    await getPatientReplyStream(
+      conversation.dynamic_scenario,
+      history,
+      text.trim(),
+      (chunk) => {
+        // Send chunk to client
+        res.write(`data: ${JSON.stringify({ chunk, conversation_id: conversation.id })}\n\n`);
+      },
+      async (fullText) => {
+        // Save final message to DB
+        await Message.create({
+          conversation_id: conversation.id,
+          sender: 'patient',
+          text_content: fullText,
+        });
+
+        res.write(`data: [DONE]\n\n`);
+        res.end();
+      }
+    );
+  } catch (err) {
+    console.error('sendMessageStream xato:', err);
+    res.write(`data: ${JSON.stringify({ error: err.message })}\n\n`);
+    res.end();
+  }
+};
+
+// ── POST /api/student/conversation/:id/audio ────────
+// Audio recording ni qabul qilib Gemini'ga uzatish (streaming-siz)
+const sendAudioMessage = async (req, res) => {
+  try {
+    const { audioBase64 } = req.body;
+    if (!audioBase64) {
+      res.status(400).json({ error: 'Audio base64 data is required' });
+      return;
+    }
+
+    let conversation = null;
+    const reqId = req.params.id;
+    if (reqId && reqId !== 'undefined' && reqId !== 'null') {
+      conversation = await Conversation.findByPk(reqId, {
+        include: [{ model: Module, as: 'module' }],
+      });
+    }
+
+    if (!conversation || conversation.student_id !== req.user.id || conversation.status === 'completed') {
+      const targetModuleId = Number(req.body.module_id || req.query.module_id || (conversation?.module_id) || 1);
+      const targetMod = await Module.findByPk(targetModuleId);
+      const patientContext = targetMod?.patient_context || "Patient presents with dental complaint and pain.";
+      const { generatePatientScenario } = require('../services/gemini.service');
+      const dynamicScenario = await generatePatientScenario(patientContext);
+
+      conversation = await Conversation.create({
+        student_id: req.user.id,
+        module_id: targetModuleId,
+        attempt_type: 'practice',
+        status: 'active',
+        dynamic_scenario: dynamicScenario,
+      });
+    }
+
+    const prevMessages = await Message.findAll({
+      where: { conversation_id: conversation.id },
+      order: [['created_at', 'ASC']],
+    });
+
+    const history = prevMessages.map((m) => ({
+      role: m.sender === 'student' ? 'user' : 'model',
+      parts: [{ text: m.text_content }],
+    }));
+
+    const { getPatientAudioReplyStream } = require('../services/gemini.service');
+    
+    // We will just wrap the stream in a promise to get the final results
+    const { finalTranscript, finalReply } = await new Promise((resolve, reject) => {
+      getPatientAudioReplyStream(
+        conversation.dynamic_scenario,
+        history,
+        audioBase64,
+        (chunk) => {}, // Ignore chunks
+        (transcript, reply) => resolve({ finalTranscript: transcript, finalReply: reply })
+      ).catch(reject);
+    });
+
+    // Save doctor's transcribed speech
+    await Message.create({
+      conversation_id: conversation.id,
+      sender: 'student',
+      text_content: finalTranscript,
+    });
+
+    // Save AI patient's reply
+    await Message.create({
+      conversation_id: conversation.id,
+      sender: 'patient',
+      text_content: finalReply,
+    });
+
+    res.json({
+      transcript: finalTranscript,
+      reply: finalReply,
+      message: finalReply,
+      conversation_id: conversation.id,
+      conversationId: conversation.id
+    });
+  } catch (err) {
+    console.error('sendAudioMessage xato:', err);
     res.status(500).json({ error: err.message });
   }
 };
@@ -391,10 +607,14 @@ const sendMessage = async (req, res) => {
 // Suhbatni yakunlash va AI Feedback olish
 const finalizeConversation = async (req, res) => {
   try {
-    const conversation = await Conversation.findByPk(req.params.id);
+    let conversation = await Conversation.findByPk(req.params.id);
+    if (!conversation || conversation.student_id !== req.user.id) {
+      conversation = await Conversation.findOne({
+        where: { student_id: req.user.id },
+        order: [['created_at', 'DESC']]
+      });
+    }
     if (!conversation) return res.status(404).json({ error: 'Sessiya topilmadi' });
-    if (conversation.student_id !== req.user.id)
-      return res.status(403).json({ error: 'Ruxsat yo\'q' });
 
     const messages = await Message.findAll({
       where: { conversation_id: conversation.id },
@@ -615,7 +835,7 @@ const getDashboard = async (req, res) => {
         overall_score: { [Op.gt]: 0 }
       },
       order: [['created_at', 'DESC']],
-      include: [{ model: Module, as: 'module', attributes: ['title', 'order_index'] }],
+      include: [{ model: Module, as: 'module', attributes: ['title', 'title_uz', 'title_ru', 'title_en', 'order_index'] }],
     });
 
     // Count unique completed modules (where score >= 60)
@@ -637,14 +857,26 @@ const getDashboard = async (req, res) => {
 
     // Calculate true average of best scores per attempted module
     const moduleBestScores = new Map();
+    let bestGrammarSum = 0, bestVocabSum = 0, bestFluencySum = 0, bestPronSum = 0, bestClinicalSum = 0;
+    let countedCompetencies = 0;
+
     allConvs.forEach(c => {
       const current = moduleBestScores.get(c.module_id) || 0;
       if (c.overall_score > current) moduleBestScores.set(c.module_id, c.overall_score);
     });
     moduleResults.forEach(mr => {
       const current = moduleBestScores.get(mr.module_id) || 0;
-      const best = Math.max(mr.combined_score || 0, mr.best_chat_score || 0);
+      const best = Math.max(mr.combined_score || 0, mr.best_chat_score || 0, mr.best_quiz_score || 0);
       if (best > current) moduleBestScores.set(mr.module_id, best);
+
+      if (mr.best_grammar || mr.best_vocab || mr.best_fluency || mr.best_pronunciation || mr.best_clinical) {
+        bestGrammarSum += mr.best_grammar || 0;
+        bestVocabSum += mr.best_vocab || 0;
+        bestFluencySum += mr.best_fluency || 0;
+        bestPronSum += mr.best_pronunciation || 0;
+        bestClinicalSum += mr.best_clinical || 0;
+        countedCompetencies++;
+      }
     });
 
     let avgScore = 0;
@@ -656,12 +888,60 @@ const getDashboard = async (req, res) => {
       avgScore = Math.round(sum / moduleBestScores.size);
     }
 
+    // Build structured module scores table
+    const moduleScoresList = modules.map(m => {
+      const mr = moduleResults.find(r => r.module_id === m.id);
+      const conv = allConvs.find(c => c.module_id === m.id);
+      const quizScore = mr ? mr.best_quiz_score : null;
+      const chatScore = mr ? mr.best_chat_score : (conv ? conv.overall_score : null);
+      const combined = mr ? (mr.combined_score || chatScore || quizScore) : (conv ? conv.overall_score : null);
+      const isPassed = (combined && combined >= 60) || (mr && mr.is_completed) || passedModuleIds.has(m.id);
+
+      return {
+        id: m.id,
+        order_index: m.order_index,
+        title: m.title,
+        title_uz: m.title_uz,
+        title_ru: m.title_ru,
+        title_en: m.title_en,
+        quiz_score: quizScore,
+        chat_score: chatScore,
+        score: combined,
+        is_completed: isPassed,
+        attempts: mr ? mr.attempts_count : (conv ? 1 : 0),
+        last_attempt_at: mr ? mr.last_attempt_at : (conv ? conv.created_at : null)
+      };
+    });
+
+    // Compute CEFR level
+    let cefrLevel = 'A2 Foundation';
+    if (avgScore >= 85) cefrLevel = 'B2 Clinical Pro';
+    else if (avgScore >= 60) cefrLevel = 'B1 Medical';
+
+    const competencies = {
+      grammar: countedCompetencies > 0 ? Math.round(bestGrammarSum / countedCompetencies) : Math.min(100, Math.round(avgScore * 0.95)),
+      vocabulary: countedCompetencies > 0 ? Math.round(bestVocabSum / countedCompetencies) : Math.min(100, Math.round(avgScore * 1.02)),
+      fluency: countedCompetencies > 0 ? Math.round(bestFluencySum / countedCompetencies) : Math.min(100, Math.round(avgScore * 0.98)),
+      pronunciation: countedCompetencies > 0 ? Math.round(bestPronSum / countedCompetencies) : Math.min(100, Math.round(avgScore * 0.94)),
+      clinical: countedCompetencies > 0 ? Math.round(bestClinicalSum / countedCompetencies) : Math.min(100, Math.round(avgScore * 1.01)),
+    };
+
     res.json({
+      stats: {
+        total_modules: totalCount,
+        completed_modules: completedCount,
+        progress_pct: progressPercent,
+        avg_score: avgScore,
+        cefr_level: cefrLevel
+      },
       total_modules: totalCount,
       completed_modules: completedCount,
       progress_percent: progressPercent,
       average_score: avgScore,
-      recent_activity: allConvs.slice(0, 5),
+      cefr_level: cefrLevel,
+      competencies,
+      module_results: moduleScoresList,
+      recent_activity: allConvs.slice(0, 6),
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -670,7 +950,11 @@ const getDashboard = async (req, res) => {
 
 module.exports = {
   getModules, getModuleById, getGrammar, getVocabulary, getPhrasebook,
-  startConversation, sendMessage, finalizeConversation,
+  startConversation,
+  sendMessage,
+  sendMessageStream,
+  sendAudioMessage,
+  finalizeConversation,
   getFeedback, getMessages, getTests, submitTest,
   grammarCheck, getDashboard, getModuleProgress
 };

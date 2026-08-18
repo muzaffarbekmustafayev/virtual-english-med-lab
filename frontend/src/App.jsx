@@ -61,6 +61,9 @@ export default function App() {
           <Route path="/student/grammar" element={
             <ProtectedRoute allowedRoles={['student']}><GrammarCheckerPage /></ProtectedRoute>
           }/>
+          <Route path="/student/grammar/:tab" element={
+            <ProtectedRoute allowedRoles={['student']}><GrammarCheckerPage /></ProtectedRoute>
+          }/>
           <Route path="/student/forum" element={
             <ProtectedRoute allowedRoles={['student']}><ForumPage /></ProtectedRoute>
           }/>
@@ -93,9 +96,10 @@ export default function App() {
           <Route path="/admin/groups" element={
             <ProtectedRoute allowedRoles={['admin']}><AdminGroupsPage /></ProtectedRoute>
           }/>
-          <Route path="/admin/content" element={
+          <Route path="/admin/content/:tab" element={
             <ProtectedRoute allowedRoles={['admin']}><ContentManager /></ProtectedRoute>
           }/>
+          <Route path="/admin/content" element={<Navigate to="/admin/content/grammar" replace />}/>
 
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/login" replace />}/>

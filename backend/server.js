@@ -13,10 +13,21 @@ async function startServer() {
     await sequelize.sync();
     console.log('✅ Barcha jadvallar sinxronlashtirildi');
 
-    app.listen(PORT, () => {
+    // Auto-seed admin@gmail.com / admin123 and base host data
+    const { ensureDefaultSeedData } = require('./src/services/initDb.service');
+    await ensureDefaultSeedData();
+
+    const { WebSocketServer } = require('ws');
+    const { setupLiveAudioWebSocket } = require('./src/services/liveAudio.service');
+
+    const server = app.listen(PORT, () => {
       console.log(`🚀 Server ishga tushdi: http://localhost:${PORT}`);
       console.log(`📋 Muhit: ${process.env.NODE_ENV || 'development'}`);
     });
+
+    const wss = new WebSocketServer({ server });
+    setupLiveAudioWebSocket(wss);
+    console.log('🔌 WebSocket server tayyor');
   } catch (error) {
     console.error('❌ Server ishga tushmadi:', error.message || error);
     if (error.original) console.error('  Asl xato:', error.original.message || error.original);

@@ -3,7 +3,7 @@ import Sidebar from './Sidebar';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import LanguageSelector from './LanguageSelector';
-import { RiMenu4Line, RiUser3Line, RiShieldCheckLine, RiHeartPulseLine } from 'react-icons/ri';
+import { RiMenu4Line, RiUser3Line, RiShieldCheckLine, RiHeartPulseLine, RiSparklingFill } from 'react-icons/ri';
 
 export default function Layout({ children }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -14,23 +14,23 @@ export default function Layout({ children }) {
   const isDental = specialtyName.toLowerCase().includes('stom') || specialtyName.toLowerCase().includes('dent');
 
   return (
-    <div className="flex min-h-screen bg-slate-50 text-slate-800 antialiased selection:bg-blue-500 selection:text-white">
+    <div className="flex min-h-screen bg-slate-50 text-slate-800 antialiased selection:bg-blue-600 selection:text-white">
       {/* Mobile Backdrop Overlay */}
       {isMobileMenuOpen && (
         <div
           onClick={() => setIsMobileMenuOpen(false)}
-          className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-40 md:hidden transition-opacity duration-200"
+          className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 md:hidden transition-opacity duration-200"
           aria-hidden="true"
         />
       )}
 
-      {/* Standard Sidebar */}
+      {/* Standard Sidebar Navigation */}
       <Sidebar isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
 
-      {/* Main Content Area */}
+      {/* Main Content Layout */}
       <div className="flex-1 min-h-screen w-full flex flex-col md:pl-[260px] transition-all overflow-x-hidden">
-        {/* Standard Top Navbar Header */}
-        <header className="sticky top-0 left-0 right-0 h-16 bg-white/85 backdrop-blur-md border-b border-slate-200/80 z-30 px-4 sm:px-8 flex items-center justify-between shadow-2xs">
+        {/* Sticky Top Header */}
+        <header className="sticky top-0 left-0 right-0 h-16 bg-white/90 backdrop-blur-md border-b border-slate-200/90 z-30 px-4 sm:px-8 flex items-center justify-between shadow-2xs">
           {/* Left section: Mobile menu trigger + Specialty tag */}
           <div className="flex items-center gap-3">
             <button
@@ -47,37 +47,24 @@ export default function Layout({ children }) {
                 <span>{isDental ? '🦷' : '🩺'}</span>
                 <span className="truncate max-w-[180px] sm:max-w-none">{specialtyName}</span>
               </span>
-              <span className="hidden md:inline-block text-xs font-semibold text-slate-400">
+              <span className="hidden lg:inline-block text-xs font-bold text-slate-400">
                 · {t('app_title')}
               </span>
             </div>
           </div>
 
-          {/* Right section: Language Dropdown & Quick User Profile */}
+          {/* Right section: Language Dropdown & Quick User Indicator */}
           <div className="flex items-center gap-3">
+            <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-full bg-slate-100/80 border border-slate-200/80 text-[11px] font-bold text-slate-600">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="truncate max-w-[120px]">{user?.full_name?.split(' ')[0] || 'User'}</span>
+            </div>
             <LanguageSelector variant="navbar" />
-
-            {/* User Quick Chip */}
-            {user && (
-              <div className="flex items-center gap-2.5 pl-3 border-l border-slate-200">
-                <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white text-xs font-extrabold flex items-center justify-center shadow-xs flex-shrink-0">
-                  {user.full_name?.[0]?.toUpperCase() || <RiUser3Line />}
-                </div>
-                <div className="hidden lg:block text-left">
-                  <p className="text-xs font-extrabold text-slate-900 leading-tight truncate max-w-[130px]">
-                    {user.full_name?.split(' ')[0]}
-                  </p>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                    {user.role}
-                  </p>
-                </div>
-              </div>
-            )}
           </div>
         </header>
 
-        {/* Main Content Layout */}
-        <main className="flex-1 w-full px-4 py-6 sm:px-6 md:px-8 max-w-[1400px] mx-auto animate-fade-in">
+        {/* Main Content Container */}
+        <main className="flex-1 w-full px-4 py-6 sm:px-6 md:px-8 max-w-[1440px] mx-auto animate-fade-in">
           {children}
         </main>
       </div>

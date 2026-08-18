@@ -9,12 +9,15 @@ export const TRANSLATIONS = {
     app_subtitle: "English Lab",
     sign_out: "Chiqish",
     navigation: "Menyu",
+    select_language: "Tilni tanlang",
+    lang_footer_hint: "Tibbiy kontent avtomatik moslashadi",
+    lang_count_badge: "3 tilda",
 
     // Flat nav keys
     nav_dashboard: "Boshqaruv paneli",
     nav_modules: "Modullar",
     nav_grammar: "Grammatika tekshiruvi",
-    nav_forum: "Klinik Forum",
+    nav_forum: "Forum",
     nav_profile: "Shaxsiy profil",
     nav_groups: "Guruhlar",
     nav_reports: "Hisobotlar",
@@ -40,6 +43,10 @@ export const TRANSLATIONS = {
     step_badge_5: "5-Bosqich: Quiz",
     step_badge_6: "6-Bosqich: Virtual Bemor",
     step_badge_7: "7-Bosqich: Natijalar",
+    steps_progress_text: "{done}/{total} bosqich yakunlandi",
+    results_not_available_title: "Natijalar hali mavjud emas",
+    results_not_available_desc: "Avval 6-bosqichdagi virtual bemor bilan muloqot qilib, baholash oling.",
+    chat_virtual_patient_btn_step: "Virtual Bemor Chati (6-Bosqich)",
 
     // Flat chat keys
     chat_header_title: "Virtual Bemor bilan Jonli Muloqot",
@@ -83,6 +90,10 @@ export const TRANSLATIONS = {
     results_all_modules_btn: "Barcha modullarga qaytish",
     results_retry_btn: "Qayta urinish",
     results_next_module_btn: "Keyingi modul: #{id}",
+    results_next_module_label: "Keyingi Modul",
+    results_next_locked_msg: "Keyingi modul qulflangan (Kamida 60% kerak)",
+    results_course_completed_title: "Tabriklaymiz! Barcha modullar yakunlandi! 🏆",
+    results_course_completed_desc: "Siz mutaxassislik bo'yicha barcha klinik modullarni muvaffaqiyatli tamomladingiz.",
 
     // Step 1: Grammar
     grammar_title: "Klinik Grammatika & Qoidalar",
@@ -92,8 +103,13 @@ export const TRANSLATIONS = {
     grammar_formula_label: "Formula",
     grammar_examples: "Klinik Gap Namunalar",
     grammar_mistakes_title: "Keng Tarqalgan Xatolar va To'g'ri Shakllari",
+    grammar_incorrect: "✕ Noto'g'ri",
+    grammar_correct: "✓ To'g'ri",
+    grammar_explanation_label: "Izoh:",
     grammar_listen: "Talaffuzni tinglash",
     grammar_all_learned: "Grammatikani o'zlashtirdim → Lug'atga o'tish",
+    grammar_no_rules_title: "Ushbu modul uchun grammatik qoidalar",
+    grammar_no_rules_desc: "Klinik muloqotda grammatik to'g'ri jumlalardan foydalanish bemor ishonchini oshiradi va aniq tashxis qo'yishga yordam beradi.",
 
     // Step 2: Vocab
     vocab_title: "Klinik Lug'at & Terminologiya",
@@ -116,7 +132,9 @@ export const TRANSLATIONS = {
     gap_subtitle: "Klinik iboralarni to'g'ri so'zlar bilan yakunlang",
     gap_check: "Javoblarni tekshirish",
     gap_retry: "Qayta urinish",
-    gap_next: "Test / Quiz bosqichiga o'tish",
+    gap_next: "Keyingisi: Quiz",
+    gap_score_passed: "{pct}% To'g'ri!",
+    gap_score_failed: "{pct}% (Kamida 60% kerak)",
 
     // Step 4: Quiz
     quiz_title: "Modul bo'yicha Klinik Test",
@@ -223,14 +241,22 @@ export const TRANSLATIONS = {
     student: {
       dashboard: {
         title: "Talaba Portali",
+        badge: "Talaba Portali",
+        greeting: "Salom, {name}",
         greeting_morning: "Xayrli tong",
         greeting_afternoon: "Xayrli kun",
         greeting_evening: "Xayrli kech",
         subtitle: "Yangi modullarni ochish uchun klinik amaliyotni davom ettiring",
         total_modules: "Jami modullar",
         completed_modules: "Yakunlangan",
+        avg_score: "O'rtacha ball",
         average_score: "O'rtacha ball",
+        overall_progress: "Umumiy jarayon",
         course_progress: "O'quv kursi jarayoni",
+        progress_title: "O'quv kursi jarayoni",
+        progress_start: "0% (Boshlang'ich)",
+        progress_end: "100% (Klinik Shifokor)",
+        modules_completed: "modul yakunlandi",
         modules_done_of: "{completed} / {total} modul yakunlandi",
         unlock_requirement: "Keyingi modulni ochish uchun kamida 60% kerak",
         recent_activity: "So'nggi faollik",
@@ -496,6 +522,9 @@ export const TRANSLATIONS = {
     app_subtitle: "English Lab",
     sign_out: "Выйти",
     navigation: "Навигация",
+    select_language: "Выберите язык",
+    lang_footer_hint: "Медицинский контент обновляется автоматически",
+    lang_count_badge: "3 языка",
 
     // Flat nav keys
     nav_dashboard: "Панель управления",
@@ -527,6 +556,10 @@ export const TRANSLATIONS = {
     step_badge_5: "5-й этап: Квиз",
     step_badge_6: "6-й этап: Виртуальный пациент",
     step_badge_7: "7-й этап: Результаты",
+    steps_progress_text: "{done}/{total} этапов завершено",
+    results_not_available_title: "Результаты пока недоступны",
+    results_not_available_desc: "Сначала пообщайтесь с виртуальным пациентом на 6-м этапе и получите оценку.",
+    chat_virtual_patient_btn_step: "Чат с виртуальным пациентом (6-й этап)",
 
     // Flat chat keys
     chat_header_title: "Живой Диалог с Виртуальным Пациентом",
@@ -563,6 +596,10 @@ export const TRANSLATIONS = {
     results_all_modules_btn: "Вернуться ко всем модулям",
     results_retry_btn: "Попробовать снова",
     results_next_module_btn: "Следующий модуль: #{id}",
+    results_next_module_label: "Следующий Модуль",
+    results_next_locked_msg: "Следующий модуль заблокирован (Требуется минимум 60%)",
+    results_course_completed_title: "Поздравляем! Все модули успешно завершены! 🏆",
+    results_course_completed_desc: "Вы успешно завершили все клинические модули по вашей специальности.",
 
     // Step 1: Grammar
     grammar_title: "Клиническая Грамматика & Правила",
@@ -572,8 +609,13 @@ export const TRANSLATIONS = {
     grammar_formula_label: "Формула",
     grammar_examples: "Клинические Примеры Предложений",
     grammar_mistakes_title: "Типичные Ошибки и Правильные Формы",
+    grammar_incorrect: "✕ Неправильно",
+    grammar_correct: "✓ Правильно",
+    grammar_explanation_label: "Пояснение:",
     grammar_listen: "Слушать произношение",
     grammar_all_learned: "Грамматика усвоена → Перейти к словарю",
+    grammar_no_rules_title: "Грамматические правила для этого модуля",
+    grammar_no_rules_desc: "Использование грамматически правильных фраз в клиническом диалоге повышает доверие пациента и помогает поставить точный диагноз.",
 
     // Step 2: Vocab
     vocab_title: "Клинический Словарь & Терминология",
@@ -596,7 +638,9 @@ export const TRANSLATIONS = {
     gap_subtitle: "Дополните клинические фразы правильными словами",
     gap_check: "Проверить ответы",
     gap_retry: "Попробовать снова",
-    gap_next: "Перейти к Тесту / Квизу",
+    gap_next: "Далее: Тест / Квиз",
+    gap_score_passed: "{pct}% Правильно!",
+    gap_score_failed: "{pct}% (Требуется минимум 60%)",
 
     // Step 4: Quiz
     quiz_title: "Клинический Тест по Модулю",
@@ -703,14 +747,22 @@ export const TRANSLATIONS = {
     student: {
       dashboard: {
         title: "Портал студента",
+        badge: "Портал Студента",
+        greeting: "Привет, {name}",
         greeting_morning: "Доброе утро",
         greeting_afternoon: "Добрый день",
         greeting_evening: "Добрый вечер",
         subtitle: "Продолжайте клиническую практику, чтобы открывать новые модули",
         total_modules: "Всего модулей",
         completed_modules: "Завершено",
+        avg_score: "Средний балл",
         average_score: "Средний балл",
+        overall_progress: "Общий прогресс",
         course_progress: "Прогресс обучения",
+        progress_title: "Прогресс обучения",
+        progress_start: "0% (Начальный)",
+        progress_end: "100% (Клинический Врач)",
+        modules_completed: "модулей завершено",
         modules_done_of: "Завершено {completed} из {total} модулей",
         unlock_requirement: "Для разблокировки следующего модуля требуется от 60%",
         recent_activity: "Недавняя активность",
@@ -976,6 +1028,9 @@ export const TRANSLATIONS = {
     app_subtitle: "English Lab",
     sign_out: "Sign out",
     navigation: "Navigation",
+    select_language: "Select language",
+    lang_footer_hint: "Medical content updates automatically",
+    lang_count_badge: "3 languages",
 
     // Flat nav keys
     nav_dashboard: "Dashboard",
@@ -1007,6 +1062,10 @@ export const TRANSLATIONS = {
     step_badge_5: "Step 5: Quiz",
     step_badge_6: "Step 6: Virtual Patient",
     step_badge_7: "Step 7: Results",
+    steps_progress_text: "{done}/{total} steps completed",
+    results_not_available_title: "Results not available yet",
+    results_not_available_desc: "Complete the conversation with the virtual patient in Step 6 first to receive evaluation.",
+    chat_virtual_patient_btn_step: "Virtual Patient Chat (Step 6)",
 
     // Flat chat keys
     chat_header_title: "Live Virtual Patient Dialogue",
@@ -1043,6 +1102,10 @@ export const TRANSLATIONS = {
     results_all_modules_btn: "Back to all modules",
     results_retry_btn: "Retry Module",
     results_next_module_btn: "Next Module: #{id}",
+    results_next_module_label: "Next Clinical Module",
+    results_next_locked_msg: "Next module locked (Minimum 60% score required)",
+    results_course_completed_title: "Congratulations! All Modules Completed! 🏆",
+    results_course_completed_desc: "You have successfully completed all clinical modules in your specialty.",
 
     // Step 1: Grammar
     grammar_title: "Clinical Grammar & Language Structures",
@@ -1052,8 +1115,13 @@ export const TRANSLATIONS = {
     grammar_formula_label: "Formula",
     grammar_examples: "Clinical Sentence Examples",
     grammar_mistakes_title: "Common Pitfalls vs. Correct Medical Usage",
+    grammar_incorrect: "✕ Incorrect",
+    grammar_correct: "✓ Correct",
+    grammar_explanation_label: "Explanation:",
     grammar_listen: "Listen pronunciation",
     grammar_all_learned: "Grammar Mastered → Proceed to Vocabulary",
+    grammar_no_rules_title: "Grammar Guidelines for this Module",
+    grammar_no_rules_desc: "Using grammatically accurate expressions in clinical communication builds patient rapport and aids in precise diagnosis.",
 
     // Step 2: Vocab
     vocab_title: "Clinical Vocabulary & Terminology",
@@ -1076,7 +1144,9 @@ export const TRANSLATIONS = {
     gap_subtitle: "Complete medical phrases with the correct clinical terms",
     gap_check: "Check Answers",
     gap_retry: "Retry Exercise",
-    gap_next: "Proceed to Clinical Quiz",
+    gap_next: "Next: Clinical Quiz",
+    gap_score_passed: "{pct}% Correct!",
+    gap_score_failed: "{pct}% (Minimum 60% required)",
 
     // Step 4: Quiz
     quiz_title: "Module Clinical Knowledge Quiz",
@@ -1183,14 +1253,22 @@ export const TRANSLATIONS = {
     student: {
       dashboard: {
         title: "Student Portal",
+        badge: "Student Portal",
+        greeting: "Hello, {name}",
         greeting_morning: "Good morning",
         greeting_afternoon: "Good afternoon",
         greeting_evening: "Good evening",
         subtitle: "Practice clinical conversations to master medical English and unlock modules",
         total_modules: "Total Modules",
         completed_modules: "Completed",
+        avg_score: "Average Score",
         average_score: "Average Score",
+        overall_progress: "Overall Progress",
         course_progress: "Course Progress",
+        progress_title: "Course Progress",
+        progress_start: "0% (Beginner)",
+        progress_end: "100% (Clinical Expert)",
+        modules_completed: "modules completed",
         modules_done_of: "{completed} of {total} modules completed",
         unlock_requirement: "60% or higher required on previous module to unlock next",
         recent_activity: "Recent Activity",
@@ -1520,8 +1598,38 @@ export function LanguageProvider({ children }) {
   };
 
   // Helper to dynamically get translation of a content item (vocabulary, phrase, module)
-  const getLocalized = (item, field = 'translation') => {
+  const getLocalized = (item, field = 'title') => {
     if (!item) return '';
+
+    if (field === 'title') {
+      if (language === 'uz') {
+        return item.title_uz || item.title || item.title_en || '';
+      } else if (language === 'ru') {
+        return item.title_ru || item.title_uz || item.title || item.title_en || '';
+      } else {
+        return item.title_en || item.title || item.title_uz || '';
+      }
+    }
+
+    if (field === 'name') {
+      if (language === 'uz') {
+        return item.name_uz || item.name || item.name_en || '';
+      } else if (language === 'ru') {
+        return item.name_ru || item.name_uz || item.name || item.name_en || '';
+      } else {
+        return item.name_en || item.name || item.name_uz || '';
+      }
+    }
+
+    if (field === 'description') {
+      if (language === 'uz') {
+        return item.description_uz || item.description || item.description_ru || item.description_en || '';
+      } else if (language === 'ru') {
+        return item.description_ru || item.description_uz || item.description || item.description_en || '';
+      } else {
+        return item.description_en || item.description || item.description_uz || '';
+      }
+    }
 
     if (field === 'translation') {
       if (language === 'uz') {
@@ -1553,17 +1661,10 @@ export function LanguageProvider({ children }) {
       }
     }
 
-    if (field === 'description') {
-      if (language === 'uz') {
-        return item.description_uz || item.description || item.description_ru || item.description_en || '';
-      } else if (language === 'ru') {
-        return item.description_ru || item.description || item.description_uz || item.description_en || '';
-      } else {
-        return item.description_en || item.description || '';
-      }
-    }
-
-    return item[field] || '';
+    // Generic fallback for any field: e.g. field + '_uz', field + '_ru', field + '_en'
+    if (language === 'uz') return item[`${field}_uz`] || item[field] || '';
+    if (language === 'ru') return item[`${field}_ru`] || item[`${field}_uz`] || item[field] || '';
+    return item[`${field}_en`] || item[field] || '';
   };
 
   const getTranslation = getLocalized;

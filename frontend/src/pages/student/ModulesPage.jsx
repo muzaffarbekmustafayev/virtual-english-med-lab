@@ -144,7 +144,8 @@ export default function ModulesPage() {
               const cfg = statusConfig[st];
               const StatusIcon = cfg.icon;
               const IconComponent = MODULE_ICONS[idx % MODULE_ICONS.length];
-              const description = getLocalized(mod, 'description');
+              const title = getLocalized(mod, 'title') || mod.title;
+              const description = getLocalized(mod, 'description') || mod.description;
 
               return (
                 <div
@@ -176,11 +177,11 @@ export default function ModulesPage() {
 
                     {/* Title & Description */}
                     <h3 className="text-base font-extrabold text-slate-900 leading-snug mb-2">
-                      {mod.title}
+                      {title}
                     </h3>
 
                     <p className="text-xs text-slate-500 line-clamp-3 leading-relaxed mb-4 font-medium">
-                      {description || mod.description}
+                      {description}
                     </p>
                   </div>
 

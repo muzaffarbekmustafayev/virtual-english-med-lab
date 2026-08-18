@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -8,58 +8,69 @@ import {
   RiGroupLine, RiBarChartLine, RiSettings4Line,
   RiFileListLine, RiTeamLine, RiUserStarLine,
   RiShieldCheckLine, RiHeartPulseLine, RiCloseLine,
+  RiBrainLine, RiBookLine, RiLightbulbLine, RiQuestionLine, RiHospitalLine
 } from "react-icons/ri";
 
 export default function Sidebar({ isOpen, onClose }) {
   const { user, logout } = useAuth();
   const { t } = useLanguage();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const STUDENT_NAV = [
-    { to: "/student/dashboard", icon: RiDashboardLine,  label: t('nav_dashboard') },
-    { to: "/student/modules",   icon: RiBookOpenLine,   label: t('nav_modules') },
-    { to: "/student/grammar",   icon: RiQuillPenLine,   label: t('nav_grammar') },
-    { to: "/student/forum",     icon: RiChatSmile2Line, label: t('nav_forum') },
-    { to: "/student/profile",   icon: RiUser3Line,      label: t('nav_profile') },
+    { to: "/student/dashboard", icon: RiDashboardLine, label: t('nav_dashboard') },
+    { to: "/student/modules", icon: RiBookOpenLine, label: t('nav_modules') },
+    { to: "/student/grammar", icon: RiQuillPenLine, label: t('nav_grammar') },
+    { to: "/student/forum", icon: RiChatSmile2Line, label: t('nav_forum') },
+    { to: "/student/profile", icon: RiUser3Line, label: t('nav_profile') },
   ];
 
   const TEACHER_NAV = [
-    { to: "/teacher/dashboard", icon: RiDashboardLine,  label: t('nav_dashboard') },
-    { to: "/teacher/groups",    icon: RiGroupLine,      label: t('nav_groups') },
-    { to: "/teacher/reports",   icon: RiBarChartLine,   label: t('nav_reports') },
-    { to: "/teacher/forum",     icon: RiChatSmile2Line, label: t('nav_forum') },
+    { to: "/teacher/dashboard", icon: RiDashboardLine, label: t('nav_dashboard') },
+    { to: "/teacher/groups", icon: RiGroupLine, label: t('nav_groups') },
+    { to: "/teacher/reports", icon: RiBarChartLine, label: t('nav_reports') },
+    { to: "/teacher/forum", icon: RiChatSmile2Line, label: t('nav_forum') },
   ];
 
   const ADMIN_NAV = [
-    { to: "/admin/overview",  icon: RiDashboardLine, label: t('nav_dashboard') },
-    { to: "/admin/users",     icon: RiTeamLine,      label: t('nav_users') },
-    { to: "/admin/groups",    icon: RiGroupLine,     label: t('nav_groups') },
-    { to: "/admin/content",   icon: RiFileListLine,  label: t('nav_content') },
+    { to: "/admin/overview", icon: RiDashboardLine, label: "Umumiy Holat" },
+    { isDivider: true, label: "FOYDALANUVCHILAR" },
+    { to: "/admin/users", icon: RiTeamLine, label: "Barchasi" },
+    { to: "/admin/users?action=create&role=student", icon: RiUser3Line, label: "Talaba Yaratish" },
+    { to: "/admin/users?action=create&role=teacher", icon: RiUserStarLine, label: "O'qituvchi Yaratish" },
+    { isDivider: true, label: "TUZILMA VA GURUHLAR" },
+    { to: "/admin/groups?action=specialty", icon: RiHospitalLine, label: "Yo'nalish Yaratish" },
+    { to: "/admin/groups?action=group", icon: RiGroupLine, label: "Guruhlar" },
+    { isDivider: true, label: "KONTENT BOSHQARUVI" },
+    { to: "/admin/content/grammar", icon: RiBrainLine, label: "Grammatika" },
+    { to: "/admin/content/vocabulary", icon: RiBookLine, label: "Lug'at" },
+    { to: "/admin/content/phrasebook", icon: RiLightbulbLine, label: "Iboralar" },
+    { to: "/admin/content/quizzes", icon: RiQuestionLine, label: "Testlar" },
+    { to: "/admin/content/scenarios", icon: RiFileListLine, label: "Modullar" },
   ];
 
   const NAV_MAP = { student: STUDENT_NAV, teacher: TEACHER_NAV, admin: ADMIN_NAV };
   const navItems = NAV_MAP[user?.role] || [];
 
   const ROLE_CONFIG = {
-    student: { icon: RiUser3Line,       label: 'Talaba / Student',    bg: 'bg-blue-600', text: 'text-blue-700', border: 'border-blue-200' },
-    teacher: { icon: RiUserStarLine,    label: "O'qituvchi / Teacher", bg: 'bg-emerald-600', text: 'text-emerald-700', border: 'border-emerald-200' },
-    admin:   { icon: RiShieldCheckLine, label: 'Administrator',        bg: 'bg-purple-600', text: 'text-purple-700', border: 'border-purple-200' },
+    student: { icon: RiUser3Line, label: 'Talaba / Student', bg: 'bg-blue-600', text: 'text-blue-700', border: 'border-blue-200' },
+    teacher: { icon: RiUserStarLine, label: "O'qituvchi / Teacher", bg: 'bg-emerald-600', text: 'text-emerald-700', border: 'border-emerald-200' },
+    admin: { icon: RiShieldCheckLine, label: 'Administrator', bg: 'bg-purple-600', text: 'text-purple-700', border: 'border-purple-200' },
   };
   const role = ROLE_CONFIG[user?.role] || ROLE_CONFIG.student;
 
-  const handleLogout = () => { 
-    logout(); 
+  const handleLogout = () => {
+    logout();
     toast.success(t('sign_out') + " muvaffaqiyatli!");
     if (onClose) onClose();
-    navigate("/login"); 
+    navigate("/login");
   };
 
   return (
     <aside
       id="main-sidebar"
-      className={`fixed top-0 left-0 h-screen w-[260px] flex flex-col z-50 bg-white border-r border-slate-200/90 shadow-xs transition-transform duration-300 ease-in-out md:translate-x-0 ${
-        isOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full md:translate-x-0"
-      }`}
+      className={`fixed top-0 left-0 h-screen w-[260px] flex flex-col z-50 bg-white border-r border-slate-200/90 shadow-xs transition-transform duration-300 ease-in-out md:translate-x-0 ${isOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full md:translate-x-0"
+        }`}
     >
       {/* Brand Header */}
       <div className="p-4 border-b border-slate-100 flex items-center justify-between">
@@ -81,8 +92,57 @@ export default function Sidebar({ isOpen, onClose }) {
         </button>
       </div>
 
+
+
+      {/* Navigation List */}
+      <nav className="flex-1 px-3 py-2 overflow-y-auto space-y-1">
+        <p className="text-[10px] font-extrabold text-slate-400 tracking-wider uppercase px-2 pb-1 pt-1">
+          {t('navigation')}
+        </p>
+        <div className="flex flex-col gap-1">
+          {navItems.map((item, idx) => {
+            if (item.isDivider) {
+              return (
+                <div key={`divider-${idx}`} className="mt-4 mb-1 px-2">
+                  <p className="text-[10px] font-extrabold text-slate-400 tracking-wider uppercase">
+                    {item.label}
+                  </p>
+                </div>
+              );
+            }
+            const Icon = item.icon;
+            const isExactActive = (item.to.includes('?')) 
+              ? location.pathname + location.search === item.to
+              : location.pathname === item.to && !location.search;
+
+            return (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                id={"nav-" + item.to.replace(/\//g, '-').replace(/\?/g, '-').replace(/&/g, '-').replace(/=/g, '-')}
+                onClick={() => onClose && onClose()}
+                className={() =>
+                  `flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${isExactActive
+                    ? "bg-blue-50 text-blue-700 border border-blue-200/80 shadow-2xs"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/70"
+                  }`
+                }
+              >
+                {() => (
+                  <>
+                    <Icon className={`text-base flex-shrink-0 transition-colors ${isExactActive ? "text-blue-600 font-black" : "text-slate-400"}`} />
+                    <span className="truncate flex-1">{item.label}</span>
+                    {isExactActive && <span className="w-1.5 h-1.5 rounded-full bg-blue-600 flex-shrink-0" />}
+                  </>
+                )}
+              </NavLink>
+            );
+          })}
+        </div>
+      </nav>
+
       {/* User Information Card */}
-      <div className="p-3">
+      <div className="p-3 mt-auto">
         <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-3 flex items-center gap-2.5 shadow-2xs">
           <div
             className={`w-9 h-9 rounded-xl ${role.bg} text-white font-black text-xs flex items-center justify-center shadow-2xs flex-shrink-0`}
@@ -100,41 +160,6 @@ export default function Sidebar({ isOpen, onClose }) {
           </div>
         </div>
       </div>
-
-      {/* Navigation List */}
-      <nav className="flex-1 px-3 py-2 overflow-y-auto space-y-1">
-        <p className="text-[10px] font-extrabold text-slate-400 tracking-wider uppercase px-2 pb-1 pt-1">
-          {t('navigation')}
-        </p>
-        <div className="flex flex-col gap-1">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                id={"nav-" + item.to.replace(/\//g, '-')}
-                onClick={() => onClose && onClose()}
-                className={({ isActive }) =>
-                  `flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${
-                    isActive
-                      ? "bg-blue-50 text-blue-700 border border-blue-200/80 shadow-2xs"
-                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/70"
-                  }`
-                }
-              >
-                {({ isActive }) => (
-                  <>
-                    <Icon className={`text-base flex-shrink-0 transition-colors ${isActive ? "text-blue-600 font-black" : "text-slate-400"}`} />
-                    <span className="truncate flex-1">{item.label}</span>
-                    {isActive && <span className="w-1.5 h-1.5 rounded-full bg-blue-600 flex-shrink-0" />}
-                  </>
-                )}
-              </NavLink>
-            );
-          })}
-        </div>
-      </nav>
 
       {/* Logout Footer */}
       <div className="p-3 border-t border-slate-100 bg-slate-50/50">

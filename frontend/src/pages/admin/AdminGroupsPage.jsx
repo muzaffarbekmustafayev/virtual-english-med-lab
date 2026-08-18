@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import api from '../../lib/api';
 import toast from 'react-hot-toast';
@@ -7,128 +8,124 @@ import {
   RiGroupLine, RiAddLine, RiDeleteBinLine, RiEditLine,
   RiCheckLine, RiCloseLine, RiUserStarLine, RiUser3Line,
   RiStethoscopeLine, RiSearchLine, RiSave3Line, RiShieldCheckLine,
-  RiExchangeLine
+  RiArrowRightSLine, RiDragDropLine, RiMore2Fill
 } from 'react-icons/ri';
 
 export default function AdminGroupsPage() {
   const { t } = useLanguage();
-  const [activeTab, setActiveTab] = useState('groups');
-
-  // Data states
-  const [groups, setGroups]           = useState([]);
-  const [specialties, setSpecialties] = useState([]);
-  const [teachers, setTeachers]       = useState([]);
-  const [students, setStudents]       = useState([]);
-  const [loading, setLoading]         = useState(false);
-
-  // Group Create / Edit State
-  const [showGroupModal, setShowGroupModal] = useState(false);
-  const [groupForm, setGroupForm] = useState({ id: null, name: '', specialty_id: '' });
-
-  // Specialty Create / Edit State
-  const [showSpecModal, setShowSpecModal] = useState(false);
-  const [specForm, setSpecForm] = useState({ id: null, name: '' });
-
-  // Teacher-Group Assignment State
-  const [selectedTeacherId, setSelectedTeacherId] = useState('');
+  const location = useLocation();
+  const navigate = useNavigate();
   
-  // Student Assignment Search
-  const [studentSearch, setStudentSearch] = useState('');
-  const [groupFilter, setGroupFilter] = useState('');
+  // Data States
+  const [specialties, setSpecialties] = useState([]);
+  const [groups, setGroups] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  // Load all initial data
+  // Selection States
+  const [selectedSpecId, setSelectedSpecId] = useState(null);
+  const [selectedGroupId, setSelectedGroupId] = useState(null);
+
+  // Modals / Forms
+  const [specForm, setSpecForm] = useState({ show: false, id: null, name: '' });
+  const [groupForm, setGroupForm] = useState({ show: false, id: null, name: '' });
+  
+  // Assignment states
+  const [showAddTeacher, setShowAddTeacher] = useState(false);
+  const [showAddStudent, setShowAddStudent] = useState(false);
+  const [selectedTeacherId, setSelectedTeacherId] = useState('');
+  const [selectedStudentId, setSelectedStudentId] = useState('');
+
   const loadAll = async () => {
     setLoading(true);
     try {
-      const [gRes, sRes, uRes] = await Promise.all([
-        api.get('/admin/groups'),
+      const [sRes, gRes, uRes] = await Promise.all([
         api.get('/admin/specialties'),
-        api.get('/admin/users'),
+        api.get('/admin/groups'),
+        api.get('/admin/users')
       ]);
-      setGroups(gRes.data || []);
       setSpecialties(sRes.data || []);
-      
-      const allUsers = uRes.data || [];
-      const teacherList = allUsers.filter(u => u.role === 'teacher');
-      const studentList = allUsers.filter(u => u.role === 'student');
-      setTeachers(teacherList);
-      setStudents(studentList);
-
-      if (teacherList.length > 0 && !selectedTeacherId) {
-        setSelectedTeacherId(teacherList[0].id);
-      }
-    } catch {
+      setGroups(gRes.data || []);
+      setUsers(uRes.data || []);
+    } catch (err) {
       toast.error(t('common.error'));
     } finally {
       setLoading(false);
     }
   };
 
+  const [viewMode, setViewMode] = useState('all'); // 'specialty', 'group', 'all'
+
   useEffect(() => {
     loadAll();
   }, []);
 
-  // ── GROUP ACTIONS ──
-  const handleSaveGroup = async (e) => {
-    e.preventDefault();
-    if (!groupForm.name.trim()) return;
-    try {
-      if (groupForm.id) {
-        await api.put(`/admin/groups/${groupForm.id}`, {
-          name: groupForm.name,
-          specialty_id: groupForm.specialty_id || null,
-        });
-        toast.success(t('common.success'));
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const action = params.get('action');
+    if (action === 'specialty') {
+      setViewMode('specialty');
+      setSpecForm(prev => prev.show ? prev : { show: true, id: null, name: '' });
+    } else if (action === 'group') {
+      setViewMode('group');
+      setGroupForm(prev => prev.show ? prev : { show: true, id: null, name: '' });
+    } else {
+      setViewMode('all');
+    }
+  }, [location.search]);
+
+  // Derived Data
+  const teachers = useMemo(() => users.filter(u => u.role === 'teacher'), [users]);
+  const students = useMemo(() => users.filter(u => u.role === 'student'), [users]);
+  
+  const filteredGroups = useMemo(() => {
+    if (!selectedSpecId) return [];
+    return groups.filter(g => g.specialty_id === selectedSpecId);
+  }, [groups, selectedSpecId]);
+
+  const activeGroup = useMemo(() => {
+    return groups.find(g => g.id === selectedGroupId) || null;
+  }, [groups, selectedGroupId]);
+
+  // Handle Spec Click
+  const handleSpecClick = (id) => {
+    setSelectedSpecId(id);
+    if (id) {
+      const specsGroups = groups.filter(g => g.specialty_id === id);
+      if (specsGroups.length > 0) {
+        setSelectedGroupId(specsGroups[0].id);
       } else {
-        await api.post('/admin/groups', {
-          name: groupForm.name,
-          specialty_id: groupForm.specialty_id || null,
-        });
-        toast.success(t('common.success'));
+        setSelectedGroupId(null);
       }
-      setShowGroupModal(false);
-      setGroupForm({ id: null, name: '', specialty_id: '' });
-      loadAll();
-    } catch (err) {
-      toast.error(err.response?.data?.error || t('common.error'));
+    } else {
+      setSelectedGroupId(null);
     }
   };
 
-  const handleDeleteGroup = async (id) => {
-    if (!window.confirm(t('common.confirm_delete'))) return;
-    try {
-      await api.delete(`/admin/groups/${id}`);
-      toast.success(t('common.success'));
-      loadAll();
-    } catch (err) {
-      toast.error(err.response?.data?.error || t('common.error'));
-    }
-  };
-
-  // ── SPECIALTY ACTIONS ──
-  const handleSaveSpec = async (e) => {
+  // --- SPECIALTY ACTIONS ---
+  const saveSpec = async (e) => {
     e.preventDefault();
     if (!specForm.name.trim()) return;
     try {
       if (specForm.id) {
         await api.put(`/admin/specialties/${specForm.id}`, { name: specForm.name });
-        toast.success(t('common.success'));
       } else {
         await api.post('/admin/specialties', { name: specForm.name });
-        toast.success(t('common.success'));
       }
-      setShowSpecModal(false);
-      setSpecForm({ id: null, name: '' });
+      toast.success(t('common.success'));
+      setSpecForm({ show: false, id: null, name: '' });
       loadAll();
     } catch (err) {
       toast.error(err.response?.data?.error || t('common.error'));
     }
   };
 
-  const handleDeleteSpec = async (id) => {
+  const deleteSpec = async (id, e) => {
+    e.stopPropagation();
     if (!window.confirm(t('common.confirm_delete'))) return;
     try {
       await api.delete(`/admin/specialties/${id}`);
+      if (selectedSpecId === id) setSelectedSpecId(null);
       toast.success(t('common.success'));
       loadAll();
     } catch (err) {
@@ -136,53 +133,89 @@ export default function AdminGroupsPage() {
     }
   };
 
-  // ── TEACHER ASSIGNMENT ACTIONS ──
-  const handleToggleGroupForTeacher = async (groupId, isAssigned) => {
-    if (!selectedTeacherId) return;
+  // --- GROUP ACTIONS ---
+  const saveGroup = async (e) => {
+    e.preventDefault();
+    if (!groupForm.name.trim() || !selectedSpecId) return;
     try {
-      if (isAssigned) {
-        await api.delete(`/admin/teachers/${selectedTeacherId}/groups/${groupId}`);
+      if (groupForm.id) {
+        await api.put(`/admin/groups/${groupForm.id}`, { name: groupForm.name, specialty_id: selectedSpecId });
       } else {
-        await api.post(`/admin/teachers/${selectedTeacherId}/groups`, { group_id: groupId });
+        await api.post('/admin/groups', { name: groupForm.name, specialty_id: selectedSpecId });
       }
       toast.success(t('common.success'));
+      setGroupForm({ show: false, id: null, name: '' });
       loadAll();
     } catch (err) {
       toast.error(err.response?.data?.error || t('common.error'));
     }
   };
 
-  // ── STUDENT GROUP ASSIGNMENT ──
-  const handleUpdateStudentGroup = async (studentId, groupId) => {
+  const deleteGroup = async (id, e) => {
+    e.stopPropagation();
+    if (!window.confirm(t('common.confirm_delete'))) return;
     try {
-      await api.put(`/admin/users/${studentId}`, {
-        group_id: groupId ? parseInt(groupId) : null,
-      });
-      toast.success("Talaba guruhi biriktirildi!");
+      await api.delete(`/admin/groups/${id}`);
+      if (selectedGroupId === id) setSelectedGroupId(null);
+      toast.success(t('common.success'));
       loadAll();
     } catch (err) {
       toast.error(err.response?.data?.error || t('common.error'));
     }
   };
 
-  const selectedTeacher = teachers.find(t => t.id === parseInt(selectedTeacherId));
+  // --- ASSIGNMENT ACTIONS ---
+  const assignTeacher = async () => {
+    if (!selectedTeacherId || !selectedGroupId) return;
+    try {
+      await api.post('/admin/teacher-groups', { teacher_id: parseInt(selectedTeacherId), group_id: selectedGroupId });
+      toast.success(t('common.success'));
+      setShowAddTeacher(false);
+      setSelectedTeacherId('');
+      loadAll();
+    } catch (err) {
+      toast.error(err.response?.data?.error || t('common.error'));
+    }
+  };
 
-  const filteredStudents = students
-    .filter(s => {
-      if (!studentSearch.trim()) return true;
-      const q = studentSearch.toLowerCase();
-      return s.full_name?.toLowerCase().includes(q) || s.email?.toLowerCase().includes(q);
-    })
-    .filter(s => {
-      if (!groupFilter) return true;
-      if (groupFilter === 'none') return !s.group_id;
-      return s.group_id === parseInt(groupFilter);
-    });
+  const removeTeacher = async (teacherId) => {
+    if (!selectedGroupId) return;
+    try {
+      await api.delete('/admin/teacher-groups', { data: { teacher_id: teacherId, group_id: selectedGroupId } });
+      toast.success(t('common.success'));
+      loadAll();
+    } catch (err) {
+      toast.error(err.response?.data?.error || t('common.error'));
+    }
+  };
+
+  const assignStudent = async () => {
+    if (!selectedStudentId || !selectedGroupId) return;
+    try {
+      await api.post('/admin/student-groups', { student_id: parseInt(selectedStudentId), group_id: selectedGroupId, specialty_id: selectedSpecId });
+      toast.success(t('common.success'));
+      setShowAddStudent(false);
+      setSelectedStudentId('');
+      loadAll();
+    } catch (err) {
+      toast.error(err.response?.data?.error || t('common.error'));
+    }
+  };
+
+  const removeStudent = async (studentId) => {
+    try {
+      await api.post('/admin/student-groups', { student_id: studentId, group_id: null });
+      toast.success(t('common.success'));
+      loadAll();
+    } catch (err) {
+      toast.error(err.response?.data?.error || t('common.error'));
+    }
+  };
 
   return (
     <Layout>
       <div className="space-y-6">
-        {/* ── 1. Header ── */}
+        {/* Header */}
         <div className="card-standard p-6 sm:p-8 flex flex-wrap items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1.5">
@@ -194,346 +227,247 @@ export default function AdminGroupsPage() {
               <span className="w-10 h-10 rounded-2xl bg-purple-50 text-purple-600 border border-purple-200 flex items-center justify-center text-xl shrink-0">
                 <RiGroupLine />
               </span>
-              {t('admin.groups_page.title')}
+              Tashkilot Tuzilmasi
             </h1>
-            <p className="text-slate-500 text-xs sm:text-sm mt-1 font-medium">{t('admin.groups_page.subtitle')}</p>
+            <p className="text-slate-500 text-xs sm:text-sm mt-1 font-medium">Yo'nalishlar, Guruhlar, O'qituvchi va Talabalarni boshqarish</p>
           </div>
         </div>
 
-        {/* ── 2. Tab Navigation ── */}
-        <div className="flex border-b border-slate-200 gap-2 overflow-x-auto">
-          {[
-            { key: 'groups',       label: t('admin.groups_page.tab_groups'),    icon: RiGroupLine },
-            { key: 'specialties',  label: t('admin.groups_page.tab_specialties'), icon: RiStethoscopeLine },
-            { key: 'teacher_assign', label: t('admin.groups_page.tab_assign_teacher'), icon: RiUserStarLine },
-            { key: 'student_assign', label: t('admin.groups_page.tab_assign_student'), icon: RiExchangeLine },
-          ].map(tab => {
-            const Icon = tab.icon;
-            const isSel = activeTab === tab.key;
-            return (
-              <button
-                key={tab.key}
-                onClick={() => setActiveTab(tab.key)}
-                className={`pb-3 px-4 text-xs font-bold transition-all border-b-2 flex items-center gap-2 whitespace-nowrap cursor-pointer ${
-                  isSel
-                    ? 'border-purple-600 text-purple-700 font-black'
-                    : 'border-transparent text-slate-500 hover:text-slate-800'
-                }`}
-              >
-                <Icon className="text-base" />
-                <span>{tab.label}</span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* ── TAB 1: GROUPS MANAGEMENT ── */}
-        {activeTab === 'groups' && (
-          <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <p className="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Mavjud Akademik Guruhlar ({groups.length})</p>
-              <button
-                onClick={() => { setGroupForm({ id: null, name: '', specialty_id: '' }); setShowGroupModal(true); }}
-                className="btn-primary-gradient bg-gradient-to-r from-purple-600 to-indigo-600"
-              >
-                <RiAddLine /> {t('admin.groups_page.add_group_btn')}
-              </button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {groups.map(g => (
-                <div key={g.id} className="card-standard p-5 flex flex-col justify-between hover:border-slate-300 transition-all">
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="badge-standard badge-purple">
-                        Guruh #{g.id}
-                      </span>
-                      <div className="flex items-center gap-1">
-                        <button
-                          onClick={() => { setGroupForm({ id: g.id, name: g.name, specialty_id: g.specialty_id || '' }); setShowGroupModal(true); }}
-                          className="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-colors cursor-pointer"
-                        >
-                          <RiEditLine size={16} />
-                        </button>
-                        <button
-                          onClick={() => handleDeleteGroup(g.id)}
-                          className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
-                        >
-                          <RiDeleteBinLine size={16} />
-                        </button>
-                      </div>
-                    </div>
-
-                    <h3 className="text-base font-extrabold text-slate-900 leading-snug">{g.name}</h3>
-                    <p className="text-xs text-slate-500 font-medium mt-1">
-                      Mutaxassislik: {g.specialty?.name || g.specialty_name || 'Umumiy'}
-                    </p>
-                  </div>
-
-                  <div className="pt-4 border-t border-slate-100 flex items-center justify-between mt-4">
-                    <span className="badge-standard badge-slate">
-                      <RiUser3Line /> {g.student_count || 0} talaba
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* ── TAB 2: SPECIALTIES MANAGEMENT ── */}
-        {activeTab === 'specialties' && (
-          <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <p className="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Tibbiy Mutaxassisliklar ({specialties.length})</p>
-              <button
-                onClick={() => { setSpecForm({ id: null, name: '' }); setShowSpecModal(true); }}
-                className="btn-primary-gradient bg-gradient-to-r from-purple-600 to-indigo-600"
-              >
-                <RiAddLine /> {t('admin.groups_page.add_spec_btn')}
-              </button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {specialties.map(s => (
-                <div key={s.id} className="card-standard p-5 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 border border-blue-200 flex items-center justify-center text-xl shrink-0 font-bold">
-                      🩺
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-extrabold text-slate-900">{s.name}</h3>
-                      <p className="text-xs text-slate-400 font-medium">{s.student_count || 0} talaba ro'yxatda</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-1">
-                    <button
-                      onClick={() => { setSpecForm({ id: s.id, name: s.name }); setShowSpecModal(true); }}
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-colors cursor-pointer"
-                    >
-                      <RiEditLine size={16} />
-                    </button>
-                    <button
-                      onClick={() => handleDeleteSpec(s.id)}
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
-                    >
-                      <RiDeleteBinLine size={16} />
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* ── TAB 3: TEACHER-GROUP ASSIGNMENT ── */}
-        {activeTab === 'teacher_assign' && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <div className="lg:col-span-4 space-y-3">
-              <h2 className="text-xs text-slate-400 font-black uppercase tracking-wider px-1">O'qituvchini tanlang</h2>
-              <div className="space-y-2">
-                {teachers.map(tch => {
-                  const isSel = parseInt(selectedTeacherId) === tch.id;
-                  return (
-                    <button
-                      key={tch.id}
-                      onClick={() => setSelectedTeacherId(tch.id)}
-                      className={`w-full text-left p-4 rounded-2xl border transition-all cursor-pointer ${
-                        isSel
-                          ? 'border-purple-500 bg-purple-50 text-purple-950 shadow-xs font-bold'
-                          : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
-                      }`}
-                    >
-                      <p className="font-extrabold text-sm text-slate-900">{tch.full_name}</p>
-                      <p className="text-xs text-slate-500 font-medium mt-0.5">{tch.email}</p>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="lg:col-span-8 card-standard p-6 space-y-4">
-              <h3 className="text-sm font-black text-slate-900 flex items-center gap-2 pb-3 border-b border-slate-100">
-                <RiUserStarLine className="text-purple-600" />
-                <span>{selectedTeacher ? `${selectedTeacher.full_name} ga guruhlarni biriktirish` : 'O\'qituvchi tanlanmagan'}</span>
-              </h3>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {groups.map(g => {
-                  const isAssigned = selectedTeacher?.assigned_group_ids?.includes(g.id) || selectedTeacher?.groups?.some(x => x.id === g.id);
-                  return (
-                    <div
-                      key={g.id}
-                      onClick={() => handleToggleGroupForTeacher(g.id, isAssigned)}
-                      className={`p-4 rounded-2xl border transition-all flex items-center justify-between cursor-pointer ${
-                        isAssigned
-                          ? 'bg-emerald-50 border-emerald-300 text-emerald-950 font-bold'
-                          : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-white hover:border-slate-300'
-                      }`}
-                    >
-                      <div>
-                        <p className="text-xs font-bold">{g.name}</p>
-                        <p className="text-[11px] text-slate-500">{g.student_count || 0} talaba</p>
-                      </div>
-                      <span className={`w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold ${isAssigned ? 'bg-emerald-600 text-white' : 'bg-white border border-slate-300 text-transparent'}`}>
-                        ✓
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* ── TAB 4: STUDENT DISTRIBUTION ── */}
-        {activeTab === 'student_assign' && (
-          <div className="space-y-4">
-            <div className="card-standard p-4 flex flex-wrap items-center justify-between gap-3">
-              <div className="relative w-full sm:w-72">
-                <RiSearchLine className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs" />
-                <input
-                  type="text"
-                  placeholder="Talabani izlash..."
-                  value={studentSearch}
-                  onChange={(e) => setStudentSearch(e.target.value)}
-                  className="input-standard pl-9 py-2 text-xs"
-                />
-              </div>
-
-              <select
-                value={groupFilter}
-                onChange={(e) => setGroupFilter(e.target.value)}
-                className="input-standard py-2 text-xs w-auto font-bold"
-              >
-                <option value="">Barcha guruhlar</option>
-                <option value="none">Guruhsiz talabalar</option>
-                {groups.map(g => (
-                  <option key={g.id} value={g.id}>{g.name}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className="card-standard overflow-hidden">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="border-b border-slate-100 bg-slate-50/40 text-[10px] font-black text-slate-400 uppercase tracking-wider">
-                    <th className="px-5 py-3">Talaba</th>
-                    <th className="px-5 py-3">Mutaxassislik</th>
-                    <th className="px-5 py-3">Guruhni tanlang</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100 text-xs">
-                  {filteredStudents.map(s => (
-                    <tr key={s.id} className="hover:bg-slate-50/80 transition-colors">
-                      <td className="px-5 py-3.5">
-                        <p className="font-bold text-slate-900">{s.full_name}</p>
-                        <p className="text-[11px] text-slate-400 font-medium">{s.email}</p>
-                      </td>
-                      <td className="px-5 py-3.5 text-slate-600 font-medium">
-                        {s.specialty?.name || 'Stomatologiya'}
-                      </td>
-                      <td className="px-5 py-3.5">
-                        <select
-                          value={s.group_id || ''}
-                          onChange={(e) => handleUpdateStudentGroup(s.id, e.target.value)}
-                          className="input-standard py-1.5 text-xs font-semibold w-52"
-                        >
-                          <option value="">Guruhga biriktirilmagan</option>
-                          {groups.map(g => (
-                            <option key={g.id} value={g.id}>{g.name}</option>
-                          ))}
-                        </select>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
-
-        {/* Group Modal */}
-        {showGroupModal && (
-          <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-50 flex items-center justify-center p-4">
-            <div className="bg-white border border-slate-200 shadow-2xl rounded-3xl p-6 w-full max-w-md animate-scale-in">
-              <div className="flex justify-between items-center mb-4 pb-3 border-b border-slate-100">
-                <h3 className="font-black text-slate-900 text-base">{groupForm.id ? "Guruhni tahrirlash" : "Yangi guruh qo'shish"}</h3>
-                <button onClick={() => setShowGroupModal(false)} className="text-slate-400 hover:text-slate-600 p-1">
-                  <RiCloseLine size={20} />
+        {loading && specialties.length === 0 ? (
+          <div className="flex justify-center p-12"><div className="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div></div>
+        ) : (
+          <div className={`grid grid-cols-1 ${viewMode === 'specialty' ? 'lg:grid-cols-1' : viewMode === 'group' ? 'lg:grid-cols-2' : 'lg:grid-cols-3'} gap-6`}>
+            
+            {/* COLUMN 1: SPECIALTIES */}
+            {(viewMode === 'all' || viewMode === 'specialty') && (
+            <div className="card-standard p-5 h-[600px] flex flex-col">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-bold text-slate-800 flex items-center gap-2">
+                  <RiStethoscopeLine className="text-slate-500" /> Yo'nalishlar
+                </h3>
+                <button onClick={() => setSpecForm({ show: true, id: null, name: '' })} className="btn-primary-gradient px-3 py-1.5 text-xs">
+                  <RiAddLine /> Qo'shish
                 </button>
               </div>
-              <form onSubmit={handleSaveGroup} className="space-y-4">
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Guruh nomi *</label>
-                  <input
-                    type="text"
-                    placeholder="Masalan: 401-Stomatologiya"
-                    value={groupForm.name}
-                    onChange={(e) => setGroupForm({ ...groupForm, name: e.target.value })}
-                    required
-                    className="input-standard text-xs"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Mutaxassislik</label>
-                  <select
-                    value={groupForm.specialty_id}
-                    onChange={(e) => setGroupForm({ ...groupForm, specialty_id: e.target.value })}
-                    className="input-standard text-xs"
+
+              {specForm.show && (
+                <form onSubmit={saveSpec} className="mb-4 bg-slate-50 p-3 rounded-xl border border-slate-200">
+                  <input autoFocus type="text" value={specForm.name} onChange={e => setSpecForm({...specForm, name: e.target.value})} placeholder="Yo'nalish nomi..." className="input-standard text-sm py-2 mb-2" />
+                  <div className="flex gap-2 justify-end">
+                    <button type="button" onClick={() => setSpecForm({show:false, id:null, name:''})} className="btn-secondary-soft px-3 py-1.5 text-xs">Bekor</button>
+                    <button type="submit" className="btn-primary-gradient px-3 py-1.5 text-xs">Saqlash</button>
+                  </div>
+                </form>
+              )}
+
+              <div className="overflow-y-auto pr-2 space-y-2 flex-1 custom-scrollbar">
+                {specialties.length === 0 && !specForm.show && <p className="text-sm text-slate-500 text-center py-4">Yo'nalishlar yo'q</p>}
+                {specialties.map(spec => (
+                  <div 
+                    key={spec.id} 
+                    onClick={() => handleSpecClick(spec.id)}
+                    className={`p-3 rounded-xl border cursor-pointer transition-all flex items-center justify-between ${selectedSpecId === spec.id ? 'bg-slate-100 border-slate-300 shadow-sm' : 'bg-white border-slate-100 hover:border-slate-300 hover:bg-slate-50'}`}
                   >
-                    <option value="">Tanlang...</option>
+                    <div>
+                      <h4 className={`font-bold text-sm ${selectedSpecId === spec.id ? 'text-slate-900' : 'text-slate-700'}`}>{spec.name}</h4>
+                      <p className="text-xs text-slate-500 mt-0.5">{spec.groups?.length || 0} ta guruh</p>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <button onClick={(e) => { e.stopPropagation(); setSpecForm({ show: true, id: spec.id, name: spec.name }); }} className="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-200"><RiEditLine /></button>
+                      <button onClick={(e) => deleteSpec(spec.id, e)} className="p-1.5 text-slate-400 hover:text-rose-500 rounded-lg hover:bg-rose-50"><RiDeleteBinLine /></button>
+                      <RiArrowRightSLine className={`${selectedSpecId === spec.id ? 'text-slate-500' : 'text-slate-300'}`} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            )}
+
+            {/* COLUMN 2: GROUPS */}
+            {(viewMode === 'all' || viewMode === 'group') && (
+            <div className="card-standard p-5 h-[600px] flex flex-col">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-bold text-slate-800 flex items-center gap-2">
+                  <RiGroupLine className="text-slate-500" /> Guruhlar
+                </h3>
+                {selectedSpecId && (
+                  <button onClick={() => setGroupForm({ show: true, id: null, name: '' })} className="btn-primary-gradient px-3 py-1.5 text-xs">
+                    <RiAddLine /> Qo'shish
+                  </button>
+                )}
+              </div>
+
+              {viewMode === 'group' && (
+                <div className="mb-4">
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Yo'nalishni tanlang</label>
+                  <select 
+                    className="input-standard text-sm w-full py-2"
+                    value={selectedSpecId || ''}
+                    onChange={(e) => handleSpecClick(e.target.value ? parseInt(e.target.value) : null)}
+                  >
+                    <option value="">-- Yo'nalish tanlang --</option>
                     {specialties.map(s => (
                       <option key={s.id} value={s.id}>{s.name}</option>
                     ))}
                   </select>
                 </div>
-                <div className="flex gap-2 pt-2">
-                  <button type="button" onClick={() => setShowGroupModal(false)} className="flex-1 btn-secondary-soft">
-                    {t('common.cancel')}
-                  </button>
-                  <button type="submit" className="flex-1 btn-primary-gradient bg-gradient-to-r from-purple-600 to-indigo-600">
-                    {t('common.save')}
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
+              )}
 
-        {/* Specialty Modal */}
-        {showSpecModal && (
-          <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-50 flex items-center justify-center p-4">
-            <div className="bg-white border border-slate-200 shadow-2xl rounded-3xl p-6 w-full max-w-md animate-scale-in">
-              <div className="flex justify-between items-center mb-4 pb-3 border-b border-slate-100">
-                <h3 className="font-black text-slate-900 text-base">{specForm.id ? "Mutaxassislikni tahrirlash" : "Yangi mutaxassislik"}</h3>
-                <button onClick={() => setShowSpecModal(false)} className="text-slate-400 hover:text-slate-600 p-1">
-                  <RiCloseLine size={20} />
-                </button>
-              </div>
-              <form onSubmit={handleSaveSpec} className="space-y-4">
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Mutaxassislik nomi *</label>
-                  <input
-                    type="text"
-                    placeholder="Masalan: Stomatologiya, Pediatriya..."
-                    value={specForm.name}
-                    onChange={(e) => setSpecForm({ ...specForm, name: e.target.value })}
-                    required
-                    className="input-standard text-xs"
-                  />
+              {!selectedSpecId ? (
+                <div className="flex-1 flex flex-col items-center justify-center text-slate-400 text-sm">
+                  <RiArrowRightSLine size={32} className="mb-2 opacity-50" />
+                  <p>Chapdan yo'nalishni tanlang</p>
                 </div>
-                <div className="flex gap-2 pt-2">
-                  <button type="button" onClick={() => setShowSpecModal(false)} className="flex-1 btn-secondary-soft">
-                    {t('common.cancel')}
-                  </button>
-                  <button type="submit" className="flex-1 btn-primary-gradient bg-gradient-to-r from-purple-600 to-indigo-600">
-                    {t('common.save')}
-                  </button>
-                </div>
-              </form>
+              ) : (
+                <>
+                  {groupForm.show && (
+                    <form onSubmit={saveGroup} className="mb-4 bg-slate-50 p-3 rounded-xl border border-slate-200">
+                      <input autoFocus type="text" value={groupForm.name} onChange={e => setGroupForm({...groupForm, name: e.target.value})} placeholder="Guruh nomi..." className="input-standard text-sm py-2 mb-2" />
+                      <div className="flex gap-2 justify-end">
+                        <button type="button" onClick={() => setGroupForm({show:false, id:null, name:''})} className="btn-secondary-soft px-3 py-1.5 text-xs">Bekor</button>
+                        <button type="submit" className="btn-primary-gradient px-3 py-1.5 text-xs">Saqlash</button>
+                      </div>
+                    </form>
+                  )}
+                  
+                  <div className="overflow-y-auto pr-2 space-y-2 flex-1 custom-scrollbar">
+                    {filteredGroups.length === 0 && !groupForm.show && <p className="text-sm text-slate-500 text-center py-4">Bu yo'nalishda guruhlar yo'q</p>}
+                    {filteredGroups.map(group => (
+                      <div 
+                        key={group.id} 
+                        onClick={() => setSelectedGroupId(group.id)}
+                        className={`p-3 rounded-xl border cursor-pointer transition-all flex items-center justify-between ${selectedGroupId === group.id ? 'bg-slate-100 border-slate-300 shadow-sm' : 'bg-white border-slate-100 hover:border-slate-300 hover:bg-slate-50'}`}
+                      >
+                        <div>
+                          <h4 className={`font-bold text-sm ${selectedGroupId === group.id ? 'text-slate-900' : 'text-slate-700'}`}>{group.name}</h4>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span className="text-xs text-slate-500 flex items-center gap-1"><RiUserStarLine/> {group.teachers?.length || 0}</span>
+                            <span className="text-xs text-slate-500 flex items-center gap-1"><RiUser3Line/> {group.students?.length || 0}</span>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <button onClick={(e) => { e.stopPropagation(); setGroupForm({ show: true, id: group.id, name: group.name }); }} className="p-1.5 text-slate-400 hover:text-amber-500 rounded-lg hover:bg-amber-50"><RiEditLine /></button>
+                          <button onClick={(e) => deleteGroup(group.id, e)} className="p-1.5 text-slate-400 hover:text-rose-500 rounded-lg hover:bg-rose-50"><RiDeleteBinLine /></button>
+                          <RiArrowRightSLine className={`${selectedGroupId === group.id ? 'text-slate-500' : 'text-slate-300'}`} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
+            )}
+
+            {/* COLUMN 3: USERS IN GROUP */}
+            {(viewMode === 'all' || viewMode === 'group') && (
+            <div className="card-standard p-5 h-[600px] flex flex-col bg-slate-50/50">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-bold text-slate-800 flex items-center gap-2">
+                  <RiUserStarLine className="text-slate-500" /> A'zolar
+                </h3>
+              </div>
+
+              {!selectedGroupId ? (
+                <div className="flex-1 flex flex-col items-center justify-center text-slate-400 text-sm">
+                  <RiArrowRightSLine size={32} className="mb-2 opacity-50" />
+                  <p>Chapdan guruhni tanlang</p>
+                </div>
+              ) : (
+                <div className="overflow-y-auto pr-2 space-y-6 flex-1 custom-scrollbar">
+                  
+                  {/* Teachers Section */}
+                  <div>
+                    <div className="flex items-center justify-between mb-2 pb-2 border-b border-slate-100">
+                      <h4 className="text-sm font-bold text-slate-700">O'qituvchilar</h4>
+                      <button onClick={() => setShowAddTeacher(!showAddTeacher)} className="text-slate-600 hover:text-slate-800 text-xs font-bold flex items-center gap-1 bg-slate-100 px-2 py-1 rounded-lg">
+                        <RiAddLine /> Qo'shish
+                      </button>
+                    </div>
+                    
+                    {showAddTeacher && (
+                      <div className="mb-3 p-3 bg-slate-50 border border-slate-200 rounded-xl">
+                        <select 
+                          className="input-standard text-sm py-2 w-full mb-2"
+                          value={selectedTeacherId}
+                          onChange={e => setSelectedTeacherId(e.target.value)}
+                        >
+                          <option value="">O'qituvchi tanlang...</option>
+                          {teachers.filter(t => !activeGroup?.teachers?.some(at => at.id === t.id)).map(t => (
+                            <option key={t.id} value={t.id}>{t.full_name}</option>
+                          ))}
+                        </select>
+                        <div className="flex gap-2 justify-end">
+                          <button onClick={() => setShowAddTeacher(false)} className="btn-secondary-soft px-2 py-1 text-xs">Bekor</button>
+                          <button onClick={assignTeacher} className="btn-primary-gradient px-2 py-1 rounded-lg text-xs">Biriktirish</button>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="space-y-2">
+                      {activeGroup?.teachers?.length === 0 && <p className="text-xs text-slate-400 italic">O'qituvchilar yo'q</p>}
+                      {activeGroup?.teachers?.map(t => (
+                        <div key={t.id} className="flex items-center justify-between bg-white border border-slate-100 p-2 rounded-lg">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center text-white shadow-sm">
+                              <RiUserStarLine className="text-lg" />
+                            </div>
+                            <span className="text-sm font-medium text-slate-700">{t.full_name}</span>
+                          </div>
+                          <button onClick={() => removeTeacher(t.id)} className="text-slate-400 hover:text-rose-500 bg-slate-50 hover:bg-rose-50 p-1.5 rounded-lg"><RiCloseLine/></button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Students Section */}
+                  <div>
+                    <div className="flex items-center justify-between mb-2 pb-2 border-b border-slate-100">
+                      <h4 className="text-sm font-bold text-slate-700">Talabalar</h4>
+                      <button onClick={() => setShowAddStudent(!showAddStudent)} className="text-slate-600 hover:text-slate-800 text-xs font-bold flex items-center gap-1 bg-slate-100 px-2 py-1 rounded-lg">
+                        <RiAddLine /> Qo'shish
+                      </button>
+                    </div>
+                    
+                    {showAddStudent && (
+                      <div className="mb-3 p-3 bg-slate-50 border border-slate-200 rounded-xl">
+                        <select 
+                          className="input-standard text-sm py-2 w-full mb-2"
+                          value={selectedStudentId}
+                          onChange={e => setSelectedStudentId(e.target.value)}
+                        >
+                          <option value="">Talaba tanlang...</option>
+                          {students.filter(s => s.group_id !== selectedGroupId).map(s => (
+                            <option key={s.id} value={s.id} disabled={!!s.group_id}>{s.full_name} {s.group_id ? `(Boshqa guruhda)` : `(Guruhsiz)`}</option>
+                          ))}
+                        </select>
+                        <div className="flex gap-2 justify-end">
+                          <button onClick={() => setShowAddStudent(false)} className="btn-secondary-soft px-2 py-1 text-xs">Bekor</button>
+                          <button onClick={assignStudent} className="btn-primary-gradient px-2 py-1 rounded-lg text-xs">Qo'shish</button>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="space-y-2">
+                      {activeGroup?.students?.length === 0 && <p className="text-xs text-slate-400 italic">Talabalar yo'q</p>}
+                      {activeGroup?.students?.map(s => (
+                        <div key={s.id} className="flex items-center justify-between bg-white border border-slate-100 p-2 rounded-lg">
+                          <div className="flex items-center gap-2">
+                            <div className="w-6 h-6 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-xs font-bold">
+                              {s.full_name?.charAt(0) || 'T'}
+                            </div>
+                            <span className="text-sm font-medium text-slate-700">{s.full_name}</span>
+                          </div>
+                          <button onClick={() => removeStudent(s.id)} className="text-slate-400 hover:text-rose-500 bg-slate-50 hover:bg-rose-50 p-1.5 rounded-lg"><RiCloseLine/></button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                </div>
+              )}
+            </div>
+            )}
+
           </div>
         )}
       </div>

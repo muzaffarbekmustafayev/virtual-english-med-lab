@@ -6,7 +6,7 @@ import { useLanguage } from '../../contexts/LanguageContext';
 import {
   RiTeamLine, RiBookOpenLine, RiTrophyLine,
   RiUserStarLine, RiSettings3Line, RiMessage3Line,
-  RiArrowRightLine, RiShieldCheckLine, RiHospitalLine
+  RiArrowRightLine, RiShieldCheckLine, RiHospitalLine, RiAddLine, RiGroupLine
 } from 'react-icons/ri';
 import {
   FaTooth, FaBaby, FaStethoscope
@@ -85,6 +85,13 @@ export default function AdminOverview() {
 
           <div className="flex items-center gap-3">
             <button
+              onClick={() => navigate('/admin/groups')}
+              className="btn-primary-gradient bg-gradient-to-r from-emerald-600 to-teal-600 shadow-emerald-500/20 hover:from-emerald-700 hover:to-teal-700 hover:shadow-emerald-500/30"
+            >
+              <RiHospitalLine />
+              <span>Yo'nalish qo'shish</span>
+            </button>
+            <button
               onClick={() => navigate('/admin/users')}
               className="btn-primary-gradient"
             >
@@ -105,7 +112,7 @@ export default function AdminOverview() {
         {loading ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="h-28 bg-white rounded-3xl border border-slate-200 animate-pulse" />
+              <div key={i} className="h-28 bg-white rounded-xl border border-slate-200 animate-pulse" />
             ))}
           </div>
         ) : (
@@ -130,9 +137,17 @@ export default function AdminOverview() {
         {/* ── 3. Specialty Analytics ── */}
         {stats?.specialties?.length > 0 && (
           <div className="card-standard p-6 sm:p-8 space-y-6">
-            <h2 className="text-sm font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-              <RiHospitalLine className="text-blue-600 text-lg" /> {t('admin.overview.specialties_analytics')}
-            </h2>
+            <div className="flex items-center justify-between">
+              <h2 className="text-sm font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <RiHospitalLine className="text-blue-600 text-lg" /> {t('admin.overview.specialties_analytics')}
+              </h2>
+              <button 
+                onClick={() => navigate('/admin/groups')}
+                className="text-xs font-bold text-emerald-600 bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded-lg flex items-center gap-1 transition-colors"
+              >
+                <RiAddLine /> Yo'nalish yaratish
+              </button>
+            </div>
 
             <div className="flex flex-wrap gap-2.5">
               {stats.specialties.map((spec) => {
@@ -144,7 +159,7 @@ export default function AdminOverview() {
                     onClick={() => setSelectedSpecialtyId(spec.id)}
                     className={`flex items-center gap-2.5 px-4 py-2.5 rounded-2xl text-xs font-bold border transition-all cursor-pointer ${
                       isSel
-                        ? 'bg-slate-900 text-white border-slate-900 shadow-sm font-black'
+                        ? 'bg-purple-600 text-white border-purple-600 shadow-md shadow-purple-500/20 font-black'
                         : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
                     }`}
                   >
@@ -160,19 +175,49 @@ export default function AdminOverview() {
 
             {/* Selected Specialty Breakdown */}
             {selectedSpecialty && (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-slate-100">
-                <div className="card-standard p-5 bg-slate-50/70">
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">{t('admin.groups_page.groups_title')}</p>
-                  <p className="text-2xl font-black text-slate-900 mt-1">{selectedSpecialty.groups?.length || 0} ta guruh</p>
+              <div className="space-y-6 pt-4 border-t border-slate-100">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="card-standard p-5 bg-slate-50/70">
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">{t('admin.groups_page.groups_title')}</p>
+                    <p className="text-2xl font-black text-slate-900 mt-1">{selectedSpecialty.groups?.length || 0} ta guruh</p>
+                  </div>
+                  <div className="card-standard p-5 bg-slate-50/70">
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">{t('admin.overview.total_students')}</p>
+                    <p className="text-2xl font-black text-slate-900 mt-1">{selectedSpecialty.total_students || 0} talaba</p>
+                  </div>
+                  <div className="card-standard p-5 bg-slate-50/70">
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">{t('student.dashboard.average_score')}</p>
+                    <p className="text-2xl font-black text-emerald-600 mt-1">{selectedSpecialty.avg_score || 0}%</p>
+                  </div>
                 </div>
-                <div className="card-standard p-5 bg-slate-50/70">
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">{t('admin.overview.total_students')}</p>
-                  <p className="text-2xl font-black text-slate-900 mt-1">{selectedSpecialty.student_count || 0} talaba</p>
-                </div>
-                <div className="card-standard p-5 bg-slate-50/70">
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">{t('student.dashboard.average_score')}</p>
-                  <p className="text-2xl font-black text-emerald-600 mt-1">{selectedSpecialty.avg_score || 0}%</p>
-                </div>
+
+                {selectedSpecialty.groups?.length > 0 && (
+                  <div>
+                    <h3 className="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
+                      <RiGroupLine className="text-blue-600" /> Guruhlar Natijalari
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {selectedSpecialty.groups.map(group => (
+                        <div key={group.id} className="bg-white border border-slate-200 rounded-xl p-4 flex items-center justify-between hover:border-blue-200 hover:shadow-sm transition-all cursor-default">
+                          <div>
+                            <h4 className="font-bold text-slate-900">{group.name}</h4>
+                            <p className="text-xs text-slate-500 mt-0.5 font-medium flex items-center gap-2">
+                              <span><RiTeamLine className="inline -mt-0.5 mr-0.5 opacity-70"/>{group.student_count}</span>
+                              <span>·</span>
+                              <span><RiMessage3Line className="inline -mt-0.5 mr-0.5 opacity-70"/>{group.completed_conversations}</span>
+                            </p>
+                          </div>
+                          <div className="text-right">
+                            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest block mb-0.5">Natija</span>
+                            <span className={`text-lg font-black ${group.avg_score >= 80 ? 'text-emerald-600' : group.avg_score >= 60 ? 'text-amber-500' : group.avg_score > 0 ? 'text-rose-500' : 'text-slate-400'}`}>
+                              {group.avg_score}%
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>

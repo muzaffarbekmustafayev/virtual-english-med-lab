@@ -1,18 +1,19 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import api from '../lib/api';
 import { useLanguage } from '../contexts/LanguageContext';
 import {
-  RiMicLine, RiStopCircleLine, RiVolumeUpLine,
-  RiLoader4Line, RiHeartPulseLine, RiPhoneLine,
-  RiCheckDoubleLine, RiUser3Line, RiRobot2Line,
-  RiArrowRightSLine, RiKeyboardLine, RiSendPlane2Line, RiAlertLine,
-  RiPulseLine, RiSparkling2Line, RiSpeedLine,
-  RiStethoscopeLine, RiLightbulbLine, RiMedicineBottleLine,
-  RiFirstAidKitLine, RiShieldStarLine, RiEyeLine, RiEyeOffLine,
-  RiChatQuoteLine, RiSoundModuleLine
+  RiMicLine, RiMicOffLine, RiStopCircleLine, RiVolumeUpLine,
+  RiLoader4Line, RiHeartPulseLine,
+  RiCheckDoubleLine, RiUser3Line,
+  RiSendPlane2Line, RiSpeedLine,
+  RiStethoscopeLine, RiLightbulbLine,
+  RiEyeLine, RiChatQuoteLine, RiSoundModuleLine,
+  RiSparkling2Line, RiRefreshLine, RiKeyboardLine,
+  RiPlayCircleLine, RiVoiceprintLine, RiAwardLine
 } from 'react-icons/ri';
+import { toast } from 'react-hot-toast';
 
-// 10 ta modul uchun maxsus klinik mavzu parametrlari va vizual ikonkalari
+// 10 ta modul uchun klinik mavzular va moslashtirilgan boshlang'ich bemor shikoyatlari
 const MODULE_THEMES = {
   1: {
     name: 'Dental Pain & Sensitivity',
@@ -21,9 +22,8 @@ const MODULE_THEMES = {
     iconTag: 'Tooth Nerve & Cold Pain',
     accentColor: 'rose',
     gradientBg: 'from-rose-50 via-slate-50 to-amber-50/60',
-    ringColor: 'ring-rose-400/40',
-    glowColor: 'shadow-rose-500/10',
     chiefComplaint: 'Sharp shooting pain when drinking cold liquids & throbbing night ache',
+    initialGreeting: "Hello Doctor. I've had a sharp, throbbing pain in my lower left tooth for three days now, especially with cold liquids.",
     symptoms: ['Cold Sensitivity', 'Percussion Pain', 'Throbbing Night Ache'],
   },
   2: {
@@ -33,9 +33,8 @@ const MODULE_THEMES = {
     iconTag: 'Enamel Cavity & Filling',
     accentColor: 'cyan',
     gradientBg: 'from-cyan-50 via-slate-50 to-blue-50/60',
-    ringColor: 'ring-cyan-400/40',
-    glowColor: 'shadow-cyan-500/10',
     chiefComplaint: 'Food getting caught in upper molar with mild sweet sensitivity',
+    initialGreeting: "Good morning Doctor. Food keeps getting caught in my upper right molar, and I feel a sharp sensitivity with sweets.",
     symptoms: ['Cavity / Enamel Decay', 'Sweet Sensitivity', 'Dark Fissure Spot'],
   },
   3: {
@@ -45,9 +44,8 @@ const MODULE_THEMES = {
     iconTag: 'Gums & Calculus Probe',
     accentColor: 'emerald',
     gradientBg: 'from-emerald-50 via-slate-50 to-teal-50/60',
-    ringColor: 'ring-emerald-400/40',
-    glowColor: 'shadow-emerald-500/10',
     chiefComplaint: 'Bleeding gums when brushing & persistent bad breath',
+    initialGreeting: "Hello Doctor. My gums have been bleeding noticeably every time I brush, and they feel sore around my lower teeth.",
     symptoms: ['Bleeding on Probing', 'Subgingival Calculus', 'Gum Recession'],
   },
   4: {
@@ -57,9 +55,8 @@ const MODULE_THEMES = {
     iconTag: 'Surgical Forceps & Anesthesia',
     accentColor: 'indigo',
     gradientBg: 'from-indigo-50 via-slate-50 to-purple-50/60',
-    ringColor: 'ring-indigo-400/40',
-    glowColor: 'shadow-indigo-500/10',
     chiefComplaint: 'Severe broken crown with recurrent abscess in lower right quadrant',
+    initialGreeting: "Doctor, my lower right tooth broke last week and my cheek is swollen with severe throbbing pain. Can you check it?",
     symptoms: ['Root Rest Retention', 'Local Anesthesia Planning', 'Post-Op Instructions'],
   },
   5: {
@@ -69,9 +66,8 @@ const MODULE_THEMES = {
     iconTag: 'Pulp Chamber & Canal Files',
     accentColor: 'amber',
     gradientBg: 'from-amber-50 via-slate-50 to-orange-50/60',
-    ringColor: 'ring-amber-400/40',
-    glowColor: 'shadow-amber-500/10',
     chiefComplaint: 'Continuous throbbing radiated pain unresponsive to regular analgesics',
+    initialGreeting: "Hello Doctor, the pain in my back tooth is unbearable and radiates up into my ear. Regular painkillers aren't helping at all.",
     symptoms: ['Pulpitis / Necrosis', 'Thermal Lingering Pain', 'Apical Tenderness'],
   },
   6: {
@@ -81,9 +77,8 @@ const MODULE_THEMES = {
     iconTag: 'Brackets & Archwire',
     accentColor: 'blue',
     gradientBg: 'from-blue-50 via-slate-50 to-sky-50/60',
-    ringColor: 'ring-blue-400/40',
-    glowColor: 'shadow-blue-500/10',
     chiefComplaint: 'Crowding of anterior mandibular incisors and difficulty chewing',
+    initialGreeting: "Hi Doctor. I'm concerned about the crowding of my front lower teeth and difficulty with chewing. What options do I have?",
     symptoms: ['Class II Malocclusion', 'Anterior Crowding', 'Cephalometric Analysis'],
   },
   7: {
@@ -93,9 +88,8 @@ const MODULE_THEMES = {
     iconTag: 'Ceramic Crown & Implant Bridge',
     accentColor: 'violet',
     gradientBg: 'from-violet-50 via-slate-50 to-indigo-50/60',
-    ringColor: 'ring-violet-400/40',
-    glowColor: 'shadow-violet-500/10',
     chiefComplaint: 'Missing premolar causing aesthetic concern and bite imbalance',
+    initialGreeting: "Good day Doctor. I lost a premolar tooth a few months ago and would like to discuss crowns, bridges, or dental implants.",
     symptoms: ['Missing Tooth Edentulism', 'Shade Selection A2/A3', 'Impression Taking'],
   },
   8: {
@@ -105,9 +99,8 @@ const MODULE_THEMES = {
     iconTag: 'Primary Molars & Fluoride Gel',
     accentColor: 'pink',
     gradientBg: 'from-pink-50 via-slate-50 to-rose-50/60',
-    ringColor: 'ring-pink-400/40',
-    glowColor: 'shadow-pink-500/10',
     chiefComplaint: '7-year-old child with early childhood caries on primary molar',
+    initialGreeting: "Hello Doctor, my tooth hurts when I eat ice cream or cold food. I was a bit scared to visit today.",
     symptoms: ['Tell-Show-Do Method', 'Pit & Fissure Sealants', 'Fluoride Varnish'],
   },
   9: {
@@ -117,9 +110,8 @@ const MODULE_THEMES = {
     iconTag: 'Histopathology & White Plaque',
     accentColor: 'teal',
     gradientBg: 'from-teal-50 via-slate-50 to-emerald-50/60',
-    ringColor: 'ring-teal-400/40',
-    glowColor: 'shadow-teal-500/10',
     chiefComplaint: 'Painless white patch on buccal mucosa lasting for over 3 weeks',
+    initialGreeting: "Hello Doctor. I noticed a painless white patch inside my cheek about three weeks ago that hasn't gone away.",
     symptoms: ['Leukoplakia', 'Mucosal Ulceration', 'Biopsy Referral'],
   },
   10: {
@@ -129,26 +121,92 @@ const MODULE_THEMES = {
     iconTag: 'Tooth Luxation & Splinting',
     accentColor: 'red',
     gradientBg: 'from-red-50 via-slate-50 to-rose-50/60',
-    ringColor: 'ring-red-400/40',
-    glowColor: 'shadow-red-500/10',
     chiefComplaint: 'Sports trauma resulting in avulsion of maxillary central incisor',
-    symptoms: ['Avulsed Incisor 21', 'Storage in Hank\'s / Milk', 'Flexible Splint 14 Days'],
+    initialGreeting: "Doctor! I was hit during a sports match an hour ago and my front tooth got knocked out. I brought it in a glass of milk!",
+    symptoms: ['Avulsed Incisor 21', 'Storage in Milk', 'Emergency Reimplantation'],
   },
+};
+
+const MODULE_SUGGESTED_QUESTIONS = {
+  1: [
+    "Hello, what brings you in today?",
+    "Where is the pain located?",
+    "Is it sensitive to hot or cold food?",
+    "How long does the pain linger?"
+  ],
+  2: [
+    "Hello, how can I help you today?",
+    "Which tooth is giving you trouble?",
+    "Does sweet food cause any discomfort?",
+    "Let me examine the cavity under light."
+  ],
+  3: [
+    "Good morning, what seems to be the issue?",
+    "Do your gums bleed when you brush or floss?",
+    "How long have your gums been swollen?",
+    "We need to perform periodontal probing."
+  ],
+  4: [
+    "Hello, what brings you to our dental clinic?",
+    "Where is the swelling located in your mouth?",
+    "Is the tooth broken down to the root?",
+    "We will administer local anesthesia first."
+  ],
+  5: [
+    "Hello, what brings you in today?",
+    "Where is the throbbing pain located, and does it radiate to your ear?",
+    "Does hot or cold drink trigger severe lingering pain?",
+    "Does the tooth hurt when you bite or tap on it?",
+    "We need a periapical X-ray to check for pulp necrosis and root canals."
+  ],
+  6: [
+    "Hello, how can I help with your smile today?",
+    "Are you concerned about crowded or crooked teeth?",
+    "Do you have any difficulty chewing or speaking?",
+    "We can discuss ceramic brackets or clear aligners."
+  ],
+  7: [
+    "Good day, what brings you in today?",
+    "Which missing tooth are you looking to replace?",
+    "Would you prefer a dental crown, bridge, or implant?",
+    "Let's take a dental impression for shade matching."
+  ],
+  8: [
+    "Hello there! How are you feeling today?",
+    "Can you show me where the tooth hurts?",
+    "Does eating ice cream or sweets make it ache?",
+    "Let's count your teeth and apply gentle fluoride gel."
+  ],
+  9: [
+    "Hello, what brings you in for consultation?",
+    "Where is the white patch or lesion located?",
+    "Has the lesion changed in size or color recently?",
+    "We should take a gentle diagnostic biopsy."
+  ],
+  10: [
+    "Hello, what is the dental emergency today?",
+    "Did you experience any dental trauma or accident?",
+    "Is the tooth completely knocked out or loose?",
+    "We will perform an emergency dental splint."
+  ]
 };
 
 export default function VirtualPatientChat({
   moduleId,
   module,
-  conversationId,
+  conversationId: initialConversationId,
   phrasebook = [],
   onFinish,
   onTestPass100
 }) {
-  const { t, lang, getTranslated } = useLanguage();
-  const [callState, setCallState] = useState('idle');
-  const [micState, setMicState] = useState('idle');
-  const [chatMode, setChatMode] = useState('audio');
-  const [visualView, setVisualView] = useState('case');
+  const { t, getTranslated } = useLanguage();
+
+  // State
+  const [activeConvId, setActiveConvId] = useState(initialConversationId || null);
+  const [callState, setCallState] = useState('idle'); // 'idle' | 'active' | 'ended'
+  const [micState, setMicState] = useState('idle');   // 'idle' | 'listening' | 'processing' | 'speaking'
+  const [chatMode, setChatMode] = useState('audio');   // 'audio' | 'text'
+  const [visualView, setVisualView] = useState('case'); // 'case' | 'transcript'
   const [chatHistory, setChatHistory] = useState([]);
   const [transcript, setTranscript] = useState('');
   const [textInput, setTextInput] = useState('');
@@ -156,11 +214,12 @@ export default function VirtualPatientChat({
   const [volumeLevel, setVolumeLevel] = useState(0);
   const [speechRate, setSpeechRate] = useState(0.95);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [showReplayAlert, setShowReplayAlert] = useState(false);
+  const [audioRecordingSupported, setAudioRecordingSupported] = useState(true);
 
+  // Refs
   const recognitionRef = useRef(null);
-  const synthRef = useRef(window.speechSynthesis);
-  const currentAudioRef = useRef(null);
+  const mediaRecorderRef = useRef(null);
+  const audioChunksRef = useRef([]);
   const isSpeakingRef = useRef(false);
   const isListeningRef = useRef(false);
   const isProcessingRef = useRef(false);
@@ -171,9 +230,21 @@ export default function VirtualPatientChat({
   const micStreamRef = useRef(null);
   const animFrameRef = useRef(null);
   const messagesEndRef = useRef(null);
+  const transcriptRef = useRef('');
+  const silenceTimerRef = useRef(null);
+  const keepAliveIntervalRef = useRef(null);
+  const activeConvIdRef = useRef(initialConversationId || null);
 
   const parsedModuleId = Number(moduleId) || 1;
   const currentTheme = MODULE_THEMES[parsedModuleId] || MODULE_THEMES[1];
+
+  // Sync activeConvId
+  useEffect(() => {
+    if (initialConversationId) {
+      setActiveConvId(initialConversationId);
+      activeConvIdRef.current = initialConversationId;
+    }
+  }, [initialConversationId]);
 
   useEffect(() => {
     callStateRef.current = callState;
@@ -187,39 +258,96 @@ export default function VirtualPatientChat({
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chatHistory]);
 
+  const lastSoundTimeRef = useRef(0);
+  const isSpeakingAudioRef = useRef(false);
+  const autoCommitTriggeredRef = useRef(false);
+  const voiceFrameCountRef = useRef(0);
+  const speechDetectedRef = useRef(false);
+
+  // Audio Context & Mic Visualizer with Noise Suppression & 60fps Hardware JS VAD
   const initAudioAnalyser = async () => {
     try {
-      if (audioContextRef.current) return;
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      if (micStreamRef.current) return micStreamRef.current;
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true,
+        }
+      });
       micStreamRef.current = stream;
+
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
       const audioCtx = new AudioCtx();
+      if (audioCtx.state === 'suspended') {
+        await audioCtx.resume();
+      }
+
+      // Hardware Bandpass Filter (Removes low frequency fan rumble < 150Hz & high frequency hiss)
+      const highpass = audioCtx.createBiquadFilter();
+      highpass.type = 'highpass';
+      highpass.frequency.value = 150; // Cut off low hums/fans
+
       const analyser = audioCtx.createAnalyser();
       analyser.fftSize = 64;
+      analyser.smoothingTimeConstant = 0.8;
+
       const source = audioCtx.createMediaStreamSource(stream);
-      source.connect(analyser);
+      source.connect(highpass);
+      highpass.connect(analyser);
 
       audioContextRef.current = audioCtx;
       analyserRef.current = analyser;
 
       const dataArray = new Uint8Array(analyser.frequencyBinCount);
       const updateVolume = () => {
-        if (analyserRef.current && isListeningRef.current) {
+        if (analyserRef.current && isListeningRef.current && !isProcessingRef.current && !isSpeakingRef.current) {
           analyserRef.current.getByteFrequencyData(dataArray);
           let sum = 0;
           for (let i = 0; i < dataArray.length; i++) {
             sum += dataArray[i];
           }
           const avg = sum / dataArray.length;
-          setVolumeLevel(Math.min(100, Math.round((avg / 128) * 100)));
+          const vol = Math.min(100, Math.round((avg / 128) * 100));
+          setVolumeLevel(vol);
+
+          // Noise Gate: Ignore any noise/whispers below 20%
+          const NOISE_GATE_THRESHOLD = 20;
+
+          if (vol >= NOISE_GATE_THRESHOLD) {
+            voiceFrameCountRef.current += 1;
+            // Only confirm intentional speech if sustained for at least 2 frames (prevents click/pop false triggers)
+            if (voiceFrameCountRef.current >= 2) {
+              isSpeakingAudioRef.current = true;
+              speechDetectedRef.current = true;
+              lastSoundTimeRef.current = Date.now();
+              autoCommitTriggeredRef.current = false;
+            }
+          } else {
+            voiceFrameCountRef.current = 0;
+            if (isSpeakingAudioRef.current && !autoCommitTriggeredRef.current) {
+              const elapsedSilence = Date.now() - lastSoundTimeRef.current;
+              if (elapsedSilence > 500) { // 500ms (0.5s) ultra-fast pause detection
+                autoCommitTriggeredRef.current = true;
+                isSpeakingAudioRef.current = false;
+                console.log('%c⚡ [INSTANT VAD 0.5s] Nutq to\'xtadi (0.5s). AI ga zudlik bilan yuborilmoqda...', 'color: #10b981; font-weight: bold;');
+                if (recognitionRef.current) {
+                  try { recognitionRef.current.stop(); } catch (_) {}
+                }
+                sendMessage();
+              }
+            }
+          }
         } else {
           setVolumeLevel(0);
         }
         animFrameRef.current = requestAnimationFrame(updateVolume);
       };
       updateVolume();
+      return stream;
     } catch (e) {
-      console.warn('Audio Visualizer setup skipped:', e);
+      console.warn('Audio Visualizer setup skipped or permission denied:', e);
+      return null;
     }
   };
 
@@ -236,98 +364,22 @@ export default function VirtualPatientChat({
     setVolumeLevel(0);
   };
 
-  const getBestNaturalVoice = () => {
-    if (!window.speechSynthesis) return null;
+  // Natural English Voice Selection
+  const getBestNaturalVoice = useCallback(() => {
+    if (typeof window === 'undefined' || !window.speechSynthesis) return null;
     const voices = window.speechSynthesis.getVoices();
     if (!voices || voices.length === 0) return null;
 
-    let v = voices.find(v => (v.name.includes('Natural') || v.name.includes('Neural')) && (v.lang.startsWith('en') || v.lang === 'en-US'));
-    if (!v) v = voices.find(v => v.name.includes('Online') && v.lang.startsWith('en'));
+    let v = voices.find(v => (v.name.includes('Natural') || v.name.includes('Neural') || v.name.includes('Online')) && v.lang.startsWith('en'));
     if (!v) v = voices.find(v => v.name.includes('Google') && v.lang.startsWith('en'));
+    if (!v) v = voices.find(v => (v.name.includes('David') || v.name.includes('Jenny') || v.name.includes('Aria') || v.name.includes('Zira')) && v.lang.startsWith('en'));
     if (!v) v = voices.find(v => v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen'));
     if (!v) v = voices.find(v => v.lang.startsWith('en'));
     return v || voices[0];
-  };
+  }, []);
 
-  const startListening = () => {
-    if (chatModeRef.current !== 'audio') return;
-    if (callStateRef.current !== 'active') return;
-    if (isSpeakingRef.current || isProcessingRef.current) return;
-
-    const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRec) return;
-
-    if (recognitionRef.current) {
-      try { recognitionRef.current.abort(); } catch (_) {}
-    }
-
-    const rec = new SpeechRec();
-    rec.continuous = false;
-    rec.interimResults = true;
-    rec.lang = 'en-US';
-    rec.maxAlternatives = 1;
-
-    rec.onstart = () => {
-      isListeningRef.current = true;
-      setMicState('listening');
-    };
-
-    rec.onresult = (event) => {
-      let interim = '';
-      let final = '';
-      for (let i = event.resultIndex; i < event.results.length; ++i) {
-        if (event.results[i].isFinal) {
-          final += event.results[i][0].transcript;
-        } else {
-          interim += event.results[i][0].transcript;
-        }
-      }
-      const liveText = final || interim;
-      setTranscript(liveText);
-
-      if (final && final.trim().length > 0) {
-        try { rec.stop(); } catch (_) {}
-        sendMessage(final.trim());
-      }
-    };
-
-    rec.onerror = (e) => {
-      isListeningRef.current = false;
-      if (callStateRef.current === 'active' && !isSpeakingRef.current && !isProcessingRef.current) {
-        setTimeout(() => {
-          if (callStateRef.current === 'active' && !isSpeakingRef.current && !isProcessingRef.current) {
-            startListening();
-          }
-        }, 1200);
-      }
-    };
-
-    rec.onend = () => {
-      isListeningRef.current = false;
-      if (callStateRef.current === 'active' && !isSpeakingRef.current && !isProcessingRef.current) {
-        setTimeout(() => {
-          if (callStateRef.current === 'active' && !isSpeakingRef.current && !isProcessingRef.current) {
-            startListening();
-          }
-        }, 600);
-      }
-    };
-
-    recognitionRef.current = rec;
-    try {
-      rec.start();
-    } catch (_) {}
-  };
-
-  const stopListening = () => {
-    isListeningRef.current = false;
-    if (recognitionRef.current) {
-      try { recognitionRef.current.abort(); } catch (_) {}
-      recognitionRef.current = null;
-    }
-  };
-
-  const playTTS = (text, audioBase64 = null) => {
+  // Text-To-Speech (TTS) Engine
+  const playTTS = useCallback((text, audioBase64 = null) => {
     return new Promise((resolve) => {
       stopListening();
       isSpeakingRef.current = true;
@@ -336,11 +388,9 @@ export default function VirtualPatientChat({
       if (audioBase64) {
         try {
           const audio = new Audio(`data:audio/mp3;base64,${audioBase64}`);
-          currentAudioRef.current = audio;
           audio.playbackRate = speechRate;
           audio.onended = () => {
             isSpeakingRef.current = false;
-            currentAudioRef.current = null;
             resolve();
           };
           audio.onerror = () => {
@@ -358,96 +408,400 @@ export default function VirtualPatientChat({
 
       fallbackBrowserTTS(text).then(resolve);
     });
-  };
+  }, [speechRate, getBestNaturalVoice]);
 
   const fallbackBrowserTTS = (text) => {
     return new Promise((resolve) => {
-      if (!window.speechSynthesis) {
+      if (typeof window === 'undefined' || !window.speechSynthesis) {
         isSpeakingRef.current = false;
         resolve();
         return;
       }
 
-      window.speechSynthesis.cancel();
-      const utt = new SpeechSynthesisUtterance(text);
+      try {
+        window.speechSynthesis.cancel();
+      } catch (_) {}
+
+      const cleanText = text.replace(/[*_~`#[\]]/g, '').trim();
+      const utt = new SpeechSynthesisUtterance(cleanText);
       utt.lang = 'en-US';
       utt.rate = speechRate;
       utt.pitch = 1.0;
+      utt.volume = 1.0;
 
       const voice = getBestNaturalVoice();
       if (voice) utt.voice = voice;
 
-      utt.onend = () => {
+      // Chrome garbage collection protection
+      window.__activePatientUtterance = utt;
+
+      if (keepAliveIntervalRef.current) clearInterval(keepAliveIntervalRef.current);
+      keepAliveIntervalRef.current = setInterval(() => {
+        if (window.speechSynthesis && window.speechSynthesis.speaking) {
+          window.speechSynthesis.pause();
+          window.speechSynthesis.resume();
+        } else {
+          clearInterval(keepAliveIntervalRef.current);
+        }
+      }, 5000);
+
+      const cleanup = () => {
+        if (keepAliveIntervalRef.current) clearInterval(keepAliveIntervalRef.current);
+        window.__activePatientUtterance = null;
         isSpeakingRef.current = false;
+      };
+
+      utt.onend = () => {
+        cleanup();
         resolve();
       };
+
       utt.onerror = () => {
-        isSpeakingRef.current = false;
+        cleanup();
         resolve();
       };
 
       try {
         window.speechSynthesis.speak(utt);
-      } catch (_) {
-        isSpeakingRef.current = false;
+      } catch (err) {
+        cleanup();
         resolve();
       }
     });
   };
 
-  const sendMessage = async (userText) => {
-    if (!userText || !userText.trim()) return;
+  // Start MediaRecorder (Ultra-compressed 24kbps Opus audio for fast upload)
+  const startMediaRecorder = async () => {
+    try {
+      const stream = micStreamRef.current || await initAudioAnalyser();
+      if (!stream) return;
+      audioChunksRef.current = [];
+      const options = typeof MediaRecorder !== 'undefined' && MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
+        ? { mimeType: 'audio/webm;codecs=opus', audioBitsPerSecond: 24000 }
+        : { audioBitsPerSecond: 24000 };
+      const mr = new MediaRecorder(stream, options);
+      mr.ondataavailable = (e) => {
+        if (e.data && e.data.size > 0) {
+          audioChunksRef.current.push(e.data);
+        }
+      };
+      mediaRecorderRef.current = mr;
+      mr.start(100);
+    } catch (e) {
+      console.warn('MediaRecorder setup error:', e);
+    }
+  };
+
+  const stopMediaRecorderAndGetBase64 = () => {
+    return new Promise((resolve) => {
+      if (!mediaRecorderRef.current || mediaRecorderRef.current.state === 'inactive') {
+        resolve(null);
+        return;
+      }
+      mediaRecorderRef.current.onstop = () => {
+        const blob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64 = reader.result;
+          resolve(base64);
+        };
+        reader.onerror = () => resolve(null);
+        reader.readAsDataURL(blob);
+      };
+      try {
+        mediaRecorderRef.current.stop();
+      } catch (_) {
+        resolve(null);
+      }
+    });
+  };
+
+  // Speech-To-Text (STT) Recognition with Fast Turn-Taking
+  const startListening = useCallback(() => {
+    if (chatModeRef.current !== 'audio') return;
+    if (callStateRef.current !== 'active') return;
+    if (isSpeakingRef.current || isProcessingRef.current) return;
+
+    speechDetectedRef.current = false;
+    isSpeakingAudioRef.current = false;
+    autoCommitTriggeredRef.current = false;
+    lastSoundTimeRef.current = Date.now();
+
+    // Start background MediaRecorder
+    startMediaRecorder();
+
+    const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRec) {
+      isListeningRef.current = true;
+      setMicState('listening');
+      return;
+    }
+
+    if (recognitionRef.current) {
+      try { recognitionRef.current.abort(); } catch (_) {}
+      recognitionRef.current = null;
+    }
+
+    const rec = new SpeechRec();
+    rec.continuous = true;
+    rec.interimResults = true;
+    rec.lang = 'en-US';
+    rec.maxAlternatives = 1;
+
+    rec.onstart = () => {
+      console.log('%c🎤 [STT STARTED] Mikrofon eshitishni boshladi (en-US)', 'color: #10b981; font-weight: bold;');
+      isListeningRef.current = true;
+      setMicState('listening');
+    };
+
+    rec.onaudiostart = () => {
+      console.log('%c🔊 [AUDIO INPUT] Ovoz signali qabul qilinmoqda...', 'color: #06b6d4;');
+    };
+
+    rec.onsoundstart = () => {
+      console.log('%c🎵 [SOUND DETECTED] Tovush aniqlandi...', 'color: #3b82f6;');
+    };
+
+    rec.onspeechstart = () => {
+      console.log('%c🗣️ [SPEECH DETECTED] Nutq gapirilmoqda...', 'color: #8b5cf6; font-weight: bold;');
+      speechDetectedRef.current = true;
+    };
+
+    rec.onspeechend = () => {
+      console.log('%c🤐 [SPEECH PAUSE] Nutq to\'xtadi (0.5s)...', 'color: #ec4899;');
+      
+      // Fast 500ms pause
+      if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
+      silenceTimerRef.current = setTimeout(() => {
+        if (!transcriptRef.current && isListeningRef.current && !isProcessingRef.current && speechDetectedRef.current) {
+          console.log('%c⚡ [AUDIO SEND] 0.5s pauza. Audio Gemini ga yuborilmoqda...', 'color: #06b6d4; font-weight: bold;');
+          try { rec.stop(); } catch (_) {}
+          sendMessage();
+        }
+      }, 500);
+    };
+
+    rec.onresult = (event) => {
+      let interim = '';
+      let final = '';
+
+      for (let i = event.results.length - 1; i >= 0; i--) {
+        const item = event.results[i];
+        if (item.isFinal) {
+          final = item[0].transcript + ' ' + final;
+        } else {
+          interim += item[0].transcript;
+        }
+      }
+
+      const liveText = (final + interim).trim();
+      if (liveText) {
+        console.log('%c📝 [STT LIVE TRANSCRIPT]:', 'color: #f59e0b; font-weight: bold; font-size: 13px;', liveText);
+        setTranscript(liveText);
+        transcriptRef.current = liveText;
+
+        if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
+
+        // Fast 500ms pause -> User finished -> Trigger AI
+        silenceTimerRef.current = setTimeout(() => {
+          if (transcriptRef.current && transcriptRef.current.trim().length > 1 && isListeningRef.current && !isProcessingRef.current) {
+            const captured = transcriptRef.current.trim();
+            console.log('%c🚀 [AUTO COMMIT 0.5s] Matn AI ga yuborilmoqda:', 'color: #10b981; font-weight: bold;', captured);
+            try { rec.stop(); } catch (_) {}
+            sendMessage(captured);
+          }
+        }, 500);
+      }
+    };
+
+    rec.onerror = (e) => {
+      if (e.error === 'aborted' || e.error === 'no-speech') {
+        // Normal intentional events, do not log or warn
+        return;
+      }
+      console.warn('%c⚠️ [STT ERROR/NOTICE]:', 'color: #ef4444;', e.error);
+      if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
+        toast.error("Mikrofonga ruxsat berilmagan!");
+        stopAllAudioAndRecognition();
+      }
+    };
+
+    rec.onend = () => {
+      isListeningRef.current = false;
+      
+      // If there's an uncommitted transcript in the buffer, send it
+      if (transcriptRef.current && transcriptRef.current.trim().length > 1 && !isProcessingRef.current) {
+        const textToSend = transcriptRef.current.trim();
+        console.log('%c🚀 [FLUSH BUFFER] Qolgan matn AI ga yuborilmoqda:', 'color: #10b981; font-weight: bold;', textToSend);
+        sendMessage(textToSend);
+        return;
+      }
+
+      // If speech was heard but no text was ever returned, send audio fallback
+      if (speechDetectedRef.current && !transcriptRef.current && !isProcessingRef.current && callStateRef.current === 'active' && !isSpeakingRef.current) {
+        console.log('%c🎙️ [AUDIO FALLBACK ON END] Audio Gemini ga yuborilmoqda...', 'color: #06b6d4; font-weight: bold;');
+        sendMessage();
+        return;
+      }
+
+      // Restart listening cleanly if call is active and not speaking/processing
+      if (callStateRef.current === 'active' && chatModeRef.current === 'audio' && !isSpeakingRef.current && !isProcessingRef.current) {
+        setTimeout(() => {
+          if (callStateRef.current === 'active' && chatModeRef.current === 'audio' && !isSpeakingRef.current && !isProcessingRef.current) {
+            startListening();
+          }
+        }, 500);
+      }
+    };
+
+    recognitionRef.current = rec;
+    try {
+      rec.start();
+    } catch (err) {
+      console.error('STT start exception:', err);
+    }
+  }, []);
+
+  const stopListening = () => {
+    isListeningRef.current = false;
+    if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
+    if (recognitionRef.current) {
+      try { recognitionRef.current.abort(); } catch (_) {}
+      recognitionRef.current = null;
+    }
+  };
+
+  // Send User Message to AI (Either text or recorded audio)
+  const sendMessage = async (userText = null) => {
     if (isProcessingRef.current) return;
 
     stopListening();
-    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
+
+    const finalUserText = userText || transcriptRef.current || '';
+    
+    // Stop media recorder and get audio
+    const audioBase64 = await stopMediaRecorderAndGetBase64();
+
+    // If both text and audio are completely empty, restart listening
+    if (!finalUserText.trim() && !audioBase64) {
+      if (callStateRef.current === 'active') {
+        startListening();
+      }
+      return;
+    }
 
     isProcessingRef.current = true;
     setMicState('processing');
     setTranscript('');
+    transcriptRef.current = '';
 
-    const newHistory = [...chatHistory, { role: 'user', content: userText, timestamp: new Date() }];
-    setChatHistory(newHistory);
+    const convEndpointId = activeConvIdRef.current || 'undefined';
 
-    try {
-      const res = await api.post(`/student/conversations/${conversationId}/messages`, {
-        content: userText,
-        message: userText
-      });
+    // 1. If we have text from STT, use text endpoint
+    if (finalUserText.trim()) {
+      console.log('%c📤 [SENDING TO GEMINI VIA TEXT]:', 'color: #2563eb; font-weight: bold;', finalUserText.trim());
+      const newHistory = [...chatHistory, { role: 'user', content: finalUserText.trim(), timestamp: new Date() }];
+      setChatHistory(newHistory);
 
-      const patientReply = res.data.message || res.data.reply || "I understand, doctor. What should we do next?";
-      const audioBase64 = res.data.audio || null;
+      try {
+        const res = await api.post(`/student/conversations/${convEndpointId}/messages`, {
+          content: finalUserText.trim(),
+          message: finalUserText.trim(),
+          text: finalUserText.trim(),
+          module_id: parsedModuleId
+        });
 
-      setChatHistory(prev => [
-        ...prev,
-        { role: 'patient', content: patientReply, timestamp: new Date(), audio: audioBase64 }
-      ]);
+        if (res.data.conversation_id && res.data.conversation_id !== activeConvIdRef.current) {
+          setActiveConvId(res.data.conversation_id);
+          activeConvIdRef.current = res.data.conversation_id;
+        }
 
-      isProcessingRef.current = false;
+        const patientReply = res.data.message || res.data.reply || "I understand, Doctor. What should we do next?";
+        const replyAudio = res.data.audio || null;
+        console.log('%c📥 [GEMINI PATIENT REPLY]:', 'color: #10b981; font-weight: bold;', patientReply);
 
-      if (callStateRef.current === 'active') {
-        await playTTS(patientReply, audioBase64);
+        setChatHistory(prev => [
+          ...prev,
+          { role: 'patient', content: patientReply, timestamp: new Date(), audio: replyAudio }
+        ]);
 
+        isProcessingRef.current = false;
+
+        // Speak patient response
         if (callStateRef.current === 'active') {
-          setMicState('listening');
-          if (chatModeRef.current === 'audio') {
-            startListening();
+          console.log('%c🗣️ [TTS SPEAKING START]:', 'color: #8b5cf6; font-weight: bold;', patientReply);
+          await playTTS(patientReply, replyAudio);
+          console.log('%c✅ [TTS SPEAKING DONE]: Listening again...', 'color: #10b981;');
+
+          if (callStateRef.current === 'active') {
+            setMicState('listening');
+            if (chatModeRef.current === 'audio') {
+              startListening();
+            }
+          }
+        }
+      } catch (err) {
+        console.error('Chat error:', err);
+        isProcessingRef.current = false;
+        const errorMsg = "I understand, Doctor. What do you advise?";
+        setChatHistory(prev => [
+          ...prev,
+          { role: 'patient', content: errorMsg, timestamp: new Date() }
+        ]);
+        if (callStateRef.current === 'active') {
+          await playTTS(errorMsg);
+          if (callStateRef.current === 'active') {
+            setMicState('listening');
+            if (chatModeRef.current === 'audio') startListening();
           }
         }
       }
-    } catch (err) {
-      console.error('Chat error:', err);
-      isProcessingRef.current = false;
-      const errorMsg = "I'm having a little trouble hearing you, doctor. Could you please repeat that?";
-      setChatHistory(prev => [
-        ...prev,
-        { role: 'patient', content: errorMsg, timestamp: new Date() }
-      ]);
-      if (callStateRef.current === 'active') {
-        await fallbackBrowserTTS(errorMsg);
+    } else if (audioBase64) {
+      // 2. Direct Multimodal Audio fallback -> Gemini listens to your voice recording directly
+      console.log('%c📤 [SENDING AUDIO DIRECTLY TO GEMINI]:', 'color: #06b6d4; font-weight: bold;', 'Base64 audio payload size:', audioBase64.length);
+      try {
+        const res = await api.post(`/student/conversations/${convEndpointId}/audio-stream`, {
+          audioBase64,
+          module_id: parsedModuleId
+        });
+
+        if (res.data.conversation_id && res.data.conversation_id !== activeConvIdRef.current) {
+          setActiveConvId(res.data.conversation_id);
+          activeConvIdRef.current = res.data.conversation_id;
+        }
+
+        const transcribed = res.data.transcript || "Doctor's clinical inquiry";
+        const patientReply = res.data.reply || res.data.message || "I understand, Doctor.";
+        console.log('%c📝 [GEMINI TRANSCRIBED DOCTOR]:', 'color: #f59e0b; font-weight: bold;', transcribed);
+        console.log('%c📥 [GEMINI PATIENT REPLY]:', 'color: #10b981; font-weight: bold;', patientReply);
+
+        setChatHistory(prev => [
+          ...prev,
+          { role: 'user', content: transcribed, timestamp: new Date() },
+          { role: 'patient', content: patientReply, timestamp: new Date() }
+        ]);
+
+        isProcessingRef.current = false;
+
+        if (callStateRef.current === 'active') {
+          console.log('%c🗣️ [TTS SPEAKING START]:', 'color: #8b5cf6; font-weight: bold;', patientReply);
+          await playTTS(patientReply);
+          console.log('%c✅ [TTS SPEAKING DONE]: Listening again...', 'color: #10b981;');
+
+          if (callStateRef.current === 'active') {
+            setMicState('listening');
+            if (chatModeRef.current === 'audio') {
+              startListening();
+            }
+          }
+        }
+      } catch (err) {
+        console.error('Audio stream error:', err);
+        isProcessingRef.current = false;
         if (callStateRef.current === 'active') {
           setMicState('listening');
-          if (chatModeRef.current === 'audio') startListening();
+          startListening();
         }
       }
     }
@@ -455,16 +809,10 @@ export default function VirtualPatientChat({
 
   const stopAllAudioAndRecognition = () => {
     stopListening();
-    if (window.speechSynthesis) {
+    if (typeof window !== 'undefined' && window.speechSynthesis) {
       try { window.speechSynthesis.cancel(); } catch (_) {}
     }
-    if (currentAudioRef.current) {
-      try {
-        currentAudioRef.current.pause();
-        currentAudioRef.current.currentTime = 0;
-      } catch (_) {}
-      currentAudioRef.current = null;
-    }
+    if (keepAliveIntervalRef.current) clearInterval(keepAliveIntervalRef.current);
     stopAudioAnalyser();
     isSpeakingRef.current = false;
     isProcessingRef.current = false;
@@ -472,8 +820,10 @@ export default function VirtualPatientChat({
     setMicState('idle');
   };
 
+  // Start Consultation Call
   const startCall = async (mode = 'audio') => {
     stopAllAudioAndRecognition();
+
     setChatMode(mode);
     chatModeRef.current = mode;
     setCallState('active');
@@ -483,16 +833,29 @@ export default function VirtualPatientChat({
       await initAudioAnalyser();
     }
 
-    setMicState('listening');
-
-    if (mode === 'audio') {
-      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SR) {
-        alert("Brauzeringiz ovozli muloqotni qo'llab-quvvatlamaydi. Microsoft Edge yoki Chrome tavsiya etiladi.");
-        setCallState('idle');
-        callStateRef.current = 'idle';
-        return;
+    // Wait for the doctor/student to speak first
+    if (callStateRef.current === 'active') {
+      setMicState('listening');
+      if (mode === 'audio') {
+        startListening();
       }
+    }
+  };
+
+  // Manual Mic Toggle
+  const toggleListening = () => {
+    if (micState === 'listening') {
+      // Manual commit
+      if (transcriptRef.current && transcriptRef.current.trim()) {
+        sendMessage(transcriptRef.current.trim());
+      } else {
+        sendMessage();
+      }
+    } else if (micState === 'idle' || micState === 'speaking') {
+      if (typeof window !== 'undefined' && window.speechSynthesis) {
+        try { window.speechSynthesis.cancel(); } catch (_) {}
+      }
+      isSpeakingRef.current = false;
       startListening();
     }
   };
@@ -519,32 +882,46 @@ export default function VirtualPatientChat({
     setCallState('ended');
     callStateRef.current = 'ended';
     setTranscript('');
+    transcriptRef.current = '';
   };
 
   const handleFinish = async () => {
-    if (chatHistory.filter(m => m.role === 'user').length === 0) {
-      alert("Suhbat hali boshlanmadi. Avval bemor bilan muloqot qiling.");
+    const userMsgCount = chatHistory.filter(m => m.role === 'user').length;
+    if (userMsgCount === 0) {
+      toast.error("Baholash olish uchun kamida 1 marta bemor bilan muloqot qiling.");
       return;
     }
     stopAllAudioAndRecognition();
     setIsSubmitting(true);
     try {
-      await onFinish();
+      const convId = activeConvIdRef.current || conversationId;
+      if (convId) {
+        const res = await api.post(`/student/conversations/${convId}/complete`);
+        const evalData = res.data?.evaluation || res.data;
+        if (onFinish) {
+          await onFinish(evalData);
+        }
+      } else {
+        if (onFinish) await onFinish();
+      }
+    } catch (err) {
+      console.error('Evaluation error:', err);
+      toast.error("Baholash hisoboti yaratilmoqda...");
+      if (onFinish) await onFinish();
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const isIdle    = callState === 'idle';
-  const isActive  = callState === 'active';
-  const isEnded   = callState === 'ended';
+  const isIdle       = callState === 'idle';
+  const isActive     = callState === 'active';
+  const isEnded      = callState === 'ended';
 
   const isListening  = isActive && micState === 'listening';
   const isProcessing = isActive && micState === 'processing';
   const isSpeaking   = isActive && micState === 'speaking';
 
   const userMessagesCount = chatHistory.filter(m => m.role === 'user').length;
-  const canEvaluate = isEnded && userMessagesCount >= 1;
   const lastPatientMsg = [...chatHistory].reverse().find(m => m.role === 'patient');
 
   const statusInfo = isIdle ? {
@@ -553,22 +930,22 @@ export default function VirtualPatientChat({
     badgeClass: 'bg-slate-100 text-slate-500 border-slate-200',
     dotClass: 'bg-slate-400'
   } : isListening ? {
-    title: chatMode === 'text' ? 'Matn kiriting...' : t('chat_listening'),
+    title: transcript ? "Gapirib bo'lingach avtomatik yuboriladi..." : 'Sizni tinglamoqda... (Gapiring)',
     badge: 'Microphone Active',
-    badgeClass: 'bg-emerald-50 text-emerald-700 border-emerald-200 animate-pulse',
+    badgeClass: 'bg-emerald-50 text-emerald-700 border-emerald-200 shadow-sm animate-pulse',
     dotClass: 'bg-emerald-500'
   } : isProcessing ? {
-    title: t('chat_processing'),
-    badge: 'AI Generating',
-    badgeClass: 'bg-amber-50 text-amber-700 border-amber-200',
+    title: 'AI bemor javob bermoqda...',
+    badge: 'AI Processing',
+    badgeClass: 'bg-amber-50 text-amber-700 border-amber-200 shadow-sm',
     dotClass: 'bg-amber-500'
   } : isSpeaking ? {
-    title: t('chat_speaking'),
-    badge: 'TTS Speaking',
-    badgeClass: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+    title: 'Bemor gapirmoqda (TTS)...',
+    badge: 'Patient Speaking',
+    badgeClass: 'bg-indigo-50 text-indigo-700 border-indigo-200 shadow-sm',
     dotClass: 'bg-indigo-500'
   } : {
-    title: t('chat_ended'),
+    title: 'Muloqot Yakunlandi',
     badge: 'Finished',
     badgeClass: 'bg-slate-100 text-slate-700 border-slate-200',
     dotClass: 'bg-slate-400'
@@ -586,7 +963,7 @@ export default function VirtualPatientChat({
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-base font-extrabold text-slate-900 tracking-tight">
-                {t('chat_header_title')}
+                {t('chat_header_title') || "Virtual Bemor bilan Jonli Muloqot"}
               </h2>
               <span className="text-xs px-2.5 py-0.5 rounded-full font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/70">
                 Modul #{parsedModuleId}
@@ -598,7 +975,7 @@ export default function VirtualPatientChat({
           </div>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-2.5 w-full sm:w-auto mt-2 sm:mt-0 justify-start sm:justify-end">
           {/* Status badge */}
           <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-bold ${statusInfo.badgeClass}`}>
             <span className={`w-2 h-2 rounded-full ${statusInfo.dotClass} ${isListening ? 'animate-ping' : ''}`} />
@@ -609,25 +986,25 @@ export default function VirtualPatientChat({
           <div className="flex items-center bg-white p-1 rounded-xl border border-slate-200 shadow-xs">
             <button
               onClick={() => setVisualView('case')}
-              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
                 visualView === 'case'
                   ? 'bg-indigo-600 text-white shadow-xs'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
               }`}
             >
               <RiEyeLine size={13} />
-              <span>{t('chat_visual_mode')}</span>
+              <span>{t('chat_visual_mode') || "Vizual"}</span>
             </button>
             <button
               onClick={() => setVisualView('transcript')}
-              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
                 visualView === 'transcript'
                   ? 'bg-indigo-600 text-white shadow-xs'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
               }`}
             >
               <RiChatQuoteLine size={13} />
-              <span>{t('chat_transcript_mode')}</span>
+              <span>{t('chat_transcript_mode') || "Matn Tarixi"}</span>
               {chatHistory.length > 0 && (
                 <span className="ml-0.5 px-1.5 py-0.2 bg-indigo-100 text-indigo-700 rounded-full text-[10px]">
                   {chatHistory.length}
@@ -636,6 +1013,27 @@ export default function VirtualPatientChat({
             </button>
           </div>
 
+          {/* Quick Evaluate Button in Header */}
+          {userMessagesCount >= 1 && (
+            <button
+              onClick={handleFinish}
+              disabled={isSubmitting}
+              className="px-3.5 py-1.5 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs shadow-sm hover:shadow-md transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+            >
+              {isSubmitting ? (
+                <>
+                  <RiLoader4Line className="animate-spin text-xs" />
+                  <span>Baholanmoqda...</span>
+                </>
+              ) : (
+                <>
+                  <RiAwardLine className="text-xs" />
+                  <span>Baholash (7-bosqich)</span>
+                </>
+              )}
+            </button>
+          )}
+
           {/* Voice Speed Control */}
           <div className="hidden sm:flex items-center gap-1 bg-white px-2.5 py-1.5 rounded-xl border border-slate-200 text-xs text-slate-600">
             <RiSpeedLine className="text-indigo-600" />
@@ -643,7 +1041,7 @@ export default function VirtualPatientChat({
               value={speechRate}
               onChange={(e) => setSpeechRate(parseFloat(e.target.value))}
               className="bg-transparent text-slate-800 font-bold focus:outline-hidden cursor-pointer"
-              title={t('chat_speed')}
+              title="Ovoz tezligi"
             >
               <option value="0.8">0.8x</option>
               <option value="0.95">1.0x</option>
@@ -658,7 +1056,7 @@ export default function VirtualPatientChat({
 
         {/* ── 1. IDLE STATE ── */}
         {isIdle && (
-          <div className="flex flex-col items-center justify-center text-center max-w-xl mx-auto py-8">
+          <div className="flex flex-col items-center justify-center text-center max-w-xl mx-auto py-8 animate-fade-in">
             <div className="relative mb-6">
               <div className="w-28 h-28 rounded-3xl bg-gradient-to-tr from-indigo-500/10 via-blue-500/10 to-emerald-500/10 border-2 border-dashed border-indigo-300 flex items-center justify-center text-5xl shadow-sm">
                 <span>{currentTheme.emoji}</span>
@@ -691,7 +1089,7 @@ export default function VirtualPatientChat({
                 className="flex-1 max-w-xs py-3.5 px-6 rounded-2xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-extrabold text-sm shadow-lg shadow-indigo-200 hover:shadow-indigo-300 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 cursor-pointer"
               >
                 <RiMicLine className="text-xl animate-pulse" />
-                <span>{t('chat_start_voice')}</span>
+                <span>{t('chat_start_voice') || "Ovozli Suhbatni Boshlash (STT + TTS)"}</span>
               </button>
 
               <button
@@ -699,7 +1097,7 @@ export default function VirtualPatientChat({
                 className="py-3.5 px-6 rounded-2xl bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 font-bold text-sm border border-slate-200 shadow-xs hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <RiKeyboardLine className="text-lg text-indigo-600" />
-                <span>{t('chat_start_text')}</span>
+                <span>{t('chat_start_text') || "Yozma Muloqot"}</span>
               </button>
             </div>
           </div>
@@ -707,106 +1105,279 @@ export default function VirtualPatientChat({
 
         {/* ── 2. ACTIVE / ENDED STATE ── */}
         {(isActive || isEnded) && (
-          <div className="flex flex-col flex-1 h-full">
+          <div className="flex flex-col flex-1 h-full animate-fade-in">
             
-            {/* Mode A: CASE VISUAL CENTERPIECE */}
+            {/* Mode A: ULTRA-CREATIVE MEDICAL AI SIMULATION SUITE */}
             {visualView === 'case' && (
-              <div className="flex flex-col items-center justify-center my-auto py-4">
+              <div className="w-full max-w-4xl mx-auto flex flex-col items-center justify-center my-auto py-3 animate-fade-in">
                 
-                {/* Topic Specific Animated Avatar Centerpiece */}
-                <div className="relative flex items-center justify-center mb-6">
-                  {/* Outer soundwave pulse aura */}
-                  <div
-                    className={`absolute rounded-full transition-all duration-300 pointer-events-none ${
-                      isSpeaking
-                        ? 'w-48 h-48 bg-indigo-500/15 ring-8 ring-indigo-400/30 animate-ping'
-                        : isListening
-                        ? 'w-44 h-44 bg-emerald-500/15 ring-6 ring-emerald-400/25'
-                        : 'w-36 h-36 bg-slate-200/40 ring-2 ring-slate-200'
-                    }`}
-                  />
+                {/* Main Holographic Simulation Stage Card */}
+                <div className="w-full relative overflow-hidden rounded-3xl bg-gradient-to-b from-white via-slate-50/80 to-indigo-50/30 border border-slate-200/90 shadow-xl p-5 sm:p-7 backdrop-blur-md">
+                  
+                  {/* Subtle Background Ambient Lights */}
+                  <div className="absolute -top-24 -left-24 w-64 h-64 bg-indigo-400/10 rounded-full blur-3xl pointer-events-none" />
+                  <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none" />
 
-                  {/* Visual Theme Centerpiece Card */}
-                  <div className={`relative z-10 w-32 h-32 rounded-3xl bg-gradient-to-tr ${currentTheme.gradientBg} border-2 border-slate-200/90 shadow-xl flex flex-col items-center justify-center p-3 text-center transition-all ${
-                    isSpeaking ? 'scale-105 shadow-indigo-300' : isListening ? 'scale-105 shadow-emerald-200' : ''
-                  }`}>
-                    <span className="text-4xl filter drop-shadow-sm select-none">
-                      {currentTheme.emoji}
-                    </span>
-                    <span className="text-[11px] font-extrabold text-slate-800 tracking-tight mt-1 truncate max-w-full">
-                      {currentTheme.iconTag}
-                    </span>
-                  </div>
-
-                  {/* Pulsing state badge indicator */}
-                  <div className="absolute -bottom-3 z-20">
-                    <span className={`text-[11px] font-bold px-3 py-1 rounded-full border shadow-sm flex items-center gap-1.5 ${
-                      isSpeaking
-                        ? 'bg-indigo-600 text-white border-indigo-500'
-                        : isListening
-                        ? 'bg-emerald-600 text-white border-emerald-500'
-                        : isProcessing
-                        ? 'bg-amber-500 text-white border-amber-400'
-                        : 'bg-white text-slate-700 border-slate-200'
-                    }`}>
-                      {isSpeaking && <RiVolumeUpLine className="animate-bounce" />}
-                      {isListening && <RiPulseLine className="animate-spin" />}
-                      {isProcessing && <RiLoader4Line className="animate-spin" />}
-                      <span>{statusInfo.title}</span>
-                    </span>
-                  </div>
-                </div>
-
-                {/* Equalizer Sound Wave Animation */}
-                <div className="h-8 flex items-center justify-center gap-1.5 my-3">
-                  {[...Array(12)].map((_, i) => {
-                    const dynamicHeight = isSpeaking
-                      ? Math.max(12, Math.sin(i * 0.8 + Date.now() * 0.005) * 28 + 14)
-                      : isListening
-                      ? Math.max(8, (volumeLevel / 100) * 32 * Math.sin(i + 1))
-                      : 6;
-                    return (
-                      <span
-                        key={i}
-                        style={{ height: `${dynamicHeight}px` }}
-                        className={`w-1.5 rounded-full transition-all duration-100 ${
+                  {/* ── 1. CENTER HOLOGRAPHIC AI PERSONA ORB ── */}
+                  <div className="relative flex flex-col items-center justify-center mb-6">
+                    
+                    {/* Glowing Pulse Rings */}
+                    <div className="relative flex items-center justify-center">
+                      <div
+                        className={`absolute rounded-full transition-all duration-700 pointer-events-none ${
                           isSpeaking
-                            ? 'bg-indigo-600'
+                            ? 'w-48 h-48 bg-gradient-to-tr from-indigo-500/20 to-purple-500/20 ring-4 ring-indigo-400/30 animate-pulse scale-110'
                             : isListening
-                            ? 'bg-emerald-500'
-                            : 'bg-slate-300'
+                            ? 'w-48 h-48 bg-gradient-to-tr from-emerald-500/20 to-teal-500/20 ring-4 ring-emerald-400/30 animate-pulse scale-105'
+                            : isProcessing
+                            ? 'w-44 h-44 bg-amber-500/15 ring-4 ring-amber-400/25 animate-spin'
+                            : 'w-40 h-40 bg-slate-200/40'
                         }`}
                       />
-                    );
-                  })}
-                </div>
+                      
+                      <div
+                        className={`absolute rounded-full transition-all duration-1000 pointer-events-none ${
+                          isSpeaking
+                            ? 'w-60 h-60 bg-indigo-400/10 ring-2 ring-indigo-300/20'
+                            : isListening
+                            ? 'w-60 h-60 bg-emerald-400/10 ring-2 ring-emerald-300/20'
+                            : 'w-48 h-48 bg-transparent'
+                        }`}
+                      />
 
-                {/* Live Transcript / Patient Response Ticker */}
-                <div className="w-full max-w-2xl bg-white border border-slate-200 rounded-2xl p-4 shadow-sm mt-2">
-                  <div className="flex items-center justify-between text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
-                    <span className="flex items-center gap-1.5">
-                      <RiSoundModuleLine className="text-indigo-600" />
-                      {isListening ? 'Doktor Nutqi (Live STT):' : 'Bemor Javobi:'}
-                    </span>
-                    {lastPatientMsg && (
-                      <button
-                        onClick={() => playTTS(lastPatientMsg.content, lastPatientMsg.audio)}
-                        className="text-indigo-600 hover:text-indigo-800 flex items-center gap-1 lowercase font-semibold transition-colors cursor-pointer"
-                      >
-                        <RiVolumeUpLine size={13} /> {t('chat_replay_audio')}
-                      </button>
+                      {/* Main Circular Hologram Portal */}
+                      <div className={`relative z-10 w-28 h-28 sm:w-32 sm:h-32 rounded-full p-1 bg-gradient-to-tr shadow-2xl transition-all duration-300 flex items-center justify-center ${
+                        isSpeaking
+                          ? 'from-indigo-500 via-purple-500 to-pink-500 ring-4 ring-indigo-200'
+                          : isListening
+                          ? 'from-emerald-500 via-teal-400 to-cyan-500 ring-4 ring-emerald-200 shadow-emerald-200/50'
+                          : isProcessing
+                          ? 'from-amber-400 via-orange-400 to-amber-500 ring-4 ring-amber-200'
+                          : 'from-slate-200 via-slate-300 to-slate-200'
+                      }`}>
+                        <div className="w-full h-full rounded-full bg-white flex flex-col items-center justify-center p-2 text-center shadow-inner relative overflow-hidden">
+                          {/* Shimmer sweep effect */}
+                          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/40 to-transparent opacity-60 pointer-events-none" />
+                          <span className="text-4xl sm:text-5xl filter drop-shadow-md select-none transform transition-transform duration-300 hover:scale-115">
+                            {currentTheme.emoji}
+                          </span>
+                          <span className="text-[9px] sm:text-[10px] font-black text-slate-700 tracking-tight mt-1 uppercase max-w-full px-2 truncate">
+                            {currentTheme.iconTag}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Status Pill Positioned Neatly Below Avatar (No Overlap) */}
+                    <div className="mt-3.5 z-20">
+                      <span className={`text-xs font-black px-4 py-1.5 rounded-full border shadow-sm flex items-center gap-2 transition-all ${
+                        isSpeaking
+                          ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white border-indigo-400 shadow-indigo-200'
+                          : isListening
+                          ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white border-emerald-400 shadow-emerald-200 animate-pulse'
+                          : isProcessing
+                          ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white border-amber-400 shadow-amber-200'
+                          : 'bg-white text-slate-700 border-slate-200'
+                      }`}>
+                        {isSpeaking && <RiVolumeUpLine className="animate-bounce text-sm" />}
+                        {isListening && <RiMicLine className="animate-pulse text-sm" />}
+                        {isProcessing && <RiLoader4Line className="animate-spin text-sm" />}
+                        <span>{statusInfo.title}</span>
+                      </span>
+                    </div>
+
+                    {/* 24-Bar Responsive Equalizer Wave */}
+                    <div className="h-9 flex items-center justify-center gap-1 my-3">
+                      {[...Array(24)].map((_, i) => {
+                        const dynamicHeight = isSpeaking
+                          ? Math.max(6, Math.sin(i * 0.5 + Date.now() * 0.008) * 26 + 10)
+                          : isListening
+                          ? Math.max(4, (volumeLevel / 100) * 30 * Math.abs(Math.sin((i + 1) * 0.6)) + 6)
+                          : 4;
+                        return (
+                          <span
+                            key={i}
+                            style={{ height: `${dynamicHeight}px` }}
+                            className={`w-1 sm:w-1.5 rounded-full transition-all duration-100 ${
+                              isSpeaking
+                                ? 'bg-gradient-to-t from-indigo-600 via-purple-500 to-pink-400'
+                                : isListening
+                                ? 'bg-gradient-to-t from-emerald-600 via-teal-500 to-cyan-400'
+                                : 'bg-slate-300/70'
+                            }`}
+                          />
+                        );
+                      })}
+                    </div>
+
+                    {/* Primary Voice Action Button */}
+                    {isActive && (
+                      <div className="mt-1 flex items-center justify-center gap-3">
+                        <button
+                          onClick={toggleListening}
+                          disabled={isProcessing}
+                          className={`px-7 py-3.5 rounded-2xl font-black text-xs sm:text-sm shadow-lg hover:shadow-xl transition-all flex items-center gap-3 cursor-pointer transform hover:scale-[1.03] active:scale-[0.97] ${
+                            isListening
+                              ? 'bg-gradient-to-r from-rose-500 via-red-500 to-rose-600 hover:from-rose-600 hover:to-red-700 text-white shadow-rose-200 ring-4 ring-rose-100 animate-pulse'
+                              : 'bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-emerald-200 ring-4 ring-emerald-100'
+                          }`}
+                        >
+                          {isListening ? (
+                            <>
+                              <RiStopCircleLine className="text-xl" />
+                              <span>To'xtatish va Yuborish</span>
+                            </>
+                          ) : (
+                            <>
+                              <RiMicLine className="text-xl animate-pulse" />
+                              <span>Gapirishni Boshlash (Mikrofon)</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
                     )}
                   </div>
 
-                  <p className="text-sm font-medium text-slate-800 leading-relaxed min-h-[44px]">
-                    {isListening && transcript
-                      ? `"${transcript}"`
-                      : lastPatientMsg
-                      ? lastPatientMsg.content
-                      : isProcessing
-                      ? t('chat_processing')
-                      : 'Ingliz tilida anamnez to\'plang va bemorga kerakli tibbiy savollarni bering.'}
-                  </p>
+                  {/* ── 2. DUAL CYBER-CLINICAL COMMUNICATION CHANNELS ── */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    
+                    {/* Doctor Channel Card */}
+                    <div className={`p-4 sm:p-5 rounded-2xl border transition-all duration-300 flex flex-col justify-between ${
+                      isListening && transcript
+                        ? 'bg-emerald-50/70 border-emerald-300 shadow-md ring-2 ring-emerald-200/60'
+                        : isListening
+                        ? 'bg-white border-emerald-200 shadow-xs'
+                        : 'bg-white/90 border-slate-200 shadow-xs'
+                    }`}>
+                      <div>
+                        <div className="flex items-center justify-between pb-2 mb-2.5 border-b border-slate-100 text-[11px] font-black tracking-wider uppercase">
+                          <span className="flex items-center gap-2 text-emerald-700">
+                            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+                            <RiMicLine size={15} />
+                            {transcript ? "Shifokor Nutqi (STT Jonli):" : "Shifokor Kanali (Siz):"}
+                          </span>
+                          {transcript && isListening && (
+                            <button
+                              onClick={() => sendMessage(transcript)}
+                              className="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-black text-[10px] transition-all shadow-xs cursor-pointer flex items-center gap-1"
+                            >
+                              <RiSendPlane2Line size={11} /> Hozir yuborish
+                            </button>
+                          )}
+                        </div>
+                        <p className="text-sm font-semibold text-slate-800 leading-relaxed min-h-[50px]">
+                          {transcript ? (
+                            <span className="text-emerald-950 font-bold">"{transcript}"</span>
+                          ) : isListening ? (
+                            <span className="text-slate-400 font-normal italic">
+                              Doktor, bemorga ingliz tilida savol bering yoki ko'rik o'tkazing...
+                            </span>
+                          ) : (
+                            <span className="text-slate-400 font-normal italic">
+                              Muloqot qilish uchun yuqoridagi mikrofon tugmasini bosing.
+                            </span>
+                          )}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Patient Response Channel Card */}
+                    <div className={`p-4 sm:p-5 rounded-2xl border transition-all duration-300 flex flex-col justify-between ${
+                      isSpeaking
+                        ? 'bg-indigo-50/70 border-indigo-300 shadow-md ring-2 ring-indigo-200/60'
+                        : 'bg-white/90 border-slate-200 shadow-xs'
+                    }`}>
+                      <div>
+                        <div className="flex items-center justify-between pb-2 mb-2.5 border-b border-slate-100 text-[11px] font-black tracking-wider uppercase">
+                          <span className="flex items-center gap-2 text-indigo-700">
+                            <RiHeartPulseLine size={15} className={isSpeaking ? "animate-pulse" : ""} />
+                            Bemor Javobi (AI Patient):
+                          </span>
+                          {lastPatientMsg && !isSpeaking && (
+                            <button
+                              onClick={() => playTTS(lastPatientMsg.content, lastPatientMsg.audio)}
+                              className="text-indigo-700 hover:text-indigo-900 bg-indigo-50 hover:bg-indigo-100 px-2.5 py-0.5 rounded-lg flex items-center gap-1 font-bold text-[11px] transition-all cursor-pointer shadow-2xs"
+                            >
+                              <RiVolumeUpLine size={13} /> {t('chat_replay_audio') || "Qayta tinglash"}
+                            </button>
+                          )}
+                        </div>
+                        <p className="text-sm font-medium text-slate-800 leading-relaxed min-h-[50px]">
+                          {isProcessing ? (
+                            <span className="text-amber-600 font-bold flex items-center gap-2">
+                              <RiLoader4Line className="animate-spin text-base" /> Bemor javob tayyorlamoqda...
+                            </span>
+                          ) : lastPatientMsg ? (
+                            <span className="text-slate-900 font-semibold">{lastPatientMsg.content}</span>
+                          ) : (
+                            <span className="text-slate-400 font-normal italic">
+                              Bemor bilan muloqotni boshlang.
+                            </span>
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* ── 3. CATEGORIZED CLINICAL INSPIRATION PROMPT CARDS ── */}
+                  <div className="mt-5 pt-4 border-t border-slate-200/80">
+                    <div className="flex items-center justify-between gap-2 mb-2.5">
+                      <span className="text-[11px] font-black text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                        <RiLightbulbLine className="text-amber-500 text-sm" />
+                        Tavsiya etilgan klinik savollar (Bosish orqali yuborish):
+                      </span>
+                      <span className="text-[10px] text-slate-400 font-semibold hidden sm:inline">
+                        Modul #{parsedModuleId} bo'yicha
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {(MODULE_SUGGESTED_QUESTIONS[parsedModuleId] || MODULE_SUGGESTED_QUESTIONS[1]).map((q, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => sendMessage(q)}
+                          disabled={isProcessing || !isActive}
+                          className="p-2.5 rounded-xl bg-white hover:bg-indigo-50/80 border border-slate-200/90 hover:border-indigo-300 text-slate-700 hover:text-indigo-800 font-semibold text-xs transition-all shadow-2xs hover:shadow-xs cursor-pointer disabled:opacity-50 text-left flex items-start gap-2 group"
+                        >
+                          <span className="text-indigo-500 mt-0.5 text-xs group-hover:scale-125 transition-transform flex-shrink-0">💬</span>
+                          <span className="leading-snug">{q}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* ── 4. DIRECT EVALUATION CALLOUT BANNER ── */}
+                  {userMessagesCount >= 1 && (
+                    <div className="mt-5 p-4 bg-gradient-to-r from-emerald-500 via-teal-600 to-indigo-600 rounded-2xl flex flex-wrap items-center justify-between gap-3 shadow-lg shadow-emerald-500/10 text-white animate-fade-in">
+                      <div className="space-y-0.5">
+                        <h4 className="text-sm font-black flex items-center gap-2">
+                          <RiSparkling2Line className="text-amber-300 text-base" />
+                          Muloqot yetarli ({userMessagesCount} ta savol berildi)
+                        </h4>
+                        <p className="text-xs text-emerald-100 font-medium">
+                          Konsultatsiyani yakunlab, AI dan 7-bosqich to'liq klinik baholash hisobotini oling.
+                        </p>
+                      </div>
+                      <button
+                        onClick={handleFinish}
+                        disabled={isSubmitting}
+                        className="px-5 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-900 font-black text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50 transform hover:scale-105"
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <RiLoader4Line className="animate-spin text-sm text-indigo-600" />
+                            <span>Baholanmoqda...</span>
+                          </>
+                        ) : (
+                          <>
+                            <RiAwardLine className="text-sm text-amber-500" />
+                            <span>Suhbatni Yakunlash va Baholash (7-bosqich)</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  )}
+
                 </div>
               </div>
             )}
@@ -816,7 +1387,7 @@ export default function VirtualPatientChat({
               <div className="flex-1 overflow-y-auto max-h-[380px] p-4 bg-white rounded-2xl border border-slate-200 space-y-4 shadow-inner mb-3">
                 {chatHistory.length === 0 ? (
                   <div className="text-center py-12 text-slate-400 text-sm">
-                    {t('chat_simulator')}
+                    {t('chat_simulator') || "Suhbat hali boshlanmadi."}
                   </div>
                 ) : (
                   chatHistory.map((msg, index) => {
@@ -824,7 +1395,7 @@ export default function VirtualPatientChat({
                     return (
                       <div
                         key={index}
-                        className={`flex gap-3 ${isDoctor ? 'justify-end' : 'justify-start'}`}
+                        className={`flex gap-3 ${isDoctor ? 'justify-end' : 'justify-start'} animate-fade-in`}
                       >
                         {!isDoctor && (
                           <div className="w-8 h-8 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-lg flex-shrink-0 shadow-2xs">
@@ -846,7 +1417,7 @@ export default function VirtualPatientChat({
                               <button
                                 onClick={() => playTTS(msg.content, msg.audio)}
                                 className="hover:opacity-100 flex items-center gap-1 cursor-pointer"
-                                title={t('chat_replay_audio')}
+                                title={t('chat_replay_audio') || "Qayta eshitish"}
                               >
                                 <RiVolumeUpLine size={12} />
                               </button>
@@ -870,14 +1441,14 @@ export default function VirtualPatientChat({
             {/* ─── BOTTOM CONTROLS DOCK ─── */}
             <div className="mt-4 pt-4 border-t border-slate-200/80 flex flex-col gap-3">
               
-              {/* Text Input Row (when in text mode or manual inquiry) */}
+              {/* Text Input Row */}
               <form onSubmit={handleSendText} className="flex items-center gap-2">
                 <div className="relative flex-1">
                   <input
                     type="text"
                     value={textInput}
                     onChange={(e) => setTextInput(e.target.value)}
-                    placeholder={t('chat_input_placeholder')}
+                    placeholder={t('chat_input_placeholder') || "Ingliz tilida savol yoki xabar yozing..."}
                     disabled={!isActive || isProcessing}
                     className="w-full bg-white text-slate-900 placeholder:text-slate-400 text-sm font-medium px-4 py-3 rounded-xl border border-slate-200 focus:outline-hidden focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 shadow-xs transition-all disabled:opacity-50"
                   />
@@ -898,7 +1469,7 @@ export default function VirtualPatientChat({
                   className="px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 text-white font-bold text-sm shadow-sm transition-all flex items-center gap-2 cursor-pointer"
                 >
                   <RiSendPlane2Line />
-                  <span className="hidden sm:inline">{t('submit')}</span>
+                  <span className="hidden sm:inline">{t('submit') || "Yuborish"}</span>
                 </button>
 
                 {/* Phrasebook drawer trigger */}
@@ -910,10 +1481,10 @@ export default function VirtualPatientChat({
                       ? 'bg-indigo-50 border-indigo-300 text-indigo-700 shadow-xs'
                       : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
                   }`}
-                  title={t('chat_phrasebook_drawer')}
+                  title={t('chat_phrasebook_drawer') || "Klinik Iboralar"}
                 >
                   <RiLightbulbLine className="text-amber-500 text-base" />
-                  <span className="hidden md:inline">{t('chat_phrasebook_drawer')}</span>
+                  <span className="hidden md:inline">{t('chat_phrasebook_drawer') || "Klinik Iboralar"}</span>
                 </button>
 
                 {/* End / Hang up call button */}
@@ -922,10 +1493,10 @@ export default function VirtualPatientChat({
                     type="button"
                     onClick={endCall}
                     className="px-4 py-3 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 font-bold text-xs flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer"
-                    title={t('finish')}
+                    title={t('finish') || "Tugatish"}
                   >
                     <RiStopCircleLine className="text-base text-rose-600" />
-                    <span className="hidden sm:inline">{t('finish')}</span>
+                    <span className="hidden sm:inline">{t('finish') || "Yakunlash"}</span>
                   </button>
                 )}
               </form>
@@ -935,7 +1506,7 @@ export default function VirtualPatientChat({
                 <div className="bg-slate-50 rounded-2xl border border-slate-200 p-3 max-h-48 overflow-y-auto animate-fade-in shadow-inner">
                   <div className="flex items-center justify-between mb-2 px-1">
                     <span className="text-[11px] font-extrabold text-slate-600 uppercase tracking-wider flex items-center gap-1">
-                      <RiLightbulbLine className="text-amber-500" /> {t('chat_phrasebook_drawer')} ({t('chat_phrasebook_hint')}):
+                      <RiLightbulbLine className="text-amber-500" /> {t('chat_phrasebook_drawer') || "Klinik Iboralar"}:
                     </span>
                     <span className="text-[10px] text-slate-400">
                       {phrasebook.length} ta ibora
@@ -966,12 +1537,12 @@ export default function VirtualPatientChat({
                 <div className="p-4 bg-emerald-50/60 border border-emerald-200 rounded-2xl flex flex-wrap items-center justify-between gap-3 animate-fade-in">
                   <div>
                     <h4 className="text-sm font-black text-emerald-900">
-                      {t('chat_ended')} — {chatHistory.length} ta xabar almashildi
+                      {t('chat_ended') || "Muloqot yakunlandi"} — {chatHistory.length} ta xabar almashildi
                     </h4>
                     <p className="text-xs text-emerald-700">
                       {userMessagesCount >= 1
                         ? "Bemor bilan konsultatsiya yakunlandi. Endi sun'iy intellekt orqali klinik baholash oling."
-                        : t('chat_eval_min_hint')}
+                        : "Baholash olish uchun kamida 1 marta bemor bilan muloqot qiling."}
                     </p>
                   </div>
 
@@ -980,7 +1551,7 @@ export default function VirtualPatientChat({
                       onClick={() => startCall(chatMode)}
                       className="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-bold text-xs transition-all shadow-2xs cursor-pointer"
                     >
-                      {t('retry')}
+                      {t('retry') || "Qayta boshlash"}
                     </button>
 
                     <button
@@ -991,12 +1562,12 @@ export default function VirtualPatientChat({
                       {isSubmitting ? (
                         <>
                           <RiLoader4Line className="animate-spin text-sm" />
-                          <span>{t('loading')}</span>
+                          <span>{t('loading') || "Baholanmoqda..."}</span>
                         </>
                       ) : (
                         <>
                           <RiSparkling2Line className="text-sm" />
-                          <span>{t('chat_eval_btn')}</span>
+                          <span>{t('chat_eval_btn') || "Klinik Baholash Olish"}</span>
                         </>
                       )}
                     </button>
@@ -1016,7 +1587,7 @@ export default function VirtualPatientChat({
             onClick={onTestPass100}
             className="text-[11px] text-indigo-600 hover:text-indigo-800 font-bold underline cursor-pointer"
           >
-            ⚡ {t('chat_test_100')}
+            ⚡ {t('chat_test_100') || "100% Test topshirish (O'qituvchi/Admin)"}
           </button>
         </div>
       )}

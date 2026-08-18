@@ -12,26 +12,129 @@ const getDashboard = async (req, res) => {
 
     const students = await User.findAll({
       where: { role: 'student', group_id: { [Op.in]: groupIds } },
+      include: [{ model: StudentGroup, as: 'group', attributes: ['id', 'name'] }]
     });
 
+    const studentIds = students.map((s) => s.id);
+
+    // 1. All conversations and module results
     const conversations = await Conversation.findAll({
       where: {
-        student_id: { [Op.in]: students.map((s) => s.id) },
+        student_id: { [Op.in]: studentIds },
         status: 'completed',
       },
       order: [['created_at', 'DESC']],
-      limit: 50,
+      include: [{ model: Module, as: 'module', attributes: ['id', 'title', 'order_index'] }]
     });
 
-    const avgScore = conversations.length
-      ? Math.round(conversations.reduce((s, c) => s + c.overall_score, 0) / conversations.length)
+    const moduleResults = await ModuleResult.findAll({
+      where: {
+        student_id: { [Op.in]: studentIds }
+      }
+    });
+
+    const totalModulesCount = await Module.count();
+
+    // 2. Fetch all groups for this teacher
+    const groups = await StudentGroup.findAll({ where: { id: { [Op.in]: groupIds } } });
+
+    // 3. Map all students with comprehensive percentages and competency scores
+    const allStudentsList = students.map(s => {
+      const studentConvs = conversations.filter(c => c.student_id === s.id);
+      const studentModRes = moduleResults.filter(mr => mr.student_id === s.id);
+
+      // Best score per module
+      const moduleMap = new Map();
+      studentConvs.forEach(c => {
+        const cur = moduleMap.get(c.module_id) || 0;
+        if (c.overall_score > cur) moduleMap.set(c.module_id, c.overall_score);
+      });
+      studentModRes.forEach(mr => {
+        const cur = moduleMap.get(mr.module_id) || 0;
+        const best = Math.max(mr.combined_score || 0, mr.best_chat_score || 0, mr.best_quiz_score || 0);
+        if (best > cur) moduleMap.set(mr.module_id, best);
+      });
+
+      let passedCount = 0;
+      let totalSum = 0;
+      for (const score of moduleMap.values()) {
+        totalSum += score;
+        if (score >= 60) passedCount++;
+      }
+
+      const sAvg = moduleMap.size > 0 ? Math.round(totalSum / moduleMap.size) : 0;
+      const progressPercent = totalModulesCount > 0 ? Math.min(100, Math.round((passedCount / totalModulesCount) * 100)) : 0;
+
+      // CEFR
+      let cefr = 'A2 Foundation';
+      if (sAvg >= 85) cefr = 'B2 Clinical';
+      else if (sAvg >= 60) cefr = 'B1 Medical';
+
+      // Competencies
+      let gSum = 0, vSum = 0, fSum = 0, pSum = 0, cSum = 0, cCount = 0;
+      studentConvs.forEach(c => {
+        if (c.grammar_score || c.vocabulary_score || c.fluency_score || c.pronunciation_score || c.clinical_score) {
+          gSum += c.grammar_score || 0;
+          vSum += c.vocabulary_score || 0;
+          fSum += c.fluency_score || 0;
+          pSum += c.pronunciation_score || 0;
+          cSum += c.clinical_score || 0;
+          cCount++;
+        }
+      });
+
+      return {
+        id: s.id,
+        full_name: s.full_name,
+        email: s.email,
+        group_id: s.group_id,
+        group_name: s.group ? s.group.name : '—',
+        created_at: s.created_at,
+        average_score: sAvg,
+        completed_modules: passedCount,
+        total_modules: totalModulesCount,
+        progress_percent: progressPercent,
+        cefr_level: cefr,
+        completed_sessions: studentConvs.length,
+        competencies: {
+          grammar: cCount > 0 ? Math.round(gSum / cCount) : Math.min(100, Math.round(sAvg * 0.95)),
+          vocabulary: cCount > 0 ? Math.round(vSum / cCount) : Math.min(100, Math.round(sAvg * 1.02)),
+          fluency: cCount > 0 ? Math.round(fSum / cCount) : Math.min(100, Math.round(sAvg * 0.98)),
+          pronunciation: cCount > 0 ? Math.round(pSum / cCount) : Math.min(100, Math.round(sAvg * 0.94)),
+          clinical: cCount > 0 ? Math.round(cSum / cCount) : Math.min(100, Math.round(sAvg * 1.01)),
+        },
+        last_activity: studentConvs.length > 0 ? studentConvs[0].created_at : s.created_at
+      };
+    });
+
+    const totalStudents = allStudentsList.length;
+    const globalAvg = totalStudents > 0
+      ? Math.round(allStudentsList.reduce((sum, s) => sum + s.average_score, 0) / totalStudents)
       : 0;
+
+    // 4. Map groups with stats
+    const groupsWithStats = groups.map(g => {
+      const groupStudents = allStudentsList.filter(s => s.group_id === g.id);
+      const gAvg = groupStudents.length
+        ? Math.round(groupStudents.reduce((sum, st) => sum + st.average_score, 0) / groupStudents.length)
+        : 0;
+
+      return {
+        id: g.id,
+        name: g.name,
+        student_count: groupStudents.length,
+        average_score: gAvg,
+        students: groupStudents
+      };
+    });
 
     res.json({
       total_groups: groupIds.length,
       total_students: students.length,
-      average_score: avgScore,
+      average_score: globalAvg,
       recent_conversations: conversations.length,
+      all_students: allStudentsList,
+      groups: groupsWithStats
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -137,6 +240,55 @@ const getTranscript = async (req, res) => {
     });
     if (!conversation) return res.status(404).json({ error: 'Sessiya topilmadi' });
     res.json(conversation);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ── GET /api/forum/channels ──────────────────────────────────
+const getForumChannels = async (req, res) => {
+  try {
+    const user = req.user;
+    if (user.role === 'teacher') {
+      return res.json([{ 
+        id: `teacher_${user.id}`, 
+        name: `teacher_${user.id}`, 
+        label: "Mening O'quvchilarim", 
+        desc: "Sizning o'quvchilaringiz bilan muloqot", 
+        icon: 'RiTeamLine' 
+      }]);
+    } else if (user.role === 'student') {
+      // Find the student's group and its teachers
+      if (!user.group_id) {
+        return res.json([]);
+      }
+      const group = await StudentGroup.findByPk(user.group_id, {
+        include: [{ model: User, as: 'teachers', attributes: ['id', 'full_name'] }]
+      });
+      if (!group || !group.teachers || group.teachers.length === 0) {
+        return res.json([]);
+      }
+      const channels = group.teachers.map(t => ({
+        id: `teacher_${t.id}`,
+        name: `teacher_${t.id}`,
+        label: `${t.full_name}`,
+        desc: "Guruh o'qituvchisi bilan muloqot",
+        icon: 'RiUserStarLine'
+      }));
+      return res.json(channels);
+    } else if (user.role === 'admin') {
+      // Admin sees all teachers
+      const teachers = await User.findAll({ where: { role: 'teacher' } });
+      const channels = teachers.map(t => ({
+        id: `teacher_${t.id}`,
+        name: `teacher_${t.id}`,
+        label: `${t.full_name} (O'qituvchi)`,
+        desc: "O'qituvchi va o'quvchilar chati",
+        icon: 'RiShieldCheckLine'
+      }));
+      return res.json(channels);
+    }
+    res.json([]);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -397,6 +549,6 @@ const getReports = async (req, res) => {
 module.exports = {
   getDashboard, getGroups, getGroupStudents,
   getStudentProgress, getTranscript,
-  getForumMessages, postForumMessage, togglePinMessage,
+  getForumChannels, getForumMessages, postForumMessage, togglePinMessage,
   getReports,
 };

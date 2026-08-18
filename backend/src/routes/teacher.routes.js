@@ -15,6 +15,7 @@ router.get('/students/:studentId/progress',      isTeacherOrAdmin, c.getStudentP
 router.get('/conversations/:id/transcript',      isTeacherOrAdmin, c.getTranscript);
 
 // Forum (barcha foydalanuvchilar uchun)
+router.get('/forum/channels',                    isAuthenticated,              c.getForumChannels);
 router.get('/forum/messages',                    isAuthenticated,              c.getForumMessages);
 router.post('/forum/messages',                   [...isAuthenticated, upload.single('file')], c.postForumMessage);
 router.put('/forum/messages/:id/pin',            isTeacherOrAdmin,             c.togglePinMessage);

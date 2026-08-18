@@ -32,12 +32,19 @@ export default function ForumPage() {
 
   const bottomRef = useRef(null);
 
-  const CHANNELS = [
-    { id: 'general',       name: 'general',       label: language === 'uz' ? 'Umumiy Chat' : language === 'ru' ? 'Общий Чат' : 'General Chat',        icon: RiHashtag,          desc: language === 'uz' ? 'Erkin muloqot xonasi' : language === 'ru' ? 'Свободное общение' : 'Open peer discussion' },
-    { id: 'dental_pain',   name: 'dental_pain',   label: language === 'uz' ? 'Klinik & Stomatologiya' : language === 'ru' ? 'Клинические Кейсы' : 'Clinical & Dental Cases',  icon: RiStethoscopeLine, desc: language === 'uz' ? 'Bemorlar va klinik holatlar muhokamasi' : language === 'ru' ? 'Разбор клинических ситуаций' : 'Patient cases & diagnostic dilemmas' },
-    { id: 'grammar_help',  name: 'grammar_help',  label: language === 'uz' ? 'Grammatika & Leksika' : language === 'ru' ? 'Грамматика и Лексика' : 'Grammar & Phrases',  icon: RiBookOpenLine,     desc: language === 'uz' ? 'Tibbiy atamalar va iboralar' : language === 'ru' ? 'Медицинские термины и фразы' : 'Terminology & communication tips' },
-    { id: 'announcements', name: 'announcements', label: language === 'uz' ? "E'lonlar" : language === 'ru' ? 'Объявления' : 'Announcements',           icon: RiMegaphoneLine,    desc: language === 'uz' ? "O'qituvchi va admin xabarlari" : language === 'ru' ? 'Сообщения преподавателей' : 'Faculty announcements' },
-  ];
+  const [channels, setChannels] = useState([]);
+
+  useEffect(() => {
+    api.get('/teacher/forum/channels')
+      .then(r => {
+        const data = r.data || [];
+        setChannels(data);
+        if (data.length > 0) {
+          setActiveChannel(data[0].id);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   const ROLE_CONFIG = {
     student: { badge: 'badge-blue', label: 'Talaba' },
@@ -169,38 +176,41 @@ export default function ForumPage() {
         {/* ── 2. Channels + Messages Workspace ── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
           {/* Channels Sidebar */}
-          <div className="lg:col-span-4 card-standard p-4 flex flex-col gap-2">
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider px-2 py-1">
-              {t('student.forum.categories')}
-            </p>
-            <div className="space-y-1">
-              {CHANNELS.map(ch => {
-                const Icon = ch.icon;
-                const isActive = activeChannel === ch.id;
-                return (
-                  <button
-                    key={ch.id}
-                    onClick={() => { setActiveChannel(ch.id); setReplyingTo(null); }}
-                    className={`w-full text-left p-3 rounded-2xl transition-all flex items-center gap-3 cursor-pointer ${
-                      isActive
-                        ? 'bg-blue-600 text-white shadow-xs font-bold'
-                        : 'hover:bg-slate-50 text-slate-700'
-                    }`}
-                  >
-                    <Icon className={`text-base shrink-0 ${isActive ? 'text-white' : 'text-slate-400'}`} />
-                    <div className="overflow-hidden flex-1">
-                      <p className="text-xs font-bold leading-none">{ch.label}</p>
-                      <p className={`text-[11px] mt-1 truncate font-medium ${isActive ? 'text-blue-100' : 'text-slate-400'}`}>{ch.desc}</p>
-                    </div>
-                  </button>
-                );
-              })}
+          {(channels.length > 1 || channels.length === 0 || user?.role !== 'teacher') && (
+            <div className="lg:col-span-4 card-standard p-4 flex flex-col gap-2">
+              <div className="space-y-1">
+                {channels.map(ch => {
+                  return (
+                    <button
+                      key={ch.id}
+                      onClick={() => setActiveChannel(ch.id)}
+                      className={`w-full text-left p-3 rounded-2xl transition-all flex items-start gap-3 ${activeChannel === ch.id ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20' : 'hover:bg-slate-50 text-slate-700'}`}
+                    >
+                      <div className={`mt-0.5 p-1.5 rounded-lg ${activeChannel === ch.id ? 'bg-white/20' : 'bg-slate-100 text-slate-500'}`}>
+                        <RiHashtag className="text-sm" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className={`text-sm font-bold leading-none mb-1 ${activeChannel === ch.id ? 'text-white' : 'text-slate-900'}`}>
+                          {ch.label}
+                        </h3>
+                        <p className={`text-[10px] font-medium line-clamp-2 ${activeChannel === ch.id ? 'text-blue-100' : 'text-slate-500'}`}>
+                          {ch.desc}
+                        </p>
+                      </div>
+                    </button>
+                  );
+                })}
+                {channels.length === 0 && (
+                  <p className="text-xs text-slate-500 p-2 text-center">Guruh yoki o'qituvchi biriktirilmagan.</p>
+                )}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Chat Stream & Box */}
-          <div className="lg:col-span-8 card-standard flex flex-col overflow-hidden" style={{ height: '70vh' }}>
-            {/* Pinned announcement */}
+          {channels.length > 0 && (
+            <div className={`card-standard flex flex-col overflow-hidden ${(channels.length > 1 || user?.role !== 'teacher') ? 'lg:col-span-8' : 'lg:col-span-12'}`} style={{ height: '70vh' }}>
+              {/* Pinned announcement */}
             {pinnedMessages.length > 0 && (
               <div className="bg-amber-50 border-b border-amber-200/80 px-4 py-2.5 flex items-center justify-between text-xs text-amber-900">
                 <div className="flex items-center gap-2 overflow-hidden">
@@ -316,7 +326,8 @@ export default function ForumPage() {
                 </div>
               )}
             </div>
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </Layout>

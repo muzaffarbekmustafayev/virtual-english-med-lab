@@ -272,12 +272,18 @@ const updateUser = async (req, res) => {
     if (!user) return res.status(404).json({ error: 'Foydalanuvchi topilmadi' });
 
     const { full_name, email, role, specialty_id, group_id, password } = req.body;
+    const clean_group_id = group_id ? parseInt(group_id) : null;
+    
+    if (user.role === 'student' && clean_group_id !== null && user.group_id !== null && user.group_id !== clean_group_id) {
+      return res.status(400).json({ error: "Talaba allaqachon boshqa guruhga biriktirilgan. Boshqa guruhga o'tkazish uchun avval hozirgi guruhidan o'chiring." });
+    }
+
     const updates = {
       full_name,
       email,
       role,
       specialty_id: specialty_id ? parseInt(specialty_id) : null,
-      group_id: group_id ? parseInt(group_id) : null
+      group_id: clean_group_id
     };
     if (password) updates.password_hash = await bcrypt.hash(password, 10);
 
@@ -417,6 +423,11 @@ const assignStudentGroup = async (req, res) => {
     const { student_id, group_id, specialty_id } = req.body;
     const student = await User.findOne({ where: { id: student_id, role: 'student' } });
     if (!student) return res.status(404).json({ error: 'Talaba topilmadi' });
+    
+    if (group_id !== null && group_id !== undefined && student.group_id && student.group_id !== group_id) {
+      return res.status(400).json({ error: "Talaba allaqachon boshqa guruhga biriktirilgan. Boshqa guruhga o'tkazish uchun avval hozirgi guruhidan o'chiring." });
+    }
+
     const updates = {};
     if (group_id !== undefined) updates.group_id = group_id;
     if (specialty_id !== undefined) updates.specialty_id = specialty_id;
@@ -462,7 +473,17 @@ const getGrammar = async (req, res) => {
   const { module_id } = req.query;
   const where = module_id ? { module_id } : {};
   const g = await Grammar.findAll({ where, order: [['step_order', 'ASC'], ['id', 'ASC']] });
-  res.json(g);
+  const parsed = g.map(item => {
+    const obj = item.toJSON ? item.toJSON() : { ...item };
+    if (typeof obj.examples === 'string') {
+      try { obj.examples = JSON.parse(obj.examples); } catch (_) { obj.examples = []; }
+    }
+    if (typeof obj.common_mistakes === 'string') {
+      try { obj.common_mistakes = JSON.parse(obj.common_mistakes); } catch (_) { obj.common_mistakes = []; }
+    }
+    return obj;
+  });
+  res.json(parsed);
 };
 const createGrammar = async (req, res) => {
   const g = await Grammar.create(req.body);

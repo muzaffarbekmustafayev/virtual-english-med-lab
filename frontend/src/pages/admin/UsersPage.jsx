@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import api from '../../lib/api';
 import toast from 'react-hot-toast';
@@ -18,7 +19,7 @@ const ROLE_BADGE = {
 
 function UserModal({ user, onClose, onSaved, specialties, groups }) {
   const { t } = useLanguage();
-  const isEditing = !!user;
+  const isEditing = !!(user && user.id);
   const [form, setForm] = useState({
     full_name:    user?.full_name || '',
     email:        user?.email || '',
@@ -169,7 +170,9 @@ function UserModal({ user, onClose, onSaved, specialties, groups }) {
                   className="input-standard text-xs"
                 >
                   <option value="">Tanlang...</option>
-                  {groups.map((g) => (
+                  {groups
+                    .filter(g => !form.specialty_id || g.specialty_id == form.specialty_id)
+                    .map((g) => (
                     <option key={g.id} value={g.id}>{g.name}</option>
                   ))}
                 </select>
@@ -209,6 +212,19 @@ export default function UsersPage() {
   const [roleFilter, setRoleFilter]   = useState('all');
   const [modalUser, setModalUser]     = useState(null);
   const [showModal, setShowModal]     = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get('action') === 'create') {
+      const role = params.get('role') || 'student';
+      setModalUser({ role });
+      setShowModal(true);
+      // Remove query param to prevent reopening on refresh
+      navigate(location.pathname, { replace: true });
+    }
+  }, [location.search, navigate]);
 
   const loadData = async () => {
     setLoading(true);
@@ -269,7 +285,7 @@ export default function UsersPage() {
 
           <button
             onClick={() => { setModalUser(null); setShowModal(true); }}
-            className="btn-primary-gradient"
+            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-bold rounded-xl shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/30 hover:-translate-y-0.5"
           >
             <RiAddLine className="text-base" />
             <span>{t('admin.users.add_user_btn')}</span>

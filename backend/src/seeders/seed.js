@@ -32,7 +32,7 @@ async function seed() {
   const studentHash = await bcrypt.hash('student123', 10);
 
   const admin = await User.create({
-    full_name: 'Super Admin', email: 'admin@vpe.uz',
+    full_name: 'Super Admin', email: 'admin@gmail.com',
     password_hash: adminHash, role: 'admin',
   });
   const teacher = await User.create({
@@ -221,7 +221,7 @@ async function seed() {
   console.log('\n🎉 Seed muvaffaqiyatli yakunlandi!');
   console.log('='.repeat(50));
   console.log('Login ma\'lumotlari:');
-  console.log('  Admin:   admin@vpe.uz   / admin123');
+  console.log('  Admin:   admin@gmail.com / admin123');
   console.log('  Teacher: teacher@vpe.uz / teacher123');
   console.log('  Student: student@vpe.uz / student123');
   console.log('='.repeat(50));

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import api from '../../lib/api';
 import toast from 'react-hot-toast';
@@ -29,7 +30,8 @@ const COLOR_MAP = {
 };
 
 export default function ContentManager() {
-  const [tab, setTab]             = useState('grammar');
+  const { tab = 'grammar' }       = useParams();
+  const navigate                  = useNavigate();
   const [modules, setModules]     = useState([]);
   const [specialties, setSpec]    = useState([]);
   const [selMod, setSelMod]       = useState(1);
@@ -39,13 +41,18 @@ export default function ContentManager() {
   const [showModal, setShowModal] = useState(false);
   const [editingItem, setEdit]    = useState(null);
 
+  const [selSpec, setSelSpec]     = useState(null);
+
   const loadModules = () =>
     api.get('/admin/modules')
       .then(r => { setModules(r.data); if (r.data.length > 0 && !selMod) setSelMod(r.data[0].id); })
       .catch(() => toast.error('Modullarni yuklashda xatolik'));
 
   const loadSpecialties = () =>
-    api.get('/admin/specialties').then(r => setSpec(r.data)).catch(() => {});
+    api.get('/admin/specialties').then(r => {
+      setSpec(r.data);
+      if (r.data.length > 0) setSelSpec(r.data[0].id);
+    }).catch(() => {});
 
   useEffect(() => { loadModules(); loadSpecialties(); }, []);
 
@@ -76,7 +83,7 @@ export default function ContentManager() {
     }
   };
 
-  useEffect(() => { loadItems(); setSearch(''); }, [tab, selMod]);
+  useEffect(() => { loadItems(); setSearch(''); }, [selMod, tab]);
 
   const handleDelete = async (id) => {
     if (!window.confirm("Haqiqatan ham ushbu yozuvni o'chirmoqchimisiz?")) return;
@@ -92,8 +99,11 @@ export default function ContentManager() {
   };
 
   const activeModule = modules.find(m => m.id == selMod);
+  const activeTab = TABS.find(t => t.id === tab);
 
   const filteredItems = items.filter(item => {
+    if (tab === 'scenarios' && selSpec && item.specialty_id !== selSpec) return false;
+    
     if (!search.trim()) return true;
     const q = search.toLowerCase();
     if (tab === 'grammar') return item.title?.toLowerCase().includes(q) || item.rule_explanation?.toLowerCase().includes(q) || item.structure_pattern?.toLowerCase().includes(q);
@@ -104,12 +114,8 @@ export default function ContentManager() {
     return true;
   });
 
-  const activeTab = TABS.find(t => t.id === tab);
-  const colors    = COLOR_MAP[activeTab?.color] || COLOR_MAP.indigo;
-
   return (
     <Layout>
-      {/* ── Header ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
           <div className="flex items-center gap-2 mb-1">
@@ -124,7 +130,6 @@ export default function ContentManager() {
             Modullar, lug'at, iboralar va test savollarini oson boshqaring
           </p>
         </div>
-
         <button
           onClick={() => { setEdit(null); setShowModal(true); }}
           className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white text-sm font-bold rounded-xl shadow-md shadow-indigo-500/20 transition-all hover:shadow-lg hover:shadow-indigo-500/30 hover:-translate-y-0.5"
@@ -134,75 +139,66 @@ export default function ContentManager() {
         </button>
       </div>
 
-      {/* ── 1. Modul Tanlash (scenarios tabida ko'rsatmayik) ── */}
-      {tab !== 'scenarios' && (
-        <div className="bg-white border border-gray-200 rounded-2xl p-4 mb-6 shadow-sm">
-          <div className="flex items-center justify-between gap-2 mb-3">
-            <label className="text-xs font-bold uppercase tracking-wider text-gray-500 flex items-center gap-1.5">
-              <RiLayoutGridLine className="text-indigo-500" /> O'quv Modulini Tanlang:
+      <div className="bg-white border border-gray-200 rounded-2xl p-4 mb-6 shadow-sm">
+        <div className="flex flex-col sm:flex-row gap-4 mb-4 border-b border-gray-100 pb-4">
+          <div className="flex-1">
+            <label className="text-xs font-bold uppercase tracking-wider text-gray-500 flex items-center gap-1.5 mb-2">
+              <RiStethoscopeLine className="text-purple-500" /> Yo'nalishni Tanlang:
             </label>
-            <span className="text-xs text-gray-400">
-              Tanlangan: <b className="text-gray-700">{activeModule?.order_index}-modul — {activeModule?.title}</b>
-            </span>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
-            {modules.map((m) => {
-              const isSel = m.id == selMod;
-              return (
-                <button
-                  key={m.id}
-                  onClick={() => setSelMod(m.id)}
-                  className={`p-3 rounded-xl border text-left transition-all ${
-                    isSel
-                      ? 'bg-indigo-600 text-white border-indigo-600 shadow-md shadow-indigo-500/20'
-                      : 'bg-gray-50/70 hover:bg-gray-100 border-gray-200 text-gray-700'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className={`text-[10px] font-bold uppercase ${isSel ? 'text-indigo-200' : 'text-gray-400'}`}>
-                      Modul {m.order_index}
-                    </span>
-                    {isSel && <RiCheckLine className="text-sm" />}
-                  </div>
-                  <p className="text-xs font-bold truncate mt-1">{m.title}</p>
-                </button>
-              );
-            })}
+            <select
+              value={selSpec || ''}
+              onChange={(e) => {
+                const specId = parseInt(e.target.value);
+                setSelSpec(specId);
+                const firstMod = modules.find(m => m.specialty_id === specId);
+                if (firstMod) setSelMod(firstMod.id);
+              }}
+              className="w-full max-w-sm bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded-xl focus:ring-purple-500 focus:border-purple-500 block p-2.5"
+            >
+              {specialties.map(s => (
+                <option key={s.id} value={s.id}>{s.name}</option>
+              ))}
+            </select>
           </div>
         </div>
-      )}
-
-      {/* ── 2. Tab Tanlash ── */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
-        {TABS.map((t) => {
-          const Icon    = t.icon;
-          const isActive = tab === t.id;
-          const c        = COLOR_MAP[t.color];
-          return (
-            <button
-              key={t.id}
-              onClick={() => setTab(t.id)}
-              className={`p-4 rounded-2xl border text-left transition-all ${
-                isActive
-                  ? `bg-white ${c.border} shadow-md ring-2 ${c.ring} border`
-                  : 'bg-white border-gray-200 hover:border-gray-300 text-gray-600 shadow-sm'
-              }`}
-            >
-              <div className="flex items-center justify-between mb-2">
-                <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-lg ${
-                  isActive ? `${c.bg} text-white` : 'bg-gray-100 text-gray-500'
-                }`}>
-                  <Icon />
-                </div>
-                {isActive && (
-                  <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${c.badge}`}>Faol</span>
-                )}
-              </div>
-              <p className={`text-xs font-bold ${isActive ? 'text-gray-900' : 'text-gray-700'}`}>{t.name}</p>
-              <p className="text-[11px] text-gray-400 mt-0.5 line-clamp-1">{t.desc}</p>
-            </button>
-          );
-        })}
+        
+        {tab !== 'scenarios' && (
+          <div>
+            <div className="flex items-center justify-between gap-2 mb-3">
+              <label className="text-xs font-bold uppercase tracking-wider text-gray-500 flex items-center gap-1.5">
+                <RiLayoutGridLine className="text-indigo-500" /> O'quv Modulini Tanlang:
+              </label>
+              <span className="text-xs text-gray-400">
+                Tanlangan: <b className="text-gray-700">{activeModule?.order_index}-modul — {activeModule?.title}</b>
+              </span>
+            </div>
+            
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+              {modules.filter(m => m.specialty_id === selSpec).map((m) => {
+                const isSel = m.id == selMod;
+                return (
+                  <button
+                    key={m.id}
+                    onClick={() => setSelMod(m.id)}
+                    className={`p-3 rounded-xl border text-left transition-all ${
+                      isSel
+                        ? 'bg-indigo-600 text-white border-indigo-600 shadow-md shadow-indigo-500/20'
+                        : 'bg-gray-50/70 hover:bg-gray-100 border-gray-200 text-gray-700'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className={`text-[10px] font-bold uppercase ${isSel ? 'text-indigo-200' : 'text-gray-400'}`}>
+                        Modul {m.order_index}
+                      </span>
+                      {isSel && <RiCheckLine className="text-sm" />}
+                    </div>
+                    <p className="text-xs font-bold truncate mt-1">{m.title}</p>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* ── 3. Jadval / Ro'yxat ── */}
@@ -585,16 +581,25 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
                 </FormField>
 
                 <FormField label="Mutaxassislik" icon={RiStethoscopeLine} required>
-                  <select
-                    value={form.specialty_id}
-                    onChange={(e) => set('specialty_id', e.target.value)}
-                    className="form-input"
-                  >
-                    <option value="">Tanlang...</option>
-                    {specialties.map(s => (
-                      <option key={s.id} value={s.id}>{s.name}</option>
-                    ))}
-                  </select>
+                  {specialties.length === 0 ? (
+                    <div className="bg-amber-50 border border-amber-200 p-3 rounded-xl flex items-center justify-between">
+                      <span className="text-amber-800 text-sm font-medium">Yo'nalish yaratilmagan!</span>
+                      <a href="/admin/groups" className="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-lg transition-colors">
+                        Yaratish
+                      </a>
+                    </div>
+                  ) : (
+                    <select
+                      value={form.specialty_id}
+                      onChange={(e) => set('specialty_id', e.target.value)}
+                      className="form-input text-sm"
+                    >
+                      <option value="">Tanlang...</option>
+                      {specialties.map(s => (
+                        <option key={s.id} value={s.id}>{s.name}</option>
+                      ))}
+                    </select>
+                  )}
                 </FormField>
               </div>
 
@@ -628,15 +633,7 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
           {step === 2 && (
             <div className="space-y-5">
               <SectionHeader icon={RiStethoscopeLine} title="Standart AI Bemor Konteksti"
-                desc="Bu matn AI-ga bemor rolini o'ynash uchun ko'rsatma bo'ladi" />
-
-              <div className="p-4 bg-indigo-50 border border-indigo-200 rounded-xl">
-                <p className="text-xs font-bold text-indigo-700 mb-1">💡 Ko'rsatma:</p>
-                <p className="text-xs text-indigo-600 leading-relaxed">
-                  AI bemor sifatida: ismi, yoshi, kasali, simptomlar, muloqot uslubini kiriting.
-                  Talaba bilan inglizcha suhbat o'tkazadi.
-                </p>
-              </div>
+                desc="AI-ga bemor rolini o'ynash uchun ko'rsatma (inglizcha)" />
 
               <FormField label="Bemor Konteksti (Inglizcha)" icon={RiMentalHealthLine} required>
                 <textarea
@@ -660,15 +657,7 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
           {step === 3 && (
             <div className="space-y-5">
               <SectionHeader icon={RiBrainLine} title="Final Challenge Ssenariysi"
-                desc="Murakkab klinik holat — bu bosqichda talaba kuchli sinov o'tadi" />
-
-              <div className="p-4 bg-purple-50 border border-purple-200 rounded-xl">
-                <p className="text-xs font-bold text-purple-700 mb-1">🏆 Final Challenge nima?</p>
-                <p className="text-xs text-purple-600 leading-relaxed">
-                  Standart suhbatdan keyin talabaga murakkab klinik ssenariy beriladi.
-                  Bemor yanada qiyin savollar beradi yoki holat murakkablashadi.
-                </p>
-              </div>
+                desc="Suhbat so'ngida talabaga beriladigan murakkab holat (inglizcha)" />
 
               <FormField label="Final Challenge Konteksti (Inglizcha)" icon={RiSparklingLine}>
                 <textarea
@@ -841,7 +830,7 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                         value={form.title_uz || ''}
                         onChange={e => set('title_uz', e.target.value)}
                         placeholder="Og'riq davomiyligida Present Simple"
-                        className="form-input text-xs"
+                        className="form-input text-sm"
                       />
                     </FormField>
                     <FormField label="🇷🇺 Русский Заголовок">
@@ -850,7 +839,7 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                         value={form.title_ru || ''}
                         onChange={e => set('title_ru', e.target.value)}
                         placeholder="Present Simple при оценке боли"
-                        className="form-input text-xs"
+                        className="form-input text-sm"
                       />
                     </FormField>
                   </div>
@@ -864,7 +853,7 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                       onChange={e => set('rule_explanation', e.target.value)}
                       placeholder="Use Present Simple for recurring symptoms..."
                       rows={2}
-                      className="form-input text-xs resize-none"
+                      className="form-input text-sm resize-none"
                       required
                     />
                   </FormField>
@@ -875,7 +864,7 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                         onChange={e => set('rule_explanation_uz', e.target.value)}
                         placeholder="Bemorning takrorlanuvchi simptomlari haqida..."
                         rows={2}
-                        className="form-input text-xs resize-none"
+                        className="form-input text-sm resize-none"
                       />
                     </FormField>
                     <FormField label="🇷🇺 Русское Объяснение">
@@ -884,7 +873,7 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                         onChange={e => set('rule_explanation_ru', e.target.value)}
                         placeholder="Для расспроса о регулярных симптомах..."
                         rows={2}
-                        className="form-input text-xs resize-none"
+                        className="form-input text-sm resize-none"
                       />
                     </FormField>
                   </div>
@@ -901,7 +890,7 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                         set('structure_pattern', e.target.value);
                       }}
                       placeholder="e.g. Subject + have / has + V3"
-                      className="form-input font-mono text-xs font-bold text-indigo-700"
+                      className="form-input font-mono text-sm font-bold text-indigo-700"
                     />
                   </FormField>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -911,7 +900,7 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                         value={form.structure_pattern_uz || ''}
                         onChange={e => set('structure_pattern_uz', e.target.value)}
                         placeholder="masalan: Ega + have / has + V3"
-                        className="form-input font-mono text-xs font-bold text-amber-700"
+                        className="form-input font-mono text-sm font-bold text-amber-700"
                       />
                     </FormField>
                     <FormField label="🇷🇺 Формула (Русский)">
@@ -920,7 +909,7 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                         value={form.structure_pattern_ru || ''}
                         onChange={e => set('structure_pattern_ru', e.target.value)}
                         placeholder="например: Подлежащее + have / has + V3"
-                        className="form-input font-mono text-xs font-bold text-blue-700"
+                        className="form-input font-mono text-sm font-bold text-blue-700"
                       />
                     </FormField>
                   </div>
@@ -942,15 +931,15 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                     <FormField label="🇺🇿 O'zbekcha" required>
                       <input type="text" value={form.translation_uz || form.translation || ''}
                         onChange={e => { set('translation_uz', e.target.value); set('translation', e.target.value); }}
-                        placeholder="Tish og'rig'i" className="form-input text-xs" required />
+                        placeholder="Tish og'rig'i" className="form-input text-sm" required />
                     </FormField>
                     <FormField label="🇷🇺 Русский">
                       <input type="text" value={form.translation_ru || ''} onChange={e => set('translation_ru', e.target.value)}
-                        placeholder="Зубная боль" className="form-input text-xs" />
+                        placeholder="Зубная боль" className="form-input text-sm" />
                     </FormField>
                     <FormField label="🇬🇧 English Synonym">
                       <input type="text" value={form.translation_en || ''} onChange={e => set('translation_en', e.target.value)}
-                        placeholder="Toothache" className="form-input text-xs" />
+                        placeholder="Toothache" className="form-input text-sm" />
                     </FormField>
                   </div>
                 </div>
@@ -960,16 +949,16 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                   <FormField label="🇬🇧 English Definition">
                     <input type="text" value={form.definition_en || form.definition || ''}
                       onChange={e => { set('definition_en', e.target.value); set('definition', e.target.value); }}
-                      placeholder="masalan: Acute pain originating from the dental pulp" className="form-input text-xs" />
+                      placeholder="masalan: Acute pain originating from the dental pulp" className="form-input text-sm" />
                   </FormField>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     <FormField label="🇺🇿 O'zbekcha Ta'rif">
                       <input type="text" value={form.definition_uz || ''} onChange={e => set('definition_uz', e.target.value)}
-                        placeholder="Tish pulpasi yallig'lanishidan kelib chiquvchi og'riq" className="form-input text-xs" />
+                        placeholder="Tish pulpasi yallig'lanishidan kelib chiquvchi og'riq" className="form-input text-sm" />
                     </FormField>
                     <FormField label="🇷🇺 Русское Определение">
                       <input type="text" value={form.definition_ru || ''} onChange={e => set('definition_ru', e.target.value)}
-                        placeholder="Боль, возникающая из пульпы зуба" className="form-input text-xs" />
+                        placeholder="Боль, возникающая из пульпы зуба" className="form-input text-sm" />
                     </FormField>
                   </div>
                 </div>
@@ -977,7 +966,7 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                 <FormField label="Klinik Misol Gap (English Example)">
                   <textarea value={form.example || ''} onChange={e => set('example', e.target.value)}
                     placeholder="masalan: The patient presented with acute odontalgia exacerbated by cold liquids..."
-                    rows={2} className="form-input resize-none text-xs" />
+                    rows={2} className="form-input resize-none text-sm" />
                 </FormField>
               </>
             )}
@@ -988,13 +977,13 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                 <FormField label="Kategoriya / Klinik Bosqich" required>
                   <input type="text" value={form.category || ''} onChange={e => set('category', e.target.value)}
                     placeholder="masalan: Pain Assessment, Examination, Treatment Plan"
-                    className="form-input text-xs font-bold" required />
+                    className="form-input text-sm font-bold" required />
                 </FormField>
 
                 <FormField label="Inglizcha Muloqot Iborasi (Clinical Phrase in English)" required>
                   <textarea value={form.phrase || ''} onChange={e => set('phrase', e.target.value)}
                     placeholder="masalan: Does the pain radiate to your ear, jaw, or neck?"
-                    rows={2} className="form-input resize-none font-bold text-xs" required />
+                    rows={2} className="form-input resize-none font-bold text-sm" required />
                 </FormField>
 
                 <div className="p-3 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
@@ -1002,16 +991,16 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                   <FormField label="🇺🇿 O'zbekcha Izoh">
                     <input type="text" value={form.hint_uz || ''} onChange={e => set('hint_uz', e.target.value)}
                       placeholder="masalan: Og'riq quloqqa yoki bo'yinga tarqalyaptimi?"
-                      className="form-input text-xs" />
+                      className="form-input text-sm" />
                   </FormField>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     <FormField label="🇷🇺 Русское Пояснение">
                       <input type="text" value={form.hint_ru || ''} onChange={e => set('hint_ru', e.target.value)}
-                        placeholder="Иррадиирует ли боль в ухо или шею?" className="form-input text-xs" />
+                        placeholder="Иррадиирует ли боль в ухо или шею?" className="form-input text-sm" />
                     </FormField>
                     <FormField label="🇬🇧 English Context">
                       <input type="text" value={form.hint_en || ''} onChange={e => set('hint_en', e.target.value)}
-                        placeholder="Inquire about pain radiation" className="form-input text-xs" />
+                        placeholder="Inquire about pain radiation" className="form-input text-sm" />
                     </FormField>
                   </div>
                 </div>
@@ -1103,12 +1092,15 @@ function SectionHeader({ icon: Icon, title, desc }) {
   );
 }
 
-function FormField({ label, icon: Icon, required, children }) {
+function FormField({ label, icon: Icon, required, children, desc }) {
   return (
-    <div>
-      <label className="flex items-center gap-1.5 text-xs font-bold text-gray-600 mb-1.5">
-        {Icon && <Icon className="text-gray-400" />}
-        {label} {required && <span className="text-rose-500">*</span>}
+    <div className="mb-4">
+      <label className="flex flex-col mb-1.5">
+        <div className="flex items-center gap-1.5 text-sm font-bold text-slate-700">
+          {Icon && <Icon className="text-slate-400 text-base" />}
+          {label} {required && <span className="text-rose-500">*</span>}
+        </div>
+        {desc && <span className="text-xs text-slate-400 mt-0.5">{desc}</span>}
       </label>
       {children}
     </div>

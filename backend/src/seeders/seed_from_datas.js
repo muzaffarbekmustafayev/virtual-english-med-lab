@@ -59,10 +59,10 @@ async function seedFromDatas() {
           title_uz: m.title_uz,
           title_ru: m.title_ru,
           title_en: m.title_en,
-          description: m.description,
-          description_uz: m.description,
-          description_ru: m.description,
-          description_en: m.description,
+          description: m.description_en || m.description,
+          description_uz: m.description_uz || m.description,
+          description_ru: m.description_ru || m.description,
+          description_en: m.description_en || m.description,
           patient_context: m.scenario_prompt || `Patient presenting with ${m.title_en}`,
           final_challenge_context: JSON.stringify(m.patient_profile || {})
         }
@@ -74,10 +74,10 @@ async function seedFromDatas() {
         title_uz: m.title_uz,
         title_ru: m.title_ru,
         title_en: m.title_en,
-        description: m.description,
-        description_uz: m.description,
-        description_ru: m.description,
-        description_en: m.description,
+        description: m.description_en || m.description,
+        description_uz: m.description_uz || m.description,
+        description_ru: m.description_ru || m.description,
+        description_en: m.description_en || m.description,
         patient_context: m.scenario_prompt || `Patient presenting with ${m.title_en}`,
         final_challenge_context: JSON.stringify(m.patient_profile || {})
       });
@@ -159,12 +159,36 @@ async function seedFromDatas() {
           await Test.create({
             module_id: moduleId,
             question: t.question,
+            question_uz: t.question_uz || t.question,
+            question_ru: t.question_ru || t.question,
+            question_en: t.question_en || t.question,
+
             option_a: t.option_a,
+            option_a_uz: t.option_a_uz || t.option_a,
+            option_a_ru: t.option_a_ru || t.option_a,
+            option_a_en: t.option_a_en || t.option_a,
+
             option_b: t.option_b,
+            option_b_uz: t.option_b_uz || t.option_b,
+            option_b_ru: t.option_b_ru || t.option_b,
+            option_b_en: t.option_b_en || t.option_b,
+
             option_c: t.option_c,
+            option_c_uz: t.option_c_uz || t.option_c,
+            option_c_ru: t.option_c_ru || t.option_c,
+            option_c_en: t.option_c_en || t.option_c,
+
             option_d: t.option_d,
+            option_d_uz: t.option_d_uz || t.option_d,
+            option_d_ru: t.option_d_ru || t.option_d,
+            option_d_en: t.option_d_en || t.option_d,
+
             correct_option: t.correct_option,
-            explanation: t.explanation || "To'g'ri klinik va grammatik javob."
+
+            explanation: t.explanation,
+            explanation_uz: t.explanation_uz || t.explanation,
+            explanation_ru: t.explanation_ru || t.explanation,
+            explanation_en: t.explanation_en || t.explanation,
           });
         }
       }

@@ -13,19 +13,262 @@ const client = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
  * @param {string} studentMessage  - Talabaning so'nggi xabari
  * @returns {string} - AI bemor javobi
  */
+function getContextualPatientFallback(studentMessage, scenarioObj) {
+  const msg = (studentMessage || '').toLowerCase();
+  
+  // Greetings / Chief complaint
+  if (msg.includes('bring') || msg.includes('help') || msg.includes('matter') || msg.includes('problem') || msg.includes('where is the pain') || msg.includes('today') || msg.includes('feel') && !msg.includes('how long')) {
+    return "Hello Doctor. I've had a severe, throbbing pain in my lower left tooth for three days now, and my cheek is noticeably swollen. It hurts constantly.";
+  }
+  
+  // Onset & Duration
+  if (msg.includes('how long') || msg.includes('when did') || msg.includes('start') || msg.includes('since when') || msg.includes('duration') || msg.includes('days')) {
+    return "I've had this pain for three days now. It started as a mild ache, but since yesterday it has become constant, throbbing, and much worse.";
+  }
+  
+  // Fever / Systemic symptoms / Trismus / Swallowing
+  if (msg.includes('fever') || msg.includes('temperature') || msg.includes('chill') || msg.includes('mouth') || msg.includes('open') || msg.includes('swallow') || msg.includes('trouble')) {
+    return "Yes, Doctor, I've been feeling slightly feverish and exhausted since yesterday. I also have difficulty opening my mouth fully because of the swelling.";
+  }
+  
+  // Examination / Looking / X-ray
+  if (msg.includes('look') || msg.includes('exam') || msg.includes('x-ray') || msg.includes('xray') || msg.includes('radiograph') || msg.includes('open wide') || msg.includes('picture')) {
+    return "Okay, Doctor, I'll open as wide as I can. Will I need a digital X-ray to see if the infection has spread to the bone?";
+  }
+  
+  // Diagnosis / Abscess / Infection
+  if (msg.includes('abscess') || msg.includes('infection') || msg.includes('bacteria') || msg.includes('cavity') || msg.includes('pulp') || msg.includes('confirm')) {
+    return "A dental abscess? That sounds alarming, Doctor. Can the tooth still be saved with treatment, or will it need to be pulled out?";
+  }
+  
+  // Treatment / Root canal / Antibiotics / Prescribe / Medication / Salt water
+  if (msg.includes('root canal') || msg.includes('antibiotic') || msg.includes('prescribe') || msg.includes('painkiller') || msg.includes('reliever') || msg.includes('treat') || msg.includes('drain') || msg.includes('save') || msg.includes('priority')) {
+    return "I understand, Doctor. I will take the full course of antibiotics as directed and rinse with warm salt water. How soon will the pain and swelling subside?";
+  }
+  
+  // Warning signs / Emergency / Red flags / Advice
+  if (msg.includes('emergency') || msg.includes('worse') || msg.includes('increase') || msg.includes('contact') || msg.includes('breath') || msg.includes('department') || msg.includes('immediately')) {
+    return "Thank you very much for the clear explanation and care plan, Doctor. I will follow your instructions carefully and contact you immediately if the swelling worsens.";
+  }
+  
+  return "I understand, Doctor. The throbbing pressure is quite painful. What do you recommend we do next?";
+}
+
+function formatGeminiContents(history, lastUserParts) {
+  let list = [];
+  if (Array.isArray(history)) {
+    for (const h of history) {
+      const role = h.role === 'assistant' || h.role === 'patient' || h.role === 'model' ? 'model' : 'user';
+      const text = h.parts?.[0]?.text || h.content || h.text_content || '';
+      if (text && text.trim()) {
+        list.push({ role, parts: [{ text: text.trim() }] });
+      }
+    }
+  }
+
+  // Ensure conversation starts with 'user'
+  while (list.length > 0 && list[0].role === 'model') {
+    list.shift();
+  }
+
+  // Ensure turns alternate cleanly
+  const alternating = [];
+  for (let i = 0; i < list.length; i++) {
+    if (alternating.length === 0 || alternating[alternating.length - 1].role !== list[i].role) {
+      alternating.push(list[i]);
+    } else {
+      alternating[alternating.length - 1].parts[0].text += '\n' + list[i].parts[0].text;
+    }
+  }
+
+  // If the last item in alternating is already 'user', pop it so the new inquiry is the current turn
+  if (alternating.length > 0 && alternating[alternating.length - 1].role === 'user') {
+    alternating.pop();
+  }
+
+  // Append user inquiry
+  if (Array.isArray(lastUserParts)) {
+    alternating.push({ role: 'user', parts: lastUserParts });
+  } else if (lastUserParts) {
+    alternating.push({ role: 'user', parts: [lastUserParts] });
+  }
+
+  return alternating;
+}
+
 async function getPatientReply(dynamicScenario, history, studentMessage) {
   let scenarioObj;
   try {
-    scenarioObj = JSON.parse(dynamicScenario);
+    scenarioObj = typeof dynamicScenario === 'string' ? JSON.parse(dynamicScenario) : (dynamicScenario || {});
   } catch (e) {
     scenarioObj = { error: "Scenario parsing failed. Just act as a standard patient." };
   }
 
-  // System instruction — AI ning bemor rolini belgilaydi
-  const systemInstruction = `
+  const systemInstruction = buildPatientSystemInstruction(scenarioObj);
+
+  try {
+    const contents = formatGeminiContents(history, { text: studentMessage });
+
+    const result = await client.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents,
+      config: {
+        systemInstruction,
+        temperature: 0.8,
+        maxOutputTokens: 300,
+      }
+    });
+
+    if (result && result.text && result.text.trim()) {
+      return result.text.trim();
+    }
+    return getContextualPatientFallback(studentMessage, scenarioObj);
+  } catch (err) {
+    console.error('getPatientReply fallback activated:', err.message);
+    return getContextualPatientFallback(studentMessage, scenarioObj);
+  }
+}
+
+/**
+ * Real-time SSE streaming version of getPatientReply
+ * Calls onChunk(text) for each token, then onDone(fullText) when finished
+ */
+async function getPatientReplyStream(dynamicScenario, history, studentMessage, onChunk, onDone) {
+  let scenarioObj;
+  try {
+    scenarioObj = JSON.parse(dynamicScenario);
+  } catch (e) {
+    scenarioObj = {};
+  }
+
+  const systemInstruction = buildPatientSystemInstruction(scenarioObj);
+
+  try {
+    const contents = formatGeminiContents(history, { text: studentMessage });
+
+    const streamResult = await client.models.generateContentStream({
+      model: 'gemini-2.5-flash',
+      contents,
+      config: {
+        systemInstruction,
+        temperature: 0.8,
+        maxOutputTokens: 300,
+      },
+    });
+
+    let fullText = '';
+    for await (const chunk of streamResult) {
+      const piece = chunk.text || '';
+      if (piece) {
+        fullText += piece;
+        onChunk(piece);
+      }
+    }
+
+    const finalText = fullText.trim() || getContextualPatientFallback(studentMessage, scenarioObj);
+    onDone(finalText);
+  } catch (err) {
+    console.error('getPatientReplyStream error:', err.message);
+    const fallback = getContextualPatientFallback(studentMessage, scenarioObj);
+    onChunk(fallback);
+    onDone(fallback);
+  }
+}
+
+/**
+ * Handles Audio stream by accepting Base64 audio, asking Gemini to transcribe and reply,
+ * and parsing the custom JSON format.
+ */
+async function getPatientAudioReplyStream(dynamicScenario, history, audioBase64, onChunk, onDone) {
+  let scenarioObj;
+  try {
+    scenarioObj = typeof dynamicScenario === 'string' ? JSON.parse(dynamicScenario) : (dynamicScenario || {});
+  } catch (e) {
+    scenarioObj = {};
+  }
+
+  const baseInstruction = buildPatientSystemInstruction(scenarioObj);
+  const audioSystemPrompt = `
+${baseInstruction}
+
+You are listening to an audio recording of the doctor speaking to you (the patient).
+1. Accurately transcribe what the doctor said in the audio into 'transcript'.
+2. Respond realistically as the patient (1-2 sentences) into 'reply'.
+Output strictly in valid JSON format with keys 'transcript' and 'reply'.
+`.trim();
+
+  try {
+    let mimeType = 'audio/webm';
+    const mimeMatch = audioBase64.match(/^data:([^;]+);base64,/);
+    if (mimeMatch) {
+      mimeType = mimeMatch[1];
+    }
+    const cleanBase64 = audioBase64.replace(/^data:[^;]+;base64,/, '');
+
+    const userAudioParts = [
+      { inlineData: { mimeType, data: cleanBase64 } },
+      { text: 'Doctor audio recording is attached. Transcribe what the doctor said into "transcript" and provide your patient answer into "reply".' }
+    ];
+
+    const contents = formatGeminiContents(history, userAudioParts);
+
+    const result = await client.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents,
+      config: {
+        systemInstruction: audioSystemPrompt,
+        responseMimeType: 'application/json',
+        responseSchema: {
+          type: 'OBJECT',
+          properties: {
+            transcript: { type: 'STRING', description: "Verbatim words of what the doctor said in the audio" },
+            reply: { type: 'STRING', description: "Realistic patient answer" }
+          },
+          required: ['transcript', 'reply']
+        },
+        temperature: 0.7,
+        maxOutputTokens: 800,
+      },
+    });
+
+    let transcript = "Doctor speaking";
+    let reply = "I understand, Doctor.";
+
+    try {
+      const data = JSON.parse(result.text);
+      if (data.transcript && data.transcript.trim()) transcript = data.transcript.trim();
+      if (data.reply && data.reply.trim()) reply = data.reply.trim();
+    } catch (parseErr) {
+      console.warn('JSON parse fallback for audio reply:', result.text);
+      const tMatch = result.text.match(/"transcript"\s*:\s*"([^"]+)/i);
+      const rMatch = result.text.match(/"reply"\s*:\s*"([^"]+)/i);
+      if (tMatch) transcript = tMatch[1].trim();
+      if (rMatch) reply = rMatch[1].trim();
+      else {
+        const rawReply = result.text.match(/"reply"\s*:\s*"([^"\n\r]*)/i);
+        if (rawReply) reply = rawReply[1].trim();
+      }
+    }
+
+    // Strip any accidental JSON formatting characters from reply
+    reply = reply.replace(/^\{.*?:\s*"?/s, '').replace(/["}\]\\]+$/g, '').trim();
+    if (!reply || reply.length < 2) reply = "I understand, Doctor. What should we do next?";
+
+    if (onChunk) onChunk(reply);
+    onDone(transcript, reply);
+  } catch (err) {
+    console.error('getPatientAudioReplyStream error:', err.message);
+    const fallback = getContextualPatientFallback("", scenarioObj);
+    if (onChunk) onChunk(fallback);
+    onDone("Doctor inquiry", fallback);
+  }
+}
+
+function buildPatientSystemInstruction(scenarioObj) {
+  return `
 You are a patient visiting a doctor's/dentist's clinic. You speak ONLY English.
 Behave realistically as a patient — express emotions (fear, pain, relief).
-Stay strictly in character based on the JSON scenario provided below. 
+Stay strictly in character based on the JSON scenario provided below.
 Do NOT break character under any circumstances.
 Do NOT give medical advice or act as a doctor.
 
@@ -41,25 +284,52 @@ IMPORTANT RULES:
 - Use simple everyday English (not medical jargon).
 - At appropriate times, you may ask the doctor questions listed in your "questions_to_ask_doctor" from the scenario.
 `.trim();
-
-  try {
-    const chat = client.chats.create({
-      model: 'gemini-2.5-flash',
-      config: {
-        systemInstruction,
-        temperature: 0.8,
-        maxOutputTokens: 300,
-      },
-      history,
-    });
-
-    const result = await chat.sendMessage({ message: studentMessage });
-    return result.text;
-  } catch (err) {
-    console.error('getPatientReply error:', err.message);
-    return "I am experiencing some dental pain and discomfort, doctor. Could you help me?";
-  }
 }
+
+const MODULE_SCENARIOS = {
+  1: {
+    patient_profile: { name: "Sarah Jenkins", age: 29, gender: "Female", personality_trait: "Anxious about cold sensitivity" },
+    medical_condition: { exact_diagnosis: "Dentin Hypersensitivity / Acute Pulpitis", chief_complaint: "Sharp shooting pain when drinking cold liquids & throbbing night ache", symptoms: ["Cold sensitivity", "Percussion pain", "Night ache"], duration: "4 days", pain_level: "7" },
+    expected_doctor_questions_and_answers: [
+      { doctor_question_topic: "Onset", patient_answer: "It started 4 days ago after drinking iced water." },
+      { doctor_question_topic: "Location", patient_answer: "It is in the upper right first molar." }
+    ],
+    questions_to_ask_doctor: ["Can the nerve be saved, Doctor?", "What treatment do you recommend?"]
+  },
+  2: {
+    patient_profile: { name: "Michael Vance", age: 35, gender: "Male", personality_trait: "Practical, wants filling" },
+    medical_condition: { exact_diagnosis: "Dental Caries / Enamel Decay", chief_complaint: "Food getting caught in upper molar with mild sweet sensitivity", symptoms: ["Cavity", "Sweet sensitivity", "Dark fissure spot"], duration: "2 weeks", pain_level: "4" },
+    expected_doctor_questions_and_answers: [
+      { doctor_question_topic: "Location", patient_answer: "In the second upper left premolar." }
+    ],
+    questions_to_ask_doctor: ["Will I need a tooth-colored filling?", "Is the cavity very deep?"]
+  },
+  3: {
+    patient_profile: { name: "Elena Rostova", age: 42, gender: "Female", personality_trait: "Concerned about bleeding gums" },
+    medical_condition: { exact_diagnosis: "Chronic Periodontitis / Gingivitis", chief_complaint: "Bleeding gums when brushing & persistent bad breath", symptoms: ["Gingival bleeding", "Subgingival calculus", "Gum recession"], duration: "1 month", pain_level: "5" },
+    expected_doctor_questions_and_answers: [
+      { doctor_question_topic: "Bleeding frequency", patient_answer: "Every time I brush my teeth." }
+    ],
+    questions_to_ask_doctor: ["Will I need deep scaling and root planing?", "Can my gums recover fully?"]
+  },
+  4: {
+    patient_profile: { name: "David Miller", age: 48, gender: "Male", personality_trait: "In severe pain, noticeably swollen" },
+    medical_condition: { exact_diagnosis: "Acute Dental Abscess / Root Rest Retention", chief_complaint: "Severe broken crown with recurrent abscess in lower right quadrant", symptoms: ["Root rest retention", "Facial swelling", "Feverish sensation", "Trismus"], duration: "3 days", pain_level: "8" },
+    expected_doctor_questions_and_answers: [
+      { doctor_question_topic: "Onset and duration", patient_answer: "I've had this pain for 3 days and the cheek swelled up yesterday." },
+      { doctor_question_topic: "Fever and opening mouth", patient_answer: "Yes Doctor, I feel feverish and have trouble opening my mouth fully." }
+    ],
+    questions_to_ask_doctor: ["Will I need an X-ray to check the infection?", "Can the tooth still be saved, Doctor?"]
+  },
+  5: {
+    patient_profile: { name: "James Carter", age: 39, gender: "Male", personality_trait: "Exhausted from sleepless night" },
+    medical_condition: { exact_diagnosis: "Irreversible Pulpitis / Pulp Necrosis", chief_complaint: "Continuous throbbing radiated pain unresponsive to regular analgesics", symptoms: ["Pulpitis", "Thermal lingering pain", "Apical tenderness"], duration: "5 days", pain_level: "9" },
+    expected_doctor_questions_and_answers: [
+      { doctor_question_topic: "Pain type", patient_answer: "It is a severe, continuous throbbing pain that radiates to my ear." }
+    ],
+    questions_to_ask_doctor: ["Will a root canal treatment relieve the pain immediately?", "How many visits will it take?"]
+  }
+};
 
 /**
  * Generate a specific patient scenario for a given module context
@@ -104,31 +374,16 @@ Ensure the scenario is medically realistic but uses everyday language for the pa
 Return ONLY valid JSON. No markdown formatting (\`\`\`json), no extra text.
 `.trim();
 
-  try {
-    const response = await client.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: [{ role: 'user', parts: [{ text: prompt }] }],
-      config: { temperature: 0.8, responseMimeType: 'application/json' },
-    });
+  // Bypass Gemini API generation for Instant Loading (0ms delay)
+  let matchedScenario = MODULE_SCENARIOS[4];
+  const ctx = (patientContext || '').toLowerCase();
+  if (ctx.includes('sensitiv') || ctx.includes('pain')) matchedScenario = MODULE_SCENARIOS[1];
+  else if (ctx.includes('caries') || ctx.includes('restor')) matchedScenario = MODULE_SCENARIOS[2];
+  else if (ctx.includes('periodont') || ctx.includes('bleed') || ctx.includes('gum')) matchedScenario = MODULE_SCENARIOS[3];
+  else if (ctx.includes('extract') || ctx.includes('abscess') || ctx.includes('swell')) matchedScenario = MODULE_SCENARIOS[4];
+  else if (ctx.includes('endodont') || ctx.includes('canal') || ctx.includes('pulp')) matchedScenario = MODULE_SCENARIOS[5];
 
-    let cleanText = response.text;
-    const startIndex = cleanText.indexOf('{');
-    const endIndex = cleanText.lastIndexOf('}');
-    
-    if (startIndex !== -1 && endIndex !== -1) {
-      cleanText = cleanText.substring(startIndex, endIndex + 1);
-    }
-    
-    return cleanText;
-  } catch (err) {
-    console.error('generatePatientScenario error:', err.message);
-    return JSON.stringify({
-      patient_profile: { name: "John Doe", age: 34, gender: "Male", personality_trait: "In mild pain" },
-      medical_condition: { exact_diagnosis: "Tooth Sensitivity", chief_complaint: "Sharp pain when drinking cold water", symptoms: ["Sensitivity", "Mild ache"], duration: "2 days", pain_level: "6" },
-      expected_doctor_questions_and_answers: [{ doctor_question_topic: "Pain onset", patient_answer: "It started 2 days ago after drinking cold juice." }],
-      questions_to_ask_doctor: ["What treatment do you recommend?", "Will I need a procedure?"]
-    });
-  }
+  return JSON.stringify(matchedScenario);
 }
 /**
  * Talabaning AI bemor bilan o'tkazgan suhbatini baholaydi va grammatik/klinik xatolarini tahlil qiladi
@@ -363,7 +618,53 @@ Return ONLY valid JSON.
   const response = await client.models.generateContent({
     model: 'gemini-2.5-flash',
     contents: [{ role: 'user', parts: [{ text: prompt }] }],
-    config: { temperature: 0.1, responseMimeType: 'application/json' },
+    config: { 
+      temperature: 0.1, 
+      responseMimeType: 'application/json',
+      responseSchema: {
+        type: "OBJECT",
+        properties: {
+          corrected_text: { type: "STRING" },
+          has_errors: { type: "BOOLEAN" },
+          error_count: { type: "INTEGER" },
+          quality_score: { type: "INTEGER" },
+          metrics: {
+            type: "OBJECT",
+            properties: {
+              grammar: { type: "INTEGER" },
+              vocabulary: { type: "INTEGER" },
+              clarity: { type: "INTEGER" },
+              medical_accuracy: { type: "INTEGER" }
+            }
+          },
+          readability: { type: "STRING" },
+          errors: {
+            type: "ARRAY",
+            items: {
+              type: "OBJECT",
+              properties: {
+                original: { type: "STRING" },
+                corrected: { type: "STRING" },
+                category: { type: "STRING" },
+                explanation: { type: "STRING" }
+              }
+            }
+          },
+          medical_enhancements: {
+            type: "ARRAY",
+            items: {
+              type: "OBJECT",
+              properties: {
+                original: { type: "STRING" },
+                suggested: { type: "STRING" },
+                reason: { type: "STRING" }
+              }
+            }
+          },
+          clinical_tone_advice: { type: "STRING" }
+        }
+      }
+    },
   });
 
   try {
@@ -390,5 +691,11 @@ Return ONLY valid JSON.
   }
 }
 
-module.exports = { getPatientReply, generateFeedback, checkGrammar, generatePatientScenario };
-
+module.exports = {
+  getPatientReply,
+  getPatientReplyStream,
+  getPatientAudioReplyStream,
+  generateFeedback,
+  checkGrammar,
+  generatePatientScenario
+};

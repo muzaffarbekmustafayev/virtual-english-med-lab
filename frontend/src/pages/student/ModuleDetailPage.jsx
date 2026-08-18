@@ -19,7 +19,7 @@ import {
 export default function ModuleDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { t, lang, getTranslated } = useLanguage();
+  const { t, language, lang, getLocalized, getTranslation } = useLanguage();
 
   const STEPS = [
     { id: 1, label: t('step_grammar'),    short: 'Grammar',  requiredPrev: null  },
@@ -79,6 +79,18 @@ export default function ModuleDetailPage() {
   };
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setStep(1);
+    setCompletedSteps([]);
+    setVocabLearned(false);
+    setPhrasesLearned(false);
+    setGapAnswers({});
+    setGapChecked(false);
+    setTestAnswers({});
+    setTestResult(null);
+    setFeedback(null);
+    setOverallResult(null);
+    setConversation(null);
     fetchModuleData();
   }, [id]);
 
@@ -101,7 +113,7 @@ export default function ModuleDetailPage() {
 
       const phraseList = phraseRes.data;
       if (phraseList && phraseList.length > 0) {
-        setGapExercises(generateGapFill(phraseList));
+        setGapExercises(generateGapFill(phraseList, vocabRes.data || []));
       }
 
       let savedCompleted = [];
@@ -146,7 +158,13 @@ export default function ModuleDetailPage() {
 
       try {
         const convRes = await api.post(`/student/modules/${id}/start`);
-        setConversation(convRes.data);
+        if (convRes.data) {
+          setConversation({
+            id: convRes.data.conversation_id || convRes.data.id,
+            conversation_id: convRes.data.conversation_id || convRes.data.id,
+            ...convRes.data
+          });
+        }
       } catch (_) {}
 
     } catch (err) {
@@ -156,20 +174,157 @@ export default function ModuleDetailPage() {
     }
   };
 
-  const generateGapFill = (items) => {
+  const generateGapFill = (items, vocabItems = []) => {
+    if (!items || items.length === 0) return [];
+
+    const GRAMMAR_DISTRACTORS = {
+      'brings': ['brings', 'takes', 'leads', 'calls'],
+      'bring': ['bring', 'take', 'lead', 'call'],
+      'have': ['have', 'had', 'has', 'did'],
+      'had': ['had', 'have', 'has', 'having'],
+      'has': ['has', 'have', 'had', 'is'],
+      'been': ['been', 'being', 'having', 'done'],
+      'feeling': ['feeling', 'getting', 'staying', 'growing'],
+      'feel': ['feel', 'look', 'sound', 'seem'],
+      'having': ['having', 'getting', 'feeling', 'experiencing'],
+      'opening': ['opening', 'closing', 'moving', 'swallowing'],
+      'swelling': ['swelling', 'bleeding', 'redness', 'numbness'],
+      'pain': ['pain', 'ache', 'pressure', 'sensation'],
+      'worse': ['worse', 'better', 'constant', 'milder'],
+      'getting': ['getting', 'becoming', 'turning', 'remaining'],
+      'radiate': ['radiate', 'spread', 'travel', 'extend'],
+      'start': ['start', 'begin', 'develop', 'occur'],
+      'started': ['started', 'began', 'developed', 'occurred'],
+      'persist': ['persist', 'continue', 'last', 'remain'],
+      'lasts': ['lasts', 'persists', 'takes', 'continues'],
+      'last': ['last', 'persist', 'take', 'continue'],
+      'trigger': ['trigger', 'cause', 'provoke', 'induce'],
+      'triggers': ['triggers', 'causes', 'provokes', 'induces'],
+      'caused': ['caused', 'induced', 'triggered', 'formed'],
+      'swallow': ['swallow', 'breathe', 'chew', 'speak'],
+      'chew': ['chew', 'bite', 'swallow', 'speak'],
+      'bite': ['bite', 'chew', 'press', 'hold'],
+      'severe': ['severe', 'mild', 'moderate', 'slight'],
+      'throbbing': ['throbbing', 'stabbing', 'dull', 'sharp'],
+      'sharp': ['sharp', 'dull', 'mild', 'crushing'],
+      'dull': ['dull', 'sharp', 'severe', 'acute'],
+      'should': ['should', 'must', 'can', 'may'],
+      'must': ['must', 'should', 'can', 'need'],
+      'could': ['could', 'would', 'should', 'might'],
+      'will': ['will', 'would', 'shall', 'can'],
+      'when': ['when', 'where', 'how', 'why'],
+      'how': ['how', 'when', 'where', 'what'],
+      'what': ['what', 'which', 'how', 'where'],
+      'where': ['where', 'when', 'how', 'what'],
+      'since': ['since', 'for', 'during', 'from'],
+      'for': ['for', 'since', 'during', 'until'],
+      'do': ['do', 'does', 'did', 'are'],
+      'does': ['does', 'do', 'did', 'is'],
+      'did': ['did', 'do', 'does', 'was'],
+      'is': ['is', 'are', 'was', 'were'],
+      'are': ['are', 'is', 'were', 'was'],
+      'you': ['you', 'they', 'we', 'he'],
+    };
+
     return items.slice(0, 5).map((p, idx) => {
-      const words = p.phrase.split(' ');
-      const targetIdx = words.length > 3 ? 2 : 1;
-      const targetWord = words[targetIdx] ? words[targetIdx].replace(/[.,?!]/g, '') : words[0];
-      const blanked = words.map((w, i) => i === targetIdx ? '_______' : w).join(' ');
+      const rawWords = p.phrase.split(/\s+/);
+      const cleanWords = rawWords.map(w => w.replace(/[.,?!;:()'"]/g, ''));
       
-      const allWords = items.map(x => {
-        const w = x.phrase.split(' ');
-        return (w[targetIdx] || w[0]).replace(/[.,?!]/g, '');
-      }).filter(w => w.toLowerCase() !== targetWord.toLowerCase());
+      let chosenIdx = -1;
       
-      const options = [targetWord, ...allWords.slice(0, 3)].sort(() => 0.5 - Math.random());
-      return { id: idx, blanked, answer: targetWord, options, hint: p.hint_uz || p.hint || '', original: p.phrase };
+      // Priority 1: Key clinical / grammatical content word
+      for (let i = 0; i < cleanWords.length; i++) {
+        const lower = cleanWords[i].toLowerCase();
+        if (GRAMMAR_DISTRACTORS[lower] && lower !== 'you' && lower !== 'what' && lower !== 'how' && lower !== 'is' && lower !== 'are' && lower !== 'do') {
+          chosenIdx = i;
+          break;
+        }
+      }
+
+      // Priority 2: Auxiliaries or any word in distractor dict
+      if (chosenIdx === -1) {
+        for (let i = 0; i < cleanWords.length; i++) {
+          const lower = cleanWords[i].toLowerCase();
+          if (GRAMMAR_DISTRACTORS[lower]) {
+            chosenIdx = i;
+            break;
+          }
+        }
+      }
+
+      // Priority 3: Middle content word (length >= 4)
+      if (chosenIdx === -1) {
+        for (let i = 1; i < cleanWords.length - 1; i++) {
+          if (cleanWords[i].length >= 4) {
+            chosenIdx = i;
+            break;
+          }
+        }
+      }
+
+      // Fallback
+      if (chosenIdx === -1) {
+        chosenIdx = cleanWords.length > 2 ? 1 : 0;
+      }
+
+      const targetWord = cleanWords[chosenIdx];
+      const lowerTarget = targetWord.toLowerCase();
+      const punctMatch = rawWords[chosenIdx].match(/[.,?!;:()]+$/);
+      const trailingPunct = punctMatch ? punctMatch[0] : '';
+      
+      const blanked = rawWords.map((w, i) => i === chosenIdx ? (`_______${trailingPunct}`) : w).join(' ');
+
+      // Build 4 distinct, intelligent options
+      let options = [];
+      if (GRAMMAR_DISTRACTORS[lowerTarget]) {
+        options = GRAMMAR_DISTRACTORS[lowerTarget].map(opt => {
+          if (targetWord[0] === targetWord[0].toUpperCase() && targetWord[0] !== targetWord[0].toLowerCase()) {
+            return opt.charAt(0).toUpperCase() + opt.slice(1);
+          }
+          return opt;
+        });
+      } else {
+        const candidatePool = [
+          ...items.flatMap(x => x.phrase.split(/\s+/).map(w => w.replace(/[.,?!;:()'"]/g, ''))),
+          ...(vocabItems || []).map(v => v.word ? v.word.split(' ')[0] : '')
+        ].filter(w => w && w.length >= 3 && w.toLowerCase() !== lowerTarget);
+
+        const uniquePool = Array.from(new Set(candidatePool.map(w => w.toLowerCase())));
+        const picked = uniquePool.slice(0, 3).map(w => {
+          if (targetWord[0] === targetWord[0].toUpperCase() && targetWord[0] !== targetWord[0].toLowerCase()) {
+            return w.charAt(0).toUpperCase() + w.slice(1);
+          }
+          return w;
+        });
+        options = [targetWord, ...picked];
+      }
+
+      if (!options.includes(targetWord)) {
+        options[0] = targetWord;
+      }
+      const uniqueOptions = Array.from(new Set(options));
+      while (uniqueOptions.length < 4) {
+        const fallbacks = ['have', 'been', 'feeling', 'worse', 'pain', 'should', 'start'];
+        for (const fb of fallbacks) {
+          if (!uniqueOptions.includes(fb) && fb !== targetWord) {
+            uniqueOptions.push(fb);
+            if (uniqueOptions.length >= 4) break;
+          }
+        }
+      }
+      const finalOptions = uniqueOptions.slice(0, 4).sort(() => 0.5 - Math.random());
+
+      return {
+        id: idx,
+        blanked,
+        answer: targetWord,
+        options: finalOptions,
+        hint_uz: p.hint_uz || p.hint || '',
+        hint_ru: p.hint_ru || p.hint_uz || p.hint || '',
+        hint_en: p.hint_en || p.phrase || '',
+        hint: p.hint_uz || p.hint || '',
+        original: p.phrase
+      };
     });
   };
 
@@ -349,7 +504,9 @@ export default function ModuleDetailPage() {
         return (
           <div className="mb-6 bg-white p-3 rounded-2xl border border-slate-200/80 shadow-xs">
             <div className="flex justify-between items-center mb-1.5 text-xs font-bold">
-              <span className="text-slate-500">{doneCount}/{STEPS.length} bosqich yakunlandi</span>
+              <span className="text-slate-500">
+                {t('steps_progress_text', { done: doneCount, total: STEPS.length }) || `${doneCount}/${STEPS.length} bosqich yakunlandi`}
+              </span>
               <span className="text-indigo-600">{pct}%</span>
             </div>
             <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
@@ -385,10 +542,10 @@ export default function ModuleDetailPage() {
             <div className="bg-white border border-slate-200 rounded-3xl p-8 text-center space-y-3 shadow-xs">
               <RiLightbulbLine className="text-4xl text-amber-500 mx-auto" />
               <h3 className="text-base font-extrabold text-slate-800">
-                Ushbu modul uchun grammatik qoidalar
+                {t('grammar_no_rules_title') || "Ushbu modul uchun grammatik qoidalar"}
               </h3>
               <p className="text-xs text-slate-500 max-w-md mx-auto">
-                Klinik muloqotda grammatik to'g'ri jumlalardan foydalanish bemor ishonchini oshiradi va aniq tashxis qo'yishga yordam beradi.
+                {t('grammar_no_rules_desc') || "Klinik muloqotda grammatik to'g'ri jumlalardan foydalanish bemor ishonchini oshiradi va aniq tashxis qo'yishga yordam beradi."}
               </p>
             </div>
           ) : (
@@ -501,10 +658,16 @@ export default function ModuleDetailPage() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
                         {examplesList.map((ex, exIdx) => {
                           const trans = lang === 'en'
-                            ? null
+                            ? (ex.translation_en || null)
                             : lang === 'ru'
-                            ? (ex.translation_ru || ex.translation_uz || ex.translation)
+                            ? (ex.translation_ru || ex.translation)
                             : (ex.translation_uz || ex.translation);
+
+                          const noteText = lang === 'en'
+                            ? (ex.note_en || ex.note)
+                            : lang === 'ru'
+                            ? (ex.note_ru || ex.note_en || ex.note)
+                            : (ex.note_uz || ex.note_en || ex.note);
 
                           return (
                             <div
@@ -532,9 +695,9 @@ export default function ModuleDetailPage() {
                                 )}
                               </div>
 
-                              {ex.note && (
-                                <div className="mt-3 pt-2 border-t border-slate-200/60 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                                  📌 {ex.note}
+                              {noteText && (
+                                <div className="mt-3 pt-2 border-t border-slate-200/60 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                                  📌 {noteText}
                                 </div>
                               )}
                             </div>
@@ -567,7 +730,7 @@ export default function ModuleDetailPage() {
                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                 <div className="p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-xs">
                                   <span className="text-[10px] font-black text-rose-700 uppercase tracking-wider block mb-0.5">
-                                    ✕ Noto'g'ri / Incorrect
+                                    {t('grammar_incorrect') || "✕ Noto'g'ri"}
                                   </span>
                                   <span className="font-semibold text-rose-800 line-through">
                                     "{m.incorrect}"
@@ -575,7 +738,7 @@ export default function ModuleDetailPage() {
                                 </div>
                                 <div className="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs">
                                   <span className="text-[10px] font-black text-emerald-700 uppercase tracking-wider block mb-0.5">
-                                    ✓ To'g'ri / Correct
+                                    {t('grammar_correct') || "✓ To'g'ri"}
                                   </span>
                                   <span className="font-bold text-emerald-800">
                                     "{m.correct}"
@@ -584,7 +747,7 @@ export default function ModuleDetailPage() {
                               </div>
                               {exp && (
                                 <p className="text-xs text-slate-500 font-medium pt-1">
-                                  💡 <b>Izoh:</b> {exp}
+                                  💡 <b>{t('grammar_explanation_label') || 'Izoh:'}</b> {exp}
                                 </p>
                               )}
                             </div>
@@ -828,6 +991,12 @@ export default function ModuleDetailPage() {
               const isCorrect = gapChecked && gapAnswers[ex.id] === ex.answer;
               const isWrong = gapChecked && gapAnswers[ex.id] && gapAnswers[ex.id] !== ex.answer;
 
+              const hintText = lang === 'en'
+                ? (ex.hint_en || ex.original)
+                : lang === 'ru'
+                ? (ex.hint_ru || ex.hint_uz || ex.hint)
+                : (ex.hint_uz || ex.hint);
+
               return (
                 <div
                   key={ex.id}
@@ -839,9 +1008,12 @@ export default function ModuleDetailPage() {
                       : 'border-slate-200'
                   }`}
                 >
-                  <p className="text-xs text-slate-500 font-medium mb-1.5 flex items-center gap-1">
-                    <RiMessage3Line className="text-indigo-600" /> {ex.hint}
-                  </p>
+                  {hintText && (
+                    <p className="text-xs text-slate-500 font-medium mb-1.5 flex items-center gap-1.5">
+                      <RiMessage3Line className="text-indigo-600 shrink-0" />
+                      <span>{hintText}</span>
+                    </p>
+                  )}
                   <p className="text-sm md:text-base font-bold text-slate-900 mb-4 leading-relaxed">
                     {ex.id + 1}. {ex.blanked}
                   </p>
@@ -904,26 +1076,26 @@ export default function ModuleDetailPage() {
               return passed ? (
                 <div className="flex items-center gap-3">
                   <span className="text-emerald-700 font-extrabold text-xs bg-emerald-50 px-3 py-2 rounded-xl border border-emerald-200">
-                    {gapPercent}% To'g'ri!
+                    {t('gap_score_passed', { pct: gapPercent }) || `${gapPercent}% ${lang === 'ru' ? 'Правильно!' : lang === 'en' ? 'Correct!' : 'To\'g\'ri!'}`}
                   </span>
                   <button
                     onClick={() => completeAndGoNext(5)}
                     className="px-6 py-3 rounded-2xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-extrabold text-sm shadow-md shadow-indigo-200 transition-all flex items-center gap-2 cursor-pointer"
                   >
-                    <span>Keyingisi: Quiz</span>
+                    <span>{t('gap_next') || 'Keyingisi: Quiz'}</span>
                     <RiArrowRightLine />
                   </button>
                 </div>
               ) : (
                 <div className="flex items-center gap-3">
                   <span className="text-rose-700 font-extrabold text-xs bg-rose-50 px-3 py-2 rounded-xl border border-rose-200">
-                    {gapPercent}% (Kamida 60% kerak)
+                    {t('gap_score_failed', { pct: gapPercent }) || `${gapPercent}% (${lang === 'ru' ? 'Требуется минимум 60%' : lang === 'en' ? 'Minimum 60% required' : 'Kamida 60% kerak'})`}
                   </span>
                   <button
                     onClick={() => {
                       setGapChecked(false);
                       setGapAnswers({});
-                      setGapExercises(generateGapFill(phrases));
+                      setGapExercises(generateGapFill(phrases, vocabulary));
                     }}
                     className="px-5 py-2.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 font-bold text-xs hover:bg-amber-100 transition-all flex items-center gap-1.5 cursor-pointer"
                   >
@@ -959,12 +1131,13 @@ export default function ModuleDetailPage() {
             {tests.map((q, i) => (
               <div key={q.id} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
                 <p className="text-sm font-extrabold text-slate-900 mb-3.5">
-                  {i + 1}. {q.question}
+                  {i + 1}. {q.question_en || q.question}
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {['A', 'B', 'C', 'D'].map((opt) => {
-                    const optText = q[`option_${opt.toLowerCase()}`];
+                    const optKey = `option_${opt.toLowerCase()}`;
+                    const optText = q[`${optKey}_en`] || q[optKey];
                     const isSelected = testAnswers[q.id] === opt;
 
                     return (
@@ -1018,7 +1191,7 @@ export default function ModuleDetailPage() {
           <VirtualPatientChat
             moduleId={id}
             module={module}
-            conversationId={conversation?.id}
+            conversationId={conversation?.conversation_id || conversation?.id}
             phrasebook={phrases}
             onFinish={handleFinishChat}
             onTestPass100={handleTestPass100}
@@ -1239,26 +1412,43 @@ export default function ModuleDetailPage() {
                     <span>{activeResult.score >= 60 ? (t('results_retry_btn') || 'Qayta urinish') : 'Qayta topshirish (Muloqotga qaytish)'}</span>
                   </button>
 
-                  {/* Next Module Button (Only enabled if score >= 60) */}
-                  {Number(id) < 10 ? (
+                  {/* Next Module Button / Course Completion Banner */}
+                  {module?.next_module ? (
                     activeResult.score >= 60 ? (
                       <button
-                        onClick={() => navigate(`/student/modules/${Number(id) + 1}`)}
-                        className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs shadow-md shadow-emerald-200 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                        onClick={() => navigate(`/student/modules/${module.next_module.id}`)}
+                        className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs sm:text-sm shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-between sm:justify-center gap-3 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
                       >
-                        <span>{String(t('results_next_module_btn') || 'Keyingi modul').replace(/#\{id\}/g, '').trim()} #{Number(id) + 1}</span>
-                        <RiArrowRightLine />
+                        <div className="flex flex-col items-start text-left">
+                          <span className="text-[10px] font-bold text-emerald-100 uppercase tracking-wider">
+                            {t('results_next_module_label') || "Keyingi Modul"} #{module.next_module.order_index}
+                          </span>
+                          <span className="font-black text-white text-xs sm:text-sm truncate max-w-[200px] sm:max-w-[280px]">
+                            {lang === 'ru' ? (module.next_module.title_ru || module.next_module.title) : lang === 'uz' ? (module.next_module.title_uz || module.next_module.title) : (module.next_module.title_en || module.next_module.title)}
+                          </span>
+                        </div>
+                        <div className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center text-white shrink-0 ml-1">
+                          <RiArrowRightLine className="text-lg" />
+                        </div>
                       </button>
                     ) : (
-                      <div className="inline-flex items-center gap-1.5 px-4 py-3 rounded-2xl bg-slate-100 border border-slate-200 text-slate-400 font-extrabold text-xs cursor-not-allowed">
-                        <RiLockLine />
-                        <span>Keyingi modul qulflangan (kamida 60% kerak)</span>
+                      <div className="inline-flex items-center gap-2 px-4 py-3 rounded-2xl bg-slate-100 border border-slate-200 text-slate-400 font-extrabold text-xs cursor-not-allowed">
+                        <RiLockLine className="text-sm" />
+                        <span>{t('results_next_locked_msg') || "Keyingi modul qulflangan (Kamida 60% kerak)"}</span>
                       </div>
                     )
                   ) : (
-                    <span className="text-xs font-extrabold text-emerald-600 px-4 py-2 bg-emerald-50 rounded-xl border border-emerald-200">
-                      {t('results_all_completed_congrats') || "Barcha 10 ta modul muvaffaqiyatli yakunlandi! 🏆"}
-                    </span>
+                    <div className="flex items-center gap-3 bg-gradient-to-r from-amber-500/10 via-emerald-500/10 to-teal-500/10 border border-emerald-300 rounded-2xl px-5 py-3 shadow-xs">
+                      <RiTrophyLine className="text-amber-500 text-2xl shrink-0" />
+                      <div>
+                        <p className="text-xs font-black text-slate-900">
+                          {t('results_course_completed_title') || "Tabriklaymiz! Barcha modullar yakunlandi! 🏆"}
+                        </p>
+                        <p className="text-[11px] text-slate-500 font-medium">
+                          {t('results_course_completed_desc') || "Siz mutaxassislik bo'yicha barcha klinik modullarni muvaffaqiyatli tamomladingiz."}
+                        </p>
+                      </div>
+                    </div>
                   )}
                 </div>
               </div>
@@ -1267,16 +1457,16 @@ export default function ModuleDetailPage() {
             <div className="text-center py-16 bg-white rounded-3xl border border-slate-200 p-8 shadow-xs">
               <RiAwardLine className="text-5xl text-slate-400 mx-auto mb-3" />
               <h3 className="text-lg font-black text-slate-800">
-                Natijalar hali mavjud emas
+                {t('results_not_available_title') || "Natijalar hali mavjud emas"}
               </h3>
               <p className="text-xs text-slate-500 mt-1 mb-6">
-                Avval 6-bosqichdagi virtual bemor bilan muloqot qilib, baholash oling.
+                {t('results_not_available_desc') || "Avval 6-bosqichdagi virtual bemor bilan muloqot qilib, baholash oling."}
               </p>
               <button
                 onClick={() => setStep(6)}
-                className="px-6 py-3 rounded-2xl bg-indigo-600 text-white font-extrabold text-xs shadow-md shadow-indigo-200"
+                className="px-6 py-3 rounded-2xl bg-indigo-600 text-white font-extrabold text-xs shadow-md shadow-indigo-200 cursor-pointer"
               >
-                Virtual Bemor Chati (6-Bosqich)
+                {t('chat_virtual_patient_btn_step') || "Virtual Bemor Chati (6-Bosqich)"}
               </button>
             </div>
           )}
