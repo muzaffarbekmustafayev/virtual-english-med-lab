@@ -1,0 +1,870 @@
+{
+  "specialty_id": 2,
+  "specialty_name": "Davolash ishi",
+  "order_index": 5,
+  "title": "Neurological Assessment & Headaches",
+  "title_uz": "Nevrologik tekshiruv va bosh og'rig'i",
+  "title_ru": "Неврологический осмотр и головные боли",
+  "title_en": "Neurological Assessment & Headaches",
+  "description": "Davolash ishi bo'yicha Nevrologik tekshiruv va bosh og'rig'i mavzusida klinik muloqot va tibbiy ingliz tili darsi.",
+  "clinical_level": "B2 Medical English",
+  "target_role": "Dental Clinician / Attending Physician",
+  "scenario_prompt": "You are a virtual patient presenting with symptoms related to Neurological Assessment & Headaches. Speak in natural, everyday patient English.",
+  "patient_profile": {
+    "age": 45,
+    "gender": "Male",
+    "chief_complaint": "Nevrologik tekshiruv va bosh og'rig'i",
+    "history": "Patient presents with complaints of neurological assessment & headaches."
+  },
+  "grammar": [
+    {
+      "title": "Descriptive Adjectives & Intensity Modifiers in Neurological Evaluation",
+      "title_uz": "Nevrologik Ko'rikda Sifatlar va Og'riq Xarakteristikasi (Descriptive Adjectives)",
+      "title_ru": "Качественные Прилагательные и Модификаторы Интенсивности при Неврологическом Осмотре",
+      "title_en": "Descriptive Adjectives & Intensity Modifiers in Neurological Evaluation",
+      "rule_explanation": "Use precise sensory adjectives (throbbing, sharp, dull, band-like, shooting) and intensity adverbs (extremely, moderately, progressively) to localize and classify headache etiology (migraine vs tension vs intracranial pressure).",
+      "rule_explanation_uz": "Bosh og'rig'i turini aniqlashda sensor sifatlar ('throbbing' - uruvchi, 'band-like' - qisuvchi halqa kabi, 'shooting' - sanchuvchi) va daraja ravishlari ('extremely severe') qo'llaniladi.",
+      "rule_explanation_ru": "Качественные прилагательные ('throbbing' — пульсирующая, 'band-like' — сжимающая, 'shooting' — простреливающая) помогают дифференцировать мигрень, головную боль напряжения и внутричерепную патологию.",
+      "rule_explanation_en": "Sensory adjectives and severity modifiers distinguish primary headache disorders from secondary neurological emergencies.",
+      "structure_pattern": "Is the headache + [throbbing / dull / sharp / band-like]? | It is + [extremely / moderately] + severe.",
+      "structure_pattern_uz": "Is the headache + [Sifat: throbbing / band-like]? | It is + [Ravish] + severe.",
+      "structure_pattern_ru": "Is the headache + [Прилагательное]? | It is + [Наречие] + severe.",
+      "structure_pattern_en": "Is the headache throbbing, sharp, or band-like? | It is moderately/extremely severe.",
+      "examples": [
+        {
+          "sentence": "Is the headache a unilateral throbbing sensation or a bilateral band-like tightness?",
+          "translation_uz": "Bosh og'rig'i bir tomonlama duk-duk uruvchi xarakterdami yoki ikki tomonlama qisuvchi halqa kabimi?",
+          "translation_ru": "Головная боль носит односторонний пульсирующий характер или двусторонний сжимающий, как обруч?",
+          "translation_en": "Differential diagnosis between migraine and tension-type headache.",
+          "note": "unilateral throbbing vs bilateral band-like",
+          "note_uz": "Og'riq sifati va lokalizatsiyasi",
+          "note_ru": "Характер и локализация боли",
+          "note_en": "Sensory adjective contrast"
+        }
+      ],
+      "common_mistakes": [
+        {
+          "incorrect": "My head is paining very strongly.",
+          "correct": "I have an extremely severe headache.",
+          "explanation_uz": "Tibbiy ingliz tilida 'head is paining' deyilmaydi; 'I have a severe headache' standarti ishlatiladi.",
+          "explanation_ru": "В медицинском английском не говорят 'head is paining'; правильно: 'I have a severe headache'.",
+          "explanation_en": "Use 'I have a severe headache' rather than literal translation 'my head is paining'."
+        }
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "acute stroke",
+      "translation": "o'tkir insult",
+      "translation_uz": "o'tkir insult",
+      "translation_ru": "острый инсульт",
+      "translation_en": "acute stroke",
+      "definition": "Clinical medical condition and symptom associated with acute stroke.",
+      "definition_uz": "o'tkir insult - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "острый инсульт - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with acute stroke.",
+      "example": "The doctor assessed the patient for acute stroke."
+    },
+    {
+      "word": "time-critical assessment",
+      "translation": "vaqtga bog'liq shoshilinch baholash",
+      "translation_uz": "vaqtga bog'liq shoshilinch baholash",
+      "translation_ru": "срочная оценка, зависящая от времени",
+      "translation_en": "time-critical assessment",
+      "definition": "Clinical medical condition and symptom associated with time-critical assessment.",
+      "definition_uz": "vaqtga bog'liq shoshilinch baholash - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "срочная оценка, зависящая от времени - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with time-critical assessment.",
+      "example": "The doctor assessed the patient for time-critical assessment."
+    },
+    {
+      "word": "symptom onset",
+      "translation": "simptomlarning boshlanishi",
+      "translation_uz": "simptomlarning boshlanishi",
+      "translation_ru": "начало симптомов",
+      "translation_en": "symptom onset",
+      "definition": "Clinical medical condition and symptom associated with symptom onset.",
+      "definition_uz": "simptomlarning boshlanishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "начало симптомов - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with symptom onset.",
+      "example": "The doctor assessed the patient for symptom onset."
+    },
+    {
+      "word": "suddenly",
+      "translation": "to'satdan",
+      "translation_uz": "to'satdan",
+      "translation_ru": "внезапно",
+      "translation_en": "suddenly",
+      "definition": "Clinical medical condition and symptom associated with suddenly.",
+      "definition_uz": "to'satdan - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "внезапно - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with suddenly.",
+      "example": "The doctor assessed the patient for suddenly."
+    },
+    {
+      "word": "become weak",
+      "translation": "kuchsizlanmoq",
+      "translation_uz": "kuchsizlanmoq",
+      "translation_ru": "ослабнуть",
+      "translation_en": "become weak",
+      "definition": "Clinical medical condition and symptom associated with become weak.",
+      "definition_uz": "kuchsizlanmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "ослабнуть - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with become weak.",
+      "example": "The doctor assessed the patient for become weak."
+    },
+    {
+      "word": "drop a cup",
+      "translation": "piyolani/toshni tushirib yubormoq",
+      "translation_uz": "piyolani/toshni tushirib yubormoq",
+      "translation_ru": "уронить чашку",
+      "translation_en": "drop a cup",
+      "definition": "Clinical medical condition and symptom associated with drop a cup.",
+      "definition_uz": "piyolani/toshni tushirib yubormoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "уронить чашку - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with drop a cup.",
+      "example": "The doctor assessed the patient for drop a cup."
+    },
+    {
+      "word": "express oneself",
+      "translation": "o'z fikrini ifodalamoq",
+      "translation_uz": "o'z fikrini ifodalamoq",
+      "translation_ru": "выражать свои мысли",
+      "translation_en": "express oneself",
+      "definition": "Clinical medical condition and symptom associated with express oneself.",
+      "definition_uz": "o'z fikrini ifodalamoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "выражать свои мысли - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with express oneself.",
+      "example": "The doctor assessed the patient for express oneself."
+    },
+    {
+      "word": "speech difficulty",
+      "translation": "nutqdagi qiyinchilik",
+      "translation_uz": "nutqdagi qiyinchilik",
+      "translation_ru": "нарушение речи",
+      "translation_en": "speech difficulty",
+      "definition": "Clinical medical condition and symptom associated with speech difficulty.",
+      "definition_uz": "nutqdagi qiyinchilik - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "нарушение речи - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with speech difficulty.",
+      "example": "The doctor assessed the patient for speech difficulty."
+    },
+    {
+      "word": "face looked uneven",
+      "translation": "yuzning bir tomoni qiyshaygan ko'rinmoq",
+      "translation_uz": "yuzning bir tomoni qiyshaygan ko'rinmoq",
+      "translation_ru": "лицо выглядело асимметрично",
+      "translation_en": "face looked uneven",
+      "definition": "Clinical medical condition and symptom associated with face looked uneven.",
+      "definition_uz": "yuzning bir tomoni qiyshaygan ko'rinmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "лицо выглядело асимметрично - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with face looked uneven.",
+      "example": "The doctor assessed the patient for face looked uneven."
+    },
+    {
+      "word": "right-sided weakness",
+      "translation": "o'ng tomonlama kuchsizlik",
+      "translation_uz": "o'ng tomonlama kuchsizlik",
+      "translation_ru": "слабость с правой стороны",
+      "translation_en": "right-sided weakness",
+      "definition": "Clinical medical condition and symptom associated with right-sided weakness.",
+      "definition_uz": "o'ng tomonlama kuchsizlik - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "слабость с правой стороны - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with right-sided weakness.",
+      "example": "The doctor assessed the patient for right-sided weakness."
+    },
+    {
+      "word": "lose consciousness",
+      "translation": "hushini yo'qotmoq",
+      "translation_uz": "hushini yo'qotmoq",
+      "translation_ru": "потерять сознание",
+      "translation_en": "lose consciousness",
+      "definition": "Clinical medical condition and symptom associated with lose consciousness.",
+      "definition_uz": "hushini yo'qotmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "потерять сознание - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with lose consciousness.",
+      "example": "The doctor assessed the patient for lose consciousness."
+    },
+    {
+      "word": "remain conscious",
+      "translation": "hushida qolmoq",
+      "translation_uz": "hushida qolmoq",
+      "translation_ru": "оставаться в сознании",
+      "translation_en": "remain conscious",
+      "definition": "Clinical medical condition and symptom associated with remain conscious.",
+      "definition_uz": "hushida qolmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "оставаться в сознании - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with remain conscious.",
+      "example": "The doctor assessed the patient for remain conscious."
+    },
+    {
+      "word": "severe headache",
+      "translation": "kuchli bosh og'rig'i",
+      "translation_uz": "kuchli bosh og'rig'i",
+      "translation_ru": "сильная головная боль",
+      "translation_en": "severe headache",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing severe headache.",
+      "definition_uz": "kuchli bosh og'rig'i - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "сильная головная боль - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing severe headache.",
+      "example": "The doctor assessed the patient for severe headache."
+    },
+    {
+      "word": "visual disturbance",
+      "translation": "ko'rish buzilishi",
+      "translation_uz": "ko'rish buzilishi",
+      "translation_ru": "нарушение зрения",
+      "translation_en": "visual disturbance",
+      "definition": "Clinical medical condition and symptom associated with visual disturbance.",
+      "definition_uz": "ko'rish buzilishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "нарушение зрения - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with visual disturbance.",
+      "example": "The doctor assessed the patient for visual disturbance."
+    },
+    {
+      "word": "blurred vision",
+      "translation": "ko'rishning xiralashishi",
+      "translation_uz": "ko'rishning xiralashishi",
+      "translation_ru": "затуманенное зрение",
+      "translation_en": "blurred vision",
+      "definition": "Clinical medical condition and symptom associated with blurred vision.",
+      "definition_uz": "ko'rishning xiralashishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "затуманенное зрение - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with blurred vision.",
+      "example": "The doctor assessed the patient for blurred vision."
+    },
+    {
+      "word": "symptom onset time",
+      "translation": "simptom boshlangan vaqt",
+      "translation_uz": "simptom boshlangan vaqt",
+      "translation_ru": "время начала симптомов",
+      "translation_en": "symptom onset time",
+      "definition": "Clinical medical condition and symptom associated with symptom onset time.",
+      "definition_uz": "simptom boshlangan vaqt - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "время начала симптомов - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with symptom onset time.",
+      "example": "The doctor assessed the patient for symptom onset time."
+    },
+    {
+      "word": "time-dependent",
+      "translation": "vaqtga bog'liq",
+      "translation_uz": "vaqtga bog'liq",
+      "translation_ru": "зависящий от времени",
+      "translation_en": "time-dependent",
+      "definition": "Clinical medical condition and symptom associated with time-dependent.",
+      "definition_uz": "vaqtga bog'liq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "зависящий от времени - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with time-dependent.",
+      "example": "The doctor assessed the patient for time-dependent."
+    },
+    {
+      "word": "brain imaging",
+      "translation": "miya tasviriy tekshiruvi",
+      "translation_uz": "miya tasviriy tekshiruvi",
+      "translation_ru": "нейровизуализация",
+      "translation_en": "brain imaging",
+      "definition": "Clinical medical condition and symptom associated with brain imaging.",
+      "definition_uz": "miya tasviriy tekshiruvi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "нейровизуализация - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with brain imaging.",
+      "example": "The doctor assessed the patient for brain imaging."
+    },
+    {
+      "word": "ischemic stroke",
+      "translation": "ishemik insult",
+      "translation_uz": "ishemik insult",
+      "translation_ru": "ишемический инсульт",
+      "translation_en": "ischemic stroke",
+      "definition": "Clinical medical condition and symptom associated with ischemic stroke.",
+      "definition_uz": "ishemik insult - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "ишемический инсульт - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with ischemic stroke.",
+      "example": "The doctor assessed the patient for ischemic stroke."
+    },
+    {
+      "word": "haemorrhage",
+      "translation": "qon ketishi; gemorragiya",
+      "translation_uz": "qon ketishi; gemorragiya",
+      "translation_ru": "кровоизлияние",
+      "translation_en": "haemorrhage",
+      "definition": "Clinical medical condition and symptom associated with haemorrhage.",
+      "definition_uz": "qon ketishi; gemorragiya - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "кровоизлияние - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with haemorrhage.",
+      "example": "The doctor assessed the patient for haemorrhage."
+    },
+    {
+      "word": "blood clot",
+      "translation": "qon ivindisi",
+      "translation_uz": "qon ivindisi",
+      "translation_ru": "сгусток крови",
+      "translation_en": "blood clot",
+      "definition": "Clinical medical condition and symptom associated with blood clot.",
+      "definition_uz": "qon ivindisi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "сгусток крови - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with blood clot.",
+      "example": "The doctor assessed the patient for blood clot."
+    },
+    {
+      "word": "last-known-well time",
+      "translation": "bemor oxirgi marta normal bo'lgan vaqt",
+      "translation_uz": "bemor oxirgi marta normal bo'lgan vaqt",
+      "translation_ru": "время, когда пациента в последний раз видели в нормальном состоянии",
+      "translation_en": "last-known-well time",
+      "definition": "Clinical medical condition and symptom associated with last-known-well time.",
+      "definition_uz": "bemor oxirgi marta normal bo'lgan vaqt - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "время, когда пациента в последний раз видели в нормальном состоянии - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with last-known-well time.",
+      "example": "The doctor assessed the patient for last-known-well time."
+    },
+    {
+      "word": "contraindication",
+      "translation": "qarshi ko'rsatma",
+      "translation_uz": "qarshi ko'rsatma",
+      "translation_ru": "противопоказание",
+      "translation_en": "contraindication",
+      "definition": "Clinical medical condition and symptom associated with contraindication.",
+      "definition_uz": "qarshi ko'rsatma - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "противопоказание - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with contraindication.",
+      "example": "The doctor assessed the patient for contraindication."
+    },
+    {
+      "word": "reperfusion therapy",
+      "translation": "reperfuzion davolash",
+      "translation_uz": "reperfuzion davolash",
+      "translation_ru": "реперфузионная терапия",
+      "translation_en": "reperfusion therapy",
+      "definition": "Clinical medical condition and symptom associated with reperfusion therapy.",
+      "definition_uz": "reperfuzion davolash - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "реперфузионная терапия - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with reperfusion therapy.",
+      "example": "The doctor assessed the patient for reperfusion therapy."
+    },
+    {
+      "word": "thrombolysis",
+      "translation": "tromboliz",
+      "translation_uz": "tromboliz",
+      "translation_ru": "тромболизис",
+      "translation_en": "thrombolysis",
+      "definition": "Clinical medical condition and symptom associated with thrombolysis.",
+      "definition_uz": "tromboliz - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "тромболизис - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with thrombolysis.",
+      "example": "The doctor assessed the patient for thrombolysis."
+    },
+    {
+      "word": "mechanical thrombectomy",
+      "translation": "mexanik trombektomiya",
+      "translation_uz": "mexanik trombektomiya",
+      "translation_ru": "механическая тромбэктомия",
+      "translation_en": "mechanical thrombectomy",
+      "definition": "Clinical medical condition and symptom associated with mechanical thrombectomy.",
+      "definition_uz": "mexanik trombektomiya - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "механическая тромбэктомия - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with mechanical thrombectomy.",
+      "example": "The doctor assessed the patient for mechanical thrombectomy."
+    },
+    {
+      "word": "eligible",
+      "translation": "mos keladigan; mezonlarga javob beradigan",
+      "translation_uz": "mos keladigan; mezonlarga javob beradigan",
+      "translation_ru": "подходящий по критериям",
+      "translation_en": "eligible",
+      "definition": "Clinical medical condition and symptom associated with eligible.",
+      "definition_uz": "mos keladigan; mezonlarga javob beradigan - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "подходящий по критериям - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with eligible.",
+      "example": "The doctor assessed the patient for eligible."
+    },
+    {
+      "word": "stroke team",
+      "translation": "insult bo'yicha mutaxassislar jamoasi",
+      "translation_uz": "insult bo'yicha mutaxassislar jamoasi",
+      "translation_ru": "инсультная команда",
+      "translation_en": "stroke team",
+      "definition": "Clinical medical condition and symptom associated with stroke team.",
+      "definition_uz": "insult bo'yicha mutaxassislar jamoasi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "инсультная команда - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with stroke team.",
+      "example": "The doctor assessed the patient for stroke team."
+    },
+    {
+      "word": "neurological observations",
+      "translation": "nevrologik kuzatuvlar",
+      "translation_uz": "nevrologik kuzatuvlar",
+      "translation_ru": "неврологическое наблюдение",
+      "translation_en": "neurological observations",
+      "definition": "Clinical medical condition and symptom associated with neurological observations.",
+      "definition_uz": "nevrologik kuzatuvlar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "неврологическое наблюдение - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with neurological observations.",
+      "example": "The doctor assessed the patient for neurological observations."
+    },
+    {
+      "word": "every minute can matter",
+      "translation": "har bir daqiqa muhim bo'lishi mumkin",
+      "translation_uz": "har bir daqiqa muhim bo'lishi mumkin",
+      "translation_ru": "каждая минута может иметь значение",
+      "translation_en": "every minute can matter",
+      "definition": "Clinical medical condition and symptom associated with every minute can matter.",
+      "definition_uz": "har bir daqiqa muhim bo'lishi mumkin - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "каждая минута может иметь значение - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with every minute can matter.",
+      "example": "The doctor assessed the patient for every minute can matter."
+    }
+  ],
+  "phrasebook": [
+    {
+      "phrase": "acute stroke",
+      "category": "Clinical Consultation",
+      "hint": "o'tkir insult",
+      "hint_uz": "o'tkir insult",
+      "hint_ru": "острый инсульт",
+      "hint_en": "acute stroke",
+      "patient_response": ""
+    },
+    {
+      "phrase": "time-critical assessment",
+      "category": "Clinical Consultation",
+      "hint": "vaqtga bog'liq shoshilinch baholash",
+      "hint_uz": "vaqtga bog'liq shoshilinch baholash",
+      "hint_ru": "срочная оценка, зависящая от времени",
+      "hint_en": "time-critical assessment",
+      "patient_response": ""
+    },
+    {
+      "phrase": "symptom onset",
+      "category": "Clinical Consultation",
+      "hint": "simptomlarning boshlanishi",
+      "hint_uz": "simptomlarning boshlanishi",
+      "hint_ru": "начало симптомов",
+      "hint_en": "symptom onset",
+      "patient_response": ""
+    },
+    {
+      "phrase": "suddenly",
+      "category": "Clinical Consultation",
+      "hint": "to'satdan",
+      "hint_uz": "to'satdan",
+      "hint_ru": "внезапно",
+      "hint_en": "suddenly",
+      "patient_response": ""
+    },
+    {
+      "phrase": "become weak",
+      "category": "Clinical Consultation",
+      "hint": "kuchsizlanmoq",
+      "hint_uz": "kuchsizlanmoq",
+      "hint_ru": "ослабнуть",
+      "hint_en": "become weak",
+      "patient_response": ""
+    },
+    {
+      "phrase": "drop a cup",
+      "category": "Clinical Consultation",
+      "hint": "piyolani/toshni tushirib yubormoq",
+      "hint_uz": "piyolani/toshni tushirib yubormoq",
+      "hint_ru": "уронить чашку",
+      "hint_en": "drop a cup",
+      "patient_response": ""
+    },
+    {
+      "phrase": "express oneself",
+      "category": "Clinical Consultation",
+      "hint": "o'z fikrini ifodalamoq",
+      "hint_uz": "o'z fikrini ifodalamoq",
+      "hint_ru": "выражать свои мысли",
+      "hint_en": "express oneself",
+      "patient_response": ""
+    },
+    {
+      "phrase": "speech difficulty",
+      "category": "Clinical Consultation",
+      "hint": "nutqdagi qiyinchilik",
+      "hint_uz": "nutqdagi qiyinchilik",
+      "hint_ru": "нарушение речи",
+      "hint_en": "speech difficulty",
+      "patient_response": ""
+    },
+    {
+      "phrase": "face looked uneven",
+      "category": "Clinical Consultation",
+      "hint": "yuzning bir tomoni qiyshaygan ko'rinmoq",
+      "hint_uz": "yuzning bir tomoni qiyshaygan ko'rinmoq",
+      "hint_ru": "лицо выглядело асимметрично",
+      "hint_en": "face looked uneven",
+      "patient_response": ""
+    },
+    {
+      "phrase": "right-sided weakness",
+      "category": "Clinical Consultation",
+      "hint": "o'ng tomonlama kuchsizlik",
+      "hint_uz": "o'ng tomonlama kuchsizlik",
+      "hint_ru": "слабость с правой стороны",
+      "hint_en": "right-sided weakness",
+      "patient_response": ""
+    },
+    {
+      "phrase": "lose consciousness",
+      "category": "Clinical Consultation",
+      "hint": "hushini yo'qotmoq",
+      "hint_uz": "hushini yo'qotmoq",
+      "hint_ru": "потерять сознание",
+      "hint_en": "lose consciousness",
+      "patient_response": ""
+    },
+    {
+      "phrase": "remain conscious",
+      "category": "Clinical Consultation",
+      "hint": "hushida qolmoq",
+      "hint_uz": "hushida qolmoq",
+      "hint_ru": "оставаться в сознании",
+      "hint_en": "remain conscious",
+      "patient_response": ""
+    },
+    {
+      "phrase": "severe headache",
+      "category": "Clinical Consultation",
+      "hint": "kuchli bosh og'rig'i",
+      "hint_uz": "kuchli bosh og'rig'i",
+      "hint_ru": "сильная головная боль",
+      "hint_en": "severe headache",
+      "patient_response": ""
+    },
+    {
+      "phrase": "visual disturbance",
+      "category": "Clinical Consultation",
+      "hint": "ko'rish buzilishi",
+      "hint_uz": "ko'rish buzilishi",
+      "hint_ru": "нарушение зрения",
+      "hint_en": "visual disturbance",
+      "patient_response": ""
+    },
+    {
+      "phrase": "blurred vision",
+      "category": "Clinical Consultation",
+      "hint": "ko'rishning xiralashishi",
+      "hint_uz": "ko'rishning xiralashishi",
+      "hint_ru": "затуманенное зрение",
+      "hint_en": "blurred vision",
+      "patient_response": ""
+    },
+    {
+      "phrase": "symptom onset time",
+      "category": "Clinical Consultation",
+      "hint": "simptom boshlangan vaqt",
+      "hint_uz": "simptom boshlangan vaqt",
+      "hint_ru": "время начала симптомов",
+      "hint_en": "symptom onset time",
+      "patient_response": ""
+    },
+    {
+      "phrase": "time-dependent",
+      "category": "Clinical Consultation",
+      "hint": "vaqtga bog'liq",
+      "hint_uz": "vaqtga bog'liq",
+      "hint_ru": "зависящий от времени",
+      "hint_en": "time-dependent",
+      "patient_response": ""
+    },
+    {
+      "phrase": "brain imaging",
+      "category": "Clinical Consultation",
+      "hint": "miya tasviriy tekshiruvi",
+      "hint_uz": "miya tasviriy tekshiruvi",
+      "hint_ru": "нейровизуализация",
+      "hint_en": "brain imaging",
+      "patient_response": ""
+    },
+    {
+      "phrase": "ischemic stroke",
+      "category": "Clinical Consultation",
+      "hint": "ishemik insult",
+      "hint_uz": "ishemik insult",
+      "hint_ru": "ишемический инсульт",
+      "hint_en": "ischemic stroke",
+      "patient_response": ""
+    },
+    {
+      "phrase": "haemorrhage",
+      "category": "Clinical Consultation",
+      "hint": "qon ketishi; gemorragiya",
+      "hint_uz": "qon ketishi; gemorragiya",
+      "hint_ru": "кровоизлияние",
+      "hint_en": "haemorrhage",
+      "patient_response": ""
+    },
+    {
+      "phrase": "blood clot",
+      "category": "Clinical Consultation",
+      "hint": "qon ivindisi",
+      "hint_uz": "qon ivindisi",
+      "hint_ru": "сгусток крови",
+      "hint_en": "blood clot",
+      "patient_response": ""
+    },
+    {
+      "phrase": "last-known-well time",
+      "category": "Clinical Consultation",
+      "hint": "bemor oxirgi marta normal bo'lgan vaqt",
+      "hint_uz": "bemor oxirgi marta normal bo'lgan vaqt",
+      "hint_ru": "время, когда пациента в последний раз видели в нормальном состоянии",
+      "hint_en": "last-known-well time",
+      "patient_response": ""
+    },
+    {
+      "phrase": "contraindication",
+      "category": "Clinical Consultation",
+      "hint": "qarshi ko'rsatma",
+      "hint_uz": "qarshi ko'rsatma",
+      "hint_ru": "противопоказание",
+      "hint_en": "contraindication",
+      "patient_response": ""
+    },
+    {
+      "phrase": "reperfusion therapy",
+      "category": "Clinical Consultation",
+      "hint": "reperfuzion davolash",
+      "hint_uz": "reperfuzion davolash",
+      "hint_ru": "реперфузионная терапия",
+      "hint_en": "reperfusion therapy",
+      "patient_response": ""
+    },
+    {
+      "phrase": "thrombolysis",
+      "category": "Clinical Consultation",
+      "hint": "tromboliz",
+      "hint_uz": "tromboliz",
+      "hint_ru": "тромболизис",
+      "hint_en": "thrombolysis",
+      "patient_response": ""
+    },
+    {
+      "phrase": "mechanical thrombectomy",
+      "category": "Clinical Consultation",
+      "hint": "mexanik trombektomiya",
+      "hint_uz": "mexanik trombektomiya",
+      "hint_ru": "механическая тромбэктомия",
+      "hint_en": "mechanical thrombectomy",
+      "patient_response": ""
+    },
+    {
+      "phrase": "eligible",
+      "category": "Clinical Consultation",
+      "hint": "mos keladigan; mezonlarga javob beradigan",
+      "hint_uz": "mos keladigan; mezonlarga javob beradigan",
+      "hint_ru": "подходящий по критериям",
+      "hint_en": "eligible",
+      "patient_response": ""
+    },
+    {
+      "phrase": "stroke team",
+      "category": "Clinical Consultation",
+      "hint": "insult bo'yicha mutaxassislar jamoasi",
+      "hint_uz": "insult bo'yicha mutaxassislar jamoasi",
+      "hint_ru": "инсультная команда",
+      "hint_en": "stroke team",
+      "patient_response": ""
+    },
+    {
+      "phrase": "neurological observations",
+      "category": "Clinical Consultation",
+      "hint": "nevrologik kuzatuvlar",
+      "hint_uz": "nevrologik kuzatuvlar",
+      "hint_ru": "неврологическое наблюдение",
+      "hint_en": "neurological observations",
+      "patient_response": ""
+    },
+    {
+      "phrase": "every minute can matter",
+      "category": "Clinical Consultation",
+      "hint": "har bir daqiqa muhim bo'lishi mumkin",
+      "hint_uz": "har bir daqiqa muhim bo'lishi mumkin",
+      "hint_ru": "каждая минута может иметь значение",
+      "hint_en": "every minute can matter",
+      "patient_response": ""
+    },
+    {
+      "phrase": "What was the first symptom?",
+      "category": "Clinical Inquiry",
+      "hint": "Birinchi simptom nima bo'lgan?",
+      "hint_uz": "Birinchi simptom nima bo'lgan?",
+      "hint_ru": "Какой был первый симптом?",
+      "hint_en": "What was the first symptom?",
+      "patient_response": ""
+    },
+    {
+      "phrase": "What happened after that?",
+      "category": "Clinical Inquiry",
+      "hint": "Shundan keyin nima bo'ldi?",
+      "hint_uz": "Shundan keyin nima bo'ldi?",
+      "hint_ru": "Что произошло после этого?",
+      "hint_en": "What happened after that?",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Did you understand what your wife was saying to you?",
+      "category": "Clinical Inquiry",
+      "hint": "Xotiningiz sizga aytayotgan gaplarni tushundingizmi?",
+      "hint_uz": "Xotiningiz sizga aytayotgan gaplarni tushundingizmi?",
+      "hint_ru": "Вы понимали, что вам говорила жена?",
+      "hint_en": "Did you understand what your wife was saying to you?",
+      "patient_response": ""
+    },
+    {
+      "phrase": "What time did the ambulance arrive?",
+      "category": "Clinical Inquiry",
+      "hint": "Tez yordam qaysi vaqtda yetib keldi?",
+      "hint_uz": "Tez yordam qaysi vaqtda yetib keldi?",
+      "hint_ru": "Во сколько приехала скорая помощь?",
+      "hint_en": "What time did the ambulance arrive?",
+      "patient_response": ""
+    }
+  ],
+  "dialogue": [
+    {
+      "speaker": "Doctor",
+      "text": "Please tell me exactly what happened and what time the symptoms began."
+    },
+    {
+      "speaker": "Patient",
+      "text": "I noticed something was wrong at about 7:15 this morning while I was having breakfast."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "What was the first symptom?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "My right hand suddenly became weak. I dropped my cup and couldn't pick it up again."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "What happened after that?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "A few minutes later, I tried to speak to my wife, but my words came out strangely. Relative: His face also looked uneven on the right side."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Did you understand what your wife was saying to you?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "Yes. I understood everything, but I couldn't express myself properly."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Did you have any difficulty walking?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "Yes. When I stood up, my right leg felt weak and I nearly fell. Nurse: His current blood pressure is 182 over 96. He is alert but has expressive speech difficulty and right-sided weakness."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Did you lose consciousness at any stage?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "No, I remained conscious throughout."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Did you develop a sudden severe headache?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "No."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Did you notice any visual disturbance?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "My vision became blurred for a few minutes, but then it improved."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "What time did the ambulance arrive? Relative: At approximately 7:45."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Good. The exact time of symptom onset is crucial because some stroke treatments are time-dependent."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Is it possible to treat the blockage?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Potentially, yes. First we need urgent brain imaging to determine whether this is an ischemic stroke or a haemorrhage. Nurse: I'll arrange immediate transfer for CT imaging and continue neurological observations."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "We also need to establish the last-known-well time and confirm whether there are any contraindications to reperfusion therapy."
+    },
+    {
+      "speaker": "Patient",
+      "text": "What happens if the scan shows a blood clot?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "If it confirms an eligible ischemic stroke, the stroke team will assess whether thrombolysis or mechanical thrombectomy is appropriate. Relative: And if there is bleeding?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "The management would be completely different, which is why imaging must be obtained before we make that decision."
+    },
+    {
+      "speaker": "Patient",
+      "text": "I understand. I just want to know what we can do."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "We are moving quickly because every minute can matter in acute stroke."
+    }
+  ],
+  "tests": [
+    {
+      "question": "What is the medical meaning of the term 'acute stroke' in clinical consultation?",
+      "option_a": "o'tkir insult",
+      "option_b": "vaqtga bog'liq shoshilinch baholash",
+      "option_c": "simptomlarning boshlanishi",
+      "option_d": "to'satdan",
+      "correct_option": "A",
+      "explanation": "'acute stroke' atamasining to'g'ri ma'nosi: o'tkir insult."
+    },
+    {
+      "question": "Which term corresponds to 'kuchsizlanmoq'?",
+      "option_a": "time-critical assessment",
+      "option_b": "become weak",
+      "option_c": "symptom onset",
+      "option_d": "suddenly",
+      "correct_option": "B",
+      "explanation": "'kuchsizlanmoq' ma'nosiga mos keluvchi tibbiy termin 'become weak' hisoblanadi."
+    },
+    {
+      "question": "Which of the following is the grammatically and clinically standard question to ask about the duration of symptoms?",
+      "option_a": "How long do you having this symptom?",
+      "option_b": "How long has this condition been bothering you?",
+      "option_c": "Since what time you have this problem?",
+      "option_d": "How many days you are feeling pain?",
+      "correct_option": "B",
+      "explanation": "Klinik anamnezda davomiylikni so'rash uchun Present Perfect Continuous ('How long has... been bothering you?') to'g'ri shakl hisoblanadi."
+    },
+    {
+      "question": "When evaluating acute pain, what is the best phrasing to assess pain character?",
+      "option_a": "Is your pain bad or very bad?",
+      "option_b": "Can you describe the pain—is it sharp, dull, throbbing, or aching?",
+      "option_c": "Why do you have sharp pain today?",
+      "option_d": "Stop pain with pills immediately.",
+      "correct_option": "B",
+      "explanation": "Og'riq xarakterini aniqlashda shifokor ochiq va taklif qiluvchi variantlar (sharp, dull, throbbing, aching) beradi."
+    }
+  ]
+}

@@ -1,0 +1,1302 @@
+{
+  "stomatology": {
+    "datas/STOMOTOLOGY\\platforma funksiyalari.docx": {
+      "paragraphs_count": 20,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "Tibbiyot talabalari uchun ingliz tili o‘rganish platformasi",
+        "Asosiy imkoniyatlar",
+        "Talabalar ro‘yxatdan o‘tib tizimga kirishlari mumkin",
+        "Talabalarni mutaxassisligi bo‘yicha ajratish yoki o’zlari tanlashi(masalan: davolash ishi, pediatriya, stomatologiya va boshqalar)",
+        "Tibbiyotga oid inglizcha lug‘at (so‘zlar, tarjima va misollar bilan)"
+      ],
+      "tables_preview": []
+    },
+    "datas/STOMOTOLOGY\\Stomatologiya_Virtual_Patient_English_10_Modul. YANGI.docx": {
+      "paragraphs_count": 10,
+      "tables_count": 1,
+      "first_paragraphs": [
+        "STOMATOLOGIYA TALABALARI UCHUN\nVIRTUAL PATIENT ENGLISH KURSI",
+        "10 ta klinik kommunikatsiya scenariysi",
+        "Kurs modeli: talaba Virtual Patient bilan ingliz tilida muloqot qiladi, zarur holatda Smart Phrasebook (shpargalka) orqali yordam oladi va suhbat yakunida AI feedback asosida natijasini ko‘radi.",
+        "Har bir modulning asosiy modeli",
+        "Vocabulary: mavzuga oid asosiy dental/medical so‘zlar."
+      ],
+      "tables_preview": [
+        {
+          "rows": 11,
+          "header": [
+            "№",
+            "Mavzu",
+            "Virtual Patient vaziyati",
+            "Talaba nima qiladi?"
+          ]
+        }
+      ]
+    },
+    "datas/STOMOTOLOGY\\MODULE 1\\Dental_Pain_Sensitivity_1 MODULE_Grammar.docx": {
+      "paragraphs_count": 52,
+      "tables_count": 1,
+      "first_paragraphs": [
+        "DENTAL PAIN & SENSITIVITY\n GRAMMAR",
+        "Dialogda ishlatilgan fe’l zamonlarini juda sodda usulda tushunish",
+        "Maqsad / Цель",
+        "Talaba grammatik qoidani chuqur yodlamasdan, bemorning gapidan vaqt va ma’noni tez tushunsin.",
+        "Цель: студент должен быстро понимать время и смысл фразы пациента, не изучая сложную грамматику."
+      ],
+      "tables_preview": [
+        {
+          "rows": 5,
+          "header": [
+            "Signal / Formula",
+            "Zamon",
+            "O‘zbekcha",
+            "Русский"
+          ]
+        }
+      ]
+    },
+    "datas/STOMOTOLOGY\\MODULE 1\\Dental_Pain_Sensitivity_Natural_Dialogue-1 MODULE.docx": {
+      "paragraphs_count": 22,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "Dental Pain & Sensitivity",
+        "Natural Doctor–Patient Dialogue",
+        "Doctor: Good morning. What brings you in today?",
+        "Patient: Good morning, Doctor. I’ve a toothache on the lower right side. The tooth has also become very sensitive.",
+        "Doctor: I see. Can you tell me about your tooth pain?"
+      ],
+      "tables_preview": []
+    },
+    "datas/STOMOTOLOGY\\MODULE 1\\Dental_Pain_Sensitivity_Smart_Phrasebook_with_Patient_Language -1 MODULE.docx": {
+      "paragraphs_count": 18,
+      "tables_count": 2,
+      "first_paragraphs": [
+        "1-MAVZU: DENTAL PAIN & SENSITIVITY",
+        "Vocabulary va Smart Phrasebook",
+        "Maqsad: talaba bemorning tish og‘rig‘i va tish sezgirligi haqida ingliz tilida savollar bera olishi, og‘riqning turi, davomiyligi, triggerlari, joylashuvi va kuchini aniqlay olishi tushunishi lozim.",
+        "1. VOCABULARY — Dental Pain & Sensitivity",
+        "2. SMART PHRASEBOOK — Dental Pain & Sensitivity"
+      ],
+      "tables_preview": [
+        {
+          "rows": 28,
+          "header": [
+            "English",
+            "Talaffuzi",
+            "O‘zbekcha",
+            "Русский"
+          ]
+        },
+        {
+          "rows": 18,
+          "header": [
+            "Bosqich",
+            "Doctor — English",
+            "Talaffuzi",
+            "O‘zbekcha",
+            "Patient — English",
+            "O‘zbekcha",
+            "Русский"
+          ]
+        }
+      ]
+    },
+    "datas/STOMOTOLOGY\\MODULE 10\\Full dental consultation dialog MODULE 10.docx": {
+      "paragraphs_count": 12,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "Full Dental Consultation — Dialogue-MODULE 10",
+        "Doctor: Good morning! Welcome to our clinic. What brings you in for a full consultation today?",
+        "Patient: Good morning, Doctor. It’s been over a year since my last dental check-up. Recently, I’ve noticed some mild sensitivity to hot and cold food, and my gums bleed slightly when I brush. I wanted to get a comprehensive evaluation.",
+        "Doctor: You made the right decision coming in. A complete check-up is the best way to catch potential issues early. Before we begin the physical examination, do you have any pre-existing medical conditions, allergies, or are you currently taking any medications?",
+        "Patient: No major medical conditions or allergies, but I do take a daily multivitamin."
+      ],
+      "tables_preview": []
+    },
+    "datas/STOMOTOLOGY\\MODULE 10\\Vocabulary Smart phrase MODULE 10.docx": {
+      "paragraphs_count": 11,
+      "tables_count": 2,
+      "first_paragraphs": [
+        "FULL DENTAL CONSULTATION — MODULE",
+        "Vocabulary va Smart Phrasebook (To‘liq stomatologik konsultatsiya)",
+        "Maqsad: Talaba bemorni birinchi marta qabul qilish, bemorning umumiy va stomatologik anamnezini yig‘ish, og‘iz bo‘shlig‘i profilaktik ko‘rigi (oral cancer screening), milklarning yallig‘lanishi (gingival inflammation) hamda tish kariesining ilk bosqichlari haqida ingliz tilida erkin muloqot qila olishi lozim.",
+        "1. VOCABULARY — Full Dental Consultation",
+        "2. SMART PHRASEBOOK — Full Dental Consultation"
+      ],
+      "tables_preview": [
+        {
+          "rows": 21,
+          "header": [
+            "English",
+            "Talaffuzi",
+            "O‘zbekcha",
+            "Русский"
+          ]
+        },
+        {
+          "rows": 6,
+          "header": [
+            "Bosqich",
+            "Doctor — English",
+            "Talaffuzi",
+            "O‘zbekcha",
+            "Patient — English",
+            "O‘zbekcha",
+            "Русский"
+          ]
+        }
+      ]
+    },
+    "datas/STOMOTOLOGY\\MODULE 2\\Tooth_Extraction dialogue_2 MODULE.docx": {
+      "paragraphs_count": 29,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "Tooth Extraction 2 MODULE",
+        "Characters: Doctor, Patient",
+        "Doctor: Good afternoon. Please have a seat. What seems to be the problem?",
+        "Patient: Good afternoon, doctor. I’ve been having severe pain in my lower right tooth for the last few days. It has become difficult to eat and sleep.",
+        "Doctor: When did the pain first start, and has it been getting worse recently?"
+      ],
+      "tables_preview": []
+    },
+    "datas/STOMOTOLOGY\\MODULE 2\\Tooth_Extraction_2 MODULE Vocabulary_.docx": {
+      "paragraphs_count": 2,
+      "tables_count": 1,
+      "first_paragraphs": [
+        "Tooth Extraction — 2 MODULE Vocabulary",
+        "Format: English | Pronunciation (IPA) | Uzbek | Russian"
+      ],
+      "tables_preview": [
+        {
+          "rows": 47,
+          "header": [
+            "English",
+            "Pronunciation",
+            "Uzbek",
+            "Russian"
+          ]
+        }
+      ]
+    },
+    "datas/STOMOTOLOGY\\MODULE 2\\Tooth_Extraction_Grammar_2 Module.docx": {
+      "paragraphs_count": 33,
+      "tables_count": 3,
+      "first_paragraphs": [
+        "TOOTH EXTRACTION",
+        "GRAMMAR — Present Perfect Continuous & Future Simple",
+        "1. PRESENT PERFECT CONTINUOUS",
+        "Ma’nosi: o‘tmishda boshlangan va hozirgacha davom etayotgan holat yoki harakatni ifodalaydi.",
+        "Значение: действие или состояние началось в прошлом и продолжается до настоящего момента."
+      ],
+      "tables_preview": [
+        {
+          "rows": 6,
+          "header": [
+            "Pattern",
+            "Dialogdagi misol",
+            "O‘zbekcha ma’nosi",
+            "Русский"
+          ]
+        },
+        {
+          "rows": 4,
+          "header": [
+            "",
+            "Present Perfect Continuous",
+            "Future Simple",
+            "Русский"
+          ]
+        },
+        {
+          "rows": 5,
+          "header": [
+            "Dialogdagi pattern",
+            "O‘zbekcha",
+            "Русский"
+          ]
+        }
+      ]
+    },
+    "datas/STOMOTOLOGY\\MODULE 2\\Tooth_Extraction_Smart_Phrasebook_2 MODULE.docx": {
+      "paragraphs_count": 17,
+      "tables_count": 1,
+      "first_paragraphs": [
+        "TOOTH EXTRACTION",
+        "Smart Phrasebook — B2 Level",
+        "Maqsad: talaba tish sug‘urish jarayonida bemor bilan ingliz tilida suhbatni bosqichma-bosqich olib borishi, muolajani tushuntirishi va muolajadan keyingi tavsiyalarni bera olishi.",
+        "SMART PHRASEBOOK — Tooth Extraction",
+        "Har bir bosqich dialogdagi Doctor savollari va Patient javoblari asosida tuzilgan."
+      ],
+      "tables_preview": [
+        {
+          "rows": 15,
+          "header": [
+            "Bosqich",
+            "Doctor — English",
+            "Talaffuzi",
+            "O‘zbekcha",
+            "Patient — English",
+            "O‘zbekcha",
+            "Русский"
+          ]
+        }
+      ]
+    },
+    "datas/STOMOTOLOGY\\MODULE 3\\Grammar.docx": {
+      "paragraphs_count": 43,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "Mana, \"Toothache — 3 Module\" muloqotidagi jumlalar asosida grammatikaning to'liqroq izohi, o'zbekcha (lotin yozuvida) va ruscha tarjimalari bilan tayyorlangan qo'llanma:",
+        "Grammatikani takrorlash (Grammar Review)",
+        "1. Present Continuous va Present Perfect Continuous (Hozirgi davomli zamonlar)",
+        "Ayni vaqtda sodir bo'layotgan yoki yaqin o'tmishdan beri davom etib kelayotgan holatlarni ifodalaydi.",
+        "Misol: \"I’m having an unbearable, throbbing pain in my upper left molar.\""
+      ],
+      "tables_preview": []
+    },
+    "datas/STOMOTOLOGY\\MODULE 3\\Toothache_3 Module.docx": {
+      "paragraphs_count": 15,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "TOOTHACHE —  3 MODULE",
+        "Module: Dental Consultation & Pulpitis Diagnosis",
+        "Doctor: Good afternoon. Come in and take a seat. What brings you to the clinic today?",
+        "Patient: Good afternoon, doctor. I’m having an unbearable, throbbing pain in my upper left molar. It’s been driving me crazy since last night.",
+        "Doctor: I’m sorry to hear that. Was the pain sudden, or had you been experiencing mild discomfort before it became this severe?"
+      ],
+      "tables_preview": []
+    },
+    "datas/STOMOTOLOGY\\MODULE 3\\Toothache_Smart_Phrasebook 3 MODULE.docx": {
+      "paragraphs_count": 12,
+      "tables_count": 1,
+      "first_paragraphs": [
+        "TOOTHACHE — SMART PHRASEBOOK (3 MODULE)",
+        "Maqsad: Talaba tish og'rig'i (pulpit) bilan kelgan bemor bilan muloqotni bosqichma-bosqich olib borishi va davolash rejasini tushuntirishi.",
+        "Smart Phrasebookdan foydalanish tartibi:",
+        "1. Opening — Bemorning asosiy shikoyatini va og'riq joyini aniqlash.",
+        "2. Onset & Duration — Og'riq qachon boshlangani va o'tmishdagi sezuvchanlikni aniqlash."
+      ],
+      "tables_preview": [
+        {
+          "rows": 10,
+          "header": [
+            "Bosqich",
+            "Doctor — English",
+            "Talaffuzi",
+            "O‘zbekcha",
+            "Patient — English",
+            "O‘zbekcha",
+            "Русский"
+          ]
+        }
+      ]
+    },
+    "datas/STOMOTOLOGY\\MODULE 3\\Toothache_Vocabulary 3 MODULE.docx": {
+      "paragraphs_count": 3,
+      "tables_count": 1,
+      "first_paragraphs": [
+        "TOOTHACHE — VOCABULARY",
+        "Format: English | Pronunciation (IPA) | Uzbek | Russian",
+        "Eslatma: Ushbu lug'at 'Toothache' (B2) dialogida ishlatilgan barcha asosiy tibbiy iboralar va terminlarni o'z ichiga oladi."
+      ],
+      "tables_preview": [
+        {
+          "rows": 29,
+          "header": [
+            "English",
+            "Pronunciation (IPA)",
+            "Uzbek",
+            "Russian"
+          ]
+        }
+      ]
+    },
+    "datas/STOMOTOLOGY\\MODULE 4\\Dental_Abscess_Dialogue_4 MODULE.docx": {
+      "paragraphs_count": 15,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "Dental Abscess-4 MODULE",
+        "Topic: Dental Abscess | Level: B2 (Upper-Intermediate) - Improved Version",
+        "Dialogue",
+        "Doctor: Good morning. Please, sit down. What brings you in today?",
+        "Patient: Good morning, Doctor. I’ve had a severe, throbbing pain in my lower left tooth for three days now, and my cheek is noticeably swollen."
+      ],
+      "tables_preview": []
+    },
+    "datas/STOMOTOLOGY\\MODULE 4\\Dental_Abscess_Vocabulary and Smart phrase 4 MODULE.docx": {
+      "paragraphs_count": 16,
+      "tables_count": 2,
+      "first_paragraphs": [
+        "2-MAVZU: DENTAL ABSCESS",
+        "Vocabulary va Smart Phrasebook",
+        "Maqsad: talaba dental abscess bilan murojaat qilgan bemorning asosiy shikoyati, og‘riq va shish belgilari, infeksiya rivojlanishi, diagnostika, rentgen, davolash va keyingi tavsiyalar haqida ingliz tilida savollar bera olishi va bemorning javoblarini tushunishi lozim.",
+        "1. VOCABULARY — Dental Abscess",
+        "2. SMART PHRASEBOOK — Dental Abscess"
+      ],
+      "tables_preview": [
+        {
+          "rows": 25,
+          "header": [
+            "English",
+            "Talaffuzi",
+            "O‘zbekcha",
+            "Русский"
+          ]
+        },
+        {
+          "rows": 19,
+          "header": [
+            "Bosqich",
+            "Doctor — English",
+            "Talaffuzi",
+            "O‘zbekcha",
+            "Patient — English",
+            "O‘zbekcha",
+            "Русский"
+          ]
+        }
+      ]
+    },
+    "datas/STOMOTOLOGY\\MODULE 4\\Grammar.docx": {
+      "paragraphs_count": 290,
+      "tables_count": 1,
+      "first_paragraphs": [
+        "MODULE 04 — DENTAL ABSCESS",
+        "GRAMMAR GUIDE",
+        "Topic: Dental Abscess\nGrammar focus: Present Perfect, Present Perfect Continuous, Present Simple, Passive Voice, Modal Verbs, Gerund, Infinitive, First Conditional, Imperative\nLanguage support: O‘zbekcha + Русский",
+        "1. PRESENT PERFECT",
+        "have / has + V3"
+      ],
+      "tables_preview": [
+        {
+          "rows": 11,
+          "header": [
+            "Grammar",
+            "Formula",
+            "Dialogdan misol",
+            "Ma'nosi"
+          ]
+        }
+      ]
+    },
+    "datas/STOMOTOLOGY\\MODULE 5\\Dental_Caries_Doctor_Patient_Dialogue_MODULE 5.docx": {
+      "paragraphs_count": 28,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "Dental Caries – Doctor–Patient Dialogue MODULE 5",
+        "Doctor: Good morning. What brings you in today?",
+        "Patient: Good morning, Doctor. I’ve noticed a sudden sensitivity in one of my molars. It becomes particularly uncomfortable whenever I bite down on something hard or have a cold drink.",
+        "Doctor: Does anything in particular bring on the discomfort?",
+        "Patient: Yes. Cold drinks seem to bring it on, and sometimes I get a brief, throbbing sensation when I bite on that tooth."
+      ],
+      "tables_preview": []
+    },
+    "datas/STOMOTOLOGY\\MODULE 5\\Dental_Caries_Grammar_Review , new grammar _MODULE 5.docx": {
+      "paragraphs_count": 72,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "Grammar Review – Dental Caries MODULE 5",
+        "1. Previous Modules – Quick Review",
+        "Quyidagi zamonlar avvalgi modullarda batafsil o‘rganilgan, shuning uchun bu yerda faqat qisqacha eslatib o‘tamiz.",
+        "Present Simple",
+        "Odatiy holat, umumiy faktlar."
+      ],
+      "tables_preview": []
+    },
+    "datas/STOMOTOLOGY\\MODULE 5\\Dental_Caries_Vocabulary_and_Smart_Phrasebook MODULE 5.docx": {
+      "paragraphs_count": 15,
+      "tables_count": 2,
+      "first_paragraphs": [
+        "DENTAL CARIES-MODULE 5",
+        "Vocabulary va Smart Phrasebook",
+        "Maqsad: talaba dental caries bilan murojaat qilgan bemorning asosiy shikoyati, tish sezuvchanligi, kariyes belgilari, sabablar, tekshiruv, plomba bilan davolash va keyingi tavsiyalar haqida ingliz tilida savollar bera olishi va bemorning javoblarini tushunishi lozim.",
+        "1. VOCABULARY — Dental Caries",
+        "2. SMART PHRASEBOOK — Dental Caries"
+      ],
+      "tables_preview": [
+        {
+          "rows": 21,
+          "header": [
+            "English",
+            "Talaffuzi",
+            "O‘zbekcha",
+            "Русский"
+          ]
+        },
+        {
+          "rows": 11,
+          "header": [
+            "Bosqich",
+            "Doctor — English",
+            "Talaffuzi",
+            "O‘zbekcha",
+            "Patient — English",
+            "O‘zbekcha",
+            "Русский"
+          ]
+        }
+      ]
+    },
+    "datas/STOMOTOLOGY\\MODULE 6\\Gum_Problems_Doctor_Patient_Dialogue MODULE 6.docx": {
+      "paragraphs_count": 32,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "Gum Problems – Doctor–Patient Dialogue - MODULE 6",
+        "Doctor: Good afternoon. Please have a seat. What seems to be bothering you?",
+        "Patient: Good afternoon, Doctor. My gums are becoming quite uncomfortable. They’re bleeding whenever I brush my teeth, and the area around my front teeth feels swollen.",
+        "Doctor: I see. Are you experiencing any pain at the moment?",
+        "Patient: There isn’t much pain, but my gums feel sore, especially when I’m brushing."
+      ],
+      "tables_preview": []
+    },
+    "datas/STOMOTOLOGY\\MODULE 6\\Gum_Problems_Grammar_Review_MODULE 6.docx": {
+      "paragraphs_count": 109,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "GUM PROBLEMS",
+        "GRAMMAR REVIEW — Previous Grammar + New Grammar",
+        "BU MODULEDA: oldingi modullardagi asosiy zamonlar qisqa review qilinadi, asosiy e’tibor esa Gum Problems dialogida ishlatilgan yangi grammatik konstruksiyalarga qaratiladi.",
+        "1. PRESENT SIMPLE — Quick Review 🔄",
+        "Present Simple odatiy holat, umumiy fakt yoki muntazam harakatlar uchun ishlatiladi."
+      ],
+      "tables_preview": []
+    },
+    "datas/STOMOTOLOGY\\MODULE 6\\Gum_Problems_Vocabulary_Smart_Phrasebook MODULE 6.docx": {
+      "paragraphs_count": 95,
+      "tables_count": 1,
+      "first_paragraphs": [
+        "GUM PROBLEMS – VOCABULARY & SMART PHRASEBOOK- MODULE 6",
+        "1. VOCABULARY — Gum Problems",
+        "2. SMART PHRASEBOOK — Gum Problems",
+        "Smart Phrasebook talaba suhbatni bosqichma-bosqich olib borishi, shifokor savollarini berishi va bemorning tabiiy javoblarini tushunishi uchun tuzilgan.",
+        "1. Opening — Opening the consultation"
+      ],
+      "tables_preview": [
+        {
+          "rows": 21,
+          "header": [
+            "English",
+            "Talaffuzi (IPA)",
+            "O‘zbekcha",
+            "Русский"
+          ]
+        }
+      ]
+    },
+    "datas/STOMOTOLOGY\\MODULE 7\\Impacted_Wisdom_Tooth_Dialogue_MODULE 7.docx": {
+      "paragraphs_count": 25,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "IMPACTED WISDOM TOOTH",
+        "Doctor–Patient Dialogue — MODULE 7",
+        "Doctor: Good afternoon. Please take a seat. What brings you in today?",
+        "Patient: Good afternoon, Doctor. I’ve been having a persistent, throbbing ache near the back of my lower jaw for a few days now. It’s gotten quite painful to chew, and my jaw feels a bit stiff when I open my mouth.",
+        "Doctor: I see. Let me take a look. Could you tilt your head back and open your mouth as wide as you comfortably can?"
+      ],
+      "tables_preview": []
+    },
+    "datas/STOMOTOLOGY\\MODULE 7\\Impacted_Wisdom_Tooth_Grammar_Module_7.docx": {
+      "paragraphs_count": 64,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "IMPACTED WISDOM TOOTH — GRAMMAR",
+        "MODULE 7 | Grammar Review & New Grammar |",
+        "Ushbu bo‘lim Module 7 dialogidan kelib chiqib tuzildi. Avvalgi modullarda o‘tilgan zamonlar qisqa REVIEW sifatida, yangi grammatik konstruksiyalar esa o‘zbekcha va ruscha tushuntirish bilan berildi.",
+        "PART 1 — REVIEW: AVVALGI MODULLARDAGI ZAMONLAR",
+        "Present Simple"
+      ],
+      "tables_preview": []
+    },
+    "datas/STOMOTOLOGY\\MODULE 7\\Impacted_Wisdom_Tooth_Vocabulary_Smart_Phrasebook MODULE 7.docx": {
+      "paragraphs_count": 17,
+      "tables_count": 2,
+      "first_paragraphs": [
+        "7-MAVZU: IMPACTED WISDOM TOOTH",
+        "Vocabulary va Smart Phrasebook",
+        "Maqsad: talaba impaktatsiyalangan aql tishi bilan murojaat qilgan bemorning asosiy shikoyati, tishning noto‘g‘ri chiqishi, qo‘shni tishga bosim, milkdagi yallig‘lanish, panoramik rentgen, ekstraksiya va davolash variantlari haqida ingliz tilida savollar bera olishi va bemorning javoblarini tushunishi lozim.",
+        "1. VOCABULARY — Impacted Wisdom Tooth",
+        "2. SMART PHRASEBOOK — Impacted Wisdom Tooth"
+      ],
+      "tables_preview": [
+        {
+          "rows": 32,
+          "header": [
+            "English",
+            "Talaffuzi",
+            "O‘zbekcha",
+            "Русский"
+          ]
+        },
+        {
+          "rows": 13,
+          "header": [
+            "Bosqich",
+            "Doctor — English",
+            "Talaffuzi",
+            "O‘zbekcha",
+            "Patient — English",
+            "O‘zbekcha",
+            "Русский"
+          ]
+        }
+      ]
+    },
+    "datas/STOMOTOLOGY\\MODULE 8\\Dental_Emergency_Dialogue. MODULE 8.docx": {
+      "paragraphs_count": 2,
+      "tables_count": 2,
+      "first_paragraphs": [
+        "Doctor–Patient Dialogue: Dental Emergency-MODULE 8",
+        "Focus: Past Perfect & Past Perfect Continuous Tenses in Context"
+      ],
+      "tables_preview": [
+        {
+          "rows": 1,
+          "header": [
+            "Grammar Key: Past Perfect Continuous — continuous past action leading to a specific point | Past Perfect — completed action prior to another past event."
+          ]
+        },
+        {
+          "rows": 26,
+          "header": [
+            "Speaker",
+            "Dialogue Content"
+          ]
+        }
+      ]
+    },
+    "datas/STOMOTOLOGY\\MODULE 8\\Dental_Emergency_Vocabulary_Smart_Phrasebook MODULE 8.docx": {
+      "paragraphs_count": 12,
+      "tables_count": 3,
+      "first_paragraphs": [
+        "DENTAL EMERGENCY & SEVERE INFECTION-MODULE 8",
+        "Vocabulary va Smart Phrasebook (Past Perfect & Past Perfect Continuous)",
+        "1. VOCABULARY — Dental Emergency & Severe Infection",
+        "2. SMART PHRASEBOOK — Dental Emergency",
+        "Smart Phrasebook talaba suhbatni bosqichma-bosqich olib borishi va bemorning Past Perfect hamda Past Perfect Continuous zamonlaridagi javoblarini to‘g‘ri anglab tushunishi uchun tuzilgan."
+      ],
+      "tables_preview": [
+        {
+          "rows": 1,
+          "header": [
+            "Maqsad: Talaba shoshilinch stomatologik yordamga murojaat qilgan bemorning o‘tkir va surunkali og‘riq shikoyatlari, ilgarigi davolanish tarixi (Past Perfect / Continuous), milk yallig‘lanishi, tish ildizi infeksiyasi, rentgen diagnostikasi, mahalliy anesteziya va ildiz kanallarini davolash (root canal) haqida ingliz tilida erkin muloqot qila olishi hamda bemorning javoblarini tushunishi lozim."
+          ]
+        },
+        {
+          "rows": 26,
+          "header": [
+            "English",
+            "Talaffuzi",
+            "O‘zbekcha",
+            "Русский"
+          ]
+        },
+        {
+          "rows": 11,
+          "header": [
+            "Bosqich",
+            "Doctor — English",
+            "Talaffuzi",
+            "O‘zbekcha",
+            "Patient — English",
+            "O‘zbekcha",
+            "Русский"
+          ]
+        }
+      ]
+    },
+    "datas/STOMOTOLOGY\\MODULE 9\\MODULE 9.docx": {
+      "paragraphs_count": 11,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "DENTAL RESTORATION and PROSTHETICS - MODULE 9",
+        "Doctor: Good morning, Mr. Davis. Looking at your X-rays and recent examination, the root canal treatment on your lower right molar was successful, but the remaining natural tooth structure is heavily compromised. We need to discuss a permanent restorative solution.",
+        "Patient: Thank you, Doctor. I'm relieved the infection is gone, but I noticed a significant piece of the tooth broke off before the treatment. Is a standard composite filling no longer an option?",
+        "Doctor: Unfortunately, no. Because over 50% of the clinical crown is missing, a simple filling wouldn't withstand normal masticatory forces. I strongly recommend a full-coverage dental crown to restore both its function and structural integrity.",
+        "Patient: I see. What materials do you offer for crowns, and how do they differ in terms of durability and appearance?"
+      ],
+      "tables_preview": []
+    },
+    "datas/STOMOTOLOGY\\MODULE 9\\VOCABULARY, SMART PHRASE MODULE 9.docx": {
+      "paragraphs_count": 11,
+      "tables_count": 2,
+      "first_paragraphs": [
+        "RESTORATIVE DENTISTRY & PROSTHETICS — MODULE",
+        "Vocabulary va Smart Phrasebook (Tishni qayta tiklash va protezlash)",
+        "Maqsad: Talaba tishning strukturaviy zararlanishi, ildiz kanali davosidan so‘ng tishni tiklash (restavratsiya), tish tojlari (Zirconia, PFM), tish ko‘prigi (bridge) va dental implantatsiya (implant) xizmatlari bo‘yicha ingliz tilida erkin muloqot qila olishi, materiallar va muolajalarning afzallik hamda kamchiliklarini bemorga professional tarzda tushuntirib bera olishi lozim.",
+        "1. VOCABULARY — Restorative Dentistry & Prosthetics",
+        "2. SMART PHRASEBOOK — Restorative Dentistry & Prosthetics"
+      ],
+      "tables_preview": [
+        {
+          "rows": 27,
+          "header": [
+            "English",
+            "Talaffuzi",
+            "O‘zbekcha",
+            "Русский"
+          ]
+        },
+        {
+          "rows": 6,
+          "header": [
+            "Bosqich",
+            "Doctor — English",
+            "Talaffuzi",
+            "O‘zbekcha",
+            "Patient — English",
+            "O‘zbekcha",
+            "Русский"
+          ]
+        }
+      ]
+    }
+  },
+  "davolash_ishi": {
+    "datas/DAVOLASH ISHI\\Module_01_Dialogue.docx": {
+      "paragraphs_count": 14,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "MODULE 1 — INTRODUCTION TO CLINICAL MEDICINE",
+        "Patient History & Physical Examination",
+        "Grammar Focus: Present Simple + Present Continuous",
+        "Doctor: Good morning. Please take a seat. How can I help you?",
+        "Patient: Good morning, Doctor. To be honest, I’ve been feeling unusually fatigued for the past two weeks, and I’m currently experiencing frequent dizzy spells."
+      ],
+      "tables_preview": []
+    },
+    "datas/DAVOLASH ISHI\\Module_01\\01_Dialogue_B2.docx": {
+      "paragraphs_count": 32,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "MODULE 01 — Clinical Consultation & Initial Assessment",
+        "Clinical Consultation & Initial Assessment",
+        "Grammar focus: Present Simple + Present Continuous",
+        "Dialogue purpose: history-taking → clinical assessment → differential diagnosis → investigations → management → safety-netting.",
+        "Doctor: Good morning. Please take a seat. What brings you in today?"
+      ],
+      "tables_preview": []
+    },
+    "datas/DAVOLASH ISHI\\Module_01\\Module_01_Grammar_Present_Simple_Present_Continuous.docx": {
+      "paragraphs_count": 72,
+      "tables_count": 4,
+      "first_paragraphs": [
+        "MODULE 01 — GRAMMAR",
+        "Present Simple + Present Continuous",
+        "Clinical Consultation & Initial Assessment | Level: B2 Medical English",
+        "1. GRAMMAR FOCUS",
+        "Ushbu dialogda Present Simple va Present Continuous asosan simptomlarning odatiy/takroriy holati, hozirgi va vaqtinchalik holat, shuningdek klinik kuzatuv va baholashni ifodalash uchun ishlatilgan."
+      ],
+      "tables_preview": [
+        {
+          "rows": 7,
+          "header": [
+            "Type",
+            "Structure",
+            "Clinical example"
+          ]
+        },
+        {
+          "rows": 6,
+          "header": [
+            "Type",
+            "Structure",
+            "Clinical example"
+          ]
+        },
+        {
+          "rows": 7,
+          "header": [
+            "Tense / structure",
+            "Dialogue example",
+            "Meaning"
+          ]
+        },
+        {
+          "rows": 5,
+          "header": [
+            "Present Simple",
+            "Present Continuous",
+            "Clinical difference"
+          ]
+        }
+      ]
+    },
+    "datas/DAVOLASH ISHI\\Module_01\\Module_01_Vocabulary_Smart_Phrasebook.docx": {
+      "paragraphs_count": 35,
+      "tables_count": 1,
+      "first_paragraphs": [
+        "MODULE 01 — VOCABULARY & SMART PHRASEBOOK",
+        "Clinical Consultation & Initial Assessment",
+        "Level: B2 Medical English",
+        "PART 1 — VOCABULARY",
+        "Important Clinical Distinctions"
+      ],
+      "tables_preview": [
+        {
+          "rows": 26,
+          "header": [
+            "#",
+            "Term / Phrase",
+            "Pronunciation",
+            "Uzbek",
+            "Russian",
+            "Clinical meaning / usage"
+          ]
+        }
+      ]
+    },
+    "datas/DAVOLASH ISHI\\Module_02\\01_Dialogue_B2.docx": {
+      "paragraphs_count": 36,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "MODULE 02 — Acute Chest Pain & Acute Coronary Syndrome",
+        "Acute Chest Pain & Acute Coronary Syndrome",
+        "Grammar focus: Past Simple + Past Continuous",
+        "Dialogue purpose: history-taking → clinical assessment → differential diagnosis → investigations → management → safety-netting.",
+        "Doctor: Please, tell me what happened before the chest pain started."
+      ],
+      "tables_preview": []
+    },
+    "datas/DAVOLASH ISHI\\Module_02\\Module_02_Grammar_Past_Simple_Past_Continuous.docx": {
+      "paragraphs_count": 73,
+      "tables_count": 4,
+      "first_paragraphs": [
+        "MODULE 02 — GRAMMAR",
+        "Past Simple + Past Continuous",
+        "Acute Chest Pain & Acute Coronary Syndrome | Level: B2 Medical English",
+        "1. GRAMMAR FOCUS",
+        "Dialogda Past Simple va Past Continuous asosan acute chest pain epizodining ketma-ketligi, simptom boshlangan paytdagi davom etayotgan faoliyat, bemorning o‘sha paytdagi holati va klinik tarixni bayon qilish uchun ishlatilgan."
+      ],
+      "tables_preview": [
+        {
+          "rows": 5,
+          "header": [
+            "Type",
+            "Structure",
+            "Clinical example"
+          ]
+        },
+        {
+          "rows": 4,
+          "header": [
+            "Type",
+            "Structure",
+            "Clinical example"
+          ]
+        },
+        {
+          "rows": 4,
+          "header": [
+            "Past Continuous",
+            "Past Simple",
+            "Clinical meaning"
+          ]
+        },
+        {
+          "rows": 8,
+          "header": [
+            "Tense / structure",
+            "Dialogue example",
+            "Meaning"
+          ]
+        }
+      ]
+    },
+    "datas/DAVOLASH ISHI\\Module_02\\Module_02_Vocabulary_Smart_Phrasebook (1).docx": {
+      "paragraphs_count": 34,
+      "tables_count": 1,
+      "first_paragraphs": [
+        "MODULE 02 — VOCABULARY & SMART PHRASEBOOK",
+        "Acute Chest Pain & Acute Coronary Syndrome",
+        "PART 1 — VOCABULARY",
+        "Important Clinical Distinctions",
+        "Chest pain → patient-friendly umbrella term. Chest tightness / pressure / squeezing / crushing → more specific descriptions of the sensation."
+      ],
+      "tables_preview": [
+        {
+          "rows": 26,
+          "header": [
+            "#",
+            "Term / Phrase",
+            "Pronunciation",
+            "Uzbek",
+            "Russian",
+            "Clinical meaning / usage"
+          ]
+        }
+      ]
+    },
+    "datas/DAVOLASH ISHI\\Module_03\\01_Dialogue_B2.docx": {
+      "paragraphs_count": 36,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "MODULE 03 — Acute Asthma Exacerbation",
+        "Acute Asthma Exacerbation",
+        "Grammar focus: Present Perfect + Present Perfect Continuous",
+        "Dialogue purpose: history-taking → clinical assessment → differential diagnosis → investigations → management → safety-netting.",
+        "Doctor: What has been happening with your breathing?"
+      ],
+      "tables_preview": []
+    },
+    "datas/DAVOLASH ISHI\\Module_03\\Module_03_Grammar_Present_Perfect_Present_Perfect_Continuous.docx": {
+      "paragraphs_count": 80,
+      "tables_count": 4,
+      "first_paragraphs": [
+        "MODULE 03 — GRAMMAR",
+        "Present Perfect + Present Perfect Continuous",
+        "Acute Asthma Exacerbation | Level: B2 Medical English",
+        "1. GRAMMAR FOCUS",
+        "Bu dialogda Present Perfect va Present Perfect Continuous asosan o‘tmishda boshlangan, hozirgacha davom etayotgan simptomlar, yaqinda sodir bo‘lgan o‘zgarishlar, bemorning oldingi tajribasi va hozirgi klinik vaziyat bilan bog‘liq natijalarni ifodalash uchun ishlatilgan."
+      ],
+      "tables_preview": [
+        {
+          "rows": 5,
+          "header": [
+            "Type",
+            "Structure",
+            "Clinical example"
+          ]
+        },
+        {
+          "rows": 4,
+          "header": [
+            "Type",
+            "Structure",
+            "Clinical example"
+          ]
+        },
+        {
+          "rows": 5,
+          "header": [
+            "Present Perfect",
+            "Present Perfect Continuous",
+            "Clinical difference"
+          ]
+        },
+        {
+          "rows": 8,
+          "header": [
+            "Tense / structure",
+            "Dialogue example",
+            "Meaning"
+          ]
+        }
+      ]
+    },
+    "datas/DAVOLASH ISHI\\Module_03\\Module_03_Vocabulary_Smart_Phrasebook.docx": {
+      "paragraphs_count": 35,
+      "tables_count": 1,
+      "first_paragraphs": [
+        "MODULE 03 — VOCABULARY & SMART PHRASEBOOK",
+        "Acute Asthma Exacerbation",
+        "Grammar focus: Present Perfect + Present Perfect Continuous",
+        "PART 1 — VOCABULARY",
+        "Important Clinical Distinctions"
+      ],
+      "tables_preview": [
+        {
+          "rows": 31,
+          "header": [
+            "#",
+            "Term / Phrase",
+            "Pronunciation",
+            "Uzbek",
+            "Russian",
+            "Clinical meaning / usage"
+          ]
+        }
+      ]
+    },
+    "datas/DAVOLASH ISHI\\Module_04\\01_Dialogue_B2.docx": {
+      "paragraphs_count": 33,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "MODULE 04 — Type 2 Diabetes & Hyperglycemia",
+        "Type 2 Diabetes & Hyperglycemia",
+        "Grammar focus: Present Perfect vs Past Simple",
+        "Dialogue purpose: history-taking → clinical assessment → differential diagnosis → investigations → management → safety-netting.",
+        "Doctor: When were you first diagnosed with type 2 diabetes?"
+      ],
+      "tables_preview": []
+    },
+    "datas/DAVOLASH ISHI\\Module_04\\Module_04_Grammar_Present_Perfect_vs_Past_Simple.docx": {
+      "paragraphs_count": 78,
+      "tables_count": 1,
+      "first_paragraphs": [
+        "MODULE 04 — GRAMMAR",
+        "Present Perfect vs Past Simple",
+        "Type 2 Diabetes & Hyperglycemia",
+        "1. GRAMMAR FOCUS",
+        "Bu dialogda Present Perfect hozirgi vaziyat bilan bog‘liq tajriba, yaqindagi o‘zgarish va simptomlarni so‘rash uchun; Past Simple esa aniq tugagan vaqt, tashxis qo‘yilgan vaqt, simptom boshlanishi va oldingi voqealarni ifodalash uchun ishlatiladi."
+      ],
+      "tables_preview": [
+        {
+          "rows": 5,
+          "header": [
+            "Present Perfect",
+            "Past Simple",
+            "Clinical difference"
+          ]
+        }
+      ]
+    },
+    "datas/DAVOLASH ISHI\\Module_04\\Module_04_Vocabulary_Smart_Phrasebook.docx": {
+      "paragraphs_count": 30,
+      "tables_count": 1,
+      "first_paragraphs": [
+        "MODULE 04 — VOCABULARY & SMART PHRASEBOOK",
+        "Type 2 Diabetes & Hyperglycemia",
+        "Grammar focus: Present Perfect vs Past Simple",
+        "PART 1 — VOCABULARY",
+        "Important Clinical Distinctions"
+      ],
+      "tables_preview": [
+        {
+          "rows": 30,
+          "header": [
+            "#",
+            "Term / Phrase",
+            "Uzbek",
+            "Russian",
+            "Clinical meaning / usage"
+          ]
+        }
+      ]
+    },
+    "datas/DAVOLASH ISHI\\Module_05\\01_Dialogue_B2.docx": {
+      "paragraphs_count": 35,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "MODULE 05 — Acute Stroke & Time-Critical Assessment",
+        "Acute Stroke & Time-Critical Assessment",
+        "Grammar focus: Past Simple + Time Expressions",
+        "Dialogue purpose: history-taking → clinical assessment → differential diagnosis → investigations → management → safety-netting.",
+        "Doctor: Please tell me exactly what happened and what time the symptoms began."
+      ],
+      "tables_preview": []
+    },
+    "datas/DAVOLASH ISHI\\Module_05\\Module_05_Grammar_Past_Simple_Time_Expressions.docx": {
+      "paragraphs_count": 85,
+      "tables_count": 1,
+      "first_paragraphs": [
+        "MODULE 05 — GRAMMAR",
+        "Past Simple + Time Expressions",
+        "Acute Stroke & Time-Critical Assessment",
+        "1. GRAMMAR FOCUS",
+        "Bu modulda Past Simple o‘tkir voqeaning ketma-ketligini, simptomlarning qachon boshlanganini va aniq vaqtga bog‘langan klinik voqealarni ifodalash uchun ishlatiladi. Time expressions esa tarixni aniq timeline ko‘rinishida tuzishga yordam beradi."
+      ],
+      "tables_preview": [
+        {
+          "rows": 8,
+          "header": [
+            "Time expression",
+            "Example from dialogue",
+            "Function"
+          ]
+        }
+      ]
+    },
+    "datas/DAVOLASH ISHI\\Module_05\\Module_05_Vocabulary_Smart_Phrasebook.docx": {
+      "paragraphs_count": 30,
+      "tables_count": 1,
+      "first_paragraphs": [
+        "MODULE 05 — VOCABULARY & SMART PHRASEBOOK",
+        "Acute Stroke & Time-Critical Assessment",
+        "Grammar focus: Past Simple + Time Expressions",
+        "PART 1 — VOCABULARY",
+        "Important Clinical Distinctions"
+      ],
+      "tables_preview": [
+        {
+          "rows": 31,
+          "header": [
+            "#",
+            "Term / Phrase",
+            "Uzbek",
+            "Russian",
+            "Clinical meaning / usage"
+          ]
+        }
+      ]
+    },
+    "datas/DAVOLASH ISHI\\Module_06\\01_Dialogue_B2.docx": {
+      "paragraphs_count": 31,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "MODULE 06 — Severe Infection & Sepsis Assessment",
+        "Severe Infection & Sepsis Assessment",
+        "Level: B2 Medical English | Grammar focus: Passive Voice + Present Perfect Continuous",
+        "Dialogue purpose: history-taking → clinical assessment → differential diagnosis → investigations → management → safety-netting.",
+        "Doctor: How long have you been feeling unwell?"
+      ],
+      "tables_preview": []
+    },
+    "datas/DAVOLASH ISHI\\Module_06\\Module_06_Severe_Infection_Sepsis_Assessment..docx": {
+      "paragraphs_count": 157,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "MODULE 06 — GRAMMAR",
+        "Passive Voice + Present Perfect Continuous",
+        "Severe Infection & Sepsis Assessment",
+        "Grammar focus: Passive Voice + Present Perfect Continuous",
+        "Dialogue purpose: history-taking → clinical assessment → differential diagnosis → investigations → management → safety-netting."
+      ],
+      "tables_preview": []
+    },
+    "datas/DAVOLASH ISHI\\Module_06\\MODULE_06_VOCABULARY_SMART_PHRASEBOOK_SEPSIS..docx": {
+      "paragraphs_count": 90,
+      "tables_count": 1,
+      "first_paragraphs": [
+        "MODULE 06 — VOCABULARY & SMART PHRASEBOOK",
+        "Severe Infection & Sepsis Assessment",
+        "Grammar focus: Passive Voice + Present Perfect Continuous",
+        "PART 1 — VOCABULARY",
+        "Important Clinical Distinctions"
+      ],
+      "tables_preview": [
+        {
+          "rows": 46,
+          "header": [
+            "#",
+            "Term / Phrase",
+            "Uzbek",
+            "Russian",
+            "Clinical meaning / usage"
+          ]
+        }
+      ]
+    },
+    "datas/DAVOLASH ISHI\\Module_07\\MODULE 7_Dialogue_B2.docx": {
+      "paragraphs_count": 36,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "MODULE 07 — Acute Abdominal Pain & Differential Diagnosis",
+        "Acute Abdominal Pain & Differential Diagnosis",
+        "Level: B2 Medical English | Grammar focus: Past Perfect + Past Simple",
+        "Dialogue purpose: history-taking → clinical assessment → differential diagnosis → investigations → management → safety-netting.",
+        "Doctor: Tell me what happened before the abdominal pain became severe."
+      ],
+      "tables_preview": []
+    },
+    "datas/DAVOLASH ISHI\\Module_07\\MODULE_07_GRAMMAR_Abdominal_Pain.docx": {
+      "paragraphs_count": 120,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "MODULE 07 — GRAMMAR",
+        "Past Perfect + Past Simple",
+        "Acute Abdominal Pain & Differential Diagnosis",
+        "Grammar focus: Past Perfect + Past Simple",
+        "Dialogue purpose: history-taking → clinical assessment → differential diagnosis → investigations → management → safety-netting."
+      ],
+      "tables_preview": []
+    },
+    "datas/DAVOLASH ISHI\\Module_07\\MODULE_07_VOCABULARY_SMART_PHRASEBOOK_Abdominal_Pain.docx": {
+      "paragraphs_count": 109,
+      "tables_count": 1,
+      "first_paragraphs": [
+        "MODULE 07 — VOCABULARY & SMART PHRASEBOOK",
+        "Acute Abdominal Pain & Differential Diagnosis",
+        "Grammar focus: Past Perfect + Past Simple",
+        "PART 1 — VOCABULARY",
+        "Important Clinical Distinctions"
+      ],
+      "tables_preview": [
+        {
+          "rows": 49,
+          "header": [
+            "#",
+            "Term / Phrase",
+            "Uzbek",
+            "Russian",
+            "Clinical meaning / usage"
+          ]
+        }
+      ]
+    },
+    "datas/DAVOLASH ISHI\\Module_08\\MODULE 8 Dialogue_B2.docx": {
+      "paragraphs_count": 31,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "MODULE 08 — Urinary Tract Infection, Pyelonephritis & Kidney Function",
+        "Urinary Tract Infection, Pyelonephritis & Kidney Function",
+        "Level: B2 Medical English | Grammar focus: Modal Verbs: should, must, may, might, have to",
+        "Dialogue purpose: history-taking → clinical assessment → differential diagnosis → investigations → management → safety-netting.",
+        "Doctor: What symptoms have brought you to the clinic today?"
+      ],
+      "tables_preview": []
+    },
+    "datas/DAVOLASH ISHI\\Module_08\\MODULE_08_GRAMMAR_UTI_Pyelonephritis.docx": {
+      "paragraphs_count": 89,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "MODULE 08 — GRAMMAR",
+        "Modal Verbs: should, must, may, might, have to",
+        "Urinary Tract Infection, Pyelonephritis & Kidney Function",
+        "Level: B2 Medical English | Grammar focus: Modal Verbs",
+        "Dialogue purpose: history-taking → clinical assessment → differential diagnosis → investigations → management → safety-netting."
+      ],
+      "tables_preview": []
+    },
+    "datas/DAVOLASH ISHI\\Module_08\\MODULE_08_VOCABULARY_SMART_PHRASEBOOK_UTI_Pyelonephritis.docx": {
+      "paragraphs_count": 90,
+      "tables_count": 1,
+      "first_paragraphs": [
+        "MODULE 08 — VOCABULARY & SMART PHRASEBOOK",
+        "Urinary Tract Infection, Pyelonephritis & Kidney Function",
+        "Grammar focus: Modal Verbs — should, must, may, might, have to",
+        "PART 1 — VOCABULARY",
+        "Important Clinical Distinctions"
+      ],
+      "tables_preview": [
+        {
+          "rows": 49,
+          "header": [
+            "#",
+            "Term / Phrase",
+            "Uzbek",
+            "Russian",
+            "Clinical meaning / usage"
+          ]
+        }
+      ]
+    },
+    "datas/DAVOLASH ISHI\\Module_09\\MODULE 9 Dialogue_B2.docx": {
+      "paragraphs_count": 31,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "MODULE 09 — Anemia, Menorrhagia & Abnormal Bleeding",
+        "Anemia, Menorrhagia & Abnormal Bleeding",
+        "Level: B2 Medical English | Grammar focus: First & Second Conditional",
+        "Dialogue purpose: history-taking → clinical assessment → differential diagnosis → investigations → management → safety-netting.",
+        "Doctor: You’ve been feeling exhausted for several months. Can you tell me about your menstrual bleeding?"
+      ],
+      "tables_preview": []
+    },
+    "datas/DAVOLASH ISHI\\Module_09\\MODULE_09_GRAMMAR_Anemia_Menorrhagia.docx": {
+      "paragraphs_count": 74,
+      "tables_count": 1,
+      "first_paragraphs": [
+        "MODULE 09 — GRAMMAR",
+        "First & Second Conditional",
+        "Anemia, Menorrhagia & Abnormal Bleeding",
+        "Level: B2 Medical English | Grammar focus: First & Second Conditional",
+        "Dialogue purpose: history-taking → clinical assessment → differential diagnosis → investigations → management → safety-netting."
+      ],
+      "tables_preview": [
+        {
+          "rows": 3,
+          "header": [
+            "Type",
+            "Structure",
+            "Meaning",
+            "Example"
+          ]
+        }
+      ]
+    },
+    "datas/DAVOLASH ISHI\\Module_09\\MODULE_09_VOCABULARY_SMART_PHRASEBOOK_Anemia_Menorrhagia.docx": {
+      "paragraphs_count": 85,
+      "tables_count": 1,
+      "first_paragraphs": [
+        "MODULE 09 — VOCABULARY & SMART PHRASEBOOK",
+        "Anemia, Menorrhagia & Abnormal Bleeding",
+        "Grammar focus: First & Second Conditional",
+        "PART 1 — VOCABULARY",
+        "Important Clinical Distinctions"
+      ],
+      "tables_preview": [
+        {
+          "rows": 41,
+          "header": [
+            "#",
+            "Term / Phrase",
+            "Uzbek",
+            "Russian",
+            "Clinical meaning / usage"
+          ]
+        }
+      ]
+    },
+    "datas/DAVOLASH ISHI\\Module_10\\MODULE 10 Dialogue_B2.docx": {
+      "paragraphs_count": 39,
+      "tables_count": 0,
+      "first_paragraphs": [
+        "MODULE 10 — Full Clinical Consultation & Differential Diagnosis",
+        "Full Clinical Consultation & Differential Diagnosis",
+        "Level: B2 Medical English | Grammar focus: Mixed Grammar / Revision",
+        "Dialogue purpose: history-taking → clinical assessment → differential diagnosis → investigations → management → safety-netting.",
+        "Doctor: Good morning. Please take a seat. What brings you in for a full assessment today?"
+      ],
+      "tables_preview": []
+    },
+    "datas/DAVOLASH ISHI\\Module_10\\Module_10_Grammar_Reformatted.docx": {
+      "paragraphs_count": 136,
+      "tables_count": 1,
+      "first_paragraphs": [
+        "MODULE 10 — GRAMMAR",
+        "Mixed Grammar / Revision\nFull Clinical Consultation & Differential Diagnosis",
+        "1. GRAMMAR FOCUS",
+        "Bu modulda Mixed Grammar / Revision ishlatiladi. Asosiy maqsad — klinik konsultatsiyada avval o‘tilgan grammatik strukturalarni birgalikda va tabiiy qo‘llash: Present Perfect, Present Perfect Continuous, Past Simple, Past Perfect, Past Perfect Continuous, modal verbs, First Conditional, Passive Voice va “would rather”.",
+        "Asosiy klinik vazifa: simptomlarning davomiyligi va rivojlanishini aniqlash, avvalgi voqealarni tasvirlash, ehtimoliy sabablarni muhokama qilish, tekshiruv va xavfsizlik bo‘yicha ko‘rsatmalarni professional tarzda ifodalash."
+      ],
+      "tables_preview": [
+        {
+          "rows": 10,
+          "header": [
+            "Grammar",
+            "Clinical example",
+            "Use"
+          ]
+        }
+      ]
+    },
+    "datas/DAVOLASH ISHI\\Module_10\\Module_10_Vocabulary_Smart_Phrase_Book.docx": {
+      "paragraphs_count": 6,
+      "tables_count": 4,
+      "first_paragraphs": [
+        "MODULE 10 — Vocabulary & Smart Phrase Book",
+        "Full Clinical Consultation & Differential Diagnosis | B2 Medical English",
+        "PART A — Essential Medical Vocabulary",
+        "PART B — Smart Phrase Book",
+        "PART C — Useful Collocations"
+      ],
+      "tables_preview": [
+        {
+          "rows": 32,
+          "header": [
+            "Vocabulary",
+            "Pronunciation",
+            "Uzbek",
+            "Russian"
+          ]
+        },
+        {
+          "rows": 22,
+          "header": [
+            "Smart Phrase",
+            "Uzbek",
+            "Russian",
+            "Clinical Function"
+          ]
+        },
+        {
+          "rows": 11,
+          "header": [
+            "Collocation",
+            "Uzbek",
+            "Russian"
+          ]
+        },
+        {
+          "rows": 6,
+          "header": [
+            "Pattern",
+            "Medical Example",
+            "Function"
+          ]
+        }
+      ]
+    }
+  }
+}

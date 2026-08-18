@@ -1,0 +1,807 @@
+{
+  "specialty_id": 2,
+  "specialty_name": "Davolash ishi",
+  "order_index": 1,
+  "title": "Clinical Consultation & Initial Assessment",
+  "title_uz": "Klinik konsultatsiya va birlamchi ko'rik",
+  "title_ru": "Клиническая консультация и первичный осмотр",
+  "title_en": "Clinical Consultation & Initial Assessment",
+  "description": "Davolash ishi bo'yicha Klinik konsultatsiya va birlamchi ko'rik mavzusida klinik muloqot va tibbiy ingliz tili darsi.",
+  "clinical_level": "B2 Medical English",
+  "target_role": "Dental Clinician / Attending Physician",
+  "scenario_prompt": "You are a virtual patient presenting with symptoms related to Clinical Consultation & Initial Assessment. Speak in natural, everyday patient English.",
+  "patient_profile": {
+    "age": 33,
+    "gender": "Male",
+    "chief_complaint": "Klinik konsultatsiya va birlamchi ko'rik",
+    "history": "Patient presents with complaints of clinical consultation & initial assessment."
+  },
+  "grammar": [
+    {
+      "title": "Open vs Closed Question Formulations in Clinical History Taking",
+      "title_uz": "Klinik Muloqotda Ochiq va Yopiq Savollar Tuzilishi (Open vs Closed Questions)",
+      "title_ru": "Открытые и Закрытые Вопросы при Первичном Осмотре (Open vs Closed Questions)",
+      "title_en": "Open vs Closed Question Formulations in Clinical History Taking",
+      "rule_explanation": "Begin interviews with open-ended questions ('What brought you in today?') to allow the patient to describe symptoms in their own words. Follow up with focused closed questions ('Does the pain radiate?') for specific diagnostic details.",
+      "rule_explanation_uz": "Klinik suhbatni bemor o'z so'zlari bilan shikoyatini bayon qilishi uchun ochiq savollar (What / How) bilan boshlang. Aniq tashxis detallari uchun esa yopiq savollar (Do you have...? / Is the pain...?) bilan davom eting.",
+      "rule_explanation_ru": "Начинайте опрос с открытых вопросов ('What brought you in today?'), чтобы пациент описал жалобы своими словами. Для уточнения деталей используйте закрытые вопросы ('Does the pain radiate?').",
+      "rule_explanation_en": "Begin clinical interviews with open questions (What, How) for patient narrative, then use closed auxiliary questions (Do you, Is it) for diagnostic precision.",
+      "structure_pattern": "What + brings you in today? | Does the pain + radiate to + [Location]?",
+      "structure_pattern_uz": "What + brings you in today? | Does the pain + radiate to + [Tana sohasi]?",
+      "structure_pattern_ru": "What + brings you in today? | Does the pain + radiate to + [Область тела]?",
+      "structure_pattern_en": "What brings you in today? | Does the pain radiate to [Location]?",
+      "examples": [
+        {
+          "sentence": "What brings you to the clinic today, Mr. Johnson?",
+          "translation_uz": "Bugun sizni klinikamizga qanday shikoyat yetaklab keldi, janob Jonson?",
+          "translation_ru": "Что привело вас в клинику сегодня, господин Джонсон?",
+          "translation_en": "Classic open-ended chief complaint elicitation.",
+          "note": "Open Question (Chief Complaint)",
+          "note_uz": "Ochiq savol (Asosiy shikoyat)",
+          "note_ru": "Открытый вопрос (Основная жалоба)",
+          "note_en": "Open question"
+        },
+        {
+          "sentence": "Does the discomfort radiate to your left shoulder or neck?",
+          "translation_uz": "Noqulaylik chap yelkangizga yoki bo'yningizga tarqalyaptimi?",
+          "translation_ru": "Иррадиирует ли дискомфорт в левое плечо или шею?",
+          "translation_en": "Focused closed question checking radiation.",
+          "note": "Closed Question (Radiation Check)",
+          "note_uz": "Yopiq savol (Og'riq irradiatsiyasi)",
+          "note_ru": "Закрытый вопрос (Иррадиация)",
+          "note_en": "Closed focused question"
+        }
+      ],
+      "common_mistakes": [
+        {
+          "incorrect": "You have pain where?",
+          "correct": "Where exactly do you feel the pain?",
+          "explanation_uz": "Maxsus so'roq gaplarda so'roq so'zi (Where) boshida keladi va yordamchi fe'l (do) qo'yiladi.",
+          "explanation_ru": "Вопросительное слово 'Where' ставится в начале предложения с вспомогательным глаголом 'do'.",
+          "explanation_en": "Use proper wh-question syntax with auxiliary 'do' in the initial position."
+        }
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "light-headed",
+      "translation": "boshi aylangan, hushidan ketgudek bo'lgan",
+      "translation_uz": "boshi aylangan, hushidan ketgudek bo'lgan",
+      "translation_ru": "головокружение, предобморочное состояние",
+      "translation_en": "light-headed",
+      "definition": "Clinical medical condition and symptom associated with light-headed.",
+      "definition_uz": "boshi aylangan, hushidan ketgudek bo'lgan - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "головокружение, предобморочное состояние - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with light-headed.",
+      "example": "The doctor assessed the patient for light-headed."
+    },
+    {
+      "word": "feel as though I might faint",
+      "translation": "hushimdan ketadigandek his qilmoq",
+      "translation_uz": "hushimdan ketadigandek his qilmoq",
+      "translation_ru": "чувствовать, что можешь потерять сознание",
+      "translation_en": "feel as though I might faint",
+      "definition": "Clinical medical condition and symptom associated with feel as though i might faint.",
+      "definition_uz": "hushimdan ketadigandek his qilmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "чувствовать, что можешь потерять сознание - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with feel as though i might faint.",
+      "example": "The doctor assessed the patient for feel as though i might faint."
+    },
+    {
+      "word": "short of breath",
+      "translation": "nafas qisgan",
+      "translation_uz": "nafas qisgan",
+      "translation_ru": "одышка",
+      "translation_en": "short of breath",
+      "definition": "Subjective clinical sensation of difficult, labored, or uncomfortable breathing.",
+      "definition_uz": "Nafas olishning qiyinlashishi, havo yetishmasligi hissi (nafas qisishi).",
+      "definition_ru": "Субъективное ощущение нехватки воздуха и затруднения дыхания (одышка).",
+      "definition_en": "Subjective clinical sensation of difficult, labored, or uncomfortable breathing.",
+      "example": "The doctor assessed the patient for short of breath."
+    },
+    {
+      "word": "exertional breathlessness",
+      "translation": "zo'riqishda nafas qisishi",
+      "translation_uz": "zo'riqishda nafas qisishi",
+      "translation_ru": "одышка при физической нагрузке",
+      "translation_en": "exertional breathlessness",
+      "definition": "Subjective clinical sensation of difficult, labored, or uncomfortable breathing.",
+      "definition_uz": "Nafas olishning qiyinlashishi, havo yetishmasligi hissi (nafas qisishi).",
+      "definition_ru": "Субъективное ощущение нехватки воздуха и затруднения дыхания (одышка).",
+      "definition_en": "Subjective clinical sensation of difficult, labored, or uncomfortable breathing.",
+      "example": "The doctor assessed the patient for exertional breathlessness."
+    },
+    {
+      "word": "stand up quickly",
+      "translation": "tez o'rnidan turmoq",
+      "translation_uz": "tez o'rnidan turmoq",
+      "translation_ru": "быстро встать",
+      "translation_en": "stand up quickly",
+      "definition": "Clinical medical condition and symptom associated with stand up quickly.",
+      "definition_uz": "tez o'rnidan turmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "быстро встать - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with stand up quickly.",
+      "example": "The doctor assessed the patient for stand up quickly."
+    },
+    {
+      "word": "episode",
+      "translation": "xuruj, epizod",
+      "translation_uz": "xuruj, epizod",
+      "translation_ru": "эпизод, приступ",
+      "translation_en": "episode",
+      "definition": "Clinical medical condition and symptom associated with episode.",
+      "definition_uz": "xuruj, epizod - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "эпизод, приступ - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with episode.",
+      "example": "The doctor assessed the patient for episode."
+    },
+    {
+      "word": "blood pressure reading",
+      "translation": "qon bosimi ko'rsatkichi",
+      "translation_uz": "qon bosimi ko'rsatkichi",
+      "translation_ru": "показатель артериального давления",
+      "translation_en": "blood pressure reading",
+      "definition": "Clinical medical condition and symptom associated with blood pressure reading.",
+      "definition_uz": "qon bosimi ko'rsatkichi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "показатель артериального давления - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with blood pressure reading.",
+      "example": "The doctor assessed the patient for blood pressure reading."
+    },
+    {
+      "word": "oxygen saturation",
+      "translation": "qondagi kislorod to'yinganligi",
+      "translation_uz": "qondagi kislorod to'yinganligi",
+      "translation_ru": "сатурация кислорода",
+      "translation_en": "oxygen saturation",
+      "definition": "Clinical medical condition and symptom associated with oxygen saturation.",
+      "definition_uz": "qondagi kislorod to'yinganligi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "сатурация кислорода - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with oxygen saturation.",
+      "example": "The doctor assessed the patient for oxygen saturation."
+    },
+    {
+      "word": "on room air",
+      "translation": "qo'shimcha kislorodsiz",
+      "translation_uz": "qo'shimcha kislorodsiz",
+      "translation_ru": "на атмосферном воздухе",
+      "translation_en": "on room air",
+      "definition": "Clinical medical condition and symptom associated with on room air.",
+      "definition_uz": "qo'shimcha kislorodsiz - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "на атмосферном воздухе - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with on room air.",
+      "example": "The doctor assessed the patient for on room air."
+    },
+    {
+      "word": "palpitations",
+      "translation": "yurak urishini sezish",
+      "translation_uz": "yurak urishini sezish",
+      "translation_ru": "сердцебиение",
+      "translation_en": "palpitations",
+      "definition": "Clinical medical condition and symptom associated with palpitations.",
+      "definition_uz": "yurak urishini sezish - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "сердцебиение - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with palpitations.",
+      "example": "The doctor assessed the patient for palpitations."
+    },
+    {
+      "word": "antihypertensive",
+      "translation": "qon bosimini tushiruvchi dori",
+      "translation_uz": "qon bosimini tushiruvchi dori",
+      "translation_ru": "антигипертензивный препарат",
+      "translation_en": "antihypertensive",
+      "definition": "Clinical medical condition and symptom associated with antihypertensive.",
+      "definition_uz": "qon bosimini tushiruvchi dori - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "антигипертензивный препарат - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with antihypertensive.",
+      "example": "The doctor assessed the patient for antihypertensive."
+    },
+    {
+      "word": "weight loss without trying",
+      "translation": "harakat qilmasdan vazn yo'qotish",
+      "translation_uz": "harakat qilmasdan vazn yo'qotish",
+      "translation_ru": "непреднамеренная потеря веса",
+      "translation_en": "weight loss without trying",
+      "definition": "Clinical medical condition and symptom associated with weight loss without trying.",
+      "definition_uz": "harakat qilmasdan vazn yo'qotish - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "непреднамеренная потеря веса - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with weight loss without trying.",
+      "example": "The doctor assessed the patient for weight loss without trying."
+    },
+    {
+      "word": "reduced appetite",
+      "translation": "ishtahaning pasayishi",
+      "translation_uz": "ishtahaning pasayishi",
+      "translation_ru": "снижение аппетита",
+      "translation_en": "reduced appetite",
+      "definition": "Clinical medical condition and symptom associated with reduced appetite.",
+      "definition_uz": "ishtahaning pasayishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "снижение аппетита - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with reduced appetite.",
+      "example": "The doctor assessed the patient for reduced appetite."
+    },
+    {
+      "word": "iron-deficiency anaemia",
+      "translation": "temir tanqisligi kamqonligi",
+      "translation_uz": "temir tanqisligi kamqonligi",
+      "translation_ru": "железодефицитная анемия",
+      "translation_en": "iron-deficiency anaemia",
+      "definition": "Clinical medical condition and symptom associated with iron-deficiency anaemia.",
+      "definition_uz": "temir tanqisligi kamqonligi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "железодефицитная анемия - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with iron-deficiency anaemia.",
+      "example": "The doctor assessed the patient for iron-deficiency anaemia."
+    },
+    {
+      "word": "pallor",
+      "translation": "rangparlik",
+      "translation_uz": "rangparlik",
+      "translation_ru": "бледность",
+      "translation_en": "pallor",
+      "definition": "Clinical medical condition and symptom associated with pallor.",
+      "definition_uz": "rangparlik - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "бледность - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with pallor.",
+      "example": "The doctor assessed the patient for pallor."
+    },
+    {
+      "word": "dehydration",
+      "translation": "suvsizlanish",
+      "translation_uz": "suvsizlanish",
+      "translation_ru": "обезвоживание",
+      "translation_en": "dehydration",
+      "definition": "Clinical medical condition and symptom associated with dehydration.",
+      "definition_uz": "suvsizlanish - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "обезвоживание - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with dehydration.",
+      "example": "The doctor assessed the patient for dehydration."
+    },
+    {
+      "word": "tachycardia",
+      "translation": "yurak urishining tezlashishi",
+      "translation_uz": "yurak urishining tezlashishi",
+      "translation_ru": "тахикардия",
+      "translation_en": "tachycardia",
+      "definition": "Clinical medical condition and symptom associated with tachycardia.",
+      "definition_uz": "yurak urishining tezlashishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "тахикардия - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with tachycardia.",
+      "example": "The doctor assessed the patient for tachycardia."
+    },
+    {
+      "word": "full blood count (FBC)",
+      "translation": "umumiy qon tahlili",
+      "translation_uz": "umumiy qon tahlili",
+      "translation_ru": "общий анализ крови",
+      "translation_en": "full blood count (FBC)",
+      "definition": "Clinical medical condition and symptom associated with full blood count (fbc).",
+      "definition_uz": "umumiy qon tahlili - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "общий анализ крови - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with full blood count (fbc).",
+      "example": "The doctor assessed the patient for full blood count (fbc)."
+    },
+    {
+      "word": "iron studies",
+      "translation": "temir almashinuvi tahlillari",
+      "translation_uz": "temir almashinuvi tahlillari",
+      "translation_ru": "показатели обмена железа",
+      "translation_en": "iron studies",
+      "definition": "Clinical medical condition and symptom associated with iron studies.",
+      "definition_uz": "temir almashinuvi tahlillari - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "показатели обмена железа - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with iron studies.",
+      "example": "The doctor assessed the patient for iron studies."
+    },
+    {
+      "word": "renal function",
+      "translation": "buyrak faoliyati",
+      "translation_uz": "buyrak faoliyati",
+      "translation_ru": "функция почек",
+      "translation_en": "renal function",
+      "definition": "Clinical medical condition and symptom associated with renal function.",
+      "definition_uz": "buyrak faoliyati - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "функция почек - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with renal function.",
+      "example": "The doctor assessed the patient for renal function."
+    },
+    {
+      "word": "thyroid function",
+      "translation": "qalqonsimon bez faoliyati",
+      "translation_uz": "qalqonsimon bez faoliyati",
+      "translation_ru": "функция щитовидной железы",
+      "translation_en": "thyroid function",
+      "definition": "Clinical medical condition and symptom associated with thyroid function.",
+      "definition_uz": "qalqonsimon bez faoliyati - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "функция щитовидной железы - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with thyroid function.",
+      "example": "The doctor assessed the patient for thyroid function."
+    },
+    {
+      "word": "differential diagnosis",
+      "translation": "differensial tashxis",
+      "translation_uz": "differensial tashxis",
+      "translation_ru": "дифференциальная диагностика",
+      "translation_en": "differential diagnosis",
+      "definition": "Clinical medical condition and symptom associated with differential diagnosis.",
+      "definition_uz": "differensial tashxis - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "дифференциальная диагностика - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with differential diagnosis.",
+      "example": "The doctor assessed the patient for differential diagnosis."
+    },
+    {
+      "word": "clinical assessment",
+      "translation": "klinik baholash",
+      "translation_uz": "klinik baholash",
+      "translation_ru": "клиническая оценка",
+      "translation_en": "clinical assessment",
+      "definition": "Clinical medical condition and symptom associated with clinical assessment.",
+      "definition_uz": "klinik baholash - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "клиническая оценка - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with clinical assessment.",
+      "example": "The doctor assessed the patient for clinical assessment."
+    },
+    {
+      "word": "contributing factor",
+      "translation": "sababga hissa qo'shuvchi omil",
+      "translation_uz": "sababga hissa qo'shuvchi omil",
+      "translation_ru": "способствующий фактор",
+      "translation_en": "contributing factor",
+      "definition": "Clinical medical condition and symptom associated with contributing factor.",
+      "definition_uz": "sababga hissa qo'shuvchi omil - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "способствующий фактор - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with contributing factor.",
+      "example": "The doctor assessed the patient for contributing factor."
+    },
+    {
+      "word": "safety-netting",
+      "translation": "xavfli belgilar bo'lsa qayta murojaat qilish bo'yicha ko'rsatma",
+      "translation_uz": "xavfli belgilar bo'lsa qayta murojaat qilish bo'yicha ko'rsatma",
+      "translation_ru": "рекомендации по обращению при ухудшении",
+      "translation_en": "safety-netting",
+      "definition": "Clinical medical condition and symptom associated with safety-netting.",
+      "definition_uz": "xavfli belgilar bo'lsa qayta murojaat qilish bo'yicha ko'rsatma - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "рекомендации по обращению при ухудшении - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with safety-netting.",
+      "example": "The doctor assessed the patient for safety-netting."
+    }
+  ],
+  "phrasebook": [
+    {
+      "phrase": "light-headed",
+      "category": "Clinical Consultation",
+      "hint": "boshi aylangan, hushidan ketgudek bo'lgan",
+      "hint_uz": "boshi aylangan, hushidan ketgudek bo'lgan",
+      "hint_ru": "головокружение, предобморочное состояние",
+      "hint_en": "light-headed",
+      "patient_response": ""
+    },
+    {
+      "phrase": "feel as though I might faint",
+      "category": "Clinical Consultation",
+      "hint": "hushimdan ketadigandek his qilmoq",
+      "hint_uz": "hushimdan ketadigandek his qilmoq",
+      "hint_ru": "чувствовать, что можешь потерять сознание",
+      "hint_en": "feel as though I might faint",
+      "patient_response": ""
+    },
+    {
+      "phrase": "short of breath",
+      "category": "Clinical Consultation",
+      "hint": "nafas qisgan",
+      "hint_uz": "nafas qisgan",
+      "hint_ru": "одышка",
+      "hint_en": "short of breath",
+      "patient_response": ""
+    },
+    {
+      "phrase": "exertional breathlessness",
+      "category": "Clinical Consultation",
+      "hint": "zo'riqishda nafas qisishi",
+      "hint_uz": "zo'riqishda nafas qisishi",
+      "hint_ru": "одышка при физической нагрузке",
+      "hint_en": "exertional breathlessness",
+      "patient_response": ""
+    },
+    {
+      "phrase": "stand up quickly",
+      "category": "Clinical Consultation",
+      "hint": "tez o'rnidan turmoq",
+      "hint_uz": "tez o'rnidan turmoq",
+      "hint_ru": "быстро встать",
+      "hint_en": "stand up quickly",
+      "patient_response": ""
+    },
+    {
+      "phrase": "episode",
+      "category": "Clinical Consultation",
+      "hint": "xuruj, epizod",
+      "hint_uz": "xuruj, epizod",
+      "hint_ru": "эпизод, приступ",
+      "hint_en": "episode",
+      "patient_response": ""
+    },
+    {
+      "phrase": "blood pressure reading",
+      "category": "Clinical Consultation",
+      "hint": "qon bosimi ko'rsatkichi",
+      "hint_uz": "qon bosimi ko'rsatkichi",
+      "hint_ru": "показатель артериального давления",
+      "hint_en": "blood pressure reading",
+      "patient_response": ""
+    },
+    {
+      "phrase": "oxygen saturation",
+      "category": "Clinical Consultation",
+      "hint": "qondagi kislorod to'yinganligi",
+      "hint_uz": "qondagi kislorod to'yinganligi",
+      "hint_ru": "сатурация кислорода",
+      "hint_en": "oxygen saturation",
+      "patient_response": ""
+    },
+    {
+      "phrase": "on room air",
+      "category": "Clinical Consultation",
+      "hint": "qo'shimcha kislorodsiz",
+      "hint_uz": "qo'shimcha kislorodsiz",
+      "hint_ru": "на атмосферном воздухе",
+      "hint_en": "on room air",
+      "patient_response": ""
+    },
+    {
+      "phrase": "palpitations",
+      "category": "Clinical Consultation",
+      "hint": "yurak urishini sezish",
+      "hint_uz": "yurak urishini sezish",
+      "hint_ru": "сердцебиение",
+      "hint_en": "palpitations",
+      "patient_response": ""
+    },
+    {
+      "phrase": "antihypertensive",
+      "category": "Clinical Consultation",
+      "hint": "qon bosimini tushiruvchi dori",
+      "hint_uz": "qon bosimini tushiruvchi dori",
+      "hint_ru": "антигипертензивный препарат",
+      "hint_en": "antihypertensive",
+      "patient_response": ""
+    },
+    {
+      "phrase": "weight loss without trying",
+      "category": "Clinical Consultation",
+      "hint": "harakat qilmasdan vazn yo'qotish",
+      "hint_uz": "harakat qilmasdan vazn yo'qotish",
+      "hint_ru": "непреднамеренная потеря веса",
+      "hint_en": "weight loss without trying",
+      "patient_response": ""
+    },
+    {
+      "phrase": "reduced appetite",
+      "category": "Clinical Consultation",
+      "hint": "ishtahaning pasayishi",
+      "hint_uz": "ishtahaning pasayishi",
+      "hint_ru": "снижение аппетита",
+      "hint_en": "reduced appetite",
+      "patient_response": ""
+    },
+    {
+      "phrase": "iron-deficiency anaemia",
+      "category": "Clinical Consultation",
+      "hint": "temir tanqisligi kamqonligi",
+      "hint_uz": "temir tanqisligi kamqonligi",
+      "hint_ru": "железодефицитная анемия",
+      "hint_en": "iron-deficiency anaemia",
+      "patient_response": ""
+    },
+    {
+      "phrase": "pallor",
+      "category": "Clinical Consultation",
+      "hint": "rangparlik",
+      "hint_uz": "rangparlik",
+      "hint_ru": "бледность",
+      "hint_en": "pallor",
+      "patient_response": ""
+    },
+    {
+      "phrase": "dehydration",
+      "category": "Clinical Consultation",
+      "hint": "suvsizlanish",
+      "hint_uz": "suvsizlanish",
+      "hint_ru": "обезвоживание",
+      "hint_en": "dehydration",
+      "patient_response": ""
+    },
+    {
+      "phrase": "tachycardia",
+      "category": "Clinical Consultation",
+      "hint": "yurak urishining tezlashishi",
+      "hint_uz": "yurak urishining tezlashishi",
+      "hint_ru": "тахикардия",
+      "hint_en": "tachycardia",
+      "patient_response": ""
+    },
+    {
+      "phrase": "full blood count (FBC)",
+      "category": "Clinical Consultation",
+      "hint": "umumiy qon tahlili",
+      "hint_uz": "umumiy qon tahlili",
+      "hint_ru": "общий анализ крови",
+      "hint_en": "full blood count (FBC)",
+      "patient_response": ""
+    },
+    {
+      "phrase": "iron studies",
+      "category": "Clinical Consultation",
+      "hint": "temir almashinuvi tahlillari",
+      "hint_uz": "temir almashinuvi tahlillari",
+      "hint_ru": "показатели обмена железа",
+      "hint_en": "iron studies",
+      "patient_response": ""
+    },
+    {
+      "phrase": "renal function",
+      "category": "Clinical Consultation",
+      "hint": "buyrak faoliyati",
+      "hint_uz": "buyrak faoliyati",
+      "hint_ru": "функция почек",
+      "hint_en": "renal function",
+      "patient_response": ""
+    },
+    {
+      "phrase": "thyroid function",
+      "category": "Clinical Consultation",
+      "hint": "qalqonsimon bez faoliyati",
+      "hint_uz": "qalqonsimon bez faoliyati",
+      "hint_ru": "функция щитовидной железы",
+      "hint_en": "thyroid function",
+      "patient_response": ""
+    },
+    {
+      "phrase": "differential diagnosis",
+      "category": "Clinical Consultation",
+      "hint": "differensial tashxis",
+      "hint_uz": "differensial tashxis",
+      "hint_ru": "дифференциальная диагностика",
+      "hint_en": "differential diagnosis",
+      "patient_response": ""
+    },
+    {
+      "phrase": "clinical assessment",
+      "category": "Clinical Consultation",
+      "hint": "klinik baholash",
+      "hint_uz": "klinik baholash",
+      "hint_ru": "клиническая оценка",
+      "hint_en": "clinical assessment",
+      "patient_response": ""
+    },
+    {
+      "phrase": "contributing factor",
+      "category": "Clinical Consultation",
+      "hint": "sababga hissa qo'shuvchi omil",
+      "hint_uz": "sababga hissa qo'shuvchi omil",
+      "hint_ru": "способствующий фактор",
+      "hint_en": "contributing factor",
+      "patient_response": ""
+    },
+    {
+      "phrase": "safety-netting",
+      "category": "Clinical Consultation",
+      "hint": "xavfli belgilar bo'lsa qayta murojaat qilish bo'yicha ko'rsatma",
+      "hint_uz": "xavfli belgilar bo'lsa qayta murojaat qilish bo'yicha ko'rsatma",
+      "hint_ru": "рекомендации по обращению при ухудшении",
+      "hint_en": "safety-netting",
+      "patient_response": ""
+    },
+    {
+      "phrase": "What brings you in today?",
+      "category": "Clinical Inquiry",
+      "hint": "Bugun sizni nima bezovta qilib, olib keldi?",
+      "hint_uz": "Bugun sizni nima bezovta qilib, olib keldi?",
+      "hint_ru": "Что привело вас к нам сегодня? На что жалуетесь?",
+      "hint_en": "What brings you to the clinic today?",
+      "patient_response": ""
+    },
+    {
+      "phrase": "When you say you feel light-headed, what exactly do you mean?",
+      "category": "Clinical Inquiry",
+      "hint": "\"Boshim aylanadi\" deganda aynan nimani nazarda tutyapsiz?",
+      "hint_uz": "\"Boshim aylanadi\" deganda aynan nimani nazarda tutyapsiz?",
+      "hint_ru": "Что именно вы имеете в виду, когда говорите, что у вас кружится голова?",
+      "hint_en": "When you say you feel light-headed, what exactly do you mean?",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Do you feel as though you might faint, or does the room seem to be spinning?",
+      "category": "Clinical Inquiry",
+      "hint": "Hushingizdan ketadigandek bo'lasizmi yoki xona aylanayotgandek tuyuladimi?",
+      "hint_uz": "Hushingizdan ketadigandek bo'lasizmi yoki xona aylanayotgandek tuyuladimi?",
+      "hint_ru": "Вам кажется, что вы можете потерять сознание, или вам кажется, что вращается комната?",
+      "hint_en": "Do you feel as though you might faint, or does the room seem to be spinning?",
+      "patient_response": ""
+    },
+    {
+      "phrase": "How often is this happening?",
+      "category": "Clinical Inquiry",
+      "hint": "Bu qanchalik tez-tez sodir bo'ladi?",
+      "hint_uz": "Bu qanchalik tez-tez sodir bo'ladi?",
+      "hint_ru": "Как часто это происходит?",
+      "hint_en": "How often is this happening?",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Are you experiencing any chest pain, palpitations, nausea, or unusual sweating?",
+      "category": "Clinical Inquiry",
+      "hint": "Ko'krak og'rig'i, yurak urishini sezish, ko'ngil aynishi yoki noodatiy terlash kuzatilyaptimi?",
+      "hint_uz": "Ko'krak og'rig'i, yurak urishini sezish, ko'ngil aynishi yoki noodatiy terlash kuzatilyaptimi?",
+      "hint_ru": "Вы испытываете боль в груди, сердцебиение, тошноту или необычную потливость?",
+      "hint_en": "Are you experiencing any chest pain, palpitations, nausea, or unusual sweating?",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Have you noticed any recent weight loss or changes in your appetite?",
+      "category": "Clinical Inquiry",
+      "hint": "Yaqinda vazn yo'qotish yoki ishtahangizda o'zgarish sezganmisiz?",
+      "hint_uz": "Yaqinda vazn yo'qotish yoki ishtahangizda o'zgarish sezganmisiz?",
+      "hint_ru": "Вы заметили недавнюю потерю веса или изменения аппетита?",
+      "hint_en": "Have you noticed any recent weight loss or changes in your appetite?",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Are you taking any regular medication?",
+      "category": "Clinical Inquiry",
+      "hint": "Doimiy ravishda biror dori qabul qilasizmi?",
+      "hint_uz": "Doimiy ravishda biror dori qabul qilasizmi?",
+      "hint_ru": "Вы регулярно принимаете какие-либо лекарства?",
+      "hint_en": "Are you taking any regular medication?",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Have you occasionally forgotten to take it?",
+      "category": "Clinical Inquiry",
+      "hint": "Ba'zida uni qabul qilishni unutib qo'yganmisiz?",
+      "hint_uz": "Ba'zida uni qabul qilishni unutib qo'yganmisiz?",
+      "hint_ru": "Вы иногда забывали его принимать?",
+      "hint_en": "Have you occasionally forgotten to take it?",
+      "patient_response": ""
+    }
+  ],
+  "dialogue": [
+    {
+      "speaker": "Doctor",
+      "text": "Good morning. Please take a seat. What brings you in today?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "Good morning, Doctor. I've been feeling increasingly weak and light-headed for the past few weeks, and over the last few days I've also been getting short of breath when I walk upstairs."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "I see. When you say you feel light-headed, do you mean the room is spinning, or do you feel as though you might faint?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "It's more like I'm about to faint. It usually happens when I stand up quickly, although yesterday it happened while I was walking."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "How often is this happening, and how long does each episode last?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "It happens several times a day. The worst episodes last for a couple of minutes, although the milder ones pass more quickly."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Has anything changed recently in your diet, sleep, workload, or medication?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I've been working longer hours and sleeping badly. I'm also eating less regularly than I used to. Nurse: Doctor, his blood pressure is 98 over 62, and his pulse is 104. Oxygen saturation is 97% on room air."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Thank you. Have you ever had blood pressure readings that low before?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "No. I usually have normal blood pressure."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Are you experiencing chest pain, palpitations, nausea, or unusual sweating at the moment?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I'm not having chest pain, but my heart sometimes feels as though it's racing when I climb stairs."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Do you have any diagnosed conditions, and are you taking any regular medication?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I was told I had mild hypertension two years ago. I take an antihypertensive every morning, although I've occasionally forgotten it recently."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Have you noticed any recent weight loss, changes in your appetite, bleeding, or black stools?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I've lost about three kilograms without trying. My appetite is slightly reduced, but I haven't noticed any bleeding or black stools."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "What about your family history? Has anyone had anemia, diabetes, heart disease, or thyroid problems?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "My mother has iron-deficiency anemia, and my father has type 2 diabetes."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "All right. I'm going to examine you now. I'll check your pulse, blood pressure lying and standing, heart and lungs, and I'd also like to look for signs of pallor or dehydration."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Is low blood pressure the main reason I'm feeling this way?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "It may be contributing, but we shouldn't assume that it explains everything. Your fatigue, exertional breathlessness, weight loss, and tachycardia could have several causes. Relative: Doctor, he has been much more tired than usual recently. He sometimes has to stop halfway up the stairs."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "That is useful information. We'll arrange a full blood count, iron studies, glucose, renal and thyroid function, and an ECG. Depending on the results, we may need further investigations."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Does that mean you suspect anemia?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "It is one possibility, but we need to distinguish it from cardiovascular, endocrine, metabolic, and other causes before deciding on treatment. Nurse: I'll take the blood samples now and repeat his blood pressure after he has rested."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Good. If you develop severe chest pain, fainting, or significant difficulty breathing while you're waiting, tell us immediately."
+    }
+  ],
+  "tests": [
+    {
+      "question": "What is the medical meaning of the term 'light-headed' in clinical consultation?",
+      "option_a": "boshi aylangan, hushidan ketgudek bo'lgan",
+      "option_b": "hushimdan ketadigandek his qilmoq",
+      "option_c": "nafas qisgan",
+      "option_d": "zo'riqishda nafas qisishi",
+      "correct_option": "A",
+      "explanation": "'light-headed' atamasining to'g'ri ma'nosi: boshi aylangan, hushidan ketgudek bo'lgan."
+    },
+    {
+      "question": "Which term corresponds to 'tez o'rnidan turmoq'?",
+      "option_a": "feel as though I might faint",
+      "option_b": "stand up quickly",
+      "option_c": "short of breath",
+      "option_d": "exertional breathlessness",
+      "correct_option": "B",
+      "explanation": "'tez o'rnidan turmoq' ma'nosiga mos keluvchi tibbiy termin 'stand up quickly' hisoblanadi."
+    },
+    {
+      "question": "Which of the following is the grammatically and clinically standard question to ask about the duration of symptoms?",
+      "option_a": "How long do you having this symptom?",
+      "option_b": "How long has this condition been bothering you?",
+      "option_c": "Since what time you have this problem?",
+      "option_d": "How many days you are feeling pain?",
+      "correct_option": "B",
+      "explanation": "Klinik anamnezda davomiylikni so'rash uchun Present Perfect Continuous ('How long has... been bothering you?') to'g'ri shakl hisoblanadi."
+    },
+    {
+      "question": "When evaluating acute pain, what is the best phrasing to assess pain character?",
+      "option_a": "Is your pain bad or very bad?",
+      "option_b": "Can you describe the pain—is it sharp, dull, throbbing, or aching?",
+      "option_c": "Why do you have sharp pain today?",
+      "option_d": "Stop pain with pills immediately.",
+      "correct_option": "B",
+      "explanation": "Og'riq xarakterini aniqlashda shifokor ochiq va taklif qiluvchi variantlar (sharp, dull, throbbing, aching) beradi."
+    }
+  ]
+}

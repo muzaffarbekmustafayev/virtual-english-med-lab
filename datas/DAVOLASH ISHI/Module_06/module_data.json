@@ -1,0 +1,1147 @@
+{
+  "specialty_id": 2,
+  "specialty_name": "Davolash ishi",
+  "order_index": 6,
+  "title": "Severe Infection & Sepsis Assessment",
+  "title_uz": "Og'ir infeksiya va sepsis baholash",
+  "title_ru": "Тяжелая инфекция и оценка сепсиса",
+  "title_en": "Severe Infection & Sepsis Assessment",
+  "description": "Davolash ishi bo'yicha Og'ir infeksiya va sepsis baholash mavzusida klinik muloqot va tibbiy ingliz tili darsi.",
+  "clinical_level": "B2 Medical English",
+  "target_role": "Dental Clinician / Attending Physician",
+  "scenario_prompt": "You are a virtual patient presenting with symptoms related to Severe Infection & Sepsis Assessment. Speak in natural, everyday patient English.",
+  "patient_profile": {
+    "age": 48,
+    "gender": "Female",
+    "chief_complaint": "Og'ir infeksiya va sepsis baholash",
+    "history": "Patient presents with complaints of severe infection & sepsis assessment."
+  },
+  "grammar": [
+    {
+      "title": "Passive Voice in Sepsis Protocols & Emergency Clinical Actions",
+      "title_uz": "Sepsis va Shoshilinch Protokollarda Majhul Nisbat (Passive Voice)",
+      "title_ru": "Пассивный Залог (Passive Voice) в Протоколах Неотложной Помощи при Сепсисе",
+      "title_en": "Passive Voice in Sepsis Protocols & Emergency Clinical Actions",
+      "rule_explanation": "Passive Voice (is/are/must be + V3) is standard in clinical emergency guidelines and triage handovers to emphasize the timely execution of life-saving medical interventions.",
+      "rule_explanation_uz": "Shoshilinch tibbiy yordam va sepsis protokollarida tezkor muolajalarga urg'u berish uchun 'Blood cultures are drawn', 'IV fluids must be administered' kabi majhul nisbat shakllari qo'llaniladi.",
+      "rule_explanation_ru": "Пассивный залог (is/are/must be + V3) — стандарт описания экстренных протоколов ('Blood cultures are drawn', 'IV fluids are initiated').",
+      "rule_explanation_en": "Passive voice establishes clinical objectivity and procedural standardisation in sepsis management guidelines.",
+      "structure_pattern": "[Intervention / Sample] + is / must be + [Past Participle V3] + within [Timeframe]",
+      "structure_pattern_uz": "[Muolaja / Tahlil] + is / must be + [Fe'l V3] + [Vaqt oralig'ida]",
+      "structure_pattern_ru": "[Процедура / Анализ] + is / must be + [Причастие V3] + в течение [Времени]",
+      "structure_pattern_en": "[Intervention] + must be + [Past Participle V3] + within [Timeframe]",
+      "examples": [
+        {
+          "sentence": "Blood cultures must be drawn immediately before broad-spectrum antibiotics are administered.",
+          "translation_uz": "Keng ta'sir doirasiga ega antibiotiklar yuborilishidan oldin zudlik bilan qon ekmasi olinishi shart.",
+          "translation_ru": "Посев крови должен быть взят незамедлительно до введения антибиотиков широкого спектра действия.",
+          "translation_en": "Standard Sepsis Six emergency bundle protocol step.",
+          "note": "must be drawn / are administered (Passive Voice)",
+          "note_uz": "Shoshilinch protokol bosqichlari",
+          "note_ru": "Этапы протокола неотложной помощи",
+          "note_en": "Passive protocol mandates"
+        }
+      ],
+      "common_mistakes": [
+        {
+          "incorrect": "Antibiotics must administer quickly.",
+          "correct": "Antibiotics must be administered quickly.",
+          "explanation_uz": "Dori vositasi o'z-o'zini yubora olmaydi; majhul nisbat 'must be administered' talab qilinadi.",
+          "explanation_ru": "Препарат не вводит себя сам; необходима пассивная конструкция 'must be administered'.",
+          "explanation_en": "Use passive infinitive 'must be administered' when the subject receives the action."
+        }
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "severe infection",
+      "translation": "og'ir infeksiya",
+      "translation_uz": "og'ir infeksiya",
+      "translation_ru": "тяжёлая инфекция",
+      "translation_en": "severe infection",
+      "definition": "Clinical medical condition and symptom associated with severe infection.",
+      "definition_uz": "og'ir infeksiya - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "тяжёлая инфекция - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with severe infection.",
+      "example": "The doctor assessed the patient for severe infection."
+    },
+    {
+      "word": "sepsis",
+      "translation": "sepsis",
+      "translation_uz": "sepsis",
+      "translation_ru": "сепсис",
+      "translation_en": "sepsis",
+      "definition": "Clinical medical condition and symptom associated with sepsis.",
+      "definition_uz": "sepsis - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "сепсис - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with sepsis.",
+      "example": "The doctor assessed the patient for sepsis."
+    },
+    {
+      "word": "feel unwell",
+      "translation": "o'zini yomon his qilmoq",
+      "translation_uz": "o'zini yomon his qilmoq",
+      "translation_ru": "чувствовать себя плохо",
+      "translation_en": "feel unwell",
+      "definition": "Clinical medical condition and symptom associated with feel unwell.",
+      "definition_uz": "o'zini yomon his qilmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "чувствовать себя плохо - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with feel unwell.",
+      "example": "The doctor assessed the patient for feel unwell."
+    },
+    {
+      "word": "progressively weaker",
+      "translation": "tobora kuchsizlanib bormoq",
+      "translation_uz": "tobora kuchsizlanib bormoq",
+      "translation_ru": "постепенно становиться слабее",
+      "translation_en": "progressively weaker",
+      "definition": "Clinical medical condition and symptom associated with progressively weaker.",
+      "definition_uz": "tobora kuchsizlanib bormoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "постепенно становиться слабее - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with progressively weaker.",
+      "example": "The doctor assessed the patient for progressively weaker."
+    },
+    {
+      "word": "fever and chills",
+      "translation": "isitma va titroq",
+      "translation_uz": "isitma va titroq",
+      "translation_ru": "лихорадка и озноб",
+      "translation_en": "fever and chills",
+      "definition": "Systemic elevation of body core temperature in response to an infectious process.",
+      "definition_uz": "Infeksion yallig'lanish jarayoniga javoban tana haroratining ko'tarilishi.",
+      "definition_ru": "Повышение температуры тела в ответ на инфекционный процесс.",
+      "definition_en": "Systemic elevation of body core temperature in response to an infectious process.",
+      "example": "The doctor assessed the patient for fever and chills."
+    },
+    {
+      "word": "repeated episodes",
+      "translation": "takroriy xurujlar",
+      "translation_uz": "takroriy xurujlar",
+      "translation_ru": "повторные эпизоды",
+      "translation_en": "repeated episodes",
+      "definition": "Clinical medical condition and symptom associated with repeated episodes.",
+      "definition_uz": "takroriy xurujlar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "повторные эпизоды - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with repeated episodes.",
+      "example": "The doctor assessed the patient for repeated episodes."
+    },
+    {
+      "word": "yellow sputum",
+      "translation": "sariq balg'am",
+      "translation_uz": "sariq balg'am",
+      "translation_ru": "жёлтая мокрота",
+      "translation_en": "yellow sputum",
+      "definition": "Clinical medical condition and symptom associated with yellow sputum.",
+      "definition_uz": "sariq balg'am - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "жёлтая мокрота - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with yellow sputum.",
+      "example": "The doctor assessed the patient for yellow sputum."
+    },
+    {
+      "word": "short of breath",
+      "translation": "nafas qisishi",
+      "translation_uz": "nafas qisishi",
+      "translation_ru": "испытывать одышку",
+      "translation_en": "short of breath",
+      "definition": "Subjective clinical sensation of difficult, labored, or uncomfortable breathing.",
+      "definition_uz": "Nafas olishning qiyinlashishi, havo yetishmasligi hissi (nafas qisishi).",
+      "definition_ru": "Субъективное ощущение нехватки воздуха и затруднения дыхания (одышка).",
+      "definition_en": "Subjective clinical sensation of difficult, labored, or uncomfortable breathing.",
+      "example": "The doctor assessed the patient for short of breath."
+    },
+    {
+      "word": "become confused",
+      "translation": "hushi chalkashmoq",
+      "translation_uz": "hushi chalkashmoq",
+      "translation_ru": "становиться спутанным",
+      "translation_en": "become confused",
+      "definition": "Clinical medical condition and symptom associated with become confused.",
+      "definition_uz": "hushi chalkashmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "становиться спутанным - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with become confused.",
+      "example": "The doctor assessed the patient for become confused."
+    },
+    {
+      "word": "almost faint",
+      "translation": "deyarli hushidan ketmoq",
+      "translation_uz": "deyarli hushidan ketmoq",
+      "translation_ru": "чуть не потерять сознание",
+      "translation_en": "almost faint",
+      "definition": "Clinical medical condition and symptom associated with almost faint.",
+      "definition_uz": "deyarli hushidan ketmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "чуть не потерять сознание - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with almost faint.",
+      "example": "The doctor assessed the patient for almost faint."
+    },
+    {
+      "word": "blood pressure",
+      "translation": "qon bosimi",
+      "translation_uz": "qon bosimi",
+      "translation_ru": "артериальное давление",
+      "translation_en": "blood pressure",
+      "definition": "Clinical medical condition and symptom associated with blood pressure.",
+      "definition_uz": "qon bosimi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "артериальное давление - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with blood pressure.",
+      "example": "The doctor assessed the patient for blood pressure."
+    },
+    {
+      "word": "pulse",
+      "translation": "tomir urishi",
+      "translation_uz": "tomir urishi",
+      "translation_ru": "пульс",
+      "translation_en": "pulse",
+      "definition": "Clinical medical condition and symptom associated with pulse.",
+      "definition_uz": "tomir urishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "пульс - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with pulse.",
+      "example": "The doctor assessed the patient for pulse."
+    },
+    {
+      "word": "respiratory rate",
+      "translation": "nafas olish tezligi",
+      "translation_uz": "nafas olish tezligi",
+      "translation_ru": "частота дыхания",
+      "translation_en": "respiratory rate",
+      "definition": "Clinical medical condition and symptom associated with respiratory rate.",
+      "definition_uz": "nafas olish tezligi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "частота дыхания - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with respiratory rate.",
+      "example": "The doctor assessed the patient for respiratory rate."
+    },
+    {
+      "word": "oxygen saturation",
+      "translation": "qonning kislorod bilan to'yinganligi",
+      "translation_uz": "qonning kislorod bilan to'yinganligi",
+      "translation_ru": "сатурация, насыщение крови кислородом",
+      "translation_en": "oxygen saturation",
+      "definition": "Clinical medical condition and symptom associated with oxygen saturation.",
+      "definition_uz": "qonning kislorod bilan to'yinganligi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "сатурация, насыщение крови кислородом - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with oxygen saturation.",
+      "example": "The doctor assessed the patient for oxygen saturation."
+    },
+    {
+      "word": "room air",
+      "translation": "oddiy xona havosi",
+      "translation_uz": "oddiy xona havosi",
+      "translation_ru": "обычный комнатный воздух",
+      "translation_en": "room air",
+      "definition": "Clinical medical condition and symptom associated with room air.",
+      "definition_uz": "oddiy xona havosi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "обычный комнатный воздух - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with room air.",
+      "example": "The doctor assessed the patient for room air."
+    },
+    {
+      "word": "chest infection",
+      "translation": "ko'krak qafasi / nafas yo'llari infeksiyasi",
+      "translation_uz": "ko'krak qafasi / nafas yo'llari infeksiyasi",
+      "translation_ru": "инфекция дыхательных путей / грудной клетки",
+      "translation_en": "chest infection",
+      "definition": "Discomfort or constricting pressure localized in the thoracic region.",
+      "definition_uz": "Ko'krak qafasi sohasida siquvchi yoki bosuvchi og'riq hissi.",
+      "definition_ru": "Сдавливающая или давящая боль в области грудной клетки.",
+      "definition_en": "Discomfort or constricting pressure localized in the thoracic region.",
+      "example": "The doctor assessed the patient for chest infection."
+    },
+    {
+      "word": "life-threatening",
+      "translation": "hayot uchun xavfli",
+      "translation_uz": "hayot uchun xavfli",
+      "translation_ru": "угрожающий жизни",
+      "translation_en": "life-threatening",
+      "definition": "Clinical medical condition and symptom associated with life-threatening.",
+      "definition_uz": "hayot uchun xavfli - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "угрожающий жизни - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with life-threatening.",
+      "example": "The doctor assessed the patient for life-threatening."
+    },
+    {
+      "word": "recognise",
+      "translation": "aniqlamoq, tanimoq",
+      "translation_uz": "aniqlamoq, tanimoq",
+      "translation_ru": "распознать",
+      "translation_en": "recognise",
+      "definition": "Clinical medical condition and symptom associated with recognise.",
+      "definition_uz": "aniqlamoq, tanimoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "распознать - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with recognise.",
+      "example": "The doctor assessed the patient for recognise."
+    },
+    {
+      "word": "treat promptly",
+      "translation": "tezda davolamoq",
+      "translation_uz": "tezda davolamoq",
+      "translation_ru": "лечить незамедлительно",
+      "translation_en": "treat promptly",
+      "definition": "Clinical medical condition and symptom associated with treat promptly.",
+      "definition_uz": "tezda davolamoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "лечить незамедлительно - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with treat promptly.",
+      "example": "The doctor assessed the patient for treat promptly."
+    },
+    {
+      "word": "blood cultures",
+      "translation": "qon kulturasi",
+      "translation_uz": "qon kulturasi",
+      "translation_ru": "посев крови",
+      "translation_en": "blood cultures",
+      "definition": "Clinical medical condition and symptom associated with blood cultures.",
+      "definition_uz": "qon kulturasi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "посев крови - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with blood cultures.",
+      "example": "The doctor assessed the patient for blood cultures."
+    },
+    {
+      "word": "blood samples",
+      "translation": "qon namunalari",
+      "translation_uz": "qon namunalari",
+      "translation_ru": "образцы крови",
+      "translation_en": "blood samples",
+      "definition": "Clinical medical condition and symptom associated with blood samples.",
+      "definition_uz": "qon namunalari - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "образцы крови - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with blood samples.",
+      "example": "The doctor assessed the patient for blood samples."
+    },
+    {
+      "word": "full blood count",
+      "translation": "umumiy qon tahlili",
+      "translation_uz": "umumiy qon tahlili",
+      "translation_ru": "общий анализ крови",
+      "translation_en": "full blood count",
+      "definition": "Clinical medical condition and symptom associated with full blood count.",
+      "definition_uz": "umumiy qon tahlili - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "общий анализ крови - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with full blood count.",
+      "example": "The doctor assessed the patient for full blood count."
+    },
+    {
+      "word": "renal function",
+      "translation": "buyrak faoliyati",
+      "translation_uz": "buyrak faoliyati",
+      "translation_ru": "функция почек",
+      "translation_en": "renal function",
+      "definition": "Clinical medical condition and symptom associated with renal function.",
+      "definition_uz": "buyrak faoliyati - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "функция почек - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with renal function.",
+      "example": "The doctor assessed the patient for renal function."
+    },
+    {
+      "word": "electrolytes",
+      "translation": "elektrolitlar",
+      "translation_uz": "elektrolitlar",
+      "translation_ru": "электролиты",
+      "translation_en": "electrolytes",
+      "definition": "Clinical medical condition and symptom associated with electrolytes.",
+      "definition_uz": "elektrolitlar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "электролиты - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with electrolytes.",
+      "example": "The doctor assessed the patient for electrolytes."
+    },
+    {
+      "word": "lactate",
+      "translation": "laktat",
+      "translation_uz": "laktat",
+      "translation_ru": "лактат",
+      "translation_en": "lactate",
+      "definition": "Clinical medical condition and symptom associated with lactate.",
+      "definition_uz": "laktat - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "лактат - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with lactate.",
+      "example": "The doctor assessed the patient for lactate."
+    },
+    {
+      "word": "supplemental oxygen",
+      "translation": "qo'shimcha kislorod",
+      "translation_uz": "qo'shimcha kislorod",
+      "translation_ru": "дополнительный кислород",
+      "translation_en": "supplemental oxygen",
+      "definition": "Clinical medical condition and symptom associated with supplemental oxygen.",
+      "definition_uz": "qo'shimcha kislorod - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "дополнительный кислород - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with supplemental oxygen.",
+      "example": "The doctor assessed the patient for supplemental oxygen."
+    },
+    {
+      "word": "monitor closely",
+      "translation": "yaqindan kuzatmoq",
+      "translation_uz": "yaqindan kuzatmoq",
+      "translation_ru": "тщательно наблюдать",
+      "translation_en": "monitor closely",
+      "definition": "Clinical medical condition and symptom associated with monitor closely.",
+      "definition_uz": "yaqindan kuzatmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "тщательно наблюдать - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with monitor closely.",
+      "example": "The doctor assessed the patient for monitor closely."
+    },
+    {
+      "word": "initial treatment",
+      "translation": "boshlang'ich davolash",
+      "translation_uz": "boshlang'ich davolash",
+      "translation_ru": "первоначальное лечение",
+      "translation_en": "initial treatment",
+      "definition": "Clinical medical condition and symptom associated with initial treatment.",
+      "definition_uz": "boshlang'ich davolash - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "первоначальное лечение - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with initial treatment.",
+      "example": "The doctor assessed the patient for initial treatment."
+    },
+    {
+      "word": "higher-level care",
+      "translation": "yuqori darajadagi tibbiy yordam",
+      "translation_uz": "yuqori darajadagi tibbiy yordam",
+      "translation_ru": "медицинская помощь более высокого уровня",
+      "translation_en": "higher-level care",
+      "definition": "Clinical medical condition and symptom associated with higher-level care.",
+      "definition_uz": "yuqori darajadagi tibbiy yordam - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "медицинская помощь более высокого уровня - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with higher-level care.",
+      "example": "The doctor assessed the patient for higher-level care."
+    },
+    {
+      "word": "organ dysfunction",
+      "translation": "a'zolar faoliyatining buzilishi",
+      "translation_uz": "a'zolar faoliyatining buzilishi",
+      "translation_ru": "нарушение функции органов",
+      "translation_en": "organ dysfunction",
+      "definition": "Clinical medical condition and symptom associated with organ dysfunction.",
+      "definition_uz": "a'zolar faoliyatining buzilishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "нарушение функции органов - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with organ dysfunction.",
+      "example": "The doctor assessed the patient for organ dysfunction."
+    },
+    {
+      "word": "intravenous access",
+      "translation": "vena ichiga kirish yo'li",
+      "translation_uz": "vena ichiga kirish yo'li",
+      "translation_ru": "венозный доступ",
+      "translation_en": "intravenous access",
+      "definition": "Clinical medical condition and symptom associated with intravenous access.",
+      "definition_uz": "vena ichiga kirish yo'li - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "венозный доступ - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with intravenous access.",
+      "example": "The doctor assessed the patient for intravenous access."
+    },
+    {
+      "word": "prescribed fluids",
+      "translation": "buyurilgan suyuqliklar",
+      "translation_uz": "buyurilgan suyuqliklar",
+      "translation_ru": "назначенные жидкости",
+      "translation_en": "prescribed fluids",
+      "definition": "Clinical medical condition and symptom associated with prescribed fluids.",
+      "definition_uz": "buyurilgan suyuqliklar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "назначенные жидкости - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with prescribed fluids.",
+      "example": "The doctor assessed the patient for prescribed fluids."
+    },
+    {
+      "word": "antimicrobial treatment",
+      "translation": "antimikrob davolash",
+      "translation_uz": "antimikrob davolash",
+      "translation_ru": "антимикробное лечение",
+      "translation_en": "antimicrobial treatment",
+      "definition": "Clinical medical condition and symptom associated with antimicrobial treatment.",
+      "definition_uz": "antimikrob davolash - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "антимикробное лечение - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with antimicrobial treatment.",
+      "example": "The doctor assessed the patient for antimicrobial treatment."
+    },
+    {
+      "word": "serious bacterial infection",
+      "translation": "jiddiy bakterial infeksiya",
+      "translation_uz": "jiddiy bakterial infeksiya",
+      "translation_ru": "серьёзная бактериальная инфекция",
+      "translation_en": "serious bacterial infection",
+      "definition": "Clinical medical condition and symptom associated with serious bacterial infection.",
+      "definition_uz": "jiddiy bakterial infeksiya - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "серьёзная бактериальная инфекция - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with serious bacterial infection.",
+      "example": "The doctor assessed the patient for serious bacterial infection."
+    },
+    {
+      "word": "empirically",
+      "translation": "empirik tarzda",
+      "translation_uz": "empirik tarzda",
+      "translation_ru": "эмпирически",
+      "translation_en": "empirically",
+      "definition": "Clinical medical condition and symptom associated with empirically.",
+      "definition_uz": "empirik tarzda - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "эмпирически - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with empirically.",
+      "example": "The doctor assessed the patient for empirically."
+    },
+    {
+      "word": "culture results",
+      "translation": "kultura natijalari",
+      "translation_uz": "kultura natijalari",
+      "translation_ru": "результаты посева",
+      "translation_en": "culture results",
+      "definition": "Clinical medical condition and symptom associated with culture results.",
+      "definition_uz": "kultura natijalari - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "результаты посева - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with culture results.",
+      "example": "The doctor assessed the patient for culture results."
+    },
+    {
+      "word": "organism",
+      "translation": "mikroorganizm",
+      "translation_uz": "mikroorganizm",
+      "translation_ru": "микроорганизм",
+      "translation_en": "organism",
+      "definition": "Clinical medical condition and symptom associated with organism.",
+      "definition_uz": "mikroorganizm - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "микроорганизм - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with organism.",
+      "example": "The doctor assessed the patient for organism."
+    },
+    {
+      "word": "sensitivities",
+      "translation": "sezuvchanlik natijalari",
+      "translation_uz": "sezuvchanlik natijalari",
+      "translation_ru": "чувствительность",
+      "translation_en": "sensitivities",
+      "definition": "Clinical medical condition and symptom associated with sensitivities.",
+      "definition_uz": "sezuvchanlik natijalari - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "чувствительность - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with sensitivities.",
+      "example": "The doctor assessed the patient for sensitivities."
+    },
+    {
+      "word": "urine output",
+      "translation": "siydik chiqishi miqdori",
+      "translation_uz": "siydik chiqishi miqdori",
+      "translation_ru": "количество выделяемой мочи",
+      "translation_en": "urine output",
+      "definition": "Clinical medical condition and symptom associated with urine output.",
+      "definition_uz": "siydik chiqishi miqdori - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "количество выделяемой мочи - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with urine output.",
+      "example": "The doctor assessed the patient for urine output."
+    },
+    {
+      "word": "mental state",
+      "translation": "ruhiy va ong holati",
+      "translation_uz": "ruhiy va ong holati",
+      "translation_ru": "психическое и сознательное состояние",
+      "translation_en": "mental state",
+      "definition": "Clinical medical condition and symptom associated with mental state.",
+      "definition_uz": "ruhiy va ong holati - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "психическое и сознательное состояние - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with mental state.",
+      "example": "The doctor assessed the patient for mental state."
+    },
+    {
+      "word": "laboratory markers",
+      "translation": "laborator ko'rsatkichlar",
+      "translation_uz": "laborator ko'rsatkichlar",
+      "translation_ru": "лабораторные показатели",
+      "translation_en": "laboratory markers",
+      "definition": "Clinical medical condition and symptom associated with laboratory markers.",
+      "definition_uz": "laborator ko'rsatkichlar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "лабораторные показатели - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with laboratory markers.",
+      "example": "The doctor assessed the patient for laboratory markers."
+    },
+    {
+      "word": "reassess",
+      "translation": "qayta baholamoq",
+      "translation_uz": "qayta baholamoq",
+      "translation_ru": "повторно оценить",
+      "translation_en": "reassess",
+      "definition": "Clinical medical condition and symptom associated with reassess.",
+      "definition_uz": "qayta baholamoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "повторно оценить - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with reassess.",
+      "example": "The doctor assessed the patient for reassess."
+    },
+    {
+      "word": "identify the source",
+      "translation": "manbani aniqlamoq",
+      "translation_uz": "manbani aniqlamoq",
+      "translation_ru": "определить источник",
+      "translation_en": "identify the source",
+      "definition": "Clinical medical condition and symptom associated with identify the source.",
+      "definition_uz": "manbani aniqlamoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "определить источник - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with identify the source.",
+      "example": "The doctor assessed the patient for identify the source."
+    },
+    {
+      "word": "vital organs",
+      "translation": "hayotiy muhim a'zolar",
+      "translation_uz": "hayotiy muhim a'zolar",
+      "translation_ru": "жизненно важные органы",
+      "translation_en": "vital organs",
+      "definition": "Clinical medical condition and symptom associated with vital organs.",
+      "definition_uz": "hayotiy muhim a'zolar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "жизненно важные органы - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with vital organs.",
+      "example": "The doctor assessed the patient for vital organs."
+    },
+    {
+      "word": "safety-netting",
+      "translation": "keyingi xavfsizlik bo'yicha ko'rsatmalar",
+      "translation_uz": "keyingi xavfsizlik bo'yicha ko'rsatmalar",
+      "translation_ru": "рекомендации по дальнейшему наблюдению и безопасности",
+      "translation_en": "safety-netting",
+      "definition": "Clinical medical condition and symptom associated with safety-netting.",
+      "definition_uz": "keyingi xavfsizlik bo'yicha ko'rsatmalar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "рекомендации по дальнейшему наблюдению и безопасности - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with safety-netting.",
+      "example": "The doctor assessed the patient for safety-netting."
+    }
+  ],
+  "phrasebook": [
+    {
+      "phrase": "severe infection",
+      "category": "Clinical Consultation",
+      "hint": "og'ir infeksiya",
+      "hint_uz": "og'ir infeksiya",
+      "hint_ru": "тяжёлая инфекция",
+      "hint_en": "severe infection",
+      "patient_response": ""
+    },
+    {
+      "phrase": "sepsis",
+      "category": "Clinical Consultation",
+      "hint": "sepsis",
+      "hint_uz": "sepsis",
+      "hint_ru": "сепсис",
+      "hint_en": "sepsis",
+      "patient_response": ""
+    },
+    {
+      "phrase": "feel unwell",
+      "category": "Clinical Consultation",
+      "hint": "o'zini yomon his qilmoq",
+      "hint_uz": "o'zini yomon his qilmoq",
+      "hint_ru": "чувствовать себя плохо",
+      "hint_en": "feel unwell",
+      "patient_response": ""
+    },
+    {
+      "phrase": "progressively weaker",
+      "category": "Clinical Consultation",
+      "hint": "tobora kuchsizlanib bormoq",
+      "hint_uz": "tobora kuchsizlanib bormoq",
+      "hint_ru": "постепенно становиться слабее",
+      "hint_en": "progressively weaker",
+      "patient_response": ""
+    },
+    {
+      "phrase": "fever and chills",
+      "category": "Clinical Consultation",
+      "hint": "Harorat (isitma) yoki qaltirash bormi?",
+      "hint_uz": "Harorat (isitma) yoki qaltirash bormi?",
+      "hint_ru": "Есть ли повышенная температура или озноб?",
+      "hint_en": "fever and chills",
+      "patient_response": ""
+    },
+    {
+      "phrase": "repeated episodes",
+      "category": "Clinical Consultation",
+      "hint": "takroriy xurujlar",
+      "hint_uz": "takroriy xurujlar",
+      "hint_ru": "повторные эпизоды",
+      "hint_en": "repeated episodes",
+      "patient_response": ""
+    },
+    {
+      "phrase": "yellow sputum",
+      "category": "Clinical Consultation",
+      "hint": "sariq balg'am",
+      "hint_uz": "sariq balg'am",
+      "hint_ru": "жёлтая мокрота",
+      "hint_en": "yellow sputum",
+      "patient_response": ""
+    },
+    {
+      "phrase": "short of breath",
+      "category": "Clinical Consultation",
+      "hint": "nafas qisishi",
+      "hint_uz": "nafas qisishi",
+      "hint_ru": "испытывать одышку",
+      "hint_en": "short of breath",
+      "patient_response": ""
+    },
+    {
+      "phrase": "become confused",
+      "category": "Clinical Consultation",
+      "hint": "hushi chalkashmoq",
+      "hint_uz": "hushi chalkashmoq",
+      "hint_ru": "становиться спутанным",
+      "hint_en": "become confused",
+      "patient_response": ""
+    },
+    {
+      "phrase": "almost faint",
+      "category": "Clinical Consultation",
+      "hint": "deyarli hushidan ketmoq",
+      "hint_uz": "deyarli hushidan ketmoq",
+      "hint_ru": "чуть не потерять сознание",
+      "hint_en": "almost faint",
+      "patient_response": ""
+    },
+    {
+      "phrase": "blood pressure",
+      "category": "Clinical Consultation",
+      "hint": "qon bosimi",
+      "hint_uz": "qon bosimi",
+      "hint_ru": "артериальное давление",
+      "hint_en": "blood pressure",
+      "patient_response": ""
+    },
+    {
+      "phrase": "pulse",
+      "category": "Clinical Consultation",
+      "hint": "tomir urishi",
+      "hint_uz": "tomir urishi",
+      "hint_ru": "пульс",
+      "hint_en": "pulse",
+      "patient_response": ""
+    },
+    {
+      "phrase": "respiratory rate",
+      "category": "Clinical Consultation",
+      "hint": "nafas olish tezligi",
+      "hint_uz": "nafas olish tezligi",
+      "hint_ru": "частота дыхания",
+      "hint_en": "respiratory rate",
+      "patient_response": ""
+    },
+    {
+      "phrase": "oxygen saturation",
+      "category": "Clinical Consultation",
+      "hint": "qonning kislorod bilan to'yinganligi",
+      "hint_uz": "qonning kislorod bilan to'yinganligi",
+      "hint_ru": "сатурация, насыщение крови кислородом",
+      "hint_en": "oxygen saturation",
+      "patient_response": ""
+    },
+    {
+      "phrase": "room air",
+      "category": "Clinical Consultation",
+      "hint": "oddiy xona havosi",
+      "hint_uz": "oddiy xona havosi",
+      "hint_ru": "обычный комнатный воздух",
+      "hint_en": "room air",
+      "patient_response": ""
+    },
+    {
+      "phrase": "chest infection",
+      "category": "Clinical Consultation",
+      "hint": "ko'krak qafasi / nafas yo'llari infeksiyasi",
+      "hint_uz": "ko'krak qafasi / nafas yo'llari infeksiyasi",
+      "hint_ru": "инфекция дыхательных путей / грудной клетки",
+      "hint_en": "chest infection",
+      "patient_response": ""
+    },
+    {
+      "phrase": "life-threatening",
+      "category": "Clinical Consultation",
+      "hint": "hayot uchun xavfli",
+      "hint_uz": "hayot uchun xavfli",
+      "hint_ru": "угрожающий жизни",
+      "hint_en": "life-threatening",
+      "patient_response": ""
+    },
+    {
+      "phrase": "recognise",
+      "category": "Clinical Consultation",
+      "hint": "aniqlamoq, tanimoq",
+      "hint_uz": "aniqlamoq, tanimoq",
+      "hint_ru": "распознать",
+      "hint_en": "recognise",
+      "patient_response": ""
+    },
+    {
+      "phrase": "treat promptly",
+      "category": "Clinical Consultation",
+      "hint": "tezda davolamoq",
+      "hint_uz": "tezda davolamoq",
+      "hint_ru": "лечить незамедлительно",
+      "hint_en": "treat promptly",
+      "patient_response": ""
+    },
+    {
+      "phrase": "blood cultures",
+      "category": "Clinical Consultation",
+      "hint": "qon kulturasi",
+      "hint_uz": "qon kulturasi",
+      "hint_ru": "посев крови",
+      "hint_en": "blood cultures",
+      "patient_response": ""
+    },
+    {
+      "phrase": "blood samples",
+      "category": "Clinical Consultation",
+      "hint": "qon namunalari",
+      "hint_uz": "qon namunalari",
+      "hint_ru": "образцы крови",
+      "hint_en": "blood samples",
+      "patient_response": ""
+    },
+    {
+      "phrase": "full blood count",
+      "category": "Clinical Consultation",
+      "hint": "umumiy qon tahlili",
+      "hint_uz": "umumiy qon tahlili",
+      "hint_ru": "общий анализ крови",
+      "hint_en": "full blood count",
+      "patient_response": ""
+    },
+    {
+      "phrase": "renal function",
+      "category": "Clinical Consultation",
+      "hint": "buyrak faoliyati",
+      "hint_uz": "buyrak faoliyati",
+      "hint_ru": "функция почек",
+      "hint_en": "renal function",
+      "patient_response": ""
+    },
+    {
+      "phrase": "electrolytes",
+      "category": "Clinical Consultation",
+      "hint": "elektrolitlar",
+      "hint_uz": "elektrolitlar",
+      "hint_ru": "электролиты",
+      "hint_en": "electrolytes",
+      "patient_response": ""
+    },
+    {
+      "phrase": "lactate",
+      "category": "Clinical Consultation",
+      "hint": "laktat",
+      "hint_uz": "laktat",
+      "hint_ru": "лактат",
+      "hint_en": "lactate",
+      "patient_response": ""
+    },
+    {
+      "phrase": "supplemental oxygen",
+      "category": "Clinical Consultation",
+      "hint": "qo'shimcha kislorod",
+      "hint_uz": "qo'shimcha kislorod",
+      "hint_ru": "дополнительный кислород",
+      "hint_en": "supplemental oxygen",
+      "patient_response": ""
+    },
+    {
+      "phrase": "monitor closely",
+      "category": "Clinical Consultation",
+      "hint": "yaqindan kuzatmoq",
+      "hint_uz": "yaqindan kuzatmoq",
+      "hint_ru": "тщательно наблюдать",
+      "hint_en": "monitor closely",
+      "patient_response": ""
+    },
+    {
+      "phrase": "initial treatment",
+      "category": "Clinical Consultation",
+      "hint": "boshlang'ich davolash",
+      "hint_uz": "boshlang'ich davolash",
+      "hint_ru": "первоначальное лечение",
+      "hint_en": "initial treatment",
+      "patient_response": ""
+    },
+    {
+      "phrase": "higher-level care",
+      "category": "Clinical Consultation",
+      "hint": "yuqori darajadagi tibbiy yordam",
+      "hint_uz": "yuqori darajadagi tibbiy yordam",
+      "hint_ru": "медицинская помощь более высокого уровня",
+      "hint_en": "higher-level care",
+      "patient_response": ""
+    },
+    {
+      "phrase": "organ dysfunction",
+      "category": "Clinical Consultation",
+      "hint": "a'zolar faoliyatining buzilishi",
+      "hint_uz": "a'zolar faoliyatining buzilishi",
+      "hint_ru": "нарушение функции органов",
+      "hint_en": "organ dysfunction",
+      "patient_response": ""
+    },
+    {
+      "phrase": "intravenous access",
+      "category": "Clinical Consultation",
+      "hint": "vena ichiga kirish yo'li",
+      "hint_uz": "vena ichiga kirish yo'li",
+      "hint_ru": "венозный доступ",
+      "hint_en": "intravenous access",
+      "patient_response": ""
+    },
+    {
+      "phrase": "prescribed fluids",
+      "category": "Clinical Consultation",
+      "hint": "buyurilgan suyuqliklar",
+      "hint_uz": "buyurilgan suyuqliklar",
+      "hint_ru": "назначенные жидкости",
+      "hint_en": "prescribed fluids",
+      "patient_response": ""
+    },
+    {
+      "phrase": "antimicrobial treatment",
+      "category": "Clinical Consultation",
+      "hint": "antimikrob davolash",
+      "hint_uz": "antimikrob davolash",
+      "hint_ru": "антимикробное лечение",
+      "hint_en": "antimicrobial treatment",
+      "patient_response": ""
+    },
+    {
+      "phrase": "serious bacterial infection",
+      "category": "Clinical Consultation",
+      "hint": "jiddiy bakterial infeksiya",
+      "hint_uz": "jiddiy bakterial infeksiya",
+      "hint_ru": "серьёзная бактериальная инфекция",
+      "hint_en": "serious bacterial infection",
+      "patient_response": ""
+    },
+    {
+      "phrase": "empirically",
+      "category": "Clinical Consultation",
+      "hint": "empirik tarzda",
+      "hint_uz": "empirik tarzda",
+      "hint_ru": "эмпирически",
+      "hint_en": "empirically",
+      "patient_response": ""
+    },
+    {
+      "phrase": "culture results",
+      "category": "Clinical Consultation",
+      "hint": "kultura natijalari",
+      "hint_uz": "kultura natijalari",
+      "hint_ru": "результаты посева",
+      "hint_en": "culture results",
+      "patient_response": ""
+    },
+    {
+      "phrase": "organism",
+      "category": "Clinical Consultation",
+      "hint": "mikroorganizm",
+      "hint_uz": "mikroorganizm",
+      "hint_ru": "микроорганизм",
+      "hint_en": "organism",
+      "patient_response": ""
+    },
+    {
+      "phrase": "sensitivities",
+      "category": "Clinical Consultation",
+      "hint": "sezuvchanlik natijalari",
+      "hint_uz": "sezuvchanlik natijalari",
+      "hint_ru": "чувствительность",
+      "hint_en": "sensitivities",
+      "patient_response": ""
+    },
+    {
+      "phrase": "urine output",
+      "category": "Clinical Consultation",
+      "hint": "siydik chiqishi miqdori",
+      "hint_uz": "siydik chiqishi miqdori",
+      "hint_ru": "количество выделяемой мочи",
+      "hint_en": "urine output",
+      "patient_response": ""
+    },
+    {
+      "phrase": "mental state",
+      "category": "Clinical Consultation",
+      "hint": "ruhiy va ong holati",
+      "hint_uz": "ruhiy va ong holati",
+      "hint_ru": "психическое и сознательное состояние",
+      "hint_en": "mental state",
+      "patient_response": ""
+    },
+    {
+      "phrase": "laboratory markers",
+      "category": "Clinical Consultation",
+      "hint": "laborator ko'rsatkichlar",
+      "hint_uz": "laborator ko'rsatkichlar",
+      "hint_ru": "лабораторные показатели",
+      "hint_en": "laboratory markers",
+      "patient_response": ""
+    },
+    {
+      "phrase": "reassess",
+      "category": "Clinical Consultation",
+      "hint": "qayta baholamoq",
+      "hint_uz": "qayta baholamoq",
+      "hint_ru": "повторно оценить",
+      "hint_en": "reassess",
+      "patient_response": ""
+    },
+    {
+      "phrase": "identify the source",
+      "category": "Clinical Consultation",
+      "hint": "manbani aniqlamoq",
+      "hint_uz": "manbani aniqlamoq",
+      "hint_ru": "определить источник",
+      "hint_en": "identify the source",
+      "patient_response": ""
+    },
+    {
+      "phrase": "vital organs",
+      "category": "Clinical Consultation",
+      "hint": "hayotiy muhim a'zolar",
+      "hint_uz": "hayotiy muhim a'zolar",
+      "hint_ru": "жизненно важные органы",
+      "hint_en": "vital organs",
+      "patient_response": ""
+    },
+    {
+      "phrase": "safety-netting",
+      "category": "Clinical Consultation",
+      "hint": "keyingi xavfsizlik bo'yicha ko'rsatmalar",
+      "hint_uz": "keyingi xavfsizlik bo'yicha ko'rsatmalar",
+      "hint_ru": "рекомендации по дальнейшему наблюдению и безопасности",
+      "hint_en": "safety-netting",
+      "patient_response": ""
+    },
+    {
+      "phrase": "How long have you been feeling unwell?",
+      "category": "Clinical Inquiry",
+      "hint": "Bu og'riq / simptom qachondan beri bor?",
+      "hint_uz": "Bu og'riq / simptom qachondan beri bor?",
+      "hint_ru": "Как долго вас беспокоит эта боль / симптом?",
+      "hint_en": "How long have you been feeling unwell?",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Have you been coughing or experiencing any urinary symptoms?",
+      "category": "Clinical Inquiry",
+      "hint": "Klinik muloqot iborasi",
+      "hint_uz": "Klinik muloqot iborasi",
+      "hint_ru": "Klinik muloqot iborasi",
+      "hint_en": "Have you been coughing or experiencing any urinary symptoms?",
+      "patient_response": ""
+    }
+  ],
+  "dialogue": [
+    {
+      "speaker": "Doctor",
+      "text": "How long have you been feeling unwell?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I've been feeling progressively weaker for about two days. I've also been having repeated episodes of fever and chills."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Have you been coughing or experiencing any urinary symptoms?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I've had a cough with yellow sputum, and I've been feeling short of breath. Relative: He became much more confused this morning and almost fainted when he stood up. Nurse: His temperature is 39.2°C, blood pressure is 88 over 54, pulse 122, respiratory rate 28, and oxygen saturation is 90% on room air."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Thank you. These observations are concerning. Have you been treated for an infection recently?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "Yes. I was treated for a chest infection last week."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Were antibiotics prescribed?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "Yes, but I stopped them after three days because I started feeling better."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "I see. At the moment, we need to consider a severe systemic infection and possible sepsis."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Is sepsis life-threatening?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "It can be. The important thing is that it is recognised and treated promptly. Nurse: Blood cultures can be taken before antibiotics are started, provided this does not cause a significant delay."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Exactly. Blood samples will be taken for cultures, full blood count, renal function, electrolytes, lactate, and other relevant tests."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Will I need oxygen?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Your oxygen saturation is low, so supplemental oxygen will be given and your response will be monitored closely. Relative: Does he need to go to intensive care?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "We'll assess his response to initial treatment. If his blood pressure remains low or organ dysfunction develops, higher-level care may be required. Nurse: Intravenous access has been established. I'm preparing the prescribed fluids and medications."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Good. Appropriate antimicrobial treatment should be started promptly if a serious bacterial infection is suspected."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Will the doctors know which antibiotic is best immediately?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Not always. Treatment may begin empirically and then be adjusted when culture results identify the organism and its sensitivities."
+    },
+    {
+      "speaker": "Patient",
+      "text": "What should I expect over the next few hours?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Your blood pressure, urine output, oxygenation, mental state, and laboratory markers will be monitored closely. We'll reassess you repeatedly rather than relying on a single measurement. Relative: So the situation is serious, but you are treating it now?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Yes. The priority is to control the infection, support your vital organs, and identify the source as quickly as possible."
+    }
+  ],
+  "tests": [
+    {
+      "question": "What is the medical meaning of the term 'severe infection' in clinical consultation?",
+      "option_a": "og'ir infeksiya",
+      "option_b": "sepsis",
+      "option_c": "o'zini yomon his qilmoq",
+      "option_d": "tobora kuchsizlanib bormoq",
+      "correct_option": "A",
+      "explanation": "'severe infection' atamasining to'g'ri ma'nosi: og'ir infeksiya."
+    },
+    {
+      "question": "Which term corresponds to 'isitma va titroq'?",
+      "option_a": "sepsis",
+      "option_b": "fever and chills",
+      "option_c": "feel unwell",
+      "option_d": "progressively weaker",
+      "correct_option": "B",
+      "explanation": "'isitma va titroq' ma'nosiga mos keluvchi tibbiy termin 'fever and chills' hisoblanadi."
+    },
+    {
+      "question": "Which of the following is the grammatically and clinically standard question to ask about the duration of symptoms?",
+      "option_a": "How long do you having this symptom?",
+      "option_b": "How long has this condition been bothering you?",
+      "option_c": "Since what time you have this problem?",
+      "option_d": "How many days you are feeling pain?",
+      "correct_option": "B",
+      "explanation": "Klinik anamnezda davomiylikni so'rash uchun Present Perfect Continuous ('How long has... been bothering you?') to'g'ri shakl hisoblanadi."
+    },
+    {
+      "question": "When evaluating acute pain, what is the best phrasing to assess pain character?",
+      "option_a": "Is your pain bad or very bad?",
+      "option_b": "Can you describe the pain—is it sharp, dull, throbbing, or aching?",
+      "option_c": "Why do you have sharp pain today?",
+      "option_d": "Stop pain with pills immediately.",
+      "correct_option": "B",
+      "explanation": "Og'riq xarakterini aniqlashda shifokor ochiq va taklif qiluvchi variantlar (sharp, dull, throbbing, aching) beradi."
+    }
+  ]
+}

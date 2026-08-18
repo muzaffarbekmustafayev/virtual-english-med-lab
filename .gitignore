@@ -32,25 +32,14 @@ out/
 .next/
 
 # ==========================================
-# Local Documents, Data Dumps & Screenshots (Do NOT commit to GitHub)
+# Ignored Media, Test Screenshots & Local Agents
 # ==========================================
-datas/
-**/datas/
-datas_summary.json
-docs/
-**/docs/
 screenshots/
 **/screenshots/
 antigravity/
 **/antigravity/
-
-# Uploads / Media files
 uploads/
 **/uploads/
-*.docx
-*.doc
-*.xlsx
-*.csv
 
 # ==========================================
 # Scratch, Migration & Capture Helper Scripts

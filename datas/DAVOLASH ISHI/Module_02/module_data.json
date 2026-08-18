@@ -1,0 +1,774 @@
+{
+  "specialty_id": 2,
+  "specialty_name": "Davolash ishi",
+  "order_index": 2,
+  "title": "Chest Pain & Cardiovascular Evaluation",
+  "title_uz": "Ko'krak og'rig'i va yurak-qon tomir tekshiruvi",
+  "title_ru": "Боль в груди и оценка сердечно-сосудистой системы",
+  "title_en": "Chest Pain & Cardiovascular Evaluation",
+  "description": "Davolash ishi bo'yicha Ko'krak og'rig'i va yurak-qon tomir tekshiruvi mavzusida klinik muloqot va tibbiy ingliz tili darsi.",
+  "clinical_level": "B2 Medical English",
+  "target_role": "Dental Clinician / Attending Physician",
+  "scenario_prompt": "You are a virtual patient presenting with symptoms related to Chest Pain & Cardiovascular Evaluation. Speak in natural, everyday patient English.",
+  "patient_profile": {
+    "age": 36,
+    "gender": "Female",
+    "chief_complaint": "Ko'krak og'rig'i va yurak-qon tomir tekshiruvi",
+    "history": "Patient presents with complaints of chest pain & cardiovascular evaluation."
+  },
+  "grammar": [
+    {
+      "title": "Past Simple vs Present Perfect in Cardiovascular Pain Assessment",
+      "title_uz": "Kardiologik Og'riqda Past Simple va Present Perfect (Boshlanishi va Dinamikasi)",
+      "title_ru": "Past Simple и Present Perfect при Оценке Кардиологической Боли",
+      "title_en": "Past Simple vs Present Perfect in Cardiovascular Pain Assessment",
+      "rule_explanation": "Use Past Simple to determine the exact time of acute chest pain onset ('When did the crushing sensation start?'). Use Present Perfect for episodes connecting past to present ('Have you ever experienced episodes like this before?').",
+      "rule_explanation_uz": "Ko'krak qafasidagi o'tkir og'riq aynan qachon boshlanganini aniqlashda Past Simple, o'tmishdan to hozirgacha bunday xurujlar bo'lgan-bo'lmaganini so'rashda Present Perfect ishlatiladi.",
+      "rule_explanation_ru": "Past Simple определяет точный момент начала острой боли за грудиной, а Present Perfect — наличие подобных эпизодов в анамнезе до настоящего времени.",
+      "rule_explanation_en": "Past Simple identifies acute onset time. Present Perfect reviews lifetime or recurring episodes connecting past to present.",
+      "structure_pattern": "When did the chest pressure start? | Have you ever had + [Condition/Episode] + before?",
+      "structure_pattern_uz": "When did the chest pressure start? | Have you ever had + [Holat] + before?",
+      "structure_pattern_ru": "When did the chest pressure start? | Have you ever had + [Состояние] + before?",
+      "structure_pattern_en": "When did the chest pressure start? | Have you ever had this symptom before?",
+      "examples": [
+        {
+          "sentence": "When exactly did this central chest pressure start?",
+          "translation_uz": "Ko'krak o'rtasidagi bu siquvchi bosim aynan qachon boshlandi?",
+          "translation_ru": "Когда именно началось это давящее ощущение в центре груди?",
+          "translation_en": "Establishing acute ischemia onset timeline.",
+          "note": "When did + Subject + start?",
+          "note_uz": "O'tkir simptom boshlanishi (Past Simple)",
+          "note_ru": "Острое начало симптома (Past Simple)",
+          "note_en": "Acute onset timing"
+        },
+        {
+          "sentence": "Have you ever experienced tightness like this during physical exertion before?",
+          "translation_uz": "Oldin jismoniy zo'riqish paytida hech shunga o'xshash siqilishni his qilganmisiz?",
+          "translation_ru": "Испытывали ли вы ранее подобную сдавленность при физической нагрузке?",
+          "translation_en": "Screening for prior angina pectoris episodes.",
+          "note": "Have you ever + V3?",
+          "note_uz": "Avvalgi tajriba (Present Perfect)",
+          "note_ru": "Анамнез приступов (Present Perfect)",
+          "note_en": "Prior experience screening"
+        }
+      ],
+      "common_mistakes": [
+        {
+          "incorrect": "Did you ever had heart attack?",
+          "correct": "Have you ever had a heart attack?",
+          "explanation_uz": "Hayotiy tajriba va anamnezni so'rashda 'Did you ever had' emas, 'Have you ever had' qo'llaniladi.",
+          "explanation_ru": "Для расспроса о жизненном анамнезе используется 'Have you ever had', а не 'Did you ever had'.",
+          "explanation_en": "Use Present Perfect ('Have you ever had') for lifetime clinical history inquiries."
+        }
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "heavy pressure",
+      "translation": "kuchli bosim",
+      "translation_uz": "kuchli bosim",
+      "translation_ru": "сильное давление",
+      "translation_en": "heavy pressure",
+      "definition": "Clinical medical condition and symptom associated with heavy pressure.",
+      "definition_uz": "kuchli bosim - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "сильное давление - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with heavy pressure.",
+      "example": "The doctor assessed the patient for heavy pressure."
+    },
+    {
+      "word": "centre of the chest",
+      "translation": "ko'krak markazi",
+      "translation_uz": "ko'krak markazi",
+      "translation_ru": "центр грудной клетки",
+      "translation_en": "centre of the chest",
+      "definition": "Discomfort or constricting pressure localized in the thoracic region.",
+      "definition_uz": "Ko'krak qafasi sohasida siquvchi yoki bosuvchi og'riq hissi.",
+      "definition_ru": "Сдавливающая или давящая боль в области грудной клетки.",
+      "definition_en": "Discomfort or constricting pressure localized in the thoracic region.",
+      "example": "The doctor assessed the patient for centre of the chest."
+    },
+    {
+      "word": "crushing pressure",
+      "translation": "ezuvchi/bosuvchi og'riq",
+      "translation_uz": "ezuvchi/bosuvchi og'riq",
+      "translation_ru": "сжимающая, давящая боль",
+      "translation_en": "crushing pressure",
+      "definition": "Clinical medical condition and symptom associated with crushing pressure.",
+      "definition_uz": "ezuvchi/bosuvchi og'riq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "сжимающая, давящая боль - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with crushing pressure.",
+      "example": "The doctor assessed the patient for crushing pressure."
+    },
+    {
+      "word": "radiate",
+      "translation": "tarqalmoq",
+      "translation_uz": "tarqalmoq",
+      "translation_ru": "иррадиировать, распространяться",
+      "translation_en": "radiate",
+      "definition": "Clinical medical condition and symptom associated with radiate.",
+      "definition_uz": "tarqalmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "иррадиировать, распространяться - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with radiate.",
+      "example": "The doctor assessed the patient for radiate."
+    },
+    {
+      "word": "left shoulder",
+      "translation": "chap yelka",
+      "translation_uz": "chap yelka",
+      "translation_ru": "левое плечо",
+      "translation_en": "left shoulder",
+      "definition": "Clinical medical condition and symptom associated with left shoulder.",
+      "definition_uz": "chap yelka - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "левое плечо - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with left shoulder.",
+      "example": "The doctor assessed the patient for left shoulder."
+    },
+    {
+      "word": "jaw",
+      "translation": "jag'",
+      "translation_uz": "jag'",
+      "translation_ru": "челюсть",
+      "translation_en": "jaw",
+      "definition": "Clinical medical condition and symptom associated with jaw.",
+      "definition_uz": "jag' - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "челюсть - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with jaw.",
+      "example": "The doctor assessed the patient for jaw."
+    },
+    {
+      "word": "sweaty",
+      "translation": "terlagan",
+      "translation_uz": "terlagan",
+      "translation_ru": "потный",
+      "translation_en": "sweaty",
+      "definition": "Clinical medical condition and symptom associated with sweaty.",
+      "definition_uz": "terlagan - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "потный - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with sweaty.",
+      "example": "The doctor assessed the patient for sweaty."
+    },
+    {
+      "word": "nauseated",
+      "translation": "ko'ngli aynigan",
+      "translation_uz": "ko'ngli aynigan",
+      "translation_ru": "испытывающий тошноту",
+      "translation_en": "nauseated",
+      "definition": "Clinical medical condition and symptom associated with nauseated.",
+      "definition_uz": "ko'ngli aynigan - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "испытывающий тошноту - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with nauseated.",
+      "example": "The doctor assessed the patient for nauseated."
+    },
+    {
+      "word": "pale",
+      "translation": "rangpar",
+      "translation_uz": "rangpar",
+      "translation_ru": "бледный",
+      "translation_en": "pale",
+      "definition": "Clinical medical condition and symptom associated with pale.",
+      "definition_uz": "rangpar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "бледный - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with pale.",
+      "example": "The doctor assessed the patient for pale."
+    },
+    {
+      "word": "lose consciousness",
+      "translation": "hushidan ketmoq",
+      "translation_uz": "hushidan ketmoq",
+      "translation_ru": "потерять сознание",
+      "translation_en": "lose consciousness",
+      "definition": "Clinical medical condition and symptom associated with lose consciousness.",
+      "definition_uz": "hushidan ketmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "потерять сознание - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with lose consciousness.",
+      "example": "The doctor assessed the patient for lose consciousness."
+    },
+    {
+      "word": "remain awake",
+      "translation": "hushyor qolmoq",
+      "translation_uz": "hushyor qolmoq",
+      "translation_ru": "оставаться в сознании",
+      "translation_en": "remain awake",
+      "definition": "Clinical medical condition and symptom associated with remain awake.",
+      "definition_uz": "hushyor qolmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "оставаться в сознании - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with remain awake.",
+      "example": "The doctor assessed the patient for remain awake."
+    },
+    {
+      "word": "chest tightness",
+      "translation": "ko'krakda siqilish",
+      "translation_uz": "ko'krakda siqilish",
+      "translation_ru": "стеснение в груди",
+      "translation_en": "chest tightness",
+      "definition": "Discomfort or constricting pressure localized in the thoracic region.",
+      "definition_uz": "Ko'krak qafasi sohasida siquvchi yoki bosuvchi og'riq hissi.",
+      "definition_ru": "Сдавливающая или давящая боль в области грудной клетки.",
+      "definition_en": "Discomfort or constricting pressure localized in the thoracic region.",
+      "example": "The doctor assessed the patient for chest tightness."
+    },
+    {
+      "word": "out of shape",
+      "translation": "jismoniy tayyorgarligi past",
+      "translation_uz": "jismoniy tayyorgarligi past",
+      "translation_ru": "не в форме",
+      "translation_en": "out of shape",
+      "definition": "Clinical medical condition and symptom associated with out of shape.",
+      "definition_uz": "jismoniy tayyorgarligi past - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "не в форме - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with out of shape.",
+      "example": "The doctor assessed the patient for out of shape."
+    },
+    {
+      "word": "acute coronary syndrome (ACS)",
+      "translation": "o'tkir koronar sindrom",
+      "translation_uz": "o'tkir koronar sindrom",
+      "translation_ru": "острый коронарный синдром",
+      "translation_en": "acute coronary syndrome (ACS)",
+      "definition": "Clinical medical condition and symptom associated with acute coronary syndrome (acs).",
+      "definition_uz": "o'tkir koronar sindrom - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "острый коронарный синдром - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with acute coronary syndrome (acs).",
+      "example": "The doctor assessed the patient for acute coronary syndrome (acs)."
+    },
+    {
+      "word": "evidence to the contrary",
+      "translation": "aksini ko'rsatuvchi dalil",
+      "translation_uz": "aksini ko'rsatuvchi dalil",
+      "translation_ru": "доказательства обратного",
+      "translation_en": "evidence to the contrary",
+      "definition": "Clinical medical condition and symptom associated with evidence to the contrary.",
+      "definition_uz": "aksini ko'rsatuvchi dalil - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "доказательства обратного - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with evidence to the contrary.",
+      "example": "The doctor assessed the patient for evidence to the contrary."
+    },
+    {
+      "word": "12-lead ECG",
+      "translation": "12 kanalli EKG",
+      "translation_uz": "12 kanalli EKG",
+      "translation_ru": "12-канальная ЭКГ",
+      "translation_en": "12-lead ECG",
+      "definition": "Clinical medical condition and symptom associated with 12-lead ecg.",
+      "definition_uz": "12 kanalli EKG - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "12-канальная ЭКГ - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with 12-lead ecg.",
+      "example": "The doctor assessed the patient for 12-lead ecg."
+    },
+    {
+      "word": "cardiac troponin",
+      "translation": "yurak troponini",
+      "translation_uz": "yurak troponini",
+      "translation_ru": "кардиальный тропонин",
+      "translation_en": "cardiac troponin",
+      "definition": "Clinical medical condition and symptom associated with cardiac troponin.",
+      "definition_uz": "yurak troponini - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "кардиальный тропонин - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with cardiac troponin.",
+      "example": "The doctor assessed the patient for cardiac troponin."
+    },
+    {
+      "word": "intravenous access",
+      "translation": "vena ichiga kirish yo'li",
+      "translation_uz": "vena ichiga kirish yo'li",
+      "translation_ru": "внутривенный доступ",
+      "translation_en": "intravenous access",
+      "definition": "Clinical medical condition and symptom associated with intravenous access.",
+      "definition_uz": "vena ichiga kirish yo'li - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "внутривенный доступ - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with intravenous access.",
+      "example": "The doctor assessed the patient for intravenous access."
+    },
+    {
+      "word": "serial troponin results",
+      "translation": "ketma-ket troponin natijalari",
+      "translation_uz": "ketma-ket troponin natijalari",
+      "translation_ru": "серийные показатели тропонина",
+      "translation_en": "serial troponin results",
+      "definition": "Clinical medical condition and symptom associated with serial troponin results.",
+      "definition_uz": "ketma-ket troponin natijalari - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "серийные показатели тропонина - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with serial troponin results.",
+      "example": "The doctor assessed the patient for serial troponin results."
+    },
+    {
+      "word": "acute myocardial ischaemia",
+      "translation": "o'tkir miokard ishemiyasi",
+      "translation_uz": "o'tkir miokard ishemiyasi",
+      "translation_ru": "острая ишемия миокарда",
+      "translation_en": "acute myocardial ischaemia",
+      "definition": "Clinical medical condition and symptom associated with acute myocardial ischaemia.",
+      "definition_uz": "o'tkir miokard ishemiyasi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "острая ишемия миокарда - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with acute myocardial ischaemia.",
+      "example": "The doctor assessed the patient for acute myocardial ischaemia."
+    },
+    {
+      "word": "reperfusion",
+      "translation": "qayta qon bilan ta'minlash",
+      "translation_uz": "qayta qon bilan ta'minlash",
+      "translation_ru": "реперфузия",
+      "translation_en": "reperfusion",
+      "definition": "Clinical medical condition and symptom associated with reperfusion.",
+      "definition_uz": "qayta qon bilan ta'minlash - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "реперфузия - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with reperfusion.",
+      "example": "The doctor assessed the patient for reperfusion."
+    },
+    {
+      "word": "clinical course",
+      "translation": "kasallikning klinik kechishi",
+      "translation_uz": "kasallikning klinik kechishi",
+      "translation_ru": "клиническое течение",
+      "translation_en": "clinical course",
+      "definition": "Clinical medical condition and symptom associated with clinical course.",
+      "definition_uz": "kasallikning klinik kechishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "клиническое течение - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with clinical course.",
+      "example": "The doctor assessed the patient for clinical course."
+    },
+    {
+      "word": "early assessment",
+      "translation": "erta klinik baholash",
+      "translation_uz": "erta klinik baholash",
+      "translation_ru": "ранняя клиническая оценка",
+      "translation_en": "early assessment",
+      "definition": "Clinical medical condition and symptom associated with early assessment.",
+      "definition_uz": "erta klinik baholash - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "ранняя клиническая оценка - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with early assessment.",
+      "example": "The doctor assessed the patient for early assessment."
+    },
+    {
+      "word": "worsen",
+      "translation": "yomonlashmoq",
+      "translation_uz": "yomonlashmoq",
+      "translation_ru": "ухудшаться",
+      "translation_en": "worsen",
+      "definition": "Clinical medical condition and symptom associated with worsen.",
+      "definition_uz": "yomonlashmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "ухудшаться - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with worsen.",
+      "example": "The doctor assessed the patient for worsen."
+    },
+    {
+      "word": "critical",
+      "translation": "juda muhim",
+      "translation_uz": "juda muhim",
+      "translation_ru": "критически важный",
+      "translation_en": "critical",
+      "definition": "Clinical medical condition and symptom associated with critical.",
+      "definition_uz": "juda muhim - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "критически важный - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with critical.",
+      "example": "The doctor assessed the patient for critical."
+    }
+  ],
+  "phrasebook": [
+    {
+      "phrase": "heavy pressure",
+      "category": "Clinical Consultation",
+      "hint": "kuchli bosim",
+      "hint_uz": "kuchli bosim",
+      "hint_ru": "сильное давление",
+      "hint_en": "heavy pressure",
+      "patient_response": ""
+    },
+    {
+      "phrase": "centre of the chest",
+      "category": "Clinical Consultation",
+      "hint": "ko'krak markazi",
+      "hint_uz": "ko'krak markazi",
+      "hint_ru": "центр грудной клетки",
+      "hint_en": "centre of the chest",
+      "patient_response": ""
+    },
+    {
+      "phrase": "crushing pressure",
+      "category": "Clinical Consultation",
+      "hint": "ezuvchi/bosuvchi og'riq",
+      "hint_uz": "ezuvchi/bosuvchi og'riq",
+      "hint_ru": "сжимающая, давящая боль",
+      "hint_en": "crushing pressure",
+      "patient_response": ""
+    },
+    {
+      "phrase": "radiate",
+      "category": "Clinical Consultation",
+      "hint": "Og'riq boshqa joyga (quloq, jag', bo'yin) tarqaladimi?",
+      "hint_uz": "Og'riq boshqa joyga (quloq, jag', bo'yin) tarqaladimi?",
+      "hint_ru": "Отдает (иррадиирует) ли боль в челюсть, ухо или шею?",
+      "hint_en": "radiate",
+      "patient_response": ""
+    },
+    {
+      "phrase": "left shoulder",
+      "category": "Clinical Consultation",
+      "hint": "chap yelka",
+      "hint_uz": "chap yelka",
+      "hint_ru": "левое плечо",
+      "hint_en": "left shoulder",
+      "patient_response": ""
+    },
+    {
+      "phrase": "sweaty",
+      "category": "Clinical Consultation",
+      "hint": "terlagan",
+      "hint_uz": "terlagan",
+      "hint_ru": "потный",
+      "hint_en": "sweaty",
+      "patient_response": ""
+    },
+    {
+      "phrase": "nauseated",
+      "category": "Clinical Consultation",
+      "hint": "ko'ngli aynigan",
+      "hint_uz": "ko'ngli aynigan",
+      "hint_ru": "испытывающий тошноту",
+      "hint_en": "nauseated",
+      "patient_response": ""
+    },
+    {
+      "phrase": "pale",
+      "category": "Clinical Consultation",
+      "hint": "rangpar",
+      "hint_uz": "rangpar",
+      "hint_ru": "бледный",
+      "hint_en": "pale",
+      "patient_response": ""
+    },
+    {
+      "phrase": "lose consciousness",
+      "category": "Clinical Consultation",
+      "hint": "hushidan ketmoq",
+      "hint_uz": "hushidan ketmoq",
+      "hint_ru": "потерять сознание",
+      "hint_en": "lose consciousness",
+      "patient_response": ""
+    },
+    {
+      "phrase": "remain awake",
+      "category": "Clinical Consultation",
+      "hint": "hushyor qolmoq",
+      "hint_uz": "hushyor qolmoq",
+      "hint_ru": "оставаться в сознании",
+      "hint_en": "remain awake",
+      "patient_response": ""
+    },
+    {
+      "phrase": "chest tightness",
+      "category": "Clinical Consultation",
+      "hint": "ko'krakda siqilish",
+      "hint_uz": "ko'krakda siqilish",
+      "hint_ru": "стеснение в груди",
+      "hint_en": "chest tightness",
+      "patient_response": ""
+    },
+    {
+      "phrase": "out of shape",
+      "category": "Clinical Consultation",
+      "hint": "jismoniy tayyorgarligi past",
+      "hint_uz": "jismoniy tayyorgarligi past",
+      "hint_ru": "не в форме",
+      "hint_en": "out of shape",
+      "patient_response": ""
+    },
+    {
+      "phrase": "acute coronary syndrome (ACS)",
+      "category": "Clinical Consultation",
+      "hint": "o'tkir koronar sindrom",
+      "hint_uz": "o'tkir koronar sindrom",
+      "hint_ru": "острый коронарный синдром",
+      "hint_en": "acute coronary syndrome (ACS)",
+      "patient_response": ""
+    },
+    {
+      "phrase": "evidence to the contrary",
+      "category": "Clinical Consultation",
+      "hint": "aksini ko'rsatuvchi dalil",
+      "hint_uz": "aksini ko'rsatuvchi dalil",
+      "hint_ru": "доказательства обратного",
+      "hint_en": "evidence to the contrary",
+      "patient_response": ""
+    },
+    {
+      "phrase": "12-lead ECG",
+      "category": "Clinical Consultation",
+      "hint": "12 kanalli EKG",
+      "hint_uz": "12 kanalli EKG",
+      "hint_ru": "12-канальная ЭКГ",
+      "hint_en": "12-lead ECG",
+      "patient_response": ""
+    },
+    {
+      "phrase": "cardiac troponin",
+      "category": "Clinical Consultation",
+      "hint": "yurak troponini",
+      "hint_uz": "yurak troponini",
+      "hint_ru": "кардиальный тропонин",
+      "hint_en": "cardiac troponin",
+      "patient_response": ""
+    },
+    {
+      "phrase": "intravenous access",
+      "category": "Clinical Consultation",
+      "hint": "vena ichiga kirish yo'li",
+      "hint_uz": "vena ichiga kirish yo'li",
+      "hint_ru": "внутривенный доступ",
+      "hint_en": "intravenous access",
+      "patient_response": ""
+    },
+    {
+      "phrase": "serial troponin results",
+      "category": "Clinical Consultation",
+      "hint": "ketma-ket troponin natijalari",
+      "hint_uz": "ketma-ket troponin natijalari",
+      "hint_ru": "серийные показатели тропонина",
+      "hint_en": "serial troponin results",
+      "patient_response": ""
+    },
+    {
+      "phrase": "acute myocardial ischaemia",
+      "category": "Clinical Consultation",
+      "hint": "o'tkir miokard ishemiyasi",
+      "hint_uz": "o'tkir miokard ishemiyasi",
+      "hint_ru": "острая ишемия миокарда",
+      "hint_en": "acute myocardial ischaemia",
+      "patient_response": ""
+    },
+    {
+      "phrase": "reperfusion",
+      "category": "Clinical Consultation",
+      "hint": "qayta qon bilan ta'minlash",
+      "hint_uz": "qayta qon bilan ta'minlash",
+      "hint_ru": "реперфузия",
+      "hint_en": "reperfusion",
+      "patient_response": ""
+    },
+    {
+      "phrase": "clinical course",
+      "category": "Clinical Consultation",
+      "hint": "kasallikning klinik kechishi",
+      "hint_uz": "kasallikning klinik kechishi",
+      "hint_ru": "клиническое течение",
+      "hint_en": "clinical course",
+      "patient_response": ""
+    },
+    {
+      "phrase": "early assessment",
+      "category": "Clinical Consultation",
+      "hint": "erta klinik baholash",
+      "hint_uz": "erta klinik baholash",
+      "hint_ru": "ранняя клиническая оценка",
+      "hint_en": "early assessment",
+      "patient_response": ""
+    },
+    {
+      "phrase": "worsen",
+      "category": "Clinical Consultation",
+      "hint": "yomonlashmoq",
+      "hint_uz": "yomonlashmoq",
+      "hint_ru": "ухудшаться",
+      "hint_en": "worsen",
+      "patient_response": ""
+    },
+    {
+      "phrase": "critical",
+      "category": "Clinical Consultation",
+      "hint": "juda muhim",
+      "hint_uz": "juda muhim",
+      "hint_ru": "критически важный",
+      "hint_en": "critical",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Did the pain remain in the centre of your chest, or did it radiate anywhere?",
+      "category": "Pain Character",
+      "hint": "Og'riq boshqa joyga (quloq, jag', bo'yin) tarqaladimi?",
+      "hint_uz": "Og'riq boshqa joyga (quloq, jag', bo'yin) tarqaladimi?",
+      "hint_ru": "Отдает (иррадиирует) ли боль в челюсть, ухо или шею?",
+      "hint_en": "Did the pain remain in the centre of your chest, or did it radiate anywhere?",
+      "patient_response": ""
+    },
+    {
+      "phrase": "What happened next?",
+      "category": "Pain Character",
+      "hint": "Keyin nima bo'ldi?",
+      "hint_uz": "Keyin nima bo'ldi?",
+      "hint_ru": "Что произошло потом?",
+      "hint_en": "What happened next?",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Have you ever had similar symptoms during exercise?",
+      "category": "Pain Character",
+      "hint": "Jismoniy zo'riqishda ilgari shunga o'xshash simptomlar bo'lganmi?",
+      "hint_uz": "Jismoniy zo'riqishda ilgari shunga o'xshash simptomlar bo'lganmi?",
+      "hint_ru": "У вас когда-нибудь были похожие симптомы при физической нагрузке?",
+      "hint_en": "Have you ever had similar symptoms during exercise?",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Do you have hypertension, diabetes, high cholesterol, or a history of smoking?",
+      "category": "Pain Character",
+      "hint": "Sizda gipertoniya, diabet, yuqori xolesterin yoki chekish tarixi bormi?",
+      "hint_uz": "Sizda gipertoniya, diabet, yuqori xolesterin yoki chekish tarixi bormi?",
+      "hint_ru": "У вас есть гипертония, диабет, высокий холестерин или анамнез курения?",
+      "hint_en": "Do you have hypertension, diabetes, high cholesterol, or a history of smoking?",
+      "patient_response": ""
+    }
+  ],
+  "dialogue": [
+    {
+      "speaker": "Doctor",
+      "text": "Please, tell me what happened before the chest pain started."
+    },
+    {
+      "speaker": "Patient",
+      "text": "I was carrying some boxes upstairs when I suddenly felt a heavy pressure in the centre of my chest."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "What were you doing immediately before the pressure began?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I was lifting the last box when the pain suddenly appeared. I put it down and sat on the stairs."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "How would you describe the pain - sharp, burning, squeezing, or crushing?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "It was a crushing pressure. It felt as though someone was sitting on my chest."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Did the pain remain in the centre of your chest, or did it radiate anywhere?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "It spread towards my left shoulder and down my arm. I also felt it slightly in my jaw."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "What happened next?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I became sweaty and nauseated. My wife called an ambulance because I looked very pale. Relative: He was also extremely anxious. He kept saying that something was seriously wrong."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Did you lose consciousness at any point?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "No, I didn't. I remained awake, but I felt very weak."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "How long did the episode last?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "The worst of it lasted about twenty minutes. It eased slightly while I was resting, but it never disappeared completely. Nurse: His blood pressure is 156 over 94, pulse 108, and oxygen saturation 95% on room air."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Thank you. Have you ever had similar symptoms during exercise?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I had experienced mild chest tightness when walking uphill over the past month, but I thought it was just because I was out of shape."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Did you take anything before the ambulance arrived?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "No. I wasn't sure what I should take."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Do you have hypertension, diabetes, high cholesterol, or a history of smoking?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I have hypertension and high cholesterol. I stopped smoking five years ago."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "We need to treat this as possible acute coronary syndrome until we have evidence to the contrary. Nurse, please obtain a 12-lead ECG immediately and prepare blood samples for cardiac troponin. Nurse: Understood. I'll also establish intravenous access."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Doctor, does this mean I'm having a heart attack?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "It is one of the possibilities. Your symptoms are concerning, but the diagnosis depends on the ECG, serial troponin results, examination, and clinical course."
+    },
+    {
+      "speaker": "Patient",
+      "text": "What happens if the ECG is abnormal?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "If it shows evidence of acute myocardial ischemia, we'll involve the cardiology team urgently and consider reperfusion according to the findings. Relative: Is there anything we should do right now?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Keep him resting and don't give him food or drink unless the clinical team advises it. If the pain suddenly worsens, tell us immediately."
+    },
+    {
+      "speaker": "Patient",
+      "text": "I understand. I'm frightened, but I'm glad I came in."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "You did the right thing. With chest pain of this type, early assessment is critical."
+    }
+  ],
+  "tests": [
+    {
+      "question": "What is the medical meaning of the term 'heavy pressure' in clinical consultation?",
+      "option_a": "kuchli bosim",
+      "option_b": "ko'krak markazi",
+      "option_c": "ezuvchi/bosuvchi og'riq",
+      "option_d": "tarqalmoq",
+      "correct_option": "A",
+      "explanation": "'heavy pressure' atamasining to'g'ri ma'nosi: kuchli bosim."
+    },
+    {
+      "question": "Which term corresponds to 'chap yelka'?",
+      "option_a": "centre of the chest",
+      "option_b": "left shoulder",
+      "option_c": "crushing pressure",
+      "option_d": "radiate",
+      "correct_option": "B",
+      "explanation": "'chap yelka' ma'nosiga mos keluvchi tibbiy termin 'left shoulder' hisoblanadi."
+    },
+    {
+      "question": "Which of the following is the grammatically and clinically standard question to ask about the duration of symptoms?",
+      "option_a": "How long do you having this symptom?",
+      "option_b": "How long has this condition been bothering you?",
+      "option_c": "Since what time you have this problem?",
+      "option_d": "How many days you are feeling pain?",
+      "correct_option": "B",
+      "explanation": "Klinik anamnezda davomiylikni so'rash uchun Present Perfect Continuous ('How long has... been bothering you?') to'g'ri shakl hisoblanadi."
+    },
+    {
+      "question": "When evaluating acute pain, what is the best phrasing to assess pain character?",
+      "option_a": "Is your pain bad or very bad?",
+      "option_b": "Can you describe the pain—is it sharp, dull, throbbing, or aching?",
+      "option_c": "Why do you have sharp pain today?",
+      "option_d": "Stop pain with pills immediately.",
+      "correct_option": "B",
+      "explanation": "Og'riq xarakterini aniqlashda shifokor ochiq va taklif qiluvchi variantlar (sharp, dull, throbbing, aching) beradi."
+    }
+  ]
+}

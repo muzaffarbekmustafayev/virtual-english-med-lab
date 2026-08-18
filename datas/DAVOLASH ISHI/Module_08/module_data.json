@@ -1,0 +1,1228 @@
+{
+  "specialty_id": 2,
+  "specialty_name": "Davolash ishi",
+  "order_index": 8,
+  "title": "Urinary Tract Infection & Pyelonephritis",
+  "title_uz": "Siydik yo'llari infeksiyasi va piyelonefrit",
+  "title_ru": "Инфекция мочевыводящих путей и пиелонефрит",
+  "title_en": "Urinary Tract Infection & Pyelonephritis",
+  "description": "Davolash ishi bo'yicha Siydik yo'llari infeksiyasi va piyelonefrit mavzusida klinik muloqot va tibbiy ingliz tili darsi.",
+  "clinical_level": "B2 Medical English",
+  "target_role": "Dental Clinician / Attending Physician",
+  "scenario_prompt": "You are a virtual patient presenting with symptoms related to Urinary Tract Infection & Pyelonephritis. Speak in natural, everyday patient English.",
+  "patient_profile": {
+    "age": 54,
+    "gender": "Female",
+    "chief_complaint": "Siydik yo'llari infeksiyasi va piyelonefrit",
+    "history": "Patient presents with complaints of urinary tract infection & pyelonephritis."
+  },
+  "grammar": [
+    {
+      "title": "Modal Verbs for Diagnostic Decisions & Therapeutic Instructions (Must, Should, Need to)",
+      "title_uz": "Tashxis va Davolashda Modal Fe'llar (Must, Should, Need to)",
+      "title_ru": "Модальные Глаголы для Диагностики и Назначений (Must, Should, Need to)",
+      "title_en": "Modal Verbs for Diagnostic Decisions & Therapeutic Instructions",
+      "rule_explanation": "Use 'must' for absolute clinical imperatives (ruling out pyelonephritis), 'should' for clinical guidelines (completing antibiotic courses), and 'need to' for patient action steps.",
+      "rule_explanation_uz": "Piyelonefritni inkor etish kabi qat'iy klinik talablarda 'must', davolash kursi bo'yicha tavsiyalarda 'should', bemor bajarishi zarur bo'lgan tahlillarda 'need to' qo'llaniladi.",
+      "rule_explanation_ru": "'Must' выражает клиническую необходимость (исключение пиелонефрита), 'should' — медицинские рекомендации (завершение курса терапии), 'need to' — план обследования.",
+      "rule_explanation_en": "Modal verbs calibrate clinical obligation, clinical recommendation, and diagnostic necessity.",
+      "structure_pattern": "We + must rule out + [Condition] | You + should complete + [Therapy]",
+      "structure_pattern_uz": "We + must rule out + [Kasallik] | You + should complete + [Davolash]",
+      "structure_pattern_ru": "We + must rule out + [Заболевание] | You + should complete + [Лечение]",
+      "structure_pattern_en": "We must rule out [Condition] | You should complete the full course of antibiotics.",
+      "examples": [
+        {
+          "sentence": "We must rule out upper urinary tract infection given your high fever and flank pain.",
+          "translation_uz": "Yuqori harorat va bel sohasidagi og'riqni inobatga olib, biz yuqori siydik yo'llari infeksiyasini (piyelonefritni) inkor etishimiz shart.",
+          "translation_ru": "Учитывая высокую температуру и боль в пояснице, мы должны исключить инфекцию верхних мочевыводящих путей (пиелонефрит).",
+          "translation_en": "Clinical obligation in differential diagnosis.",
+          "note": "must rule out",
+          "note_uz": "Qat'iy diagnostik zarurat",
+          "note_ru": "Диагностическая необходимость",
+          "note_en": "Diagnostic necessity"
+        },
+        {
+          "sentence": "You should complete the entire seven-day course of antibiotics even if your symptoms resolve early.",
+          "translation_uz": "Simptomlaringiz erta yo'qolsa ham, 7 kunlik to'liq antibiotik kursini oxirigacha ichishingiz kerak.",
+          "translation_ru": "Вам следует пройти полный 7-дневный курс антибиотиков, даже если симптомы исчезнут раньше.",
+          "translation_en": "Preventing antibiotic resistance and recurrence.",
+          "note": "should complete",
+          "note_uz": "Tavsiya (Rezistentlik profilaktikasi)",
+          "note_ru": "Рекомендация по завершению курса",
+          "note_en": "Therapy completion guidance"
+        }
+      ],
+      "common_mistakes": [
+        {
+          "incorrect": "You must to drink more water.",
+          "correct": "You must drink more water.",
+          "explanation_uz": "'Must' modal fe'lidan so'ng 'to' ishlatilmaydi.",
+          "explanation_ru": "После модального глагола 'must' частица 'to' не ставится.",
+          "explanation_en": "Do not insert 'to' after modal verbs."
+        }
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "urinary tract infection (UTI)",
+      "translation": "siydik yo'llari infeksiyasi",
+      "translation_uz": "siydik yo'llari infeksiyasi",
+      "translation_ru": "инфекция мочевыводящих путей",
+      "translation_en": "urinary tract infection (UTI)",
+      "definition": "Clinical medical condition and symptom associated with urinary tract infection (uti).",
+      "definition_uz": "siydik yo'llari infeksiyasi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "инфекция мочевыводящих путей - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with urinary tract infection (uti).",
+      "example": "The doctor assessed the patient for urinary tract infection (uti)."
+    },
+    {
+      "word": "burning when I urinate",
+      "translation": "siydik chiqarganda achishish",
+      "translation_uz": "siydik chiqarganda achishish",
+      "translation_ru": "жжение при мочеиспускании",
+      "translation_en": "burning when I urinate",
+      "definition": "Clinical medical condition and symptom associated with burning when i urinate.",
+      "definition_uz": "siydik chiqarganda achishish - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "жжение при мочеиспускании - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with burning when i urinate.",
+      "example": "The doctor assessed the patient for burning when i urinate."
+    },
+    {
+      "word": "pass urine",
+      "translation": "siydik chiqarmoq",
+      "translation_uz": "siydik chiqarmoq",
+      "translation_ru": "мочиться",
+      "translation_en": "pass urine",
+      "definition": "Clinical medical condition and symptom associated with pass urine.",
+      "definition_uz": "siydik chiqarmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "мочиться - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with pass urine.",
+      "example": "The doctor assessed the patient for pass urine."
+    },
+    {
+      "word": "frequently",
+      "translation": "tez-tez",
+      "translation_uz": "tez-tez",
+      "translation_ru": "часто",
+      "translation_en": "frequently",
+      "definition": "Clinical medical condition and symptom associated with frequently.",
+      "definition_uz": "tez-tez - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "часто - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with frequently.",
+      "example": "The doctor assessed the patient for frequently."
+    },
+    {
+      "word": "blood in the urine",
+      "translation": "siydikdagi qon",
+      "translation_uz": "siydikdagi qon",
+      "translation_ru": "кровь в моче",
+      "translation_en": "blood in the urine",
+      "definition": "Clinical medical condition and symptom associated with blood in the urine.",
+      "definition_uz": "siydikdagi qon - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "кровь в моче - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with blood in the urine.",
+      "example": "The doctor assessed the patient for blood in the urine."
+    },
+    {
+      "word": "urine appearance",
+      "translation": "siydikning ko'rinishi",
+      "translation_uz": "siydikning ko'rinishi",
+      "translation_ru": "внешний вид мочи",
+      "translation_en": "urine appearance",
+      "definition": "Clinical medical condition and symptom associated with urine appearance.",
+      "definition_uz": "siydikning ko'rinishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "внешний вид мочи - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with urine appearance.",
+      "example": "The doctor assessed the patient for urine appearance."
+    },
+    {
+      "word": "dark urine",
+      "translation": "to'q rangli siydik",
+      "translation_uz": "to'q rangli siydik",
+      "translation_ru": "тёмная моча",
+      "translation_en": "dark urine",
+      "definition": "Clinical medical condition and symptom associated with dark urine.",
+      "definition_uz": "to'q rangli siydik - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "тёмная моча - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with dark urine.",
+      "example": "The doctor assessed the patient for dark urine."
+    },
+    {
+      "word": "fever",
+      "translation": "isitma",
+      "translation_uz": "isitma",
+      "translation_ru": "лихорадка",
+      "translation_en": "fever",
+      "definition": "Systemic elevation of body core temperature in response to an infectious process.",
+      "definition_uz": "Infeksion yallig'lanish jarayoniga javoban tana haroratining ko'tarilishi.",
+      "definition_ru": "Повышение температуры тела в ответ на инфекционный процесс.",
+      "definition_en": "Systemic elevation of body core temperature in response to an infectious process.",
+      "example": "The doctor assessed the patient for fever."
+    },
+    {
+      "word": "chills",
+      "translation": "titroq, qaltirash",
+      "translation_uz": "titroq, qaltirash",
+      "translation_ru": "озноб",
+      "translation_en": "chills",
+      "definition": "Clinical medical condition and symptom associated with chills.",
+      "definition_uz": "titroq, qaltirash - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "озноб - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with chills.",
+      "example": "The doctor assessed the patient for chills."
+    },
+    {
+      "word": "nausea",
+      "translation": "ko'ngil aynishi",
+      "translation_uz": "ko'ngil aynishi",
+      "translation_ru": "тошнота",
+      "translation_en": "nausea",
+      "definition": "Clinical medical condition and symptom associated with nausea.",
+      "definition_uz": "ko'ngil aynishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "тошнота - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with nausea.",
+      "example": "The doctor assessed the patient for nausea."
+    },
+    {
+      "word": "flank pain",
+      "translation": "yonbosh og'rig'i",
+      "translation_uz": "yonbosh og'rig'i",
+      "translation_ru": "боль в боку",
+      "translation_en": "flank pain",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing flank pain.",
+      "definition_uz": "yonbosh og'rig'i - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "боль в боку - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing flank pain.",
+      "example": "The doctor assessed the patient for flank pain."
+    },
+    {
+      "word": "right flank",
+      "translation": "o'ng yonbosh",
+      "translation_uz": "o'ng yonbosh",
+      "translation_ru": "правый бок",
+      "translation_en": "right flank",
+      "definition": "Clinical medical condition and symptom associated with right flank.",
+      "definition_uz": "o'ng yonbosh - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "правый бок - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with right flank.",
+      "example": "The doctor assessed the patient for right flank."
+    },
+    {
+      "word": "upper urinary tract",
+      "translation": "yuqori siydik yo'llari",
+      "translation_uz": "yuqori siydik yo'llari",
+      "translation_ru": "верхние мочевые пути",
+      "translation_en": "upper urinary tract",
+      "definition": "Clinical medical condition and symptom associated with upper urinary tract.",
+      "definition_uz": "yuqori siydik yo'llari - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "верхние мочевые пути - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with upper urinary tract.",
+      "example": "The doctor assessed the patient for upper urinary tract."
+    },
+    {
+      "word": "kidney infection",
+      "translation": "buyrak infeksiyasi",
+      "translation_uz": "buyrak infeksiyasi",
+      "translation_ru": "инфекция почки",
+      "translation_en": "kidney infection",
+      "definition": "Clinical medical condition and symptom associated with kidney infection.",
+      "definition_uz": "buyrak infeksiyasi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "инфекция почки - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with kidney infection.",
+      "example": "The doctor assessed the patient for kidney infection."
+    },
+    {
+      "word": "pyelonephritis",
+      "translation": "pielonefrit",
+      "translation_uz": "pielonefrit",
+      "translation_ru": "пиелонефрит",
+      "translation_en": "pyelonephritis",
+      "definition": "Clinical medical condition and symptom associated with pyelonephritis.",
+      "definition_uz": "pielonefrit - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "пиелонефрит - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with pyelonephritis.",
+      "example": "The doctor assessed the patient for pyelonephritis."
+    },
+    {
+      "word": "kidney function",
+      "translation": "buyrak faoliyati",
+      "translation_uz": "buyrak faoliyati",
+      "translation_ru": "функция почек",
+      "translation_en": "kidney function",
+      "definition": "Clinical medical condition and symptom associated with kidney function.",
+      "definition_uz": "buyrak faoliyati - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "функция почек - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with kidney function.",
+      "example": "The doctor assessed the patient for kidney function."
+    },
+    {
+      "word": "be affected",
+      "translation": "ta'sirlanmoq / zararlanmoq",
+      "translation_uz": "ta'sirlanmoq / zararlanmoq",
+      "translation_ru": "быть нарушенным / затронутым",
+      "translation_en": "be affected",
+      "definition": "Clinical medical condition and symptom associated with be affected.",
+      "definition_uz": "ta'sirlanmoq / zararlanmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "быть нарушенным / затронутым - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with be affected.",
+      "example": "The doctor assessed the patient for be affected."
+    },
+    {
+      "word": "urinalysis",
+      "translation": "siydik tahlili",
+      "translation_uz": "siydik tahlili",
+      "translation_ru": "анализ мочи",
+      "translation_en": "urinalysis",
+      "definition": "Clinical medical condition and symptom associated with urinalysis.",
+      "definition_uz": "siydik tahlili - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "анализ мочи - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with urinalysis.",
+      "example": "The doctor assessed the patient for urinalysis."
+    },
+    {
+      "word": "urine culture",
+      "translation": "siydik kulturasi",
+      "translation_uz": "siydik kulturasi",
+      "translation_ru": "посев мочи",
+      "translation_en": "urine culture",
+      "definition": "Clinical medical condition and symptom associated with urine culture.",
+      "definition_uz": "siydik kulturasi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "посев мочи - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with urine culture.",
+      "example": "The doctor assessed the patient for urine culture."
+    },
+    {
+      "word": "blood count",
+      "translation": "qon tahlili",
+      "translation_uz": "qon tahlili",
+      "translation_ru": "анализ крови",
+      "translation_en": "blood count",
+      "definition": "Clinical medical condition and symptom associated with blood count.",
+      "definition_uz": "qon tahlili - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "анализ крови - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with blood count.",
+      "example": "The doctor assessed the patient for blood count."
+    },
+    {
+      "word": "inflammatory markers",
+      "translation": "yallig'lanish markerlari",
+      "translation_uz": "yallig'lanish markerlari",
+      "translation_ru": "маркеры воспаления",
+      "translation_en": "inflammatory markers",
+      "definition": "Clinical medical condition and symptom associated with inflammatory markers.",
+      "definition_uz": "yallig'lanish markerlari - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "маркеры воспаления - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with inflammatory markers.",
+      "example": "The doctor assessed the patient for inflammatory markers."
+    },
+    {
+      "word": "renal function",
+      "translation": "buyrak faoliyati",
+      "translation_uz": "buyrak faoliyati",
+      "translation_ru": "функция почек",
+      "translation_en": "renal function",
+      "definition": "Clinical medical condition and symptom associated with renal function.",
+      "definition_uz": "buyrak faoliyati - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "функция почек - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with renal function.",
+      "example": "The doctor assessed the patient for renal function."
+    },
+    {
+      "word": "electrolytes",
+      "translation": "elektrolitlar",
+      "translation_uz": "elektrolitlar",
+      "translation_ru": "электролиты",
+      "translation_en": "electrolytes",
+      "definition": "Clinical medical condition and symptom associated with electrolytes.",
+      "definition_uz": "elektrolitlar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "электролиты - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with electrolytes.",
+      "example": "The doctor assessed the patient for electrolytes."
+    },
+    {
+      "word": "adequate hydration",
+      "translation": "yetarli suyuqlik qabul qilish",
+      "translation_uz": "yetarli suyuqlik qabul qilish",
+      "translation_ru": "достаточная гидратация",
+      "translation_en": "adequate hydration",
+      "definition": "Clinical medical condition and symptom associated with adequate hydration.",
+      "definition_uz": "yetarli suyuqlik qabul qilish - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "достаточная гидратация - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with adequate hydration.",
+      "example": "The doctor assessed the patient for adequate hydration."
+    },
+    {
+      "word": "restrict fluids",
+      "translation": "suyuqlikni cheklamoq",
+      "translation_uz": "suyuqlikni cheklamoq",
+      "translation_ru": "ограничивать жидкость",
+      "translation_en": "restrict fluids",
+      "definition": "Clinical medical condition and symptom associated with restrict fluids.",
+      "definition_uz": "suyuqlikni cheklamoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "ограничивать жидкость - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with restrict fluids.",
+      "example": "The doctor assessed the patient for restrict fluids."
+    },
+    {
+      "word": "excessive amounts",
+      "translation": "haddan tashqari miqdor",
+      "translation_uz": "haddan tashqari miqdor",
+      "translation_ru": "чрезмерное количество",
+      "translation_en": "excessive amounts",
+      "definition": "Clinical medical condition and symptom associated with excessive amounts.",
+      "definition_uz": "haddan tashqari miqdor - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "чрезмерное количество - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with excessive amounts.",
+      "example": "The doctor assessed the patient for excessive amounts."
+    },
+    {
+      "word": "painkillers",
+      "translation": "og'riq qoldiruvchi dorilar",
+      "translation_uz": "og'riq qoldiruvchi dorilar",
+      "translation_ru": "обезболивающие",
+      "translation_en": "painkillers",
+      "definition": "An unpleasant sensory and emotional experience in the oral or anatomical region representing painkillers.",
+      "definition_uz": "og'riq qoldiruvchi dorilar - tish yoki to'qimalar sohasidagi yoqimsiz og'riq va noqulaylik hissi.",
+      "definition_ru": "обезболивающие - неприятное болевое ощущение или дискомфорт в тканях.",
+      "definition_en": "An unpleasant sensory and emotional experience in the oral or anatomical region representing painkillers.",
+      "example": "The doctor assessed the patient for painkillers."
+    },
+    {
+      "word": "impaired kidney function",
+      "translation": "buyrak faoliyatining buzilishi",
+      "translation_uz": "buyrak faoliyatining buzilishi",
+      "translation_ru": "нарушение функции почек",
+      "translation_en": "impaired kidney function",
+      "definition": "Clinical medical condition and symptom associated with impaired kidney function.",
+      "definition_uz": "buyrak faoliyatining buzilishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "нарушение функции почек - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with impaired kidney function.",
+      "example": "The doctor assessed the patient for impaired kidney function."
+    },
+    {
+      "word": "stay in hospital",
+      "translation": "kasalxonada qolmoq",
+      "translation_uz": "kasalxonada qolmoq",
+      "translation_ru": "оставаться в больнице",
+      "translation_en": "stay in hospital",
+      "definition": "Clinical medical condition and symptom associated with stay in hospital.",
+      "definition_uz": "kasalxonada qolmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "оставаться в больнице - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with stay in hospital.",
+      "example": "The doctor assessed the patient for stay in hospital."
+    },
+    {
+      "word": "keep fluids down",
+      "translation": "ichilgan suyuqlikni qayt qilmasdan ushlab qolmoq",
+      "translation_uz": "ichilgan suyuqlikni qayt qilmasdan ushlab qolmoq",
+      "translation_ru": "удерживать жидкость, не вызывая рвоту",
+      "translation_en": "keep fluids down",
+      "definition": "Clinical medical condition and symptom associated with keep fluids down.",
+      "definition_uz": "ichilgan suyuqlikni qayt qilmasdan ushlab qolmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "удерживать жидкость, не вызывая рвоту - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with keep fluids down.",
+      "example": "The doctor assessed the patient for keep fluids down."
+    },
+    {
+      "word": "kidney dysfunction",
+      "translation": "buyrak faoliyatining buzilishi",
+      "translation_uz": "buyrak faoliyatining buzilishi",
+      "translation_ru": "нарушение функции почек",
+      "translation_en": "kidney dysfunction",
+      "definition": "Clinical medical condition and symptom associated with kidney dysfunction.",
+      "definition_uz": "buyrak faoliyatining buzilishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "нарушение функции почек - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with kidney dysfunction.",
+      "example": "The doctor assessed the patient for kidney dysfunction."
+    },
+    {
+      "word": "systemic infection",
+      "translation": "tizimli infeksiya",
+      "translation_uz": "tizimli infeksiya",
+      "translation_ru": "системная инфекция",
+      "translation_en": "systemic infection",
+      "definition": "Clinical medical condition and symptom associated with systemic infection.",
+      "definition_uz": "tizimli infeksiya - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "системная инфекция - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with systemic infection.",
+      "example": "The doctor assessed the patient for systemic infection."
+    },
+    {
+      "word": "persistent vomiting",
+      "translation": "davomli qusish",
+      "translation_uz": "davomli qusish",
+      "translation_ru": "постоянная / davomli qusish",
+      "translation_en": "persistent vomiting",
+      "definition": "Clinical medical condition and symptom associated with persistent vomiting.",
+      "definition_uz": "davomli qusish - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "постоянная / davomli qusish - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with persistent vomiting.",
+      "example": "The doctor assessed the patient for persistent vomiting."
+    },
+    {
+      "word": "oral treatment",
+      "translation": "og'iz orqali davolash",
+      "translation_uz": "og'iz orqali davolash",
+      "translation_ru": "пероральное лечение",
+      "translation_en": "oral treatment",
+      "definition": "Clinical medical condition and symptom associated with oral treatment.",
+      "definition_uz": "og'iz orqali davolash - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "пероральное лечение - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with oral treatment.",
+      "example": "The doctor assessed the patient for oral treatment."
+    },
+    {
+      "word": "intravenous fluids",
+      "translation": "vena ichiga yuboriladigan suyuqliklar",
+      "translation_uz": "vena ichiga yuboriladigan suyuqliklar",
+      "translation_ru": "внутривенные жидкости",
+      "translation_en": "intravenous fluids",
+      "definition": "Clinical medical condition and symptom associated with intravenous fluids.",
+      "definition_uz": "vena ichiga yuboriladigan suyuqliklar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "внутривенные жидкости - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with intravenous fluids.",
+      "example": "The doctor assessed the patient for intravenous fluids."
+    },
+    {
+      "word": "intravenous antibiotics",
+      "translation": "vena ichiga yuboriladigan antibiotiklar",
+      "translation_uz": "vena ichiga yuboriladigan antibiotiklar",
+      "translation_ru": "внутривенные антибиотики",
+      "translation_en": "intravenous antibiotics",
+      "definition": "Clinical medical condition and symptom associated with intravenous antibiotics.",
+      "definition_uz": "vena ichiga yuboriladigan antibiotiklar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "внутривенные антибиотики - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with intravenous antibiotics.",
+      "example": "The doctor assessed the patient for intravenous antibiotics."
+    },
+    {
+      "word": "resistant bacterium",
+      "translation": "antibiotikka chidamli bakteriya",
+      "translation_uz": "antibiotikka chidamli bakteriya",
+      "translation_ru": "устойчивая бактерия",
+      "translation_en": "resistant bacterium",
+      "definition": "Clinical medical condition and symptom associated with resistant bacterium.",
+      "definition_uz": "antibiotikka chidamli bakteriya - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "устойчивая бактерия - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with resistant bacterium.",
+      "example": "The doctor assessed the patient for resistant bacterium."
+    },
+    {
+      "word": "susceptibility results",
+      "translation": "sezuvchanlik natijalari",
+      "translation_uz": "sezuvchanlik natijalari",
+      "translation_ru": "результаты чувствительности",
+      "translation_en": "susceptibility results",
+      "definition": "Clinical medical condition and symptom associated with susceptibility results.",
+      "definition_uz": "sezuvchanlik natijalari - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "результаты чувствительности - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with susceptibility results.",
+      "example": "The doctor assessed the patient for susceptibility results."
+    },
+    {
+      "word": "complete the prescribed course",
+      "translation": "buyurilgan davolash kursini to'liq tugatmoq",
+      "translation_uz": "buyurilgan davolash kursini to'liq tugatmoq",
+      "translation_ru": "полностью завершить назначенный курс",
+      "translation_en": "complete the prescribed course",
+      "definition": "Clinical medical condition and symptom associated with complete the prescribed course.",
+      "definition_uz": "buyurilgan davolash kursini to'liq tugatmoq - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "полностью завершить назначенный курс - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with complete the prescribed course.",
+      "example": "The doctor assessed the patient for complete the prescribed course."
+    },
+    {
+      "word": "eradicated",
+      "translation": "butunlay yo'q qilingan",
+      "translation_uz": "butunlay yo'q qilingan",
+      "translation_ru": "элиминированный / полностью уничтоженный",
+      "translation_en": "eradicated",
+      "definition": "Clinical medical condition and symptom associated with eradicated.",
+      "definition_uz": "butunlay yo'q qilingan - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "элиминированный / полностью уничтоженный - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with eradicated.",
+      "example": "The doctor assessed the patient for eradicated."
+    },
+    {
+      "word": "warning signs",
+      "translation": "xavf belgilar",
+      "translation_uz": "xavf belgilar",
+      "translation_ru": "предупреждающие признаки",
+      "translation_en": "warning signs",
+      "definition": "Clinical medical condition and symptom associated with warning signs.",
+      "definition_uz": "xavf belgilar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "предупреждающие признаки - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with warning signs.",
+      "example": "The doctor assessed the patient for warning signs."
+    },
+    {
+      "word": "urgent medical attention",
+      "translation": "shoshilinch tibbiy yordam",
+      "translation_uz": "shoshilinch tibbiy yordam",
+      "translation_ru": "неотложная медицинская помощь",
+      "translation_en": "urgent medical attention",
+      "definition": "Clinical medical condition and symptom associated with urgent medical attention.",
+      "definition_uz": "shoshilinch tibbiy yordam - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "неотложная медицинская помощь - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with urgent medical attention.",
+      "example": "The doctor assessed the patient for urgent medical attention."
+    },
+    {
+      "word": "severe weakness",
+      "translation": "kuchli holsizlik",
+      "translation_uz": "kuchli holsizlik",
+      "translation_ru": "сильная слабость",
+      "translation_en": "severe weakness",
+      "definition": "Clinical medical condition and symptom associated with severe weakness.",
+      "definition_uz": "kuchli holsizlik - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "сильная слабость - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with severe weakness.",
+      "example": "The doctor assessed the patient for severe weakness."
+    },
+    {
+      "word": "confusion",
+      "translation": "ong chalkashishi",
+      "translation_uz": "ong chalkashishi",
+      "translation_ru": "спутанность сознания",
+      "translation_en": "confusion",
+      "definition": "Clinical medical condition and symptom associated with confusion.",
+      "definition_uz": "ong chalkashishi - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "спутанность сознания - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with confusion.",
+      "example": "The doctor assessed the patient for confusion."
+    },
+    {
+      "word": "fainting",
+      "translation": "hushidan ketish",
+      "translation_uz": "hushidan ketish",
+      "translation_ru": "обморок",
+      "translation_en": "fainting",
+      "definition": "Clinical medical condition and symptom associated with fainting.",
+      "definition_uz": "hushidan ketish - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "обморок - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with fainting.",
+      "example": "The doctor assessed the patient for fainting."
+    },
+    {
+      "word": "admission",
+      "translation": "kasalxonaga yotqizish",
+      "translation_uz": "kasalxonaga yotqizish",
+      "translation_ru": "госпитализация",
+      "translation_en": "admission",
+      "definition": "Clinical medical condition and symptom associated with admission.",
+      "definition_uz": "kasalxonaga yotqizish - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "госпитализация - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with admission.",
+      "example": "The doctor assessed the patient for admission."
+    },
+    {
+      "word": "discharge",
+      "translation": "kasalxonadan chiqarish",
+      "translation_uz": "kasalxonadan chiqarish",
+      "translation_ru": "выписка",
+      "translation_en": "discharge",
+      "definition": "Clinical medical condition and symptom associated with discharge.",
+      "definition_uz": "kasalxonadan chiqarish - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "выписка - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with discharge.",
+      "example": "The doctor assessed the patient for discharge."
+    },
+    {
+      "word": "safety-netting",
+      "translation": "xavfsizlik va keyingi kuzatuv bo'yicha ko'rsatmalar",
+      "translation_uz": "xavfsizlik va keyingi kuzatuv bo'yicha ko'rsatmalar",
+      "translation_ru": "рекомендации по безопасности и дальнейшему наблюдению",
+      "translation_en": "safety-netting",
+      "definition": "Clinical medical condition and symptom associated with safety-netting.",
+      "definition_uz": "xavfsizlik va keyingi kuzatuv bo'yicha ko'rsatmalar - bemor ko'rigida aniqlanadigan klinik belgi yoki holat.",
+      "definition_ru": "рекомендации по безопасности и дальнейшему наблюдению - клинический симптом или состояние, выявляемое при осмотре.",
+      "definition_en": "Clinical medical condition and symptom associated with safety-netting.",
+      "example": "The doctor assessed the patient for safety-netting."
+    }
+  ],
+  "phrasebook": [
+    {
+      "phrase": "urinary tract infection (UTI)",
+      "category": "Clinical Consultation",
+      "hint": "siydik yo'llari infeksiyasi",
+      "hint_uz": "siydik yo'llari infeksiyasi",
+      "hint_ru": "инфекция мочевыводящих путей",
+      "hint_en": "urinary tract infection (UTI)",
+      "patient_response": ""
+    },
+    {
+      "phrase": "burning when I urinate",
+      "category": "Clinical Consultation",
+      "hint": "siydik chiqarganda achishish",
+      "hint_uz": "siydik chiqarganda achishish",
+      "hint_ru": "жжение при мочеиспускании",
+      "hint_en": "burning when I urinate",
+      "patient_response": ""
+    },
+    {
+      "phrase": "pass urine",
+      "category": "Clinical Consultation",
+      "hint": "siydik chiqarmoq",
+      "hint_uz": "siydik chiqarmoq",
+      "hint_ru": "мочиться",
+      "hint_en": "pass urine",
+      "patient_response": ""
+    },
+    {
+      "phrase": "frequently",
+      "category": "Clinical Consultation",
+      "hint": "tez-tez",
+      "hint_uz": "tez-tez",
+      "hint_ru": "часто",
+      "hint_en": "frequently",
+      "patient_response": ""
+    },
+    {
+      "phrase": "blood in the urine",
+      "category": "Clinical Consultation",
+      "hint": "siydikdagi qon",
+      "hint_uz": "siydikdagi qon",
+      "hint_ru": "кровь в моче",
+      "hint_en": "blood in the urine",
+      "patient_response": ""
+    },
+    {
+      "phrase": "urine appearance",
+      "category": "Clinical Consultation",
+      "hint": "siydikning ko'rinishi",
+      "hint_uz": "siydikning ko'rinishi",
+      "hint_ru": "внешний вид мочи",
+      "hint_en": "urine appearance",
+      "patient_response": ""
+    },
+    {
+      "phrase": "dark urine",
+      "category": "Clinical Consultation",
+      "hint": "to'q rangli siydik",
+      "hint_uz": "to'q rangli siydik",
+      "hint_ru": "тёмная моча",
+      "hint_en": "dark urine",
+      "patient_response": ""
+    },
+    {
+      "phrase": "fever",
+      "category": "Clinical Consultation",
+      "hint": "Harorat (isitma) yoki qaltirash bormi?",
+      "hint_uz": "Harorat (isitma) yoki qaltirash bormi?",
+      "hint_ru": "Есть ли повышенная температура или озноб?",
+      "hint_en": "fever",
+      "patient_response": ""
+    },
+    {
+      "phrase": "chills",
+      "category": "Clinical Consultation",
+      "hint": "titroq, qaltirash",
+      "hint_uz": "titroq, qaltirash",
+      "hint_ru": "озноб",
+      "hint_en": "chills",
+      "patient_response": ""
+    },
+    {
+      "phrase": "nausea",
+      "category": "Clinical Consultation",
+      "hint": "ko'ngil aynishi",
+      "hint_uz": "ko'ngil aynishi",
+      "hint_ru": "тошнота",
+      "hint_en": "nausea",
+      "patient_response": ""
+    },
+    {
+      "phrase": "flank pain",
+      "category": "Clinical Consultation",
+      "hint": "yonbosh og'rig'i",
+      "hint_uz": "yonbosh og'rig'i",
+      "hint_ru": "боль в боку",
+      "hint_en": "flank pain",
+      "patient_response": ""
+    },
+    {
+      "phrase": "right flank",
+      "category": "Clinical Consultation",
+      "hint": "o'ng yonbosh",
+      "hint_uz": "o'ng yonbosh",
+      "hint_ru": "правый бок",
+      "hint_en": "right flank",
+      "patient_response": ""
+    },
+    {
+      "phrase": "upper urinary tract",
+      "category": "Clinical Consultation",
+      "hint": "yuqori siydik yo'llari",
+      "hint_uz": "yuqori siydik yo'llari",
+      "hint_ru": "верхние мочевые пути",
+      "hint_en": "upper urinary tract",
+      "patient_response": ""
+    },
+    {
+      "phrase": "kidney infection",
+      "category": "Clinical Consultation",
+      "hint": "buyrak infeksiyasi",
+      "hint_uz": "buyrak infeksiyasi",
+      "hint_ru": "инфекция почки",
+      "hint_en": "kidney infection",
+      "patient_response": ""
+    },
+    {
+      "phrase": "pyelonephritis",
+      "category": "Clinical Consultation",
+      "hint": "pielonefrit",
+      "hint_uz": "pielonefrit",
+      "hint_ru": "пиелонефрит",
+      "hint_en": "pyelonephritis",
+      "patient_response": ""
+    },
+    {
+      "phrase": "kidney function",
+      "category": "Clinical Consultation",
+      "hint": "buyrak faoliyati",
+      "hint_uz": "buyrak faoliyati",
+      "hint_ru": "функция почек",
+      "hint_en": "kidney function",
+      "patient_response": ""
+    },
+    {
+      "phrase": "be affected",
+      "category": "Clinical Consultation",
+      "hint": "ta'sirlanmoq / zararlanmoq",
+      "hint_uz": "ta'sirlanmoq / zararlanmoq",
+      "hint_ru": "быть нарушенным / затронутым",
+      "hint_en": "be affected",
+      "patient_response": ""
+    },
+    {
+      "phrase": "urinalysis",
+      "category": "Clinical Consultation",
+      "hint": "siydik tahlili",
+      "hint_uz": "siydik tahlili",
+      "hint_ru": "анализ мочи",
+      "hint_en": "urinalysis",
+      "patient_response": ""
+    },
+    {
+      "phrase": "urine culture",
+      "category": "Clinical Consultation",
+      "hint": "siydik kulturasi",
+      "hint_uz": "siydik kulturasi",
+      "hint_ru": "посев мочи",
+      "hint_en": "urine culture",
+      "patient_response": ""
+    },
+    {
+      "phrase": "blood count",
+      "category": "Clinical Consultation",
+      "hint": "qon tahlili",
+      "hint_uz": "qon tahlili",
+      "hint_ru": "анализ крови",
+      "hint_en": "blood count",
+      "patient_response": ""
+    },
+    {
+      "phrase": "inflammatory markers",
+      "category": "Clinical Consultation",
+      "hint": "yallig'lanish markerlari",
+      "hint_uz": "yallig'lanish markerlari",
+      "hint_ru": "маркеры воспаления",
+      "hint_en": "inflammatory markers",
+      "patient_response": ""
+    },
+    {
+      "phrase": "renal function",
+      "category": "Clinical Consultation",
+      "hint": "buyrak faoliyati",
+      "hint_uz": "buyrak faoliyati",
+      "hint_ru": "функция почек",
+      "hint_en": "renal function",
+      "patient_response": ""
+    },
+    {
+      "phrase": "electrolytes",
+      "category": "Clinical Consultation",
+      "hint": "elektrolitlar",
+      "hint_uz": "elektrolitlar",
+      "hint_ru": "электролиты",
+      "hint_en": "electrolytes",
+      "patient_response": ""
+    },
+    {
+      "phrase": "adequate hydration",
+      "category": "Clinical Consultation",
+      "hint": "yetarli suyuqlik qabul qilish",
+      "hint_uz": "yetarli suyuqlik qabul qilish",
+      "hint_ru": "достаточная гидратация",
+      "hint_en": "adequate hydration",
+      "patient_response": ""
+    },
+    {
+      "phrase": "restrict fluids",
+      "category": "Clinical Consultation",
+      "hint": "suyuqlikni cheklamoq",
+      "hint_uz": "suyuqlikni cheklamoq",
+      "hint_ru": "ограничивать жидкость",
+      "hint_en": "restrict fluids",
+      "patient_response": ""
+    },
+    {
+      "phrase": "excessive amounts",
+      "category": "Clinical Consultation",
+      "hint": "haddan tashqari miqdor",
+      "hint_uz": "haddan tashqari miqdor",
+      "hint_ru": "чрезмерное количество",
+      "hint_en": "excessive amounts",
+      "patient_response": ""
+    },
+    {
+      "phrase": "painkillers",
+      "category": "Clinical Consultation",
+      "hint": "Og'riq qoldiruvchi dori qabul qildingizmi?",
+      "hint_uz": "Og'riq qoldiruvchi dori qabul qildingizmi?",
+      "hint_ru": "Принимали ли вы обезболивающие препараты?",
+      "hint_en": "painkillers",
+      "patient_response": ""
+    },
+    {
+      "phrase": "impaired kidney function",
+      "category": "Clinical Consultation",
+      "hint": "buyrak faoliyatining buzilishi",
+      "hint_uz": "buyrak faoliyatining buzilishi",
+      "hint_ru": "нарушение функции почек",
+      "hint_en": "impaired kidney function",
+      "patient_response": ""
+    },
+    {
+      "phrase": "stay in hospital",
+      "category": "Clinical Consultation",
+      "hint": "kasalxonada qolmoq",
+      "hint_uz": "kasalxonada qolmoq",
+      "hint_ru": "оставаться в больнице",
+      "hint_en": "stay in hospital",
+      "patient_response": ""
+    },
+    {
+      "phrase": "keep fluids down",
+      "category": "Clinical Consultation",
+      "hint": "ichilgan suyuqlikni qayt qilmasdan ushlab qolmoq",
+      "hint_uz": "ichilgan suyuqlikni qayt qilmasdan ushlab qolmoq",
+      "hint_ru": "удерживать жидкость, не вызывая рвоту",
+      "hint_en": "keep fluids down",
+      "patient_response": ""
+    },
+    {
+      "phrase": "kidney dysfunction",
+      "category": "Clinical Consultation",
+      "hint": "buyrak faoliyatining buzilishi",
+      "hint_uz": "buyrak faoliyatining buzilishi",
+      "hint_ru": "нарушение функции почек",
+      "hint_en": "kidney dysfunction",
+      "patient_response": ""
+    },
+    {
+      "phrase": "systemic infection",
+      "category": "Clinical Consultation",
+      "hint": "tizimli infeksiya",
+      "hint_uz": "tizimli infeksiya",
+      "hint_ru": "системная инфекция",
+      "hint_en": "systemic infection",
+      "patient_response": ""
+    },
+    {
+      "phrase": "persistent vomiting",
+      "category": "Clinical Consultation",
+      "hint": "davomli qusish",
+      "hint_uz": "davomli qusish",
+      "hint_ru": "постоянная / davomli qusish",
+      "hint_en": "persistent vomiting",
+      "patient_response": ""
+    },
+    {
+      "phrase": "oral treatment",
+      "category": "Clinical Consultation",
+      "hint": "og'iz orqali davolash",
+      "hint_uz": "og'iz orqali davolash",
+      "hint_ru": "пероральное лечение",
+      "hint_en": "oral treatment",
+      "patient_response": ""
+    },
+    {
+      "phrase": "intravenous fluids",
+      "category": "Clinical Consultation",
+      "hint": "vena ichiga yuboriladigan suyuqliklar",
+      "hint_uz": "vena ichiga yuboriladigan suyuqliklar",
+      "hint_ru": "внутривенные жидкости",
+      "hint_en": "intravenous fluids",
+      "patient_response": ""
+    },
+    {
+      "phrase": "intravenous antibiotics",
+      "category": "Clinical Consultation",
+      "hint": "vena ichiga yuboriladigan antibiotiklar",
+      "hint_uz": "vena ichiga yuboriladigan antibiotiklar",
+      "hint_ru": "внутривенные антибиотики",
+      "hint_en": "intravenous antibiotics",
+      "patient_response": ""
+    },
+    {
+      "phrase": "resistant bacterium",
+      "category": "Clinical Consultation",
+      "hint": "antibiotikka chidamli bakteriya",
+      "hint_uz": "antibiotikka chidamli bakteriya",
+      "hint_ru": "устойчивая бактерия",
+      "hint_en": "resistant bacterium",
+      "patient_response": ""
+    },
+    {
+      "phrase": "susceptibility results",
+      "category": "Clinical Consultation",
+      "hint": "sezuvchanlik natijalari",
+      "hint_uz": "sezuvchanlik natijalari",
+      "hint_ru": "результаты чувствительности",
+      "hint_en": "susceptibility results",
+      "patient_response": ""
+    },
+    {
+      "phrase": "complete the prescribed course",
+      "category": "Clinical Consultation",
+      "hint": "buyurilgan davolash kursini to'liq tugatmoq",
+      "hint_uz": "buyurilgan davolash kursini to'liq tugatmoq",
+      "hint_ru": "полностью завершить назначенный курс",
+      "hint_en": "complete the prescribed course",
+      "patient_response": ""
+    },
+    {
+      "phrase": "eradicated",
+      "category": "Clinical Consultation",
+      "hint": "butunlay yo'q qilingan",
+      "hint_uz": "butunlay yo'q qilingan",
+      "hint_ru": "элиминированный / полностью уничтоженный",
+      "hint_en": "eradicated",
+      "patient_response": ""
+    },
+    {
+      "phrase": "warning signs",
+      "category": "Clinical Consultation",
+      "hint": "xavf belgilar",
+      "hint_uz": "xavf belgilar",
+      "hint_ru": "предупреждающие признаки",
+      "hint_en": "warning signs",
+      "patient_response": ""
+    },
+    {
+      "phrase": "urgent medical attention",
+      "category": "Clinical Consultation",
+      "hint": "shoshilinch tibbiy yordam",
+      "hint_uz": "shoshilinch tibbiy yordam",
+      "hint_ru": "неотложная медицинская помощь",
+      "hint_en": "urgent medical attention",
+      "patient_response": ""
+    },
+    {
+      "phrase": "severe weakness",
+      "category": "Clinical Consultation",
+      "hint": "kuchli holsizlik",
+      "hint_uz": "kuchli holsizlik",
+      "hint_ru": "сильная слабость",
+      "hint_en": "severe weakness",
+      "patient_response": ""
+    },
+    {
+      "phrase": "confusion",
+      "category": "Clinical Consultation",
+      "hint": "ong chalkashishi",
+      "hint_uz": "ong chalkashishi",
+      "hint_ru": "спутанность сознания",
+      "hint_en": "confusion",
+      "patient_response": ""
+    },
+    {
+      "phrase": "fainting",
+      "category": "Clinical Consultation",
+      "hint": "hushidan ketish",
+      "hint_uz": "hushidan ketish",
+      "hint_ru": "обморок",
+      "hint_en": "fainting",
+      "patient_response": ""
+    },
+    {
+      "phrase": "admission",
+      "category": "Clinical Consultation",
+      "hint": "kasalxonaga yotqizish",
+      "hint_uz": "kasalxonaga yotqizish",
+      "hint_ru": "госпитализация",
+      "hint_en": "admission",
+      "patient_response": ""
+    },
+    {
+      "phrase": "discharge",
+      "category": "Clinical Consultation",
+      "hint": "kasalxonadan chiqarish",
+      "hint_uz": "kasalxonadan chiqarish",
+      "hint_ru": "выписка",
+      "hint_en": "discharge",
+      "patient_response": ""
+    },
+    {
+      "phrase": "safety-netting",
+      "category": "Clinical Consultation",
+      "hint": "xavfsizlik va keyingi kuzatuv bo'yicha ko'rsatmalar",
+      "hint_uz": "xavfsizlik va keyingi kuzatuv bo'yicha ko'rsatmalar",
+      "hint_ru": "рекомендации по безопасности и дальнейшему наблюдению",
+      "hint_en": "safety-netting",
+      "patient_response": ""
+    },
+    {
+      "phrase": "What symptoms have brought you to the clinic today?",
+      "category": "Clinical Inquiry",
+      "hint": "Klinik muloqot iborasi",
+      "hint_uz": "Klinik muloqot iborasi",
+      "hint_ru": "Klinik muloqot iborasi",
+      "hint_en": "What symptoms have brought you to the clinic today?",
+      "patient_response": ""
+    },
+    {
+      "phrase": "Have you noticed blood in your urine?",
+      "category": "Clinical Inquiry",
+      "hint": "Klinik muloqot iborasi",
+      "hint_uz": "Klinik muloqot iborasi",
+      "hint_ru": "Klinik muloqot iborasi",
+      "hint_en": "Have you noticed blood in your urine?",
+      "patient_response": ""
+    }
+  ],
+  "dialogue": [
+    {
+      "speaker": "Doctor",
+      "text": "What symptoms have brought you to the clinic today?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I've had burning when I urinate, and I've been needing to pass urine much more frequently."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Have you noticed blood in your urine or any change in its appearance?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "Yes. It looked darker yesterday, and I noticed a small amount of blood."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Have you developed fever, chills, nausea, or pain in your back or side?"
+    },
+    {
+      "speaker": "Patient",
+      "text": "I've had a fever since last night, and there is severe pain in my right flank. Nurse: Her temperature is 38.8°C, pulse 108, and blood pressure 106 over 68."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "That combination may indicate that the infection has moved beyond the bladder and may involve the upper urinary tract."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Could it be a kidney infection?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "It might be. We must assess how severe the infection is and whether your kidney function has been affected."
+    },
+    {
+      "speaker": "Patient",
+      "text": "What tests do I need?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "You must provide a urine sample for urinalysis and culture. We should also check your blood count, inflammatory markers, renal function and electrolytes. Nurse: I'll collect the urine sample and prepare the blood tubes."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Should I drink a lot of water?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "You should maintain adequate hydration unless there is another medical reason for restricting fluids. However, drinking excessive amounts will not replace antibiotic treatment."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Should I take painkillers?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "You should check with us before taking them, particularly if your kidney function is impaired."
+    },
+    {
+      "speaker": "Patient",
+      "text": "Do I have to stay in hospital?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "You may have to stay if you are unable to keep fluids down, if your infection is severe, or if there are signs of kidney dysfunction or systemic infection. Relative: She has been vomiting since this morning. Does that make admission more likely?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "Yes, persistent vomiting can make oral treatment difficult and may increase the need for intravenous fluids and antibiotics."
+    },
+    {
+      "speaker": "Patient",
+      "text": "What happens if the urine culture shows a resistant bacterium?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "We may have to change the antibiotic according to the organism's susceptibility results."
+    },
+    {
+      "speaker": "Patient",
+      "text": "And if I start feeling better tomorrow?"
+    },
+    {
+      "speaker": "Doctor",
+      "text": "You should still complete the prescribed course unless your doctor specifically changes it. Feeling better does not necessarily mean the infection has been eradicated. Nurse: I'll explain the warning signs before discharge if she is well enough to go home."
+    },
+    {
+      "speaker": "Doctor",
+      "text": "If you develop worsening flank pain, persistent vomiting, confusion, fainting, or severe weakness, you must seek urgent medical attention."
+    }
+  ],
+  "tests": [
+    {
+      "question": "What is the medical meaning of the term 'urinary tract infection (UTI)' in clinical consultation?",
+      "option_a": "siydik yo'llari infeksiyasi",
+      "option_b": "siydik chiqarganda achishish",
+      "option_c": "siydik chiqarmoq",
+      "option_d": "tez-tez",
+      "correct_option": "A",
+      "explanation": "'urinary tract infection (UTI)' atamasining to'g'ri ma'nosi: siydik yo'llari infeksiyasi."
+    },
+    {
+      "question": "Which term corresponds to 'siydikdagi qon'?",
+      "option_a": "burning when I urinate",
+      "option_b": "blood in the urine",
+      "option_c": "pass urine",
+      "option_d": "frequently",
+      "correct_option": "B",
+      "explanation": "'siydikdagi qon' ma'nosiga mos keluvchi tibbiy termin 'blood in the urine' hisoblanadi."
+    },
+    {
+      "question": "Which of the following is the grammatically and clinically standard question to ask about the duration of symptoms?",
+      "option_a": "How long do you having this symptom?",
+      "option_b": "How long has this condition been bothering you?",
+      "option_c": "Since what time you have this problem?",
+      "option_d": "How many days you are feeling pain?",
+      "correct_option": "B",
+      "explanation": "Klinik anamnezda davomiylikni so'rash uchun Present Perfect Continuous ('How long has... been bothering you?') to'g'ri shakl hisoblanadi."
+    },
+    {
+      "question": "When evaluating acute pain, what is the best phrasing to assess pain character?",
+      "option_a": "Is your pain bad or very bad?",
+      "option_b": "Can you describe the pain—is it sharp, dull, throbbing, or aching?",
+      "option_c": "Why do you have sharp pain today?",
+      "option_d": "Stop pain with pills immediately.",
+      "correct_option": "B",
+      "explanation": "Og'riq xarakterini aniqlashda shifokor ochiq va taklif qiluvchi variantlar (sharp, dull, throbbing, aching) beradi."
+    }
+  ]
+}
