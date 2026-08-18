@@ -1,11 +1,83 @@
+# ==========================================
+# Dependencies
+# ==========================================
 node_modules/
 **/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+
+# ==========================================
+# Environment & Sensitive Credentials
+# ==========================================
 .env
+.env.*
+!.env.example
 *.env
 **/.env
 **/*.env
+**/.env.*
+!**/.env.example
+
+# ==========================================
+# Production Builds & Dist
+# ==========================================
 dist/
 build/
-.DS_Store
+out/
+**/dist/
+**/build/
+.next/
+
+# ==========================================
+# Local Documents, Data Dumps & Screenshots (Do NOT commit to GitHub)
+# ==========================================
+datas/
+**/datas/
+datas_summary.json
+docs/
+**/docs/
+screenshots/
+**/screenshots/
+antigravity/
+**/antigravity/
+
+# Uploads / Media files
+uploads/
+**/uploads/
+*.docx
+*.doc
+*.xlsx
+*.csv
+
+# ==========================================
+# Scratch, Migration & Capture Helper Scripts
+# ==========================================
+backend/capture_*.js
+backend/inspect_*.py
+backend/update_*.py
+backend/mig*.js
+backend/extract_datas.py
+backend/dump_*.py
+frontend/patch*.cjs
+update_formulas.js
+scratch/
+**/*.tmp
 *.log
+
+# ==========================================
+# IDE & System Files
+# ==========================================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 .gemini/
+**/.gemini/
