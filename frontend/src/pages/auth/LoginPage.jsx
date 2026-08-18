@@ -6,9 +6,8 @@ import { useLanguage } from '../../contexts/LanguageContext';
 import LanguageSelector from '../../components/LanguageSelector';
 import {
   RiEyeLine, RiEyeOffLine, RiHeartPulseLine,
-  RiLockPasswordLine, RiMailLine, RiUser3Line,
-  RiUserStarLine, RiShieldCheckLine, RiLoader4Line,
-  RiArrowRightLine, RiSparklingFill, RiStethoscopeLine
+  RiLockPasswordLine, RiMailLine, RiLoader4Line,
+  RiArrowRightLine
 } from 'react-icons/ri';
 
 export default function LoginPage() {
@@ -35,10 +34,6 @@ export default function LoginPage() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleDemoFill = (email, pass) => {
-    setForm({ email, password: pass });
   };
 
   return (
@@ -115,58 +110,10 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPass(!showPass)}
-                  className="absolute right-3 text-slate-400 hover:text-slate-600 transition-colors p-1.5 rounded-lg hover:bg-slate-100 cursor-pointer flex items-center justify-center z-10"
-                  aria-label="Toggle Password Visibility"
+                  className="absolute right-3.5 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer select-none"
+                  aria-label={showPass ? 'Hide password' : 'Show password'}
                 >
                   {showPass ? <RiEyeOffLine className="text-base" /> : <RiEyeLine className="text-base" />}
-                </button>
-              </div>
-            </div>
-
-            {/* Quick Demo Accounts Selection */}
-            <div className="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-3.5 space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider">
-                  {t('auth.demo_hint')}
-                </span>
-                <span className="text-[10px] text-blue-600 font-bold">1-bosish</span>
-              </div>
-              <div className="grid grid-cols-3 gap-1.5">
-                <button
-                  type="button"
-                  onClick={() => handleDemoFill('student@vpe.uz', 'student123')}
-                  className={`px-2 py-2 rounded-xl bg-white border text-[11px] font-extrabold transition-all shadow-2xs flex items-center justify-center gap-1.5 cursor-pointer ${
-                    form.email === 'student@vpe.uz'
-                      ? 'border-blue-500 text-blue-700 bg-blue-50/50 ring-2 ring-blue-100'
-                      : 'border-slate-200 hover:border-blue-300 text-slate-700 hover:bg-slate-50'
-                  }`}
-                >
-                  <RiUser3Line className="text-blue-600 text-xs" />
-                  <span>Talaba</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleDemoFill('teacher@vpe.uz', 'teacher123')}
-                  className={`px-2 py-2 rounded-xl bg-white border text-[11px] font-extrabold transition-all shadow-2xs flex items-center justify-center gap-1.5 cursor-pointer ${
-                    form.email === 'teacher@vpe.uz'
-                      ? 'border-emerald-500 text-emerald-700 bg-emerald-50/50 ring-2 ring-emerald-100'
-                      : 'border-slate-200 hover:border-emerald-300 text-slate-700 hover:bg-slate-50'
-                  }`}
-                >
-                  <RiUserStarLine className="text-emerald-600 text-xs" />
-                  <span>O'qituvchi</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleDemoFill('admin@gmail.com', 'admin123')}
-                  className={`px-2 py-2 rounded-xl bg-white border text-[11px] font-extrabold transition-all shadow-2xs flex items-center justify-center gap-1.5 cursor-pointer ${
-                    form.email === 'admin@gmail.com'
-                      ? 'border-purple-500 text-purple-700 bg-purple-50/50 ring-2 ring-purple-100'
-                      : 'border-slate-200 hover:border-purple-300 text-slate-700 hover:bg-slate-50'
-                  }`}
-                >
-                  <RiShieldCheckLine className="text-purple-600 text-xs" />
-                  <span>Admin</span>
                 </button>
               </div>
             </div>
@@ -175,7 +122,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full btn-primary py-3.5 text-xs sm:text-sm font-black shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
+              className="w-full btn-primary py-3.5 text-xs sm:text-sm font-black shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
             >
               {loading ? (
                 <>
