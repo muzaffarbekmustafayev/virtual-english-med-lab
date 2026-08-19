@@ -69,91 +69,110 @@ function UserModal({ user, onClose, onSaved, specialties, groups }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-50 flex items-center justify-center p-4">
-      <div className="bg-white border border-slate-200 shadow-2xl rounded-3xl p-6 sm:p-7 w-full max-w-md animate-scale-in">
-        <div className="flex justify-between items-center mb-5 pb-3 border-b border-slate-100">
-          <div className="flex items-center gap-2.5">
-            <div className={`p-2.5 rounded-xl ${isEditing ? 'bg-amber-50 text-amber-600' : 'bg-blue-50 text-blue-600'}`}>
-              {isEditing ? <RiEditLine size={18} /> : <RiAddLine size={18} />}
-            </div>
-            <div>
-              <h3 className="font-black text-slate-900 text-base">
-                {isEditing ? t('admin.users.edit_user') : t('admin.users.add_user_btn')}
-              </h3>
-            </div>
-          </div>
+    <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
+        <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+          <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+            <span className="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
+              {isEditing ? <RiEditLine /> : <RiAddLine />}
+            </span>
+            {isEditing ? t('admin.users.edit_user') : t('admin.users.add_user_btn')}
+          </h3>
           <button
+            type="button"
             onClick={onClose}
-            className="text-slate-400 hover:text-slate-600 bg-slate-50 hover:bg-slate-100 p-2 rounded-xl transition-colors cursor-pointer"
+            className="text-slate-400 hover:text-slate-600 hover:bg-slate-100 p-2 rounded-xl transition-colors"
           >
-            <RiCloseLine size={18} />
+            <RiCloseLine className="text-xl" />
           </button>
         </div>
 
         {error && (
-          <div className="mb-4 p-3 rounded-xl bg-rose-50 text-rose-700 border border-rose-200 text-xs font-bold">
-            {error}
+          <div className="mx-6 mt-4 p-3 rounded-xl bg-rose-50 text-rose-700 border border-rose-200 text-xs font-bold flex items-center gap-2">
+            <RiCloseLine className="text-lg" /> {error}
           </div>
         )}
 
-        <form onSubmit={submit} className="space-y-3.5">
+        <form onSubmit={submit} className="p-6 space-y-4">
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1">{t('auth.full_name')} *</label>
-            <input
-              placeholder={t('auth.enter_full_name')}
-              value={form.full_name}
-              onChange={(e) => setForm({ ...form, full_name: e.target.value })}
-              required
-              className="input-standard text-xs"
-            />
+            <label className="block text-sm font-semibold text-slate-700 mb-1.5">{t('auth.full_name')} *</label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <RiUserLine className="text-slate-400" />
+              </div>
+              <input
+                autoFocus
+                placeholder={t('auth.enter_full_name')}
+                value={form.full_name}
+                onChange={(e) => setForm({ ...form, full_name: e.target.value })}
+                required
+                className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-sm bg-slate-50 focus:bg-white"
+              />
+            </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1">{t('auth.email')} *</label>
-            <input
-              type="email"
-              placeholder={t('auth.enter_email')}
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-              required
-              className="input-standard text-xs"
-            />
+            <label className="block text-sm font-semibold text-slate-700 mb-1.5">{t('auth.email')} *</label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <RiMailLine className="text-slate-400" />
+              </div>
+              <input
+                type="email"
+                placeholder={t('auth.enter_email')}
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                required
+                className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-sm bg-slate-50 focus:bg-white"
+              />
+            </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1">
-              {t('auth.password')} {isEditing && <span className="text-[10px] text-slate-400 font-normal">(O'zgartirish shart emas)</span>}
+            <label className="block text-sm font-semibold text-slate-700 mb-1.5 flex items-center gap-2">
+              {t('auth.password')}
+              {isEditing && <span className="text-[10px] text-slate-400 font-normal px-2 py-0.5 bg-slate-100 rounded-full">Ixtiyoriy</span>}
             </label>
-            <input
-              type="password"
-              placeholder="••••••••"
-              value={form.password}
-              onChange={(e) => setForm({ ...form, password: e.target.value })}
-              className="input-standard text-xs"
-            />
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <RiLockPasswordLine className="text-slate-400" />
+              </div>
+              <input
+                type="password"
+                placeholder={isEditing ? "O'zgartirish uchun yangi parol kiriting" : "••••••••"}
+                value={form.password}
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
+                className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-sm bg-slate-50 focus:bg-white"
+              />
+            </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1">{t('auth.role')} *</label>
-            <select
-              value={form.role}
-              onChange={(e) => setForm({ ...form, role: e.target.value })}
-              className="input-standard text-xs font-bold"
-            >
-              <option value="student">Talaba / Student</option>
-              <option value="teacher">O'qituvchi / Teacher</option>
-              <option value="admin">Administrator / Admin</option>
-            </select>
+            <label className="block text-sm font-semibold text-slate-700 mb-1.5">{t('auth.role')} *</label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <RiShieldCheckLine className="text-slate-400" />
+              </div>
+              <select
+                value={form.role}
+                onChange={(e) => setForm({ ...form, role: e.target.value })}
+                className="block w-full pl-10 pr-10 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-sm bg-slate-50 focus:bg-white appearance-none font-medium"
+              >
+                <option value="student">Talaba / Student</option>
+                <option value="teacher">O'qituvchi / Teacher</option>
+                <option value="admin">Administrator / Admin</option>
+              </select>
+            </div>
           </div>
 
           {form.role === 'student' && (
-            <div className="grid grid-cols-2 gap-3 pt-1">
+            <div className="grid grid-cols-2 gap-3 pt-2 border-t border-slate-100">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">{t('auth.specialty')}</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">{t('auth.specialty')}</label>
                 <select
                   value={form.specialty_id}
                   onChange={(e) => setForm({ ...form, specialty_id: e.target.value })}
-                  className="input-standard text-xs"
+                  className="block w-full px-3 py-2 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-xs bg-slate-50 focus:bg-white"
                 >
                   <option value="">Tanlang...</option>
                   {specialties.map((s) => (
@@ -163,11 +182,11 @@ function UserModal({ user, onClose, onSaved, specialties, groups }) {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">{t('auth.group')}</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">{t('auth.group')}</label>
                 <select
                   value={form.group_id}
                   onChange={(e) => setForm({ ...form, group_id: e.target.value })}
-                  className="input-standard text-xs"
+                  className="block w-full px-3 py-2 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-xs bg-slate-50 focus:bg-white"
                 >
                   <option value="">Tanlang...</option>
                   {groups
@@ -180,20 +199,24 @@ function UserModal({ user, onClose, onSaved, specialties, groups }) {
             </div>
           )}
 
-          <div className="flex gap-2.5 pt-3">
+          <div className="flex gap-3 justify-end pt-4 mt-2">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 btn-secondary-soft"
+              className="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-xl hover:bg-slate-50 transition-colors focus:ring-2 focus:ring-slate-200"
             >
               {t('common.cancel')}
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 btn-primary-gradient"
+              className="px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white text-sm font-semibold rounded-xl shadow-md hover:shadow-lg transition-all focus:ring-2 focus:ring-indigo-500 flex items-center gap-2"
             >
-              {loading ? t('common.loading') : isEditing ? t('common.update') : t('common.create')}
+              {loading ? (
+                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : (
+                isEditing ? t('common.update') : t('common.create')
+              )}
             </button>
           </div>
         </form>
