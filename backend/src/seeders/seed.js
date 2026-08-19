@@ -12,10 +12,9 @@ async function seed() {
   console.log('✅ Jadvallar qayta yaratildi');
 
   // ── 1. Mutaxassisliklar ──────────────────────────────────
-  const [dentistry, pediatrics, therapy] = await Specialty.bulkCreate([
-    { name: 'Stomatologiya' },
-    { name: 'Pediatriya' },
-    { name: 'Davolash ishi' },
+  const [dentistry, therapy] = await Specialty.bulkCreate([
+    { id: 1, name: 'Stomatologiya' },
+    { id: 2, name: 'Davolash ishi' },
   ], { returning: true });
   console.log('✅ Mutaxassisliklar yaratildi');
 
