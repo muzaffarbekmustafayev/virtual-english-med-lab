@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import api from '../../lib/api';
@@ -7,31 +7,24 @@ import LanguageSelector from '../../components/LanguageSelector';
 import {
   RiHeartPulseLine, RiUser3Line, RiMailLine,
   RiLockPasswordLine, RiEyeLine, RiEyeOffLine,
-  RiLoader4Line, RiStethoscopeLine, RiGroupLine,
-  RiArrowRightLine, RiShieldCheckLine
+  RiLoader4Line, RiArrowRightLine, RiErrorWarningFill
 } from 'react-icons/ri';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
   const { t } = useLanguage();
-  const [form, setForm] = useState({ full_name: '', email: '', password: '', specialty_id: '', group_id: '' });
-  const [specialties, setSpecialties] = useState([]);
-  const [groups,      setGroups]      = useState([]);
+  const [form, setForm] = useState({ full_name: '', email: '', password: '' });
   const [showPass,  setShowPass]  = useState(false);
   const [loading,   setLoading]   = useState(false);
   const [error,     setError]     = useState('');
-
-  useEffect(() => {
-    api.get('/auth/specialties').then(r => setSpecialties(r.data || [])).catch(() => {});
-    api.get('/auth/groups').then(r => setGroups(r.data || [])).catch(() => {});
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
     try {
-      await api.post('/auth/register', { ...form, role: 'student' });
+      // Register logic: No group/specialty required anymore. Default role is 'student'.
+      await api.post('/auth/register', { ...form, role: 'student', specialty_id: null, group_id: null });
       toast.success((t('common.success') || "Ro'yxatdan o'tildi") + '! ' + t('auth.login_title'));
       navigate('/login');
     } catch (err) {
@@ -44,84 +37,112 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50/70 p-4 sm:p-6 relative overflow-hidden selection:bg-blue-600 selection:text-white">
-      {/* Top right language toggle */}
-      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-20">
-        <LanguageSelector variant="compact" />
+    <div className="min-h-screen flex bg-white">
+      {/* ── Left Pane: Branding (Desktop) ── */}
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden flex-col justify-between p-12 bg-slate-900">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 to-slate-950 z-0"></div>
+        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none" />
+        
+        <div className="relative z-10 flex items-center gap-3">
+          <div className="w-11 h-11 bg-gradient-to-tr from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-500/20">
+            <RiHeartPulseLine size={24} />
+          </div>
+          <span className="text-white text-xl font-black tracking-tight">UzMedik</span>
+        </div>
+        
+        <div className="relative z-10 max-w-lg">
+          <h1 className="text-4xl lg:text-5xl font-black text-white leading-[1.15] mb-6 tracking-tight">
+            Xalqaro standartlar asosida <br/><span className="text-emerald-400">Tibbiy Ingliz Tili</span>
+          </h1>
+          <ul className="space-y-4">
+            <li className="flex items-start gap-3 text-slate-300 text-sm font-medium">
+              <div className="w-6 h-6 rounded-full bg-slate-800 flex items-center justify-center shrink-0 mt-0.5 text-emerald-400">✓</div>
+              <span>Haqiqiy klinik holatlarga asoslangan sun'iy intellekt bemorlar</span>
+            </li>
+            <li className="flex items-start gap-3 text-slate-300 text-sm font-medium">
+              <div className="w-6 h-6 rounded-full bg-slate-800 flex items-center justify-center shrink-0 mt-0.5 text-emerald-400">✓</div>
+              <span>Tibbiy terminologiya va kasbiy leksikani chuqur o'zlashtirish</span>
+            </li>
+            <li className="flex items-start gap-3 text-slate-300 text-sm font-medium">
+              <div className="w-6 h-6 rounded-full bg-slate-800 flex items-center justify-center shrink-0 mt-0.5 text-emerald-400">✓</div>
+              <span>Shifokor va bemor o'rtasidagi muloqot ko'nikmalarini rivojlantirish</span>
+            </li>
+          </ul>
+        </div>
+        
+        <div className="relative z-10 text-slate-500 text-xs font-medium">
+          © {new Date().getFullYear()} UzMedik. Barcha huquqlar himoyalangan.
+        </div>
       </div>
 
-      {/* Decorative ambient background blurs */}
-      <div className="absolute -top-32 -right-32 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="w-full max-w-[480px] animate-scale-in relative z-10 my-auto py-6">
-        {/* Header Branding */}
-        <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-3xl bg-gradient-to-tr from-blue-600 to-indigo-600 mb-3.5 shadow-lg shadow-blue-500/25 text-white ring-4 ring-blue-50">
-            <RiHeartPulseLine className="text-3xl" />
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-tight">
-            {t('auth.register_title')}
-          </h1>
-          <p className="text-slate-500 text-xs sm:text-sm mt-1 font-medium max-w-sm mx-auto">
-            {t('auth.register_subtitle')}
-          </p>
+      {/* ── Right Pane: Form ── */}
+      <div className="flex-1 flex flex-col items-center justify-center p-6 relative">
+        <div className="absolute top-6 right-6">
+          <LanguageSelector variant="compact" />
         </div>
-
-        {/* Form Card */}
-        <div className="card-standard p-6 sm:p-8 space-y-5 bg-white border border-slate-200/90 shadow-sm">
-          <div>
-            <h2 className="text-lg font-black text-slate-900 tracking-tight">Yangi talaba hisobi</h2>
-            <p className="text-xs text-slate-400 font-medium mt-0.5">Tibbiy ta'lim platformasidan foydalanish uchun ro'yxatdan o'ting</p>
+        
+        <div className="w-full max-w-[400px]">
+          {/* Mobile Branding */}
+          <div className="lg:hidden flex items-center justify-center gap-2.5 mb-10">
+            <div className="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center text-white shadow-md">
+              <RiHeartPulseLine size={22} />
+            </div>
+            <span className="text-slate-900 text-xl font-black tracking-tight">UzMedik</span>
           </div>
 
+          <div className="mb-8 text-center lg:text-left">
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">{t('auth.register_title')}</h2>
+            <p className="text-sm text-slate-500 mt-2 font-medium">Platformadan foydalanish uchun ro'yxatdan o'ting.</p>
+          </div>
+          
           {error && (
-            <div className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-bold animate-fade-in flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-rose-500 shrink-0" />
+            <div className="mb-6 p-4 rounded-xl bg-rose-50 border border-rose-100 text-rose-700 text-xs font-bold animate-fade-in flex items-center gap-2.5">
+              <RiErrorWarningFill className="text-lg shrink-0" />
               <span>{error}</span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             {/* Full Name */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">{t('auth.full_name')} *</label>
+              <label className="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wide">{t('auth.full_name')} *</label>
               <div className="relative flex items-center">
-                <RiUser3Line className="absolute left-3.5 text-slate-400 text-lg pointer-events-none select-none z-10" />
+                <RiUser3Line className="absolute left-4 text-slate-400 text-lg pointer-events-none" />
                 <input
                   type="text"
                   placeholder={t('auth.enter_full_name')}
                   required
                   value={form.full_name}
                   onChange={e => setForm({ ...form, full_name: e.target.value })}
-                  className="input-standard has-icon-left text-xs sm:text-sm"
-                  style={{ paddingLeft: '2.75rem' }}
+                  className="w-full bg-slate-50 border border-slate-200 focus:border-slate-400 focus:bg-white rounded-xl py-3.5 pr-4 text-sm font-medium transition-all outline-none"
+                  style={{ paddingLeft: '3rem' }}
                 />
               </div>
             </div>
 
             {/* Email */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">{t('auth.email')} *</label>
+              <label className="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wide">{t('auth.email')} *</label>
               <div className="relative flex items-center">
-                <RiMailLine className="absolute left-3.5 text-slate-400 text-lg pointer-events-none select-none z-10" />
+                <RiMailLine className="absolute left-4 text-slate-400 text-lg pointer-events-none" />
                 <input
                   type="email"
                   placeholder={t('auth.enter_email')}
                   required
                   value={form.email}
                   onChange={e => setForm({ ...form, email: e.target.value })}
-                  className="input-standard has-icon-left text-xs sm:text-sm"
-                  style={{ paddingLeft: '2.75rem' }}
+                  className="w-full bg-slate-50 border border-slate-200 focus:border-slate-400 focus:bg-white rounded-xl py-3.5 pr-4 text-sm font-medium transition-all outline-none"
+                  style={{ paddingLeft: '3rem' }}
                 />
               </div>
             </div>
 
             {/* Password */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">{t('auth.password')} *</label>
+              <label className="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wide">{t('auth.password')} *</label>
               <div className="relative flex items-center">
-                <RiLockPasswordLine className="absolute left-3.5 text-slate-400 text-lg pointer-events-none select-none z-10" />
+                <RiLockPasswordLine className="absolute left-4 text-slate-400 text-lg pointer-events-none" />
                 <input
                   type={showPass ? 'text' : 'password'}
                   placeholder="••••••••"
@@ -129,82 +150,42 @@ export default function RegisterPage() {
                   minLength={6}
                   value={form.password}
                   onChange={e => setForm({ ...form, password: e.target.value })}
-                  className="input-standard has-icon-left has-icon-right text-xs sm:text-sm"
-                  style={{ paddingLeft: '2.75rem', paddingRight: '2.75rem' }}
+                  className="w-full bg-slate-50 border border-slate-200 focus:border-slate-400 focus:bg-white rounded-xl py-3.5 pl-12 pr-12 text-sm font-medium transition-all outline-none"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPass(!showPass)}
-                  className="absolute right-3 text-slate-400 hover:text-slate-600 transition-colors p-1.5 rounded-lg hover:bg-slate-100 cursor-pointer flex items-center justify-center z-10"
-                  aria-label="Toggle Password Visibility"
+                  className="absolute right-4 text-slate-400 hover:text-slate-600 transition-colors"
                 >
-                  {showPass ? <RiEyeOffLine className="text-base" /> : <RiEyeLine className="text-base" />}
+                  {showPass ? <RiEyeOffLine className="text-[17px]" /> : <RiEyeLine className="text-[17px]" />}
                 </button>
               </div>
             </div>
 
-            {/* Specialty & Group in 2 Columns */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {/* Specialty */}
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5">{t('auth.specialty')}</label>
-                <div className="relative flex items-center">
-                  <RiStethoscopeLine className="absolute left-3.5 text-slate-400 text-lg pointer-events-none select-none z-10" />
-                  <select
-                    value={form.specialty_id}
-                    onChange={e => setForm({ ...form, specialty_id: e.target.value })}
-                    className="input-standard has-icon-left text-xs sm:text-sm cursor-pointer"
-                    style={{ paddingLeft: '2.75rem' }}
-                  >
-                    <option value="">{t('auth.select_specialty')}</option>
-                    {specialties.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
-                  </select>
-                </div>
-              </div>
-
-              {/* Group */}
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5">{t('auth.group')}</label>
-                <div className="relative flex items-center">
-                  <RiGroupLine className="absolute left-3.5 text-slate-400 text-lg pointer-events-none select-none z-10" />
-                  <select
-                    value={form.group_id}
-                    onChange={e => setForm({ ...form, group_id: e.target.value })}
-                    className="input-standard has-icon-left text-xs sm:text-sm cursor-pointer"
-                    style={{ paddingLeft: '2.75rem' }}
-                  >
-                    <option value="">{t('auth.select_group')}</option>
-                    {groups.map(g => <option key={g.id} value={g.id}>{g.name}</option>)}
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            {/* Submit Button */}
+            {/* Submit */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full btn-primary py-3.5 text-xs sm:text-sm font-black shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 mt-2"
+              className="w-full bg-slate-900 hover:bg-slate-800 text-white rounded-xl py-3.5 text-sm font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 mt-2 disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <>
-                  <RiLoader4Line className="animate-spin text-base" />
-                  <span>{t('auth.registering')}</span>
+                  <RiLoader4Line className="animate-spin text-lg" />
+                  <span>{t('auth.registering')}...</span>
                 </>
               ) : (
                 <>
                   <span>{t('auth.sign_up_btn')}</span>
-                  <RiArrowRightLine className="text-base" />
+                  <RiArrowRightLine className="text-lg" />
                 </>
               )}
             </button>
           </form>
 
-          {/* Footer Back to Login Link */}
-          <div className="pt-2 border-t border-slate-100 text-center">
-            <p className="text-xs text-slate-500 font-medium">
+          <div className="mt-8 text-center">
+            <p className="text-sm text-slate-500 font-medium">
               {t('auth.have_account')}{' '}
-              <Link to="/login" className="text-blue-600 hover:text-blue-700 font-bold hover:underline">
+              <Link to="/login" className="text-slate-900 hover:text-blue-600 font-bold transition-colors">
                 {t('auth.sign_in_btn')}
               </Link>
             </p>
