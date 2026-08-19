@@ -429,8 +429,22 @@ const assignStudentGroup = async (req, res) => {
     }
 
     const updates = {};
-    if (group_id !== undefined) updates.group_id = group_id;
-    if (specialty_id !== undefined) updates.specialty_id = specialty_id;
+    if (group_id !== undefined) {
+      updates.group_id = group_id;
+      if (group_id !== null) {
+        const StudentGroup = require('../models/StudentGroup');
+        const group = await StudentGroup.findByPk(group_id);
+        if (group) {
+          updates.specialty_id = group.specialty_id;
+        }
+      } else {
+        // If removing from group, optionally keep the specialty or set to null
+        updates.specialty_id = null;
+      }
+    } else if (specialty_id !== undefined) {
+      updates.specialty_id = specialty_id;
+    }
+    
     await student.update(updates);
     res.json({ message: 'Talaba biriktirildi', student });
   } catch (err) {
