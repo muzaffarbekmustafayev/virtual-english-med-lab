@@ -42,22 +42,30 @@ export default function AdminOverview() {
   const navigate = useNavigate();
   const { t } = useLanguage();
   const [stats, setStats] = useState(null);
-  const [selectedSpecialtyId, setSelectedSpecialtyId] = useState(null);
+  const [selectedSpecialtyId, setSelectedSpecialtyId] = useState('all');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     api.get('/admin/overview')
       .then(r => {
         setStats(r.data);
-        if (r.data?.specialties?.length > 0) {
-          setSelectedSpecialtyId(r.data.specialties[0].id);
+        if (!selectedSpecialtyId) {
+          setSelectedSpecialtyId('all');
         }
       })
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
 
-  const selectedSpecialty = stats?.specialties?.find(s => s.id === selectedSpecialtyId) || stats?.specialties?.[0];
+  const selectedSpecialty = selectedSpecialtyId === 'all'
+    ? {
+        id: 'all',
+        name: 'Barchasi',
+        total_students: stats?.students || 0,
+        avg_score: stats?.avg_score || 0,
+        groups: stats?.groups_ranking || []
+      }
+    : stats?.specialties?.find(s => s.id === selectedSpecialtyId);
 
   const globalCards = stats ? [
     { label: t('admin.overview.total_students'),   value: stats.students,                icon: RiTeamLine,       badge: 'bg-blue-50 text-blue-600 border-blue-200' },
@@ -139,7 +147,7 @@ export default function AdminOverview() {
           <div className="card-standard p-6 sm:p-8 space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="text-sm font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <RiHospitalLine className="text-blue-600 text-lg" /> {t('admin.overview.specialties_analytics')}
+                <RiHospitalLine className="text-blue-600 text-lg" /> Barchasi (Guruhlar tahlili)
               </h2>
               <button 
                 onClick={() => navigate('/admin/groups')}
@@ -150,6 +158,20 @@ export default function AdminOverview() {
             </div>
 
             <div className="flex flex-wrap gap-2.5">
+              <button
+                onClick={() => setSelectedSpecialtyId('all')}
+                className={`flex items-center gap-2.5 px-4 py-2.5 rounded-2xl text-xs font-bold border transition-all cursor-pointer ${
+                  selectedSpecialtyId === 'all'
+                    ? 'bg-purple-600 text-white border-purple-600 shadow-md shadow-purple-500/20 font-black'
+                    : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                }`}
+              >
+                <span>🌍</span>
+                <span>Barchasi</span>
+                <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${selectedSpecialtyId === 'all' ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-700'}`}>
+                  {stats?.students || 0}
+                </span>
+              </button>
               {stats.specialties.map((spec) => {
                 const theme = getSpecialtyTheme(spec.name);
                 const isSel = (selectedSpecialty?.id === spec.id);
