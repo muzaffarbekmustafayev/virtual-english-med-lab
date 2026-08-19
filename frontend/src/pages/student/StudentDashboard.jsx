@@ -46,7 +46,6 @@ export default function StudentDashboard() {
   const progressPct = data?.stats?.progress_pct || data?.progress_percent || 0;
   const completedCount = data?.stats?.completed_modules || data?.completed_modules || 0;
   const totalCount = data?.stats?.total_modules || data?.total_modules || 10;
-  const cefrLevel = data?.stats?.cefr_level || data?.cefr_level || (avgScore >= 85 ? 'B2 Clinical Pro' : avgScore >= 60 ? 'B1 Medical' : 'A2 Foundation');
 
   const statCards = [
     { label: t('student.dashboard.total_modules'),     value: totalCount,               icon: RiBookOpenLine,       color: "blue",    iconBg: "bg-blue-50 text-blue-600 border-blue-200" },
@@ -80,9 +79,6 @@ export default function StudentDashboard() {
                 </span>
                 <span className="text-xs text-slate-600 font-bold px-2.5 py-0.5 rounded-full bg-slate-100 border border-slate-200/80">
                   {user?.specialty?.name || "Stomatologiya"}
-                </span>
-                <span className="badge-standard badge-purple font-black">
-                  <RiAwardLine className="text-xs" /> CEFR: {cefrLevel}
                 </span>
               </div>
               
@@ -173,9 +169,6 @@ export default function StudentDashboard() {
                   Barcha modullardagi urinishlar va simulyatsiyalar asosidagi shaxsiy reyting
                 </p>
               </div>
-              <span className="badge-standard badge-blue self-start sm:self-auto font-black">
-                CEFR: {cefrLevel}
-              </span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">

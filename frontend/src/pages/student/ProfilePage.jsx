@@ -223,7 +223,7 @@ export default function ProfilePage() {
           <div className="space-y-6 animate-fade-in">
             
             {/* 4 Key KPI Metrics Cards (Fully Responsive Grid) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               
               {/* Card 1: Course Progress */}
               <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs flex flex-col justify-between">
@@ -283,23 +283,6 @@ export default function ProfilePage() {
                 <p className="text-[11px] text-slate-400 font-semibold mt-3">Simulyatsiya muloqotlari</p>
               </div>
 
-              {/* Card 4: CEFR Level */}
-              <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-[11px] font-black text-slate-400 uppercase tracking-wider">
-                      CEFR Daraja
-                    </span>
-                    <div className="w-7 h-7 rounded-lg bg-purple-50 flex items-center justify-center text-purple-600">
-                      <RiAwardLine size={16} />
-                    </div>
-                  </div>
-                  <p className="text-2xl sm:text-3xl font-black text-purple-700">
-                    {avg >= 85 ? 'B2 Clinical' : avg >= 60 ? 'B1 Medical' : 'A2 Foundation'}
-                  </p>
-                </div>
-                <p className="text-[11px] text-slate-400 font-semibold mt-3">Medical English Lab</p>
-              </div>
             </div>
 
             {/* 5-Competency Matrix Card */}

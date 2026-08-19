@@ -123,7 +123,7 @@ export default function TeacherDashboard() {
                   <span>Barcha O'quvchilar va Ularning Natijalari</span>
                 </h2>
                 <p className="text-xs text-slate-500 font-medium mt-0.5">
-                  Har bir o'quvchining o'zlashtirish foizi, o'rtacha balli va CEFR darajasi
+                  Har bir o'quvchining o'zlashtirish foizi va o'rtacha balli
                 </p>
               </div>
 
@@ -192,9 +192,6 @@ export default function TeacherDashboard() {
                             <h3 className="text-sm font-black text-slate-900 truncate">
                               {s.full_name}
                             </h3>
-                            <span className="badge-standard badge-purple text-[10px] py-0 px-2 font-extrabold">
-                              {s.cefr_level || 'A2'}
-                            </span>
                           </div>
                           <div className="flex items-center gap-2 mt-0.5">
                             <span className="text-[11px] font-bold text-slate-400 truncate max-w-[180px]">{s.email}</span>
