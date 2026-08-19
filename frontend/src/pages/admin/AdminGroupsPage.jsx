@@ -80,18 +80,18 @@ export default function AdminGroupsPage() {
   
   const filteredGroups = useMemo(() => {
     if (!selectedSpecId) return [];
-    return groups.filter(g => g.specialty_id === selectedSpecId);
+    return groups.filter(g => g.specialty_id == selectedSpecId);
   }, [groups, selectedSpecId]);
 
   const activeGroup = useMemo(() => {
-    return groups.find(g => g.id === selectedGroupId) || null;
+    return groups.find(g => g.id == selectedGroupId) || null;
   }, [groups, selectedGroupId]);
 
   // Handle Spec Click
   const handleSpecClick = (id) => {
     setSelectedSpecId(id);
     if (id) {
-      const specsGroups = groups.filter(g => g.specialty_id === id);
+      const specsGroups = groups.filter(g => g.specialty_id == id);
       if (specsGroups.length > 0) {
         setSelectedGroupId(specsGroups[0].id);
       } else {
@@ -156,7 +156,7 @@ export default function AdminGroupsPage() {
     if (!window.confirm(t('common.confirm_delete'))) return;
     try {
       await api.delete(`/admin/groups/${id}`);
-      if (selectedGroupId === id) setSelectedGroupId(null);
+      if (selectedGroupId == id) setSelectedGroupId(null);
       toast.success(t('common.success'));
       loadAll();
     } catch (err) {
