@@ -320,15 +320,7 @@ export default function AdminGroupsPage() {
                 </div>
               ) : (
                 <>
-                  {groupForm.show && (
-                    <form onSubmit={saveGroup} className="mb-4 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                      <input autoFocus type="text" value={groupForm.name} onChange={e => setGroupForm({...groupForm, name: e.target.value})} placeholder="Guruh nomi..." className="input-standard text-sm py-2 mb-2" />
-                      <div className="flex gap-2 justify-end">
-                        <button type="button" onClick={() => setGroupForm({show:false, id:null, name:''})} className="btn-secondary-soft px-3 py-1.5 text-xs">Bekor</button>
-                        <button type="submit" className="btn-primary-gradient px-3 py-1.5 text-xs">Saqlash</button>
-                      </div>
-                    </form>
-                  )}
+                  {/* Group items are shown below */}
                   
                   <div className="overflow-y-auto pr-2 space-y-2 flex-1 custom-scrollbar">
                     {filteredGroups.length === 0 && !groupForm.show && <p className="text-sm text-slate-500 text-center py-4">Bu yo'nalishda guruhlar yo'q</p>}
@@ -471,6 +463,72 @@ export default function AdminGroupsPage() {
           </div>
         )}
       </div>
+
+      {/* Group Form Modal */}
+      {groupForm.show && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
+            <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+              <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+                <span className="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
+                  {groupForm.id ? <RiEditLine /> : <RiAddLine />}
+                </span>
+                {groupForm.id ? 'Guruhni Tahrirlash' : 'Yangi Guruh Yaratish'}
+              </h3>
+              <button 
+                onClick={() => setGroupForm({ show: false, id: null, name: '' })}
+                className="text-slate-400 hover:text-slate-600 hover:bg-slate-100 p-2 rounded-xl transition-colors"
+              >
+                <RiCloseLine className="text-xl" />
+              </button>
+            </div>
+            
+            <form onSubmit={saveGroup} className="p-6">
+              <div className="mb-6">
+                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                  Guruh nomi
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <RiGroupLine className="text-slate-400" />
+                  </div>
+                  <input 
+                    autoFocus 
+                    type="text" 
+                    value={groupForm.name} 
+                    onChange={e => setGroupForm({ ...groupForm, name: e.target.value })} 
+                    placeholder="Masalan: 401-Stomatologiya" 
+                    className="block w-full pl-10 pr-3 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-sm bg-slate-50 focus:bg-white"
+                    required
+                  />
+                </div>
+                <p className="mt-2 text-xs text-slate-500 flex items-center gap-1">
+                  <RiCheckLine className="text-emerald-500" /> Ushbu guruh 
+                  <span className="font-semibold text-slate-700">
+                    {specialties.find(s => s.id == selectedSpecId)?.name}
+                  </span> yo'nalishiga qo'shiladi.
+                </p>
+              </div>
+              
+              <div className="flex gap-3 justify-end pt-2">
+                <button 
+                  type="button" 
+                  onClick={() => setGroupForm({ show: false, id: null, name: '' })} 
+                  className="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-xl hover:bg-slate-50 transition-colors focus:ring-2 focus:ring-slate-200"
+                >
+                  Bekor qilish
+                </button>
+                <button 
+                  type="submit" 
+                  className="px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white text-sm font-semibold rounded-xl shadow-md hover:shadow-lg transition-all focus:ring-2 focus:ring-indigo-500 flex items-center gap-2"
+                >
+                  <RiSave3Line /> {groupForm.id ? 'Saqlash' : 'Yaratish'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </Layout>
   );
 }
