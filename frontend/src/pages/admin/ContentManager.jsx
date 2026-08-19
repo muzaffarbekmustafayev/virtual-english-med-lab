@@ -150,8 +150,9 @@ export default function ContentManager() {
               onChange={(e) => {
                 const specId = parseInt(e.target.value);
                 setSelSpec(specId);
-                const firstMod = modules.find(m => m.specialty_id === specId);
+                const firstMod = modules.find(m => m.specialty_id == specId);
                 if (firstMod) setSelMod(firstMod.id);
+                else setSelMod(null);
               }}
               className="w-full max-w-sm bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded-xl focus:ring-purple-500 focus:border-purple-500 block p-2.5"
             >
@@ -174,7 +175,7 @@ export default function ContentManager() {
             </div>
             
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
-              {modules.filter(m => m.specialty_id === selSpec).map((m) => {
+              {modules.filter(m => m.specialty_id == selSpec).map((m) => {
                 const isSel = m.id == selMod;
                 return (
                   <button
