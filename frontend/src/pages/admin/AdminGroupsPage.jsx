@@ -61,18 +61,8 @@ export default function AdminGroupsPage() {
   }, []);
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const action = params.get('action');
-    if (action === 'specialty') {
-      setViewMode('specialty');
-      setSpecForm(prev => prev.show ? prev : { show: true, id: null, name: '' });
-    } else if (action === 'group') {
-      setViewMode('group');
-      setGroupForm(prev => prev.show ? prev : { show: true, id: null, name: '' });
-    } else {
-      setViewMode('all');
-    }
-  }, [location.search]);
+    setViewMode('all');
+  }, []);
 
   // Derived Data
   const teachers = useMemo(() => users.filter(u => u.role === 'teacher'), [users]);

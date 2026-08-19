@@ -238,16 +238,7 @@ export default function UsersPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    if (params.get('action') === 'create') {
-      const role = params.get('role') || 'student';
-      setModalUser({ role });
-      setShowModal(true);
-      // Remove query param to prevent reopening on refresh
-      navigate(location.pathname, { replace: true });
-    }
-  }, [location.search, navigate]);
+  // Auto-open modal logic removed
 
   const loadData = async () => {
     setLoading(true);
