@@ -58,12 +58,29 @@ export default function ModuleDetailPage() {
     const s = STEPS.find(x => x.id === stepId);
     if (!s) return false;
     if (s.requiredPrev === null) return true;
+    // Yakunlangan steplarga har doim qayta kirish mumkin
+    if (completedSteps.includes(stepId)) return true;
     return completedSteps.includes(s.requiredPrev);
   };
 
   const handleStepClick = (stepId) => {
     if (!isStepUnlocked(stepId)) return;
     setStep(stepId);
+  };
+
+  const handleRestart = () => {
+    try { localStorage.removeItem(`module_${id}_completed`); } catch (_) {}
+    setCompletedSteps([]);
+    setStep(1);
+    setVocabLearned(false);
+    setPhrasesLearned(false);
+    setGapAnswers({});
+    setGapChecked(false);
+    setTestAnswers({});
+    setTestResult(null);
+    setFeedback(null);
+    setOverallResult(null);
+    toast.success('Modul qaytadan boshlandi!');
   };
 
   const completeAndGoNext = (nextStepId) => {
@@ -441,8 +458,9 @@ export default function ModuleDetailPage() {
         </div>
       </div>
 
-      {/* ── Step Indicators ── */}
-      <div className="flex items-center gap-1.5 mb-6 overflow-x-auto pb-2 scrollbar-none">
+      {/* ── Step Indicators + Restart ── */}
+      <div className="flex items-center justify-between gap-2 mb-6">
+      <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none flex-1">
         {STEPS.map((s, i) => {
           const isCompleted = completedSteps.includes(s.id);
           const isCurrent   = step === s.id;
@@ -495,6 +513,17 @@ export default function ModuleDetailPage() {
             </div>
           );
         })}
+      </div>
+
+        {/* Qaytadan boshlash tugmasi */}
+        <button
+          onClick={handleRestart}
+          title="Qaytadan boshlash"
+          className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 bg-white text-slate-500 text-xs font-semibold hover:bg-red-50 hover:border-red-200 hover:text-red-600 transition-all shadow-xs"
+        >
+          <RiRepeatLine className="text-sm" />
+          <span className="hidden sm:inline">Qayta</span>
+        </button>
       </div>
 
       {/* ── Progress Summary Bar ── */}
