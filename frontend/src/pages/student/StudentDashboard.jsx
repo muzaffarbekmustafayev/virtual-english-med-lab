@@ -110,7 +110,7 @@ export default function StudentDashboard() {
             return (
               <div key={c.label} className="card-standard p-5 flex flex-col justify-between hover:border-slate-300 hover:shadow-sm transition-all bg-white border border-slate-200/90 shadow-2xs">
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-500 line-clamp-1">
+                  <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider text-slate-500 leading-tight line-clamp-2">
                     {c.label}
                   </span>
                   <div className={`w-9 h-9 rounded-2xl flex items-center justify-center text-lg border shrink-0 ${c.iconBg}`}>
@@ -163,21 +163,21 @@ export default function StudentDashboard() {
               <div>
                 <h2 className="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
                   <RiBarChartLine className="text-indigo-600 text-base" />
-                  <span>Klinik Kompetensiyalar va Natijalar Matritsasi</span>
+                  <span>{t('dash_competency_title')}</span>
                 </h2>
                 <p className="text-xs text-slate-500 font-medium mt-0.5">
-                  Barcha modullardagi urinishlar va simulyatsiyalar asosidagi shaxsiy reyting
+                  {t('dash_competency_sub')}
                 </p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
               {[
-                { name: 'Grammatika',       icon: RiBrainLine,       score: comps.grammar,       color: 'bg-indigo-600' },
-                { name: 'Tibbiy Terminlar', icon: RiBookOpenLine,    score: comps.vocabulary,    color: 'bg-blue-600' },
-                { name: 'Nutq Ravonligi',   icon: RiSpeakLine,       score: comps.fluency,       color: 'bg-emerald-600' },
-                { name: 'Talaffuz/Fonetika',icon: RiVolumeUpLine,    score: comps.pronunciation, color: 'bg-cyan-600' },
-                { name: 'Klinik Anamnez',   icon: RiStethoscopeLine, score: comps.clinical,      color: 'bg-amber-500' }
+                { name: t('comp_grammar'),       icon: RiBrainLine,       score: comps.grammar,       color: 'bg-indigo-600' },
+                { name: t('comp_vocabulary'), icon: RiBookOpenLine,    score: comps.vocabulary,    color: 'bg-blue-600' },
+                { name: t('comp_fluency'),   icon: RiSpeakLine,       score: comps.fluency,       color: 'bg-emerald-600' },
+                { name: t('comp_pronunciation'),icon: RiVolumeUpLine,    score: comps.pronunciation, color: 'bg-cyan-600' },
+                { name: t('comp_clinical'),   icon: RiStethoscopeLine, score: comps.clinical,      color: 'bg-amber-500' }
               ].map((item, idx) => {
                 const Icon = item.icon;
                 return (
@@ -188,7 +188,7 @@ export default function StudentDashboard() {
                       </div>
                       <span className="text-xs font-black text-slate-900">{item.score}%</span>
                     </div>
-                    <p className="text-xs font-bold text-slate-800 truncate">{item.name}</p>
+                    <p className="text-xs font-bold text-slate-800 leading-tight">{item.name}</p>
                     <div className="w-full bg-slate-200/80 rounded-full h-1.5 overflow-hidden">
                       <div className={`${item.color} h-1.5 rounded-full transition-all duration-700`} style={{ width: `${item.score}%` }} />
                     </div>
@@ -205,10 +205,10 @@ export default function StudentDashboard() {
                 <div>
                   <h3 className="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
                     <RiTrophyLine className="text-amber-500 text-base" />
-                    <span>Modullar Bo'yicha Shaxsiy Natijalar</span>
+                    <span>{t('dash_module_results_title')}</span>
                   </h3>
                   <p className="text-xs text-slate-500 font-medium mt-0.5">
-                    Har bir klinik modul bo'yicha test va muloqot ballari
+                    {t('dash_module_results_sub')}
                   </p>
                 </div>
                 <span className="text-xs font-bold text-slate-500">{moduleResults.length} ta modul</span>

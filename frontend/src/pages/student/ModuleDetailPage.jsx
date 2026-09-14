@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Layout from '../../components/Layout';
@@ -14,7 +14,7 @@ import {
   RiLightbulbLine, RiRobot2Line, RiQuestionLine, RiHospitalLine, RiMessage3Line, RiCloseLine,
   RiLockLine, RiCheckboxCircleLine, RiStethoscopeLine,
   RiSparklingLine, RiMedalLine, RiErrorWarningLine, RiHeartPulseLine,
-  RiStarLine, RiArrowUpLine, RiBrainLine, RiSpeakLine,
+  RiStarLine, RiArrowUpLine, RiBrainLine, RiSpeakLine, RiSearchLine,
   RiAwardLine, RiSparkling2Line, RiCheckDoubleLine, RiShieldCheckLine, RiFocus3Line, RiAlertLine
 } from 'react-icons/ri';
 
@@ -41,10 +41,18 @@ export default function ModuleDetailPage() {
   const [conversation, setConversation] = useState(null);
 
   const [step, setStep] = useState(1);
+  const stepperRef = useRef(null);
+  useEffect(() => {
+    const el = stepperRef.current?.querySelector(`[data-step="${step}"]`);
+    if (el && typeof el.scrollIntoView === 'function') el.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+  }, [step]);
   const [completedSteps, setCompletedSteps] = useState([]);
 
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(null); // 'locked' | 'error'
   const [vocabLearned, setVocabLearned] = useState(false);
+  const [vocabQuery, setVocabQuery] = useState('');
+  const [phraseCat, setPhraseCat] = useState('all');
   const [phrasesLearned, setPhrasesLearned] = useState(false);
 
   const [gapExercises, setGapExercises] = useState([]);
@@ -115,6 +123,7 @@ export default function ModuleDetailPage() {
 
   const fetchModuleData = async () => {
     setLoading(true);
+    setLoadError(null);
     try {
       const [modRes, grammarRes, vocabRes, phraseRes, testRes] = await Promise.all([
         api.get(`/student/modules/${id}`),
@@ -188,6 +197,7 @@ export default function ModuleDetailPage() {
 
     } catch (err) {
       console.error('Fetch module err:', err);
+      setLoadError(err?.response?.status === 403 ? 'locked' : 'error');
     } finally {
       setLoading(false);
     }
@@ -436,96 +446,102 @@ export default function ModuleDetailPage() {
 
   const activeResult = overallResult || feedback;
 
+  if (loadError || !module) {
+    const locked = loadError === 'locked';
+    return (
+      <Layout>
+        <div className="max-w-lg mx-auto mt-10 bg-white border border-slate-200 rounded-3xl p-8 text-center space-y-4 shadow-xs">
+          <div className={`w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl ${locked ? 'bg-amber-50 text-amber-600 border border-amber-200' : 'bg-rose-50 text-rose-600 border border-rose-200'}`}>
+            {locked ? <RiLockLine /> : <RiErrorWarningLine />}
+          </div>
+          <h2 className="text-lg font-black text-slate-900">{locked ? t('module_locked_title') : t('module_load_error_title')}</h2>
+          <p className="text-sm text-slate-500">{locked ? t('module_locked_desc') : t('module_load_error_desc')}</p>
+          <button
+            onClick={() => navigate('/student/modules')}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm transition-all"
+          >
+            <RiArrowLeftLine /> {t('back_to_modules')}
+          </button>
+        </div>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       {/* ── Header & Breadcrumbs ── */}
-      <div className="flex items-center gap-3 mb-6">
+      <div className="flex items-start gap-3 mb-5">
         <button
           onClick={() => navigate('/student/modules')}
-          className="p-2 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all shadow-2xs"
-          aria-label="Back to Modules"
+          className="p-2 mt-0.5 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all shadow-2xs shrink-0"
+          aria-label={t('back_to_modules')}
+          title={t('back_to_modules')}
         >
           <RiArrowLeftLine className="text-lg" />
         </button>
-        <div>
-          <div className="flex items-center gap-2">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2">
             <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200/80">
-              Modul #{module?.order_index}
+              {t('module_n', { n: module?.order_index ?? '' })}
             </span>
-            <span className="text-xs text-slate-500 font-medium">Virtual English Lab</span>
+            {module?.grammar_focus && (
+              <span className="hidden sm:inline text-[11px] text-slate-500 font-medium truncate max-w-[420px]" title={module.grammar_focus}>
+                {t('grammar_focus_label')}: {module.grammar_focus}
+              </span>
+            )}
           </div>
-          <h1 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight mt-0.5">
+          <h1 className="text-lg sm:text-xl md:text-2xl font-black text-slate-900 tracking-tight mt-0.5 leading-snug">
             {getLocalized(module, 'title') || module?.title}
           </h1>
         </div>
       </div>
 
       {/* ── Step Indicators + Restart ── */}
-      <div className="flex items-center justify-between gap-2 mb-6">
-      <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none flex-1">
-        {STEPS.map((s, i) => {
-          const isCompleted = completedSteps.includes(s.id);
-          const isCurrent   = step === s.id;
-          const isUnlocked  = isStepUnlocked(s.id);
-          const isLocked    = !isUnlocked && !isCurrent;
-
-          let circleStyle = '';
-          let icon = null;
-
-          if (isCurrent) {
-            circleStyle = 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-md shadow-indigo-200 scale-105 ring-2 ring-indigo-300';
-          } else if (isCompleted) {
-            circleStyle = 'bg-emerald-600 text-white shadow-xs';
-            icon = <RiCheckLine className="text-sm font-black" />;
-          } else if (isLocked) {
-            circleStyle = 'bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed opacity-60';
-            icon = <RiLockLine className="text-xs" />;
-          } else {
-            circleStyle = 'bg-white border-2 border-indigo-300 text-indigo-600 hover:bg-indigo-50 cursor-pointer shadow-xs';
-          }
-
-          return (
-            <div key={s.id} className="flex items-center gap-1.5 flex-shrink-0">
-              <button
-                onClick={() => handleStepClick(s.id)}
-                disabled={isLocked}
-                className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-extrabold transition-all cursor-pointer ${circleStyle}`}
-              >
-                {icon ?? s.id}
-              </button>
-
-              <span
-                onClick={() => !isLocked && handleStepClick(s.id)}
-                className={`text-xs whitespace-nowrap cursor-pointer transition-colors ${
-                  isCurrent
-                    ? 'text-indigo-700 font-extrabold'
-                    : isCompleted
-                    ? 'text-emerald-700 font-bold'
-                    : isLocked
-                    ? 'text-slate-400 cursor-not-allowed'
-                    : 'text-slate-600 font-semibold hover:text-slate-900'
-                }`}
-              >
-                {s.label}
-              </span>
-
-              {i < STEPS.length - 1 && (
-                <div className={`w-3 h-0.5 flex-shrink-0 rounded-full ${isCompleted ? 'bg-emerald-400' : 'bg-slate-200'}`} />
-              )}
-            </div>
-          );
-        })}
-      </div>
-
-        {/* Qaytadan boshlash tugmasi */}
-        <button
-          onClick={handleRestart}
-          title={t('module_restart')}
-          className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 bg-white text-slate-500 text-xs font-semibold hover:bg-red-50 hover:border-red-200 hover:text-red-600 transition-all shadow-xs"
-        >
-          <RiRepeatLine className="text-sm" />
-          <span className="hidden sm:inline">{t('module_restart_short')}</span>
-        </button>
+      <div className="bg-white border border-slate-200/80 rounded-2xl shadow-xs mb-4 px-3 py-2.5">
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 overflow-x-auto scrollbar-none flex-1 py-1" ref={stepperRef}>
+            {STEPS.map((s, i) => {
+              const isCompleted = completedSteps.includes(s.id);
+              const isCurrent   = step === s.id;
+              const isUnlocked  = isStepUnlocked(s.id);
+              const isLocked    = !isUnlocked && !isCurrent;
+              const circle = isCurrent
+                ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-md shadow-indigo-200 ring-2 ring-indigo-200'
+                : isCompleted ? 'bg-emerald-600 text-white'
+                : isLocked ? 'bg-slate-100 text-slate-400 border border-slate-200'
+                : 'bg-white border-2 border-indigo-300 text-indigo-600 hover:bg-indigo-50';
+              return (
+                <div key={s.id} className="flex items-center shrink-0" data-step={s.id}>
+                  <button
+                    onClick={() => handleStepClick(s.id)}
+                    disabled={isLocked}
+                    title={s.label}
+                    className={`flex items-center gap-1.5 rounded-full pl-1 pr-1 sm:pr-3 py-1 text-xs font-bold transition-all ${isLocked ? 'cursor-not-allowed opacity-70' : 'cursor-pointer'} ${isCurrent ? 'bg-indigo-50 border border-indigo-200 pr-3' : 'border border-transparent hover:bg-slate-50'}`}
+                  >
+                    <span className={`w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-extrabold shrink-0 ${circle}`}>
+                      {isCompleted && !isCurrent ? <RiCheckLine /> : isLocked ? <RiLockLine className="text-[10px]" /> : s.id}
+                    </span>
+                    <span className={`whitespace-nowrap ${isCurrent ? 'inline text-indigo-800' : 'hidden sm:inline'} ${isCompleted && !isCurrent ? 'text-emerald-700' : isLocked ? 'text-slate-400' : ''}`}>
+                      {s.label}
+                    </span>
+                  </button>
+                  {i < STEPS.length - 1 && <span className={`w-3 sm:w-5 h-0.5 mx-0.5 rounded-full shrink-0 ${isCompleted ? 'bg-emerald-400' : 'bg-slate-200'}`} />}
+                </div>
+              );
+            })}
+          </div>
+          <button
+            onClick={handleRestart}
+            title={t('module_restart')}
+            className="flex-shrink-0 flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl border border-slate-200 bg-white text-slate-500 text-xs font-semibold hover:bg-red-50 hover:border-red-200 hover:text-red-600 transition-all"
+          >
+            <RiRepeatLine className="text-sm" />
+            <span className="hidden md:inline">{t('module_restart_short')}</span>
+          </button>
+        </div>
+        <p className="sm:hidden text-[11px] font-bold text-slate-500 mt-1.5 px-1">
+          {t('step_n_of', { n: step, total: STEPS.length })}: <span className="text-indigo-700">{STEPS.find(s => s.id === step)?.label}</span>
+        </p>
       </div>
 
       {/* ── Progress Summary Bar ── */}
@@ -582,8 +598,17 @@ export default function ModuleDetailPage() {
             </span>
           </div>
 
+          <div className="relative">
+            <RiSearchLine className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+            <input
+              value={vocabQuery}
+              onChange={(e) => setVocabQuery(e.target.value)}
+              placeholder={t('vocab_search_placeholder')}
+              className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-white border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-300"
+            />
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {vocabulary.map((v) => {
+            {vocabulary.filter(v => !vocabQuery.trim() || [v.word, v.translation_uz, v.translation_ru, v.definition_en].join(' ').toLowerCase().includes(vocabQuery.trim().toLowerCase())).map((v) => {
               const transText = lang === 'en'
                 ? null
                 : lang === 'ru'
@@ -663,7 +688,7 @@ export default function ModuleDetailPage() {
             })}
           </div>
 
-          <div className="flex items-center justify-between pt-4">
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-4">
             <button
               onClick={() => setStep(1)}
               className="px-5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 font-bold text-xs hover:bg-slate-50 transition-all shadow-2xs"
@@ -700,8 +725,25 @@ export default function ModuleDetailPage() {
             </span>
           </div>
 
+          {(() => {
+            const cats = [...new Set(phrases.map(p => p.category).filter(Boolean))];
+            if (cats.length < 2) return null;
+            return (
+              <div className="flex gap-1.5 overflow-x-auto scrollbar-none pb-1">
+                {[['all', t('phrase_all_categories')], ...cats.map(c => [c, c])].map(([key, label]) => (
+                  <button
+                    key={key}
+                    onClick={() => setPhraseCat(key)}
+                    className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-bold border transition-all ${phraseCat === key ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'}`}
+                  >
+                    {label}{key !== 'all' && <span className="ml-1 opacity-70">{phrases.filter(p => p.category === key).length}</span>}
+                  </button>
+                ))}
+              </div>
+            );
+          })()}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {phrases.map((p) => {
+            {phrases.filter(p => phraseCat === 'all' || p.category === phraseCat).map((p) => {
               const hintText = lang === 'en'
                 ? (looksEnglish(p.hint_en) ? p.hint_en : null)
                 : lang === 'ru'
@@ -798,7 +840,7 @@ export default function ModuleDetailPage() {
             </details>
           )}
 
-          <div className="flex items-center justify-between pt-4">
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-4">
             <button
               onClick={() => setStep(2)}
               className="px-5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 font-bold text-xs hover:bg-slate-50 transition-all shadow-2xs"
@@ -901,7 +943,7 @@ export default function ModuleDetailPage() {
             })}
           </div>
 
-          <div className="flex items-center justify-between pt-4">
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-4">
             <button
               onClick={() => setStep(3)}
               className="px-5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 font-bold text-xs hover:bg-slate-50 transition-all shadow-2xs"
@@ -913,6 +955,7 @@ export default function ModuleDetailPage() {
               <button
                 onClick={() => setGapChecked(true)}
                 disabled={Object.keys(gapAnswers).length < gapExercises.length}
+                title={Object.keys(gapAnswers).length < gapExercises.length ? t('answer_all_hint', { done: Object.keys(gapAnswers).length, total: gapExercises.length }) : ''}
                 className="px-6 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-sm shadow-md shadow-emerald-200 transition-all disabled:opacity-50 cursor-pointer"
               >
                 {t('gap_check')}
@@ -923,7 +966,7 @@ export default function ModuleDetailPage() {
               const passed = gapPercent >= 60;
 
               return passed ? (
-                <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center gap-3">
                   <span className="text-emerald-700 font-extrabold text-xs bg-emerald-50 px-3 py-2 rounded-xl border border-emerald-200">
                     {t('gap_score_passed', { pct: gapPercent }) || `${gapPercent}% ${lang === 'ru' ? 'Правильно!' : lang === 'en' ? 'Correct!' : 'To\'g\'ri!'}`}
                   </span>
@@ -936,7 +979,7 @@ export default function ModuleDetailPage() {
                   </button>
                 </div>
               ) : (
-                <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center gap-3">
                   <span className="text-rose-700 font-extrabold text-xs bg-rose-50 px-3 py-2 rounded-xl border border-rose-200">
                     {t('gap_score_failed', { pct: gapPercent }) || `${gapPercent}% (${lang === 'ru' ? 'Требуется минимум 60%' : lang === 'en' ? 'Minimum 60% required' : 'Kamida 60% kerak'})`}
                   </span>
@@ -1013,7 +1056,7 @@ export default function ModuleDetailPage() {
             ))}
           </div>
 
-          <div className="flex items-center justify-between pt-4">
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-4">
             <button
               onClick={() => setStep(4)}
               className="px-5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 font-bold text-xs hover:bg-slate-50 transition-all shadow-2xs"
@@ -1021,9 +1064,13 @@ export default function ModuleDetailPage() {
               ← {t('step_gap')}
             </button>
 
+            <span className="text-xs font-bold text-slate-500 order-last sm:order-none w-full sm:w-auto text-center">
+              {t('answered_count', { done: Object.keys(testAnswers).length, total: tests.length })}
+            </span>
             <button
               onClick={handleTestSubmit}
               disabled={Object.keys(testAnswers).length < tests.length}
+              title={Object.keys(testAnswers).length < tests.length ? t('answer_all_hint', { done: Object.keys(testAnswers).length, total: tests.length }) : ''}
               className="px-6 py-3 rounded-2xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-extrabold text-sm shadow-md shadow-indigo-200 transition-all disabled:opacity-50 cursor-pointer"
             >
               {t('quiz_submit')}

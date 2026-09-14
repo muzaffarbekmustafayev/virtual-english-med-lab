@@ -790,27 +790,27 @@ export default function VirtualPatientChat({
 
   const statusInfo = isIdle ? {
     title: t('chat_status_idle'),
-    badge: 'Offline',
+    badge: t('chat_badge_offline'),
     badgeClass: 'bg-slate-100 text-slate-500 border-slate-200',
     dotClass: 'bg-slate-400'
   } : isListening ? {
     title: transcript ? t('chat_status_autosend') : t('chat_listening'),
-    badge: 'Microphone Active',
+    badge: t('chat_badge_listening'),
     badgeClass: 'bg-emerald-50 text-emerald-700 border-emerald-200 shadow-sm animate-pulse',
     dotClass: 'bg-emerald-500'
   } : isProcessing ? {
     title: t('chat_processing'),
-    badge: 'AI Processing',
+    badge: t('chat_badge_processing'),
     badgeClass: 'bg-amber-50 text-amber-700 border-amber-200 shadow-sm',
     dotClass: 'bg-amber-500'
   } : isSpeaking ? {
     title: t('chat_speaking'),
-    badge: 'Patient Speaking',
+    badge: t('chat_badge_speaking'),
     badgeClass: 'bg-indigo-50 text-indigo-700 border-indigo-200 shadow-sm',
     dotClass: 'bg-indigo-500'
   } : {
     title: t('chat_ended'),
-    badge: 'Finished',
+    badge: t('chat_badge_finished'),
     badgeClass: 'bg-slate-100 text-slate-700 border-slate-200',
     dotClass: 'bg-slate-400'
   };
@@ -819,22 +819,22 @@ export default function VirtualPatientChat({
     <div className="w-full bg-white rounded-3xl border border-slate-200/90 shadow-xl shadow-slate-200/60 overflow-hidden flex flex-col transition-all duration-300">
       
       {/* ─── TOP BAR HEADER ─── */}
-      <div className="px-5 py-4 bg-slate-50/80 border-b border-slate-200/80 flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 to-blue-600 flex items-center justify-center text-white shadow-md shadow-indigo-200">
+      <div className="px-4 sm:px-5 py-3.5 sm:py-4 bg-slate-50/80 border-b border-slate-200/80 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="w-10 h-10 shrink-0 rounded-2xl bg-gradient-to-tr from-indigo-600 to-blue-600 flex items-center justify-center text-white shadow-md shadow-indigo-200">
             <RiHeartPulseLine className="text-xl" />
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h2 className="text-base font-extrabold text-slate-900 tracking-tight">
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2">
+              <h2 className="text-sm sm:text-base font-extrabold text-slate-900 tracking-tight leading-snug">
                 {t('chat_header_title') || "Virtual Bemor bilan Jonli Muloqot"}
               </h2>
               <span className="text-xs px-2.5 py-0.5 rounded-full font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/70">
-                Modul #{parsedModuleId}
+                {t('module_n', { n: module?.order_index ?? parsedModuleId })}
               </span>
             </div>
-            <p className="text-xs text-slate-500 font-medium">
-              {currentTheme.name} · {currentTheme.badge}
+            <p className="text-xs text-slate-500 font-medium truncate">
+              {currentTheme.name}{currentTheme.badge ? ` · ${currentTheme.badge}` : ''}
             </p>
           </div>
         </div>
@@ -905,7 +905,7 @@ export default function VirtualPatientChat({
               value={speechRate}
               onChange={(e) => setSpeechRate(parseFloat(e.target.value))}
               className="bg-transparent text-slate-800 font-bold focus:outline-hidden cursor-pointer"
-              title="{t('chat_voice_speed')}"
+              title={t('chat_voice_speed')}
             >
               <option value="0.8">0.8x</option>
               <option value="0.95">1.0x</option>
@@ -1212,7 +1212,7 @@ export default function VirtualPatientChat({
                         {t('chat_suggested_questions')}
                       </span>
                       <span className="text-[10px] text-slate-400 font-semibold hidden sm:inline">
-                        {t('chat_for_module', { n: parsedModuleId })}
+                        {t('chat_for_module', { n: module?.order_index ?? parsedModuleId })}
                       </span>
                     </div>
 
