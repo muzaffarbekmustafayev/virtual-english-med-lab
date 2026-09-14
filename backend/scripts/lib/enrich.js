@@ -42,8 +42,8 @@ const PHRASES = [
   [/ruxsat va ehtimol/i, 'permission and possibility'],
   [/asosiy farqlar/i, 'key differences'],
   [/muhim farq/i, 'key difference'],
-  [/^s*(.+?) bilan savollars*$/i, ' Questions with $1 '],
-  [/^s*(.+?) bilan inkors*$/i, ' Negatives with $1 '],
+  [/^\s*(.+?) bilan savollar\s*$/i, ' Questions with $1 '],
+  [/^\s*(.+?) bilan inkor\s*$/i, ' Negatives with $1 '],
   [/va passive form/i, 'and the passive form'],
 ];
 const WORDS = {
@@ -158,6 +158,18 @@ function enrichRule(rule) {
   if (!rule.rule_explanation_en) rule.rule_explanation_en = rule.structure_pattern ? `Structure: ${rule.structure_pattern}.` : '';
   if (!rule.rule_explanation_ru) rule.rule_explanation_ru = rule.rule_explanation_uz || rule.rule_explanation_en;
   if (!rule.rule_explanation_uz) rule.rule_explanation_uz = rule.rule_explanation_en;
+
+  // English-facing fields must be English: drop Uzbek/Russian formula variants and signal words,
+  // and replace a non-English "English" explanation with the knowledge-base text
+  const isEn = (x) => x && !/[Ѐ-ӿ]/.test(x) && T.detectLang(x.replace(/[+→/()|]/g, ' ')) !== 'uz' && !/[oOgG]'/.test(x);
+  if (rule.structure_pattern) {
+    const kept = rule.structure_pattern.split(/s*|s*/).filter(f => f && !/[Ѐ-ӿ]/.test(f) && !/[oOgG]'|(dan|keyin|bilan|uchun|kerak|keladi|ko'pincha)/.test(f));
+    rule.structure_pattern = kept.join(' | ') || (kb.length ? kb.map(k => k.formula).filter(Boolean).join(' | ') : '');
+  }
+  if (rule.signal_words && !isEn(rule.signal_words)) rule.signal_words = kb.map(k => k.signal).filter(Boolean)[0] || '';
+  if (rule.rule_explanation_en && !isEn(rule.rule_explanation_en)) rule.rule_explanation_en = kb.length ? join('en') : (rule.structure_pattern ? `Structure: ${rule.structure_pattern}.` : '');
+  if (rule.rule_explanation_en) rule.rule_explanation_en = rule.rule_explanation_en.split(/(?<=[.!?])s+/).filter(sn => isEn(sn)).join(' ');
+  if (rule.rule_explanation_ru && !/[Ѐ-ӿ]/.test(rule.rule_explanation_ru) && kb.length) rule.rule_explanation_ru = join('ru');
 
   if (rule.signal_words) {
     for (const lang of ['en', 'uz', 'ru']) {

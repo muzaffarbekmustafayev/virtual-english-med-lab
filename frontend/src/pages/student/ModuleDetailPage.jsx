@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import Layout from '../../components/Layout';
 import VirtualPatientChat from '../../components/VirtualPatientChat';
 import GrammarStep, { pickLang } from '../../components/GrammarStep';
+import { looksEnglish } from '../../contexts/LanguageContext';
 import api from '../../lib/api';
 import { useLanguage } from '../../contexts/LanguageContext';
 import {
@@ -590,7 +591,7 @@ export default function ModuleDetailPage() {
                 : (v.translation_uz || v.translation);
 
               const def = lang === 'en'
-                ? (v.definition_en || v.definition)
+                ? (looksEnglish(v.definition_en) ? v.definition_en : (looksEnglish(v.definition) ? v.definition : null))
                 : lang === 'ru'
                 ? (v.definition_ru || v.definition_uz || v.definition)
                 : (v.definition_uz || v.definition);
@@ -702,7 +703,7 @@ export default function ModuleDetailPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {phrases.map((p) => {
               const hintText = lang === 'en'
-                ? (p.hint_en || null)
+                ? (looksEnglish(p.hint_en) ? p.hint_en : null)
                 : lang === 'ru'
                 ? (p.hint_ru || p.hint_uz || p.hint)
                 : (p.hint_uz || p.hint);
@@ -840,7 +841,7 @@ export default function ModuleDetailPage() {
               const isWrong = gapChecked && gapAnswers[ex.id] && gapAnswers[ex.id] !== ex.answer;
 
               const hintText = lang === 'en'
-                ? (ex.hint_en || ex.original)
+                ? (looksEnglish(ex.hint_en) ? ex.hint_en : ex.original)
                 : lang === 'ru'
                 ? (ex.hint_ru || ex.hint_uz || ex.hint)
                 : (ex.hint_uz || ex.hint);

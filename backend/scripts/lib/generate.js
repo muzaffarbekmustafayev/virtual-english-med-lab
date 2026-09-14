@@ -208,18 +208,32 @@ function buildQuizzes({ spec, moduleIndex, vocabulary, phrases, grammar }) {
   const out = [];
   const vocab = vocabulary.filter(v => v.translation_uz && v.word.length >= 3 && !v.word.includes('…'));
 
-  // A. term → meaning (3)
+  // English prompt for a term that never leaks Uzbek/Russian: definition → gap sentence → null
+  const gapSentence = (v) => {
+    if (!v.example) return null;
+    const re = new RegExp('(^|[^A-Za-z])(' + v.word.replace(/[.*+?^${}()|[]\]/g, '\$&').replace(/s$/, 's?') + ')(?![A-Za-z])', 'i');
+    if (!re.test(v.example)) return null;
+    return v.example.replace(re, '$1______');
+  };
+  const enPrompt = (v) => {
+    if (v.definition_en) return `Which term means: "${v.definition_en}"?`;
+    const g = gapSentence(v);
+    return g ? `Which term completes the sentence: "${g}"?` : null;
+  };
+
+  // A. term → meaning (3): uz/ru show translations; en shows the definition / gap sentence with English options
   if (vocab.length >= 4) {
-    for (const target of pick(vocab, 3, rnd)) {
-      const others = pick(vocab.filter(v => v !== target && T.keyOf(v.translation_uz) !== T.keyOf(target.translation_uz)), 3, rnd);
+    const targets = pick(vocab.filter(v => enPrompt(v)), 3, rnd);
+    for (const target of targets) {
+      const others = pick(vocab.filter(v => v !== target && T.keyOf(v.translation_uz) !== T.keyOf(target.translation_uz) && T.keyOf(v.word) !== T.keyOf(target.word)), 3, rnd);
       if (others.length < 3) continue;
-      const opts = [target, ...others].map(v => ({ en: v.definition_en || v.translation_uz, uz: v.translation_uz, ru: v.translation_ru || v.translation_uz }));
+      const opts = [target, ...others].map(v => ({ en: v.word, uz: v.translation_uz, ru: v.translation_ru || v.translation_uz }));
       out.push(mcq({
         rnd,
-        q: { en: `What does the term "${target.word}" mean?`, uz: `"${target.word}" atamasining ma'nosi qaysi?`, ru: `Что означает термин «${target.word}»?` },
+        q: { en: enPrompt(target), uz: `"${target.word}" atamasining ma'nosi qaysi?`, ru: `Что означает термин «${target.word}»?` },
         options: opts, correctIdx: 0,
         explanation: {
-          en: `"${target.word}" — ${target.definition_en || target.translation_uz}${target.translation_ru ? ` (${target.translation_ru})` : ''}.`,
+          en: `"${target.word}"${target.definition_en ? ` — ${target.definition_en}` : ''}${target.example ? `. Example: "${target.example}"` : ''}.`.replace(/..$/, '.'),
           uz: `"${target.word}" — ${target.translation_uz}.`,
           ru: `«${target.word}» — ${target.translation_ru || target.translation_uz}.`,
         },
@@ -227,18 +241,24 @@ function buildQuizzes({ spec, moduleIndex, vocabulary, phrases, grammar }) {
     }
   }
 
-  // B. meaning → term (2)
+  // B. meaning → term (2): options are English terms in every language
   if (vocab.length >= 4) {
-    for (const target of pick(vocab.filter(v => T.wordCount(v.word) <= 4), 2, rnd)) {
+    const used = new Set(out.map(q => q.question_uz));
+    for (const target of pick(vocab.filter(v => T.wordCount(v.word) <= 4 && enPrompt(v)), 2, rnd)) {
       const others = pick(vocab.filter(v => v !== target && T.keyOf(v.word) !== T.keyOf(target.word)), 3, rnd);
       if (others.length < 3) continue;
       const opts = [target, ...others].map(v => ({ en: v.word, uz: v.word, ru: v.word }));
       const ruMeaning = target.translation_ru || target.translation_uz;
+      const g = gapSentence(target);
       out.push(mcq({
         rnd,
-        q: { en: `Which English term means "${target.translation_uz}"?`, uz: `"${target.translation_uz}" ma'nosini bildiruvchi inglizcha atamani tanlang.`, ru: `Какой английский термин означает «${ruMeaning}»?` },
+        q: {
+          en: g ? `Complete the sentence with the correct term: "${g}"` : enPrompt(target),
+          uz: `"${target.translation_uz}" ma'nosini bildiruvchi inglizcha atamani tanlang.`,
+          ru: `Какой английский термин означает «${ruMeaning}»?`,
+        },
         options: opts, correctIdx: 0,
-        explanation: { en: `"${target.translation_uz}" = ${target.word}.`, uz: `"${target.translation_uz}" — ${target.word}.`, ru: `«${ruMeaning}» — ${target.word}.` },
+        explanation: { en: `Correct term: "${target.word}"${target.example ? ` — "${target.example}"` : ''}.`, uz: `"${target.translation_uz}" — ${target.word}.`, ru: `«${ruMeaning}» — ${target.word}.` },
       }));
     }
   }

@@ -1726,10 +1726,18 @@ export const TRANSLATIONS = {
   }
 };
 
+/** True when a content string is English (no Cyrillic, no Uzbek apostrophe letters / function words). */
+export function looksEnglish(s) {
+  if (!s || typeof s !== 'string') return false;
+  if (/[Ѐ-ӿ]/.test(s)) return false;
+  if (/[oOgG][‘’'ʻ]/.test(s)) return false;
+  return !/(va|uchun|bilan|kerak|emas|bo'?lw*|qilw*|bemorw*|shifokor|ya'ni|masalan|odatda|ishlatiladi|bildiradi|ifodalaydi|savolw*|javobw*|so'?zw*)/i.test(s);
+}
+
 export function LanguageProvider({ children }) {
   const [language, setLanguageState] = useState(() => {
     const saved = localStorage.getItem('vpe_lang');
-    return saved && ['uz', 'ru', 'en'].includes(saved) ? saved : 'uz';
+    return saved && ['uz', 'ru', 'en'].includes(saved) ? saved : 'en';   // tizim standart holatda inglizcha; tugma tushuntirish tilini o'zgartiradi
   });
 
   const setLanguage = (lang) => {
@@ -1746,7 +1754,7 @@ export function LanguageProvider({ children }) {
     if (!path) return '';
 
     // Direct check in current language dict
-    const currentDict = TRANSLATIONS[language] || TRANSLATIONS.uz;
+    const currentDict = TRANSLATIONS[language] || TRANSLATIONS.en;
     if (currentDict[path] !== undefined && typeof currentDict[path] === 'string') {
       let val = currentDict[path];
       for (const [pk, pv] of Object.entries(params)) {
@@ -1769,8 +1777,8 @@ export function LanguageProvider({ children }) {
     }
 
     if (!found || val === undefined) {
-      // Fallback to uz then en
-      const fallbackDict = TRANSLATIONS.uz;
+      // Fallback to en then uz
+      const fallbackDict = TRANSLATIONS.en;
       let fbVal = fallbackDict;
       let fbFound = true;
       for (const fk of keys) {
@@ -1784,7 +1792,7 @@ export function LanguageProvider({ children }) {
       // uz fallback, then en; a key missing everywhere returns '' so callers' `t('x') || 'text'` fallbacks work
       if (fbFound) val = fbVal;
       else {
-        let enVal = TRANSLATIONS.en, enFound = true;
+        let enVal = TRANSLATIONS.uz, enFound = true;
         for (const ek of keys) { if (enVal && enVal[ek] !== undefined) enVal = enVal[ek]; else { enFound = false; break; } }
         val = enFound ? enVal : '';
       }

@@ -3,7 +3,7 @@ import {
   RiBrainLine, RiLightbulbLine, RiSpeakLine, RiAlertLine, RiVolumeUpLine,
   RiArrowRightLine, RiArrowLeftLine, RiCheckLine, RiCheckDoubleLine, RiBookOpenLine, RiFlashlightLine,
 } from 'react-icons/ri';
-import { useLanguage } from '../contexts/LanguageContext';
+import { useLanguage, looksEnglish } from '../contexts/LanguageContext';
 
 /**
  * Language-aware field picker.
@@ -18,10 +18,13 @@ export function pickLang(obj, field, lang) {
     const x = obj[k];
     return typeof x === 'string' && x.trim() ? x.trim() : '';
   };
+  if (lang === 'en') {
+    // English interface: only English text may be shown — never an Uzbek/Russian fallback
+    for (const k of [`${field}_en`, field, `${field}_uz`]) { const r = v(k); if (r && looksEnglish(r)) return r; }
+    return '';
+  }
   const chain = lang === 'ru'
     ? [`${field}_ru`, `${field}_uz`, field, `${field}_en`]
-    : lang === 'en'
-    ? [`${field}_en`, field, `${field}_uz`, `${field}_ru`]
     : [`${field}_uz`, field, `${field}_en`, `${field}_ru`];
   for (const k of chain) { const r = v(k); if (r) return r; }
   return '';
