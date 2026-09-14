@@ -25,10 +25,10 @@ export default function RegisterPage() {
     try {
       // Register logic: No group/specialty required anymore. Default role is 'student'.
       await api.post('/auth/register', { ...form, role: 'student', specialty_id: null, group_id: null });
-      toast.success((t('common.success') || "Ro'yxatdan o'tildi") + '! ' + t('auth.login_title'));
+      toast.success((t('common.success')) + '! ' + t('auth.login_title'));
       navigate('/login');
     } catch (err) {
-      const msg = err.response?.data?.error || t('common.error') || "Ro'yxatdan o'tishda xatolik";
+      const msg = err.response?.data?.error || t('common.error');
       setError(msg);
       toast.error(msg);
     } finally {
@@ -53,20 +53,20 @@ export default function RegisterPage() {
         
         <div className="relative z-10 max-w-lg">
           <h1 className="text-4xl lg:text-5xl font-black text-white leading-[1.15] mb-6 tracking-tight">
-            Xalqaro standartlar asosida <br/><span className="text-emerald-400">Tibbiy Ingliz Tili</span>
+            {t('register_hero_prefix')} <br/><span className="text-emerald-400">{t('register_hero_title')}</span>
           </h1>
           <ul className="space-y-4">
             <li className="flex items-start gap-3 text-slate-300 text-sm font-medium">
               <div className="w-6 h-6 rounded-full bg-slate-800 flex items-center justify-center shrink-0 mt-0.5 text-emerald-400">✓</div>
-              <span>Haqiqiy klinik holatlarga asoslangan sun'iy intellekt bemorlar</span>
+              <span>{t('register_feature_1')}</span>
             </li>
             <li className="flex items-start gap-3 text-slate-300 text-sm font-medium">
               <div className="w-6 h-6 rounded-full bg-slate-800 flex items-center justify-center shrink-0 mt-0.5 text-emerald-400">✓</div>
-              <span>Tibbiy terminologiya va kasbiy leksikani chuqur o'zlashtirish</span>
+              <span>{t('register_feature_2')}</span>
             </li>
             <li className="flex items-start gap-3 text-slate-300 text-sm font-medium">
               <div className="w-6 h-6 rounded-full bg-slate-800 flex items-center justify-center shrink-0 mt-0.5 text-emerald-400">✓</div>
-              <span>Shifokor va bemor o'rtasidagi muloqot ko'nikmalarini rivojlantirish</span>
+              <span>{t('register_feature_3')}</span>
             </li>
           </ul>
         </div>
@@ -93,7 +93,7 @@ export default function RegisterPage() {
 
           <div className="mb-8 text-center lg:text-left">
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">{t('auth.register_title')}</h2>
-            <p className="text-sm text-slate-500 mt-2 font-medium">Platformadan foydalanish uchun ro'yxatdan o'ting.</p>
+            <p className="text-sm text-slate-500 mt-2 font-medium">{t('register_subtitle')}</p>
           </div>
           
           {error && (

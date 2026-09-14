@@ -158,9 +158,9 @@ function UserModal({ user, onClose, onSaved, specialties, groups }) {
                 onChange={(e) => setForm({ ...form, role: e.target.value })}
                 className="block w-full pl-10 pr-10 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-sm bg-slate-50 focus:bg-white appearance-none font-medium"
               >
-                <option value="student">Talaba / Student</option>
-                <option value="teacher">O'qituvchi / Teacher</option>
-                <option value="admin">Administrator / Admin</option>
+                <option value="student">{t('admin_role_student')}</option>
+                <option value="teacher">{t('role_teacher')}</option>
+                <option value="admin">{t('role_admin')}</option>
               </select>
             </div>
           </div>
@@ -174,7 +174,7 @@ function UserModal({ user, onClose, onSaved, specialties, groups }) {
                   onChange={(e) => setForm({ ...form, specialty_id: e.target.value })}
                   className="block w-full px-3 py-2 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-xs bg-slate-50 focus:bg-white"
                 >
-                  <option value="">Tanlang...</option>
+                  <option value="">{t('ui_select')}</option>
                   {specialties.map((s) => (
                     <option key={s.id} value={s.id}>{s.name}</option>
                   ))}
@@ -188,7 +188,7 @@ function UserModal({ user, onClose, onSaved, specialties, groups }) {
                   onChange={(e) => setForm({ ...form, group_id: e.target.value })}
                   className="block w-full px-3 py-2 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-xs bg-slate-50 focus:bg-white"
                 >
-                  <option value="">Tanlang...</option>
+                  <option value="">{t('ui_select')}</option>
                   {groups
                     .filter(g => !form.specialty_id || g.specialty_id == form.specialty_id)
                     .map((g) => (
@@ -311,9 +311,9 @@ export default function UsersPage() {
           <div className="flex flex-wrap items-center gap-2">
             {[
               { key: 'all', label: t('common.all') },
-              { key: 'student', label: 'Talabalar' },
-              { key: 'teacher', label: "O'qituvchilar" },
-              { key: 'admin', label: 'Adminlar' },
+              { key: 'student', label: t('role_students_plural') },
+              { key: 'teacher', label: t('role_teachers_plural') },
+              { key: 'admin', label: t('role_admins_plural') },
             ].map(f => (
               <button
                 key={f.key}
@@ -356,7 +356,7 @@ export default function UsersPage() {
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="border-b border-slate-100 bg-slate-50/40 text-[10px] font-black text-slate-400 uppercase tracking-wider">
-                    <th className="px-5 py-3">Foydalanuvchi</th>
+                    <th className="px-5 py-3">{t('ui_user')}</th>
                     <th className="px-5 py-3">{t('auth.role')}</th>
                     <th className="px-5 py-3">{t('auth.specialty')} / {t('auth.group')}</th>
                     <th className="px-5 py-3 text-right">{t('common.actions')}</th>
@@ -395,14 +395,14 @@ export default function UsersPage() {
                             <button
                               onClick={() => { setModalUser(u); setShowModal(true); }}
                               className="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-colors cursor-pointer"
-                              title="Tahrirlash"
+                              title={t('ui_edit')}
                             >
                               <RiEditLine size={16} />
                             </button>
                             <button
                               onClick={() => handleDelete(u.id)}
                               className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
-                              title="O'chirish"
+                              title={t('ui_delete')}
                             >
                               <RiDeleteBinLine size={16} />
                             </button>

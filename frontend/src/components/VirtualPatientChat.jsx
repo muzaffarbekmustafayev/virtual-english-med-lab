@@ -39,8 +39,8 @@ function buildTheme(module, phrasebook) {
     .filter(q => q && q.trim().endsWith("?"))
     .slice(0, 6);
   return {
-    name: module?.title_en || module?.title || 'Clinical Consultation',
-    badge: spec?.name_en || spec?.name || 'Virtual Patient',
+    name: module?.title_en || module?.title || t('chat_default_case'),
+    badge: spec?.name_en || spec?.name || t('chat_default_badge'),
     emoji,
     iconTag: brief?.counterpart_label
       ? `${brief.counterpart_label}${patient?.name ? ' · ' + patient.name : ''}`
@@ -581,7 +581,7 @@ export default function VirtualPatientChat({
           activeConvIdRef.current = res.data.conversation_id;
         }
 
-        const patientReply = res.data.message || res.data.reply || "I understand, Doctor. What should we do next?";
+        const patientReply = res.data.message || res.data.reply || t('chat_default_patient_reply');
         const replyAudio = res.data.audio || null;
         console.log('%c📥 [GEMINI PATIENT REPLY]:', 'color: #10b981; font-weight: bold;', patientReply);
 
@@ -827,7 +827,7 @@ export default function VirtualPatientChat({
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
               <h2 className="text-sm sm:text-base font-extrabold text-slate-900 tracking-tight leading-snug">
-                {t('chat_header_title') || "Virtual Bemor bilan Jonli Muloqot"}
+                {t('chat_header_title')}
               </h2>
               <span className="text-xs px-2.5 py-0.5 rounded-full font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/70">
                 {t('module_n', { n: module?.order_index ?? parsedModuleId })}
@@ -857,7 +857,7 @@ export default function VirtualPatientChat({
               }`}
             >
               <RiEyeLine size={13} />
-              <span>{t('chat_visual_mode') || "Vizual"}</span>
+              <span>{t('chat_visual_mode')}</span>
             </button>
             <button
               onClick={() => setVisualView('transcript')}
@@ -868,7 +868,7 @@ export default function VirtualPatientChat({
               }`}
             >
               <RiChatQuoteLine size={13} />
-              <span>{t('chat_transcript_mode') || "Matn Tarixi"}</span>
+              <span>{t('chat_transcript_mode')}</span>
               {chatHistory.length > 0 && (
                 <span className="ml-0.5 px-1.5 py-0.2 bg-indigo-100 text-indigo-700 rounded-full text-[10px]">
                   {chatHistory.length}
@@ -974,7 +974,7 @@ export default function VirtualPatientChat({
                 className="flex-1 max-w-xs py-3.5 px-6 rounded-2xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-extrabold text-sm shadow-lg shadow-indigo-200 hover:shadow-indigo-300 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 cursor-pointer"
               >
                 <RiMicLine className="text-xl animate-pulse" />
-                <span>{t('chat_start_voice') || "Ovozli Suhbatni Boshlash (STT + TTS)"}</span>
+                <span>{t('chat_start_voice')}</span>
               </button>
 
               <button
@@ -982,7 +982,7 @@ export default function VirtualPatientChat({
                 className="py-3.5 px-6 rounded-2xl bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 font-bold text-sm border border-slate-200 shadow-xs hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <RiKeyboardLine className="text-lg text-indigo-600" />
-                <span>{t('chat_start_text') || "Yozma Muloqot"}</span>
+                <span>{t('chat_start_text')}</span>
               </button>
             </div>
           </div>
@@ -1183,7 +1183,7 @@ export default function VirtualPatientChat({
                               onClick={() => playTTS(lastPatientMsg.content, lastPatientMsg.audio)}
                               className="text-indigo-700 hover:text-indigo-900 bg-indigo-50 hover:bg-indigo-100 px-2.5 py-0.5 rounded-lg flex items-center gap-1 font-bold text-[11px] transition-all cursor-pointer shadow-2xs"
                             >
-                              <RiVolumeUpLine size={13} /> {t('chat_replay_audio') || "Qayta tinglash"}
+                              <RiVolumeUpLine size={13} /> {t('chat_replay_audio')}
                             </button>
                           )}
                         </div>
@@ -1272,7 +1272,7 @@ export default function VirtualPatientChat({
               <div className="flex-1 overflow-y-auto max-h-[380px] p-4 bg-white rounded-2xl border border-slate-200 space-y-4 shadow-inner mb-3">
                 {chatHistory.length === 0 ? (
                   <div className="text-center py-12 text-slate-400 text-sm">
-                    {t('chat_simulator') || "Suhbat hali boshlanmadi."}
+                    {t('chat_simulator')}
                   </div>
                 ) : (
                   chatHistory.map((msg, index) => {
@@ -1302,7 +1302,7 @@ export default function VirtualPatientChat({
                               <button
                                 onClick={() => playTTS(msg.content, msg.audio)}
                                 className="hover:opacity-100 flex items-center gap-1 cursor-pointer"
-                                title={t('chat_replay_audio') || "Qayta eshitish"}
+                                title={t('chat_replay_audio')}
                               >
                                 <RiVolumeUpLine size={12} />
                               </button>
@@ -1333,7 +1333,7 @@ export default function VirtualPatientChat({
                     type="text"
                     value={textInput}
                     onChange={(e) => setTextInput(e.target.value)}
-                    placeholder={t('chat_input_placeholder') || "Ingliz tilida savol yoki xabar yozing..."}
+                    placeholder={t('chat_input_placeholder')}
                     disabled={!isActive || isProcessing}
                     className="w-full bg-white text-slate-900 placeholder:text-slate-400 text-sm font-medium px-4 py-3 rounded-xl border border-slate-200 focus:outline-hidden focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 shadow-xs transition-all disabled:opacity-50"
                   />
@@ -1354,7 +1354,7 @@ export default function VirtualPatientChat({
                   className="px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 text-white font-bold text-sm shadow-sm transition-all flex items-center gap-2 cursor-pointer"
                 >
                   <RiSendPlane2Line />
-                  <span className="hidden sm:inline">{t('submit') || "Yuborish"}</span>
+                  <span className="hidden sm:inline">{t('submit')}</span>
                 </button>
 
                 {/* Phrasebook drawer trigger */}
@@ -1366,10 +1366,10 @@ export default function VirtualPatientChat({
                       ? 'bg-indigo-50 border-indigo-300 text-indigo-700 shadow-xs'
                       : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
                   }`}
-                  title={t('chat_phrasebook_drawer') || "Klinik Iboralar"}
+                  title={t('chat_phrasebook_drawer')}
                 >
                   <RiLightbulbLine className="text-amber-500 text-base" />
-                  <span className="hidden md:inline">{t('chat_phrasebook_drawer') || "Klinik Iboralar"}</span>
+                  <span className="hidden md:inline">{t('chat_phrasebook_drawer')}</span>
                 </button>
 
                 {/* End / Hang up call button */}
@@ -1378,10 +1378,10 @@ export default function VirtualPatientChat({
                     type="button"
                     onClick={endCall}
                     className="px-4 py-3 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 font-bold text-xs flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer"
-                    title={t('finish') || "Tugatish"}
+                    title={t('finish')}
                   >
                     <RiStopCircleLine className="text-base text-rose-600" />
-                    <span className="hidden sm:inline">{t('finish') || "Yakunlash"}</span>
+                    <span className="hidden sm:inline">{t('finish')}</span>
                   </button>
                 )}
               </form>
@@ -1391,7 +1391,7 @@ export default function VirtualPatientChat({
                 <div className="bg-slate-50 rounded-2xl border border-slate-200 p-3 max-h-48 overflow-y-auto animate-fade-in shadow-inner">
                   <div className="flex items-center justify-between mb-2 px-1">
                     <span className="text-[11px] font-extrabold text-slate-600 uppercase tracking-wider flex items-center gap-1">
-                      <RiLightbulbLine className="text-amber-500" /> {t('chat_phrasebook_drawer') || "Klinik Iboralar"}:
+                      <RiLightbulbLine className="text-amber-500" /> {t('chat_phrasebook_drawer')}:
                     </span>
                     <span className="text-[10px] text-slate-400">
                       {phrasebook.length} ta ibora
@@ -1422,7 +1422,7 @@ export default function VirtualPatientChat({
                 <div className="p-4 bg-emerald-50/60 border border-emerald-200 rounded-2xl flex flex-wrap items-center justify-between gap-3 animate-fade-in">
                   <div>
                     <h4 className="text-sm font-black text-emerald-900">
-                      {t('chat_ended') || "Muloqot yakunlandi"} — {chatHistory.length} ta xabar almashildi
+                      {t('chat_ended')} — {chatHistory.length} ta xabar almashildi
                     </h4>
                     <p className="text-xs text-emerald-700">
                       {userMessagesCount >= 1
@@ -1436,7 +1436,7 @@ export default function VirtualPatientChat({
                       onClick={() => startCall(chatMode)}
                       className="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-bold text-xs transition-all shadow-2xs cursor-pointer"
                     >
-                      {t('retry') || "Qayta boshlash"}
+                      {t('retry')}
                     </button>
 
                     <button
@@ -1452,7 +1452,7 @@ export default function VirtualPatientChat({
                       ) : (
                         <>
                           <RiSparkling2Line className="text-sm" />
-                          <span>{t('chat_eval_btn') || "Klinik Baholash Olish"}</span>
+                          <span>{t('chat_eval_btn')}</span>
                         </>
                       )}
                     </button>
@@ -1467,12 +1467,12 @@ export default function VirtualPatientChat({
       {/* Quick Test Pass Helper */}
       {onTestPass100 && (
         <div className="px-5 py-2.5 bg-slate-100/60 border-t border-slate-200/60 flex items-center justify-between text-xs text-slate-500">
-          <span>Virtual Medical English Lab v2.0</span>
+          <span>{t('ui_app_tag')}</span>
           <button
             onClick={onTestPass100}
             className="text-[11px] text-indigo-600 hover:text-indigo-800 font-bold underline cursor-pointer"
           >
-            ⚡ {t('chat_test_100') || "100% Test topshirish (O'qituvchi/Admin)"}
+            ⚡ {t('chat_test_100')}
           </button>
         </div>
       )}

@@ -33,26 +33,26 @@ export default function Sidebar({ isOpen, onClose }) {
   ];
 
   const ADMIN_NAV = [
-    { to: "/admin/overview", icon: RiDashboardLine, label: "Umumiy Holat" },
-    { isDivider: true, label: "FOYDALANUVCHILAR" },
-    { to: "/admin/users", icon: RiTeamLine, label: "Foydalanuvchilar" },
-    { isDivider: true, label: "TUZILMA VA GURUHLAR" },
-    { to: "/admin/groups", icon: RiGroupLine, label: "Tuzilma (Yo'nalish va Guruh)" },
-    { isDivider: true, label: "KONTENT BOSHQARUVI" },
-    { to: "/admin/content/grammar", icon: RiBrainLine, label: "Grammatika" },
-    { to: "/admin/content/vocabulary", icon: RiBookLine, label: "Lug'at" },
-    { to: "/admin/content/phrasebook", icon: RiLightbulbLine, label: "Iboralar" },
-    { to: "/admin/content/quizzes", icon: RiQuestionLine, label: "Testlar" },
-    { to: "/admin/content/scenarios", icon: RiFileListLine, label: "Modullar" },
+    { to: "/admin/overview", icon: RiDashboardLine, label: t('nav_admin_overview') },
+    { isDivider: true, label: t('nav_admin_users_section') },
+    { to: "/admin/users", icon: RiTeamLine, label: t('nav_admin_users') },
+    { isDivider: true, label: t('nav_admin_structure_section') },
+    { to: "/admin/groups", icon: RiGroupLine, label: t('nav_admin_structure') },
+    { isDivider: true, label: t('nav_admin_content_section') },
+    { to: "/admin/content/grammar", icon: RiBrainLine, label: t('nav_admin_grammar') },
+    { to: "/admin/content/vocabulary", icon: RiBookLine, label: t('nav_admin_vocabulary') },
+    { to: "/admin/content/phrasebook", icon: RiLightbulbLine, label: t('nav_admin_phrasebook') },
+    { to: "/admin/content/quizzes", icon: RiQuestionLine, label: t('nav_admin_quizzes') },
+    { to: "/admin/content/scenarios", icon: RiFileListLine, label: t('nav_admin_modules') },
   ];
 
   const NAV_MAP = { student: STUDENT_NAV, teacher: TEACHER_NAV, admin: ADMIN_NAV };
   const navItems = NAV_MAP[user?.role] || [];
 
   const ROLE_CONFIG = {
-    student: { icon: RiUser3Line, label: 'Talaba / Student', bg: 'bg-blue-600', text: 'text-blue-700', border: 'border-blue-200' },
-    teacher: { icon: RiUserStarLine, label: "O'qituvchi / Teacher", bg: 'bg-emerald-600', text: 'text-emerald-700', border: 'border-emerald-200' },
-    admin: { icon: RiShieldCheckLine, label: 'Administrator', bg: 'bg-purple-600', text: 'text-purple-700', border: 'border-purple-200' },
+    student: { icon: RiUser3Line, label: t('role_student'), bg: 'bg-blue-600', text: 'text-blue-700', border: 'border-blue-200' },
+    teacher: { icon: RiUserStarLine, label: t('role_teacher'), bg: 'bg-emerald-600', text: 'text-emerald-700', border: 'border-emerald-200' },
+    admin: { icon: RiShieldCheckLine, label: t('role_admin'), bg: 'bg-purple-600', text: 'text-purple-700', border: 'border-purple-200' },
   };
   const role = ROLE_CONFIG[user?.role] || ROLE_CONFIG.student;
 
@@ -83,7 +83,7 @@ export default function Sidebar({ isOpen, onClose }) {
         <button
           onClick={onClose}
           className="md:hidden text-slate-400 hover:text-slate-700 p-1.5 rounded-lg hover:bg-slate-100 transition-colors"
-          aria-label="Close Sidebar"
+          aria-label={t('ui_close_menu')}
         >
           <RiCloseLine className="text-xl" />
         </button>

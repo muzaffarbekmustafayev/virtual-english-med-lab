@@ -52,7 +52,7 @@ export default function LanguageSwitcher({ variant = 'pill', className = '' }) {
       <div className={`flex items-center justify-between p-2 rounded-2xl bg-white/5 border border-white/10 ${className}`}>
         <div className="flex items-center gap-2 text-white/70 text-xs font-semibold px-1">
           <RiTranslate2 className="text-sm text-indigo-400" />
-          <span>{t('select_language') || 'Language'}:</span>
+          <span>{t('select_language')}:</span>
         </div>
         <div className="flex items-center gap-1">
           {LANGUAGES.map((l) => {

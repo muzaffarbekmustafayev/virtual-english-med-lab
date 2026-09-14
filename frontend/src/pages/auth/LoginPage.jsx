@@ -53,10 +53,10 @@ export default function LoginPage() {
         
         <div className="relative z-10 max-w-lg">
           <h1 className="text-4xl lg:text-5xl font-black text-white leading-[1.15] mb-6 tracking-tight">
-            Tibbiy Ingliz Tilini <br/><span className="text-emerald-400">Amaliyotda O'rganing</span>
+            {t('login_hero_title_1')} <br/><span className="text-emerald-400">{t('login_hero_title_2')}</span>
           </h1>
           <p className="text-slate-400 text-sm leading-relaxed font-medium max-w-md">
-            Virtual bemorlar bilan sun'iy intellekt orqali klinik muloqot olib boring, tibbiy terminologiyani o'zlashtiring va xalqaro standartlar asosida bilimingizni baholang.
+            {t('login_hero_desc')}
           </p>
         </div>
         
@@ -82,7 +82,7 @@ export default function LoginPage() {
 
           <div className="mb-8 text-center lg:text-left">
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">{t('auth.login_title')}</h2>
-            <p className="text-sm text-slate-500 mt-2 font-medium">Tizimga kirish uchun ma'lumotlaringizni kiriting.</p>
+            <p className="text-sm text-slate-500 mt-2 font-medium">{t('login_subtitle')}</p>
           </div>
           
           {error && (

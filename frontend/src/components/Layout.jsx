@@ -40,7 +40,7 @@ export default function Layout({ children }) {
             <button
               onClick={() => setIsMobileMenuOpen(true)}
               className="md:hidden p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-lg transition-colors cursor-pointer focus:outline-none"
-              aria-label="Open Navigation Menu"
+              aria-label={t('ui_open_menu')}
             >
               <RiMenu4Line />
             </button>

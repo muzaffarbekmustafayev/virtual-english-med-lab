@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLanguage } from '../../contexts/LanguageContext';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import api from '../../lib/api';
@@ -14,11 +15,11 @@ import {
 } from 'react-icons/ri';
 
 const TABS = [
-  { id: 'grammar',     name: "Grammatika",       icon: RiBrainLine,      color: 'amber',   desc: "Klinik grammatik qoidalar va namunalar" },
-  { id: 'vocabulary',  name: "Lug'at",          icon: RiBookLine,       color: 'indigo',  desc: "Tibbiy atamalar va tarjimalar" },
-  { id: 'phrasebook',  name: "Iboralar",         icon: RiLightbulbLine,  color: 'cyan',    desc: "Klinik muloqot iboralari" },
-  { id: 'quizzes',     name: "Testlar",          icon: RiQuestionLine,   color: 'purple',  desc: "4 variantli test savollari" },
-  { id: 'scenarios',   name: "Modullar",         icon: RiFileListLine,   color: 'emerald', desc: "AI Bemor Ssenariysi" },
+  { id: 'grammar',     name: 'nav_admin_grammar',       icon: RiBrainLine,      color: 'amber',   desc: 'cm_tab_grammar_desc' },
+  { id: 'vocabulary',  name: 'nav_admin_vocabulary',          icon: RiBookLine,       color: 'indigo',  desc: 'cm_tab_vocab_desc' },
+  { id: 'phrasebook',  name: 'nav_admin_phrasebook',         icon: RiLightbulbLine,  color: 'cyan',    desc: 'cm_tab_phrase_desc' },
+  { id: 'quizzes',     name: 'nav_admin_quizzes',          icon: RiQuestionLine,   color: 'purple',  desc: 'cm_tab_quiz_desc' },
+  { id: 'scenarios',   name: 'nav_admin_modules',         icon: RiFileListLine,   color: 'emerald', desc: 'cm_tab_modules_desc' },
 ];
 
 const COLOR_MAP = {
@@ -31,6 +32,7 @@ const COLOR_MAP = {
 
 export default function ContentManager() {
   const { tab = 'grammar' }       = useParams();
+  const { t } = useLanguage();
   const navigate                  = useNavigate();
   const [modules, setModules]     = useState([]);
   const [specialties, setSpec]    = useState([]);
@@ -46,7 +48,7 @@ export default function ContentManager() {
   const loadModules = () =>
     api.get('/admin/modules')
       .then(r => { setModules(r.data); if (r.data.length > 0 && !selMod) setSelMod(r.data[0].id); })
-      .catch(() => toast.error('Modullarni yuklashda xatolik'));
+      .catch(() => toast.error(t('cm_load_modules_error')));
 
   const loadSpecialties = () =>
     api.get('/admin/specialties').then(r => {
@@ -77,7 +79,7 @@ export default function ContentManager() {
         setItems(res.data || []);
       }
     } catch {
-      toast.error("Ma'lumotlarni yuklashda xatolik");
+      toast.error(t('cm_load_error'));
     } finally {
       setLoading(false);
     }
@@ -86,15 +88,15 @@ export default function ContentManager() {
   useEffect(() => { loadItems(); setSearch(''); }, [selMod, tab]);
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Haqiqatan ham ushbu yozuvni o'chirmoqchimisiz?")) return;
+    if (!window.confirm(t('cm_confirm_delete'))) return;
     const epMap = { grammar: 'grammar', vocabulary: 'vocabulary', phrasebook: 'phrasebook', quizzes: 'tests', scenarios: 'modules' };
     try {
       await api.delete(`/admin/${epMap[tab]}/${id}`);
-      toast.success("Muvaffaqiyatli o'chirildi");
+      toast.success(t('cm_deleted'));
       loadItems();
       if (tab === 'scenarios') loadModules();
     } catch {
-      toast.error("O'chirishda xatolik yuz berdi");
+      toast.error(t('cm_delete_error'));
     }
   };
 
@@ -135,7 +137,7 @@ export default function ContentManager() {
           className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white text-sm font-bold rounded-xl shadow-md shadow-indigo-500/20 transition-all hover:shadow-lg hover:shadow-indigo-500/30 hover:-translate-y-0.5"
         >
           <RiAddLine className="text-lg" />
-          {tab === 'scenarios' ? 'Yangi Modul' : "Yangi Qo'shish"}
+          {tab === 'scenarios' ? t('cm_new_module') : t('cm_add_new')}
         </button>
       </div>
 
@@ -207,7 +209,7 @@ export default function ContentManager() {
         {/* Sub-header */}
         <div className="p-4 border-b border-gray-200 bg-gray-50/60 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-gray-900 uppercase">{activeTab?.name}</span>
+            <span className="text-xs font-bold text-gray-900 uppercase">{t(activeTab?.name)}</span>
             <span className="text-xs text-gray-500 bg-gray-200 px-2 py-0.5 rounded-full font-semibold">
               {filteredItems.length} ta
             </span>
@@ -233,7 +235,7 @@ export default function ContentManager() {
             <div className="w-14 h-14 rounded-2xl bg-gray-100 text-gray-400 flex items-center justify-center text-3xl mx-auto mb-3">
               <RiInformationLine />
             </div>
-            <p className="text-sm font-bold text-gray-700">Hech qanday ma'lumot topilmadi</p>
+            <p className="text-sm font-bold text-gray-700">{t('cm_no_data')}</p>
             <p className="text-xs text-gray-400 mt-1 max-w-xs mx-auto">
               Yuqoridagi tugma orqali yangi yozuv qo'shishingiz mumkin.
             </p>
@@ -323,7 +325,7 @@ export default function ContentManager() {
                   <div>
                     <div className="flex items-center gap-2 mb-1">
                       <span className="text-[10px] font-bold uppercase tracking-wider bg-cyan-100 text-cyan-800 px-2 py-0.5 rounded">
-                        {item.category || 'Clinical Phrase'}
+                        {item.category || t('cm_clinical_phrase')}
                       </span>
                     </div>
                     <p className="text-sm font-bold text-gray-900 leading-snug">"{item.phrase}"</p>
@@ -384,7 +386,7 @@ export default function ContentManager() {
                       <p className="text-xs text-gray-500 mt-1 ml-9">{item.description}</p>
                     )}
                   </div>
-                  <ItemActions onEdit={() => { setEdit(item); setShowModal(true); }} onDelete={() => handleDelete(item.id)} editLabel="Tahrirlash" />
+                  <ItemActions onEdit={() => { setEdit(item); setShowModal(true); }} onDelete={() => handleDelete(item.id)} editLabel={t('ui_edit')} />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ml-9">
                   <div className="p-4 bg-gray-50 border border-gray-200 rounded-xl space-y-2">
@@ -392,7 +394,7 @@ export default function ContentManager() {
                       <RiStethoscopeLine /> Bemor Konteksti
                     </span>
                     <p className="text-xs text-gray-700 whitespace-pre-wrap leading-relaxed">
-                      {item.patient_context || "Kontekst kiritilmagan"}
+                      {item.patient_context || t('cm_no_context')}
                     </p>
                   </div>
                   <div className="p-4 bg-purple-50/50 border border-purple-200 rounded-xl space-y-2">
@@ -400,7 +402,7 @@ export default function ContentManager() {
                       <RiBrainLine /> Final Challenge
                     </span>
                     <p className="text-xs text-gray-700 whitespace-pre-wrap leading-relaxed">
-                      {item.final_challenge_context || "Final challenge kiritilmagan"}
+                      {item.final_challenge_context || t('cm_no_final')}
                     </p>
                   </div>
                 </div>
@@ -445,12 +447,12 @@ function ItemActions({ onEdit, onDelete, editLabel }) {
         </button>
       ) : (
         <button onClick={onEdit}
-          className="p-1.5 rounded-lg text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 transition" title="Tahrirlash">
+          className="p-1.5 rounded-lg text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 transition" title={t('ui_edit')}>
           <RiEditLine className="text-base" />
         </button>
       )}
       <button onClick={onDelete}
-        className="p-1.5 rounded-lg text-gray-400 hover:text-rose-600 hover:bg-rose-50 transition" title="O'chirish">
+        className="p-1.5 rounded-lg text-gray-400 hover:text-rose-600 hover:bg-rose-50 transition" title={t('ui_delete')}>
         <RiDeleteBinLine className="text-base" />
       </button>
     </div>
@@ -477,9 +479,9 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
   const set = (key, val) => setForm(f => ({ ...f, [key]: val }));
 
   const STEPS = [
-    { num: 1, label: "Asosiy Ma'lumot", icon: RiFileTextLine, desc: "Modul nomi va tartib raqami" },
-    { num: 2, label: "Bemor Konteksti", icon: RiStethoscopeLine, desc: "AI bemor uchun ssenariy" },
-    { num: 3, label: "Final Challenge", icon: RiBrainLine, desc: "Murakkab klinik ssenariy" },
+    { num: 1, label: t('cm_step_basic'), icon: RiFileTextLine, desc: t('cm_step_basic_desc') },
+    { num: 2, label: t('cm_step_patient'), icon: RiStethoscopeLine, desc: t('cm_step_patient_desc') },
+    { num: 3, label: t('cm_step_final'), icon: RiBrainLine, desc: t('cm_step_final_desc') },
   ];
 
   const canNext = () => {
@@ -493,14 +495,14 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
     try {
       if (isEdit) {
         await api.put(`/admin/modules/${initialData.id}`, form);
-        toast.success('Modul yangilandi! ✓');
+        toast.success(t('cm_module_updated'));
       } else {
         await api.post('/admin/modules', form);
-        toast.success("Yangi modul yaratildi! ✓");
+        toast.success(t('cm_module_created'));
       }
       onSaved();
     } catch (err) {
-      toast.error(err.response?.data?.error || 'Saqlashda xatolik');
+      toast.error(err.response?.data?.error || t('cm_save_error'));
     } finally {
       setSaving(false);
     }
@@ -520,7 +522,7 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
               </div>
               <div>
                 <h3 className="font-black text-lg">
-                  {isEdit ? 'Modulni Tahrirlash' : 'Yangi Modul Yaratish'}
+                  {isEdit ? t('cm_edit_module') : t('cm_create_module')}
                 </h3>
                 <p className="text-emerald-100 text-xs mt-0.5">
                   {isEdit ? form.title : `${STEPS[step - 1].label} — ${step}/3 bosqich`}
@@ -565,11 +567,11 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
           {/* ── STEP 1: Asosiy Ma'lumot ── */}
           {step === 1 && (
             <div className="space-y-5">
-              <SectionHeader icon={RiFileTextLine} title="Asosiy Ma'lumotlar"
-                desc="Modul nomi, tartibi va mutaxassislikni kiriting" />
+              <SectionHeader icon={RiFileTextLine} title={t('cm_basic_section')}
+                desc={t('cm_basic_section_desc')} />
 
               <div className="grid grid-cols-2 gap-4">
-                <FormField label="Tartib Raqami (Order Index)" icon={RiNumbersLine} required>
+                <FormField label={t('cm_order_index')} icon={RiNumbersLine} required>
                   <input
                     type="number"
                     min="1"
@@ -584,7 +586,7 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
                 <FormField label="Mutaxassislik" icon={RiStethoscopeLine} required>
                   {specialties.length === 0 ? (
                     <div className="bg-amber-50 border border-amber-200 p-3 rounded-xl flex items-center justify-between">
-                      <span className="text-amber-800 text-sm font-medium">Yo'nalish yaratilmagan!</span>
+                      <span className="text-amber-800 text-sm font-medium">{t('cm_no_specialty_created')}</span>
                       <a href="/admin/groups" className="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-lg transition-colors">
                         Yaratish
                       </a>
@@ -595,7 +597,7 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
                       onChange={(e) => set('specialty_id', e.target.value)}
                       className="form-input text-sm"
                     >
-                      <option value="">Tanlang...</option>
+                      <option value="">{t('ui_select')}</option>
                       {specialties.map(s => (
                         <option key={s.id} value={s.id}>{s.name}</option>
                       ))}
@@ -604,23 +606,23 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
                 </FormField>
               </div>
 
-              <FormField label="Modul Nomi" icon={RiText} required>
+              <FormField label={t('cm_module_title')} icon={RiText} required>
                 <input
                   type="text"
                   value={form.title}
                   onChange={(e) => set('title', e.target.value)}
-                  placeholder="masalan: Pain Assessment & Chief Complaint"
+                  placeholder={t('cm_module_title_ph')}
                   className="form-input"
                   maxLength={150}
                 />
                 <p className="text-xs text-gray-400 mt-1 text-right">{form.title.length}/150</p>
               </FormField>
 
-              <FormField label="Qisqacha Tavsif (ixtiyoriy)" icon={RiListCheck2}>
+              <FormField label={t('cm_short_desc')} icon={RiListCheck2}>
                 <textarea
                   value={form.description}
                   onChange={(e) => set('description', e.target.value)}
-                  placeholder="masalan: Bemorning asosiy shikoyatini aniqlaydigan klinik muloqot moduli"
+                  placeholder={t('cm_short_desc_ph')}
                   rows={3}
                   className="form-input resize-none"
                   maxLength={400}
@@ -633,10 +635,10 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
           {/* ── STEP 2: Bemor Konteksti ── */}
           {step === 2 && (
             <div className="space-y-5">
-              <SectionHeader icon={RiStethoscopeLine} title="Standart AI Bemor Konteksti"
-                desc="AI-ga bemor rolini o'ynash uchun ko'rsatma (inglizcha)" />
+              <SectionHeader icon={RiStethoscopeLine} title={t('cm_patient_context_section')}
+                desc={t('cm_patient_context_desc')} />
 
-              <FormField label="Bemor Konteksti (Inglizcha)" icon={RiMentalHealthLine} required>
+              <FormField label={t('cm_patient_context')} icon={RiMentalHealthLine} required>
                 <textarea
                   value={form.patient_context}
                   onChange={(e) => set('patient_context', e.target.value)}
@@ -657,10 +659,10 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
           {/* ── STEP 3: Final Challenge ── */}
           {step === 3 && (
             <div className="space-y-5">
-              <SectionHeader icon={RiBrainLine} title="Final Challenge Ssenariysi"
+              <SectionHeader icon={RiBrainLine} title={t('cm_final_section')}
                 desc="Suhbat so'ngida talabaga beriladigan murakkab holat (inglizcha)" />
 
-              <FormField label="Final Challenge Konteksti (Inglizcha)" icon={RiSparklingLine}>
+              <FormField label={t('cm_final_context')} icon={RiSparklingLine}>
                 <textarea
                   value={form.final_challenge_context}
                   onChange={(e) => set('final_challenge_context', e.target.value)}
@@ -674,7 +676,7 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
               {/* Preview */}
               {form.title && (
                 <div className="p-4 bg-gray-50 border border-gray-200 rounded-xl">
-                  <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Ko'rinish</p>
+                  <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">{t('cm_preview')}</p>
                   <div className="flex items-center gap-3">
                     <span className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 font-black text-sm flex items-center justify-center">
                       {form.order_index}
@@ -697,7 +699,7 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
             onClick={() => step > 1 ? setStep(s => s - 1) : onClose()}
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-gray-300 text-gray-700 text-sm font-bold hover:bg-gray-100 transition"
           >
-            <RiArrowLeftLine /> {step > 1 ? 'Orqaga' : 'Bekor qilish'}
+            <RiArrowLeftLine /> {step > 1 ? t('cm_back') : t('cm_cancel')}
           </button>
 
           <div className="flex items-center gap-1.5">
@@ -724,7 +726,7 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
               disabled={saving}
               className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-sm font-bold shadow-md transition disabled:opacity-50"
             >
-              <RiSave3Line /> {saving ? 'Saqlanmoqda...' : isEdit ? 'Yangilash' : "Modul Yaratish"}
+              <RiSave3Line /> {saving ? t('ui_saving') : isEdit ? t('cm_update') : t('cm_create_module_btn')}
             </button>
           )}
         </div>
@@ -748,10 +750,10 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
   const set = (key, val) => setForm(f => ({ ...f, [key]: val }));
 
   const TAB_META = {
-    grammar:     { label: "Grammatik Qoida", color: 'amber',   icon: RiBrainLine },
-    vocabulary:  { label: "Lug'at So'zi",    color: 'indigo',  icon: RiBookLine },
-    phrasebook:  { label: 'Muloqot Iborasi', color: 'cyan',    icon: RiLightbulbLine },
-    quizzes:     { label: 'Test Savoli',     color: 'purple',  icon: RiQuestionLine },
+    grammar:     { label: t('cm_meta_grammar'), color: 'amber',   icon: RiBrainLine },
+    vocabulary:  { label: t('cm_meta_vocab'),    color: 'indigo',  icon: RiBookLine },
+    phrasebook:  { label: t('cm_meta_phrase'), color: 'cyan',    icon: RiLightbulbLine },
+    quizzes:     { label: t('cm_meta_quiz'),     color: 'purple',  icon: RiQuestionLine },
   };
   const meta   = TAB_META[tab] || TAB_META.grammar;
   const colors = COLOR_MAP[meta.color];
@@ -765,14 +767,14 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
       const ep    = epMap[tab];
       if (isEdit) {
         await api.put(`/admin/${ep}/${initialData.id}`, form);
-        toast.success('Muvaffaqiyatli yangilandi ✓');
+        toast.success(t('cm_updated'));
       } else {
         await api.post(`/admin/${ep}`, { ...form, module_id: moduleId });
-        toast.success("Muvaffaqiyatli qo'shildi ✓");
+        toast.success(t('cm_added'));
       }
       onSaved();
     } catch (err) {
-      toast.error(err.response?.data?.error || 'Saqlashda xatolik');
+      toast.error(err.response?.data?.error || t('cm_save_error'));
     } finally {
       setSaving(false);
     }
@@ -792,9 +794,9 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
               </div>
               <div>
                 <h3 className="font-black text-base">
-                  {isEdit ? 'Tahrirlash' : "Yangi Qo'shish"} — {meta.label}
+                  {isEdit ? t('ui_edit') : t('cm_add_new')} — {meta.label}
                 </h3>
-                <p className="text-white/70 text-xs">Barcha * belgilangan maydonlar majburiy</p>
+                <p className="text-white/70 text-xs">{t('cm_required_hint')}</p>
               </div>
             </div>
             <button onClick={onClose}
@@ -811,21 +813,21 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
             {/* GRAMMAR */}
             {tab === 'grammar' && (
               <>
-                <FormField label="Grammatik Mavzu Nomi (English Title)" required>
+                <FormField label={t('cm_grammar_title_en')} required>
                   <input
                     type="text"
                     value={form.title || ''}
                     onChange={e => set('title', e.target.value)}
-                    placeholder="masalan: Present Simple in Pain Assessment"
+                    placeholder={t('cm_grammar_title_ph')}
                     className="form-input font-bold"
                     required
                   />
                 </FormField>
 
                 <div className="p-3 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-                  <p className="text-xs font-bold text-slate-700">Mavzu Nomi (O'zbek / Rus):</p>
+                  <p className="text-xs font-bold text-slate-700">{t('cm_title_uz_ru')}</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    <FormField label="🇺🇿 O'zbekcha Nomi">
+                    <FormField label={t('cm_title_uz')}>
                       <input
                         type="text"
                         value={form.title_uz || ''}
@@ -834,7 +836,7 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                         className="form-input text-sm"
                       />
                     </FormField>
-                    <FormField label="🇷🇺 Русский Заголовок">
+                    <FormField label={t('cm_title_ru')}>
                       <input
                         type="text"
                         value={form.title_ru || ''}
@@ -847,8 +849,8 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                 </div>
 
                 <div className="p-3 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-                  <p className="text-xs font-bold text-slate-700">Grammatik Qoida & Tushuntirish / Rule Explanation:</p>
-                  <FormField label="🇬🇧 English Rule" required>
+                  <p className="text-xs font-bold text-slate-700">{t('cm_rule_section')}</p>
+                  <FormField label={t('cm_rule_en')} required>
                     <textarea
                       value={form.rule_explanation || ''}
                       onChange={e => set('rule_explanation', e.target.value)}
@@ -859,7 +861,7 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                     />
                   </FormField>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    <FormField label="🇺🇿 O'zbekcha Tushuntirish">
+                    <FormField label={t('cm_rule_uz')}>
                       <textarea
                         value={form.rule_explanation_uz || ''}
                         onChange={e => set('rule_explanation_uz', e.target.value)}
@@ -868,7 +870,7 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                         className="form-input text-sm resize-none"
                       />
                     </FormField>
-                    <FormField label="🇷🇺 Русское Объяснение">
+                    <FormField label={t('cm_rule_ru')}>
                       <textarea
                         value={form.rule_explanation_ru || ''}
                         onChange={e => set('rule_explanation_ru', e.target.value)}
@@ -881,7 +883,7 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                 </div>
 
                 <div className="p-3 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-                  <p className="text-xs font-bold text-slate-700">3 Tildagi Gap Formulasi / Structure Formula:</p>
+                  <p className="text-xs font-bold text-slate-700">{t('cm_formula_section')}</p>
                   <FormField label="🇬🇧 Formula (English)">
                     <input
                       type="text"
@@ -904,12 +906,12 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                         className="form-input font-mono text-sm font-bold text-amber-700"
                       />
                     </FormField>
-                    <FormField label="🇷🇺 Формула (Русский)">
+                    <FormField label={t('cm_formula_ru')}>
                       <input
                         type="text"
                         value={form.structure_pattern_ru || ''}
                         onChange={e => set('structure_pattern_ru', e.target.value)}
-                        placeholder="например: Подлежащее + have / has + V3"
+                        placeholder={t('cm_formula_ru_ph')}
                         className="form-input font-mono text-sm font-bold text-blue-700"
                       />
                     </FormField>
@@ -921,24 +923,24 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
             {/* VOCABULARY */}
             {tab === 'vocabulary' && (
               <>
-                <FormField label="Inglizcha Termin (Medical Word in English)" required>
+                <FormField label={t('cm_term_en')} required>
                   <input type="text" value={form.word || ''} onChange={e => set('word', e.target.value)}
                     placeholder="masalan: Odontalgia / Pulpitis" className="form-input font-bold" required />
                 </FormField>
 
                 <div className="p-3 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-                  <p className="text-xs font-bold text-slate-700">3 Tildagi Tarjimalar / Translations:</p>
+                  <p className="text-xs font-bold text-slate-700">{t('cm_translations_section')}</p>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                     <FormField label="🇺🇿 O'zbekcha" required>
                       <input type="text" value={form.translation_uz || form.translation || ''}
                         onChange={e => { set('translation_uz', e.target.value); set('translation', e.target.value); }}
                         placeholder="Tish og'rig'i" className="form-input text-sm" required />
                     </FormField>
-                    <FormField label="🇷🇺 Русский">
+                    <FormField label={t('cm_lang_ru')}>
                       <input type="text" value={form.translation_ru || ''} onChange={e => set('translation_ru', e.target.value)}
-                        placeholder="Зубная боль" className="form-input text-sm" />
+                        placeholder={t('cm_lang_ru_ph')} className="form-input text-sm" />
                     </FormField>
-                    <FormField label="🇬🇧 English Synonym">
+                    <FormField label={t('cm_synonym_en')}>
                       <input type="text" value={form.translation_en || ''} onChange={e => set('translation_en', e.target.value)}
                         placeholder="Toothache" className="form-input text-sm" />
                     </FormField>
@@ -946,27 +948,27 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                 </div>
 
                 <div className="p-3 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-                  <p className="text-xs font-bold text-slate-700">Tibbiy Ta'rif / Definitions (3 Tilda):</p>
-                  <FormField label="🇬🇧 English Definition">
+                  <p className="text-xs font-bold text-slate-700">{t('cm_definitions_section')}</p>
+                  <FormField label={t('cm_definition_en')}>
                     <input type="text" value={form.definition_en || form.definition || ''}
                       onChange={e => { set('definition_en', e.target.value); set('definition', e.target.value); }}
-                      placeholder="masalan: Acute pain originating from the dental pulp" className="form-input text-sm" />
+                      placeholder={t('cm_definition_en_ph')} className="form-input text-sm" />
                   </FormField>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     <FormField label="🇺🇿 O'zbekcha Ta'rif">
                       <input type="text" value={form.definition_uz || ''} onChange={e => set('definition_uz', e.target.value)}
-                        placeholder="Tish pulpasi yallig'lanishidan kelib chiquvchi og'riq" className="form-input text-sm" />
+                        placeholder={t('cm_definition_uz_ph')} className="form-input text-sm" />
                     </FormField>
-                    <FormField label="🇷🇺 Русское Определение">
+                    <FormField label={t('cm_definition_ru')}>
                       <input type="text" value={form.definition_ru || ''} onChange={e => set('definition_ru', e.target.value)}
-                        placeholder="Боль, возникающая из пульпы зуба" className="form-input text-sm" />
+                        placeholder={t('cm_definition_ru_ph')} className="form-input text-sm" />
                     </FormField>
                   </div>
                 </div>
 
-                <FormField label="Klinik Misol Gap (English Example)">
+                <FormField label={t('cm_example_en')}>
                   <textarea value={form.example || ''} onChange={e => set('example', e.target.value)}
-                    placeholder="masalan: The patient presented with acute odontalgia exacerbated by cold liquids..."
+                    placeholder={t('cm_example_en_ph')}
                     rows={2} className="form-input resize-none text-sm" />
                 </FormField>
               </>
@@ -975,33 +977,33 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
             {/* PHRASEBOOK */}
             {tab === 'phrasebook' && (
               <>
-                <FormField label="Kategoriya / Klinik Bosqich" required>
+                <FormField label={t('cm_category')} required>
                   <input type="text" value={form.category || ''} onChange={e => set('category', e.target.value)}
-                    placeholder="masalan: Pain Assessment, Examination, Treatment Plan"
+                    placeholder={t('cm_category_ph')}
                     className="form-input text-sm font-bold" required />
                 </FormField>
 
-                <FormField label="Inglizcha Muloqot Iborasi (Clinical Phrase in English)" required>
+                <FormField label={t('cm_phrase_en')} required>
                   <textarea value={form.phrase || ''} onChange={e => set('phrase', e.target.value)}
-                    placeholder="masalan: Does the pain radiate to your ear, jaw, or neck?"
+                    placeholder={t('cm_phrase_en_ph')}
                     rows={2} className="form-input resize-none font-bold text-sm" required />
                 </FormField>
 
                 <div className="p-3 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-                  <p className="text-xs font-bold text-slate-700">Klinik Qo'llanilishi va Izohlar / Hints (3 Tilda):</p>
-                  <FormField label="🇺🇿 O'zbekcha Izoh">
+                  <p className="text-xs font-bold text-slate-700">{t('cm_hints_section')}</p>
+                  <FormField label={t('cm_hint_uz')}>
                     <input type="text" value={form.hint_uz || ''} onChange={e => set('hint_uz', e.target.value)}
-                      placeholder="masalan: Og'riq quloqqa yoki bo'yinga tarqalyaptimi?"
+                      placeholder={t('cm_hint_uz_ph')}
                       className="form-input text-sm" />
                   </FormField>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    <FormField label="🇷🇺 Русское Пояснение">
+                    <FormField label={t('cm_hint_ru')}>
                       <input type="text" value={form.hint_ru || ''} onChange={e => set('hint_ru', e.target.value)}
-                        placeholder="Иррадиирует ли боль в ухо или шею?" className="form-input text-sm" />
+                        placeholder={t('cm_hint_ru_ph')} className="form-input text-sm" />
                     </FormField>
-                    <FormField label="🇬🇧 English Context">
+                    <FormField label={t('cm_hint_en')}>
                       <input type="text" value={form.hint_en || ''} onChange={e => set('hint_en', e.target.value)}
-                        placeholder="Inquire about pain radiation" className="form-input text-sm" />
+                        placeholder={t('cm_hint_en_ph')} className="form-input text-sm" />
                     </FormField>
                   </div>
                 </div>
@@ -1011,15 +1013,15 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
             {/* QUIZZES */}
             {tab === 'quizzes' && (
               <>
-                <FormField label="Savol Matni" required>
+                <FormField label={t('cm_question_text')} required>
                   <textarea value={form.question || ''} onChange={e => set('question', e.target.value)}
-                    placeholder="Test savolini ingliz tilida kiriting..." rows={3}
+                    placeholder={t('cm_question_ph')} rows={3}
                     className="form-input resize-none" required />
                 </FormField>
 
                 <div>
                   <label className="block text-xs font-bold text-gray-600 mb-2">
-                    4 Ta Variant — To'g'ri javobni <span className="text-emerald-600">yashil tugma</span> bilan belgilang *
+                    {t('cm_options_hint')}
                   </label>
                   <div className="space-y-2">
                     {['A', 'B', 'C', 'D'].map((opt) => {
@@ -1032,7 +1034,7 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                           <button
                             type="button"
                             onClick={() => set('correct_option', opt)}
-                            title="To'g'ri javob"
+                            title={t('cm_correct_answer')}
                             className={`w-8 h-8 rounded-lg font-black text-xs shrink-0 flex items-center justify-center transition ${
                               isChecked ? 'bg-emerald-600 text-white shadow-sm' : 'bg-white text-gray-600 border border-gray-300 hover:border-emerald-400'
                             }`}

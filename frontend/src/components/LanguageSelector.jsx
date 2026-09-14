@@ -122,7 +122,7 @@ export default function LanguageSelector({ variant = 'navbar', className = '' })
             {/* Header */}
             <div className="px-2.5 py-1.5 text-[10px] font-black text-slate-400 uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-100 mb-1">
               <RiTranslate2 className="text-indigo-600 text-xs" />
-              <span>{t('select_language') || 'Tilni tanlang'}</span>
+              <span>{t('select_language')}</span>
             </div>
 
             {/* Language Options */}

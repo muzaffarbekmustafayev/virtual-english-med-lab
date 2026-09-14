@@ -56,15 +56,15 @@ export default function TeacherDashboard() {
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="badge-standard badge-emerald">
-                <RiUserStarLine className="text-xs" /> {t('nav.teacher_portal') || "O'qituvchi Boshqaruv Portali"}
+                <RiUserStarLine className="text-xs" /> {t('nav.teacher_portal')}
               </span>
               <span className="text-xs font-bold text-slate-400">· Medical English Lab</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-              {t('teacher.dashboard.title') || "O'qituvchi Paneli & Guruhlar Tahlili"}
+              {t('teacher.dashboard.title')}
             </h1>
             <p className="text-slate-500 text-xs sm:text-sm mt-1.5 font-medium max-w-xl">
-              {t('teacher.dashboard.subtitle') || "Barcha biriktirilgan talabalar, ularning klinik muloqot ballari, o'zlashtirish foizi va faollik ko'rsatkichlari."}
+              {t('teacher.dashboard.subtitle')}
             </p>
           </div>
 
@@ -75,7 +75,7 @@ export default function TeacherDashboard() {
               style={{ background: 'linear-gradient(135deg, #059669 0%, #047857 100%)' }}
             >
               <RiBarChartLine className="text-base" />
-              <span>Batafsil Hisobotlar</span>
+              <span>{t('teacher_detailed_reports')}</span>
               <RiArrowRightLine className="text-base" />
             </button>
           </div>
@@ -91,10 +91,10 @@ export default function TeacherDashboard() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { label: t('teacher.dashboard.assigned_groups') || "Biriktirilgan Guruhlar", value: data?.total_groups ?? 0, icon: RiGroupLine, badge: 'bg-indigo-50 text-indigo-600 border-indigo-200' },
-              { label: t('teacher.dashboard.total_students') || "Jami O'quvchilar", value: data?.total_students ?? 0, icon: RiUser3Line, badge: 'bg-emerald-50 text-emerald-600 border-emerald-200' },
-              { label: t('teacher.dashboard.group_avg_score') || "O'rtacha Natija Foizi", value: `${data?.average_score || 0}%`, icon: RiTrophyLine, badge: 'bg-amber-50 text-amber-600 border-amber-200' },
-              { label: t('teacher.dashboard.completed_sessions') || "Yakunlangan Sessiyalar", value: data?.recent_conversations ?? 0, icon: RiBarChartLine, badge: 'bg-blue-50 text-blue-600 border-blue-200' },
+              { label: t('teacher.dashboard.assigned_groups'), value: data?.total_groups ?? 0, icon: RiGroupLine, badge: 'bg-indigo-50 text-indigo-600 border-indigo-200' },
+              { label: t('teacher.dashboard.total_students'), value: data?.total_students ?? 0, icon: RiUser3Line, badge: 'bg-emerald-50 text-emerald-600 border-emerald-200' },
+              { label: t('teacher.dashboard.group_avg_score'), value: `${data?.average_score || 0}%`, icon: RiTrophyLine, badge: 'bg-amber-50 text-amber-600 border-amber-200' },
+              { label: t('teacher.dashboard.completed_sessions'), value: data?.recent_conversations ?? 0, icon: RiBarChartLine, badge: 'bg-blue-50 text-blue-600 border-blue-200' },
             ].map(s => {
               const Icon = s.icon;
               return (
@@ -120,7 +120,7 @@ export default function TeacherDashboard() {
               <div>
                 <h2 className="text-base font-black text-slate-900 flex items-center gap-2">
                   <RiUser3Line className="text-emerald-600 text-lg" />
-                  <span>Barcha O'quvchilar va Ularning Natijalari</span>
+                  <span>{t('teacher_all_students_results')}</span>
                 </h2>
                 <p className="text-xs text-slate-500 font-medium mt-0.5">
                   Har bir o'quvchining o'zlashtirish foizi va o'rtacha balli
@@ -134,7 +134,7 @@ export default function TeacherDashboard() {
                   <RiSearchLine className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs" />
                   <input
                     type="text"
-                    placeholder="Ism yoki email bo'yicha qidiruv..."
+                    placeholder={t('teacher_search_placeholder')}
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     className="input-standard pl-9 text-xs"
@@ -149,7 +149,7 @@ export default function TeacherDashboard() {
                     onChange={(e) => setSelectedGroup(e.target.value)}
                     className="input-standard text-xs w-auto cursor-pointer"
                   >
-                    <option value="all">Barcha Guruhlar</option>
+                    <option value="all">{t('teacher_all_groups')}</option>
                     {data.groups.map(g => (
                       <option key={g.id} value={g.id}>{g.name}</option>
                     ))}
@@ -162,10 +162,10 @@ export default function TeacherDashboard() {
                   onChange={(e) => setSortBy(e.target.value)}
                   className="input-standard text-xs w-auto cursor-pointer"
                 >
-                  <option value="score-desc">Ball: Eng yuqori</option>
-                  <option value="score-asc">Ball: Eng past</option>
-                  <option value="progress-desc">Progress: Eng yuqori</option>
-                  <option value="name-asc">Ism (A-Z)</option>
+                  <option value="score-desc">{t('teacher_sort_score_desc')}</option>
+                  <option value="score-asc">{t('teacher_sort_score_asc')}</option>
+                  <option value="progress-desc">{t('teacher_sort_progress_desc')}</option>
+                  <option value="name-asc">{t('teacher_sort_name')}</option>
                 </select>
               </div>
             </div>
@@ -224,9 +224,9 @@ export default function TeacherDashboard() {
                       <div className="flex flex-wrap items-center justify-between lg:justify-end gap-4 shrink-0">
                         {/* 5 Competencies Mini Badges */}
                         <div className="hidden xl:flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200/70 text-[10px] font-bold text-slate-600">
-                          <span title="Grammatika">🧠 {s.competencies?.grammar || sc}%</span>
+                          <span title={t('comp_grammar')}>🧠 {s.competencies?.grammar || sc}%</span>
                           <span className="text-slate-300">·</span>
-                          <span title="Lug'at">📖 {s.competencies?.vocabulary || sc}%</span>
+                          <span title={t('comp_vocabulary')}>📖 {s.competencies?.vocabulary || sc}%</span>
                           <span className="text-slate-300">·</span>
                           <span title="Ravonlik">🗣️ {s.competencies?.fluency || sc}%</span>
                           <span className="text-slate-300">·</span>
@@ -246,7 +246,7 @@ export default function TeacherDashboard() {
                           onClick={() => navigate(`/teacher/reports?search=${encodeURIComponent(s.full_name)}`)}
                           className="btn-secondary-soft text-xs py-2 px-3 hover:border-emerald-300 hover:text-emerald-700 transition-all font-bold flex items-center gap-1"
                         >
-                          <span>Hisobot</span>
+                          <span>{t('ui_report')}</span>
                           <RiArrowRightLine className="text-xs" />
                         </button>
                       </div>
@@ -257,8 +257,8 @@ export default function TeacherDashboard() {
             ) : (
               <div className="p-12 text-center text-slate-400">
                 <RiUser3Line className="text-4xl mx-auto mb-2 text-slate-300" />
-                <p className="text-sm font-bold text-slate-600">O'quvchilar topilmadi</p>
-                <p className="text-xs text-slate-400 mt-1">Qidiruv yoki guruh filtrini o'zgartirib ko'ring.</p>
+                <p className="text-sm font-bold text-slate-600">{t('teacher_no_students')}</p>
+                <p className="text-xs text-slate-400 mt-1">{t('teacher_no_students_hint')}</p>
               </div>
             )}
           </div>
@@ -270,7 +270,7 @@ export default function TeacherDashboard() {
             <div className="p-5 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
               <h2 className="text-sm font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
                 <RiGroupLine className="text-emerald-600 text-base" />
-                <span>Guruhlar Kesimida Ko'rish</span>
+                <span>{t('teacher_by_groups')}</span>
               </h2>
               <span className="text-xs font-bold text-slate-400">{data.groups.length} ta guruh</span>
             </div>
@@ -329,7 +329,7 @@ export default function TeacherDashboard() {
                           ))}
                         </div>
                       ) : (
-                        <p className="text-xs text-slate-500 text-center py-3 font-medium">Bu guruhda o'quvchilar yo'q.</p>
+                        <p className="text-xs text-slate-500 text-center py-3 font-medium">{t('teacher_group_empty')}</p>
                       )}
                     </div>
                   )}

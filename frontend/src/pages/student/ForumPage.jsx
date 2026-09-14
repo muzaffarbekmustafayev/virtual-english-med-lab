@@ -47,9 +47,9 @@ export default function ForumPage() {
   }, []);
 
   const ROLE_CONFIG = {
-    student: { badge: 'badge-blue', label: 'Talaba' },
-    teacher: { badge: 'badge-emerald', label: "O'qituvchi" },
-    admin:   { badge: 'badge-purple', label: 'Admin' },
+    student: { badge: 'badge-blue', label: t('role_student') },
+    teacher: { badge: 'badge-emerald', label: t('role_teacher') },
+    admin:   { badge: 'badge-purple', label: t('role_admin') },
   };
 
   const loadMessages = (channel = activeChannel) => {
@@ -93,7 +93,7 @@ export default function ForumPage() {
         setRecordingTime(prev => prev + 1);
       }, 1000);
     } catch {
-      toast.error("Mikrofon ruxsati berilmadi");
+      toast.error(t('ui_mic_denied'));
     }
   };
 
@@ -169,7 +169,7 @@ export default function ForumPage() {
 
           <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200">
             <RiWifiLine className="text-emerald-600 text-sm animate-pulse" />
-            <span className="text-[11px] font-extrabold text-emerald-700">Faol Forum</span>
+            <span className="text-[11px] font-extrabold text-emerald-700">{t('forum_active')}</span>
           </div>
         </div>
 
@@ -201,7 +201,7 @@ export default function ForumPage() {
                   );
                 })}
                 {channels.length === 0 && (
-                  <p className="text-xs text-slate-500 p-2 text-center">Guruh yoki o'qituvchi biriktirilmagan.</p>
+                  <p className="text-xs text-slate-500 p-2 text-center">{t('forum_no_group')}</p>
                 )}
               </div>
             </div>
@@ -228,8 +228,8 @@ export default function ForumPage() {
                   <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200 flex items-center justify-center shadow-2xs">
                     <RiChatSmile2Line className="text-2xl text-blue-500" />
                   </div>
-                  <p className="text-xs font-bold text-slate-600">Hozircha xabarlar yo'q</p>
-                  <p className="text-[11px] text-slate-400">Birinchi bo'lib fikr yoki savol qoldiring!</p>
+                  <p className="text-xs font-bold text-slate-600">{t('forum_no_messages')}</p>
+                  <p className="text-[11px] text-slate-400">{t('forum_be_first')}</p>
                 </div>
               ) : (
                 messages.map((m) => {
@@ -302,7 +302,7 @@ export default function ForumPage() {
                   <button
                     onClick={startRecording}
                     className="p-2.5 rounded-xl bg-slate-100 hover:bg-rose-50 hover:text-rose-600 text-slate-600 transition-colors cursor-pointer"
-                    title="Ovozli xabar yozish"
+                    title={t('forum_record_voice')}
                   >
                     <RiMicLine className="text-base" />
                   </button>

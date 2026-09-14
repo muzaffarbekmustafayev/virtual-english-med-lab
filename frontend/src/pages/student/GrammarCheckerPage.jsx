@@ -210,16 +210,16 @@ export default function GrammarCheckerPage() {
 
   const handleCheck = async () => {
     if (!text.trim()) {
-      toast.error(t('student.grammar.input_label') || "Iltimos, tekshirish uchun matn kiriting");
+      toast.error(t('gc_enter_text'));
       return;
     }
     setLoading(true);
     try {
       const res = await api.post("/student/grammar-check", { text, mode });
       setResult(res.data);
-      toast.success(t('common.success') || "Grammatik tahlil muvaffaqiyatli yakunlandi!");
+      toast.success(t('gc_done'));
     } catch (err) {
-      toast.error(err.response?.data?.error || t('common.error') || "Xatolik yuz berdi");
+      toast.error(err.response?.data?.error || t('ui_error_generic'));
     } finally {
       setLoading(false);
     }
@@ -228,7 +228,7 @@ export default function GrammarCheckerPage() {
   const handleCopy = (txt) => {
     navigator.clipboard.writeText(txt);
     setCopied(true);
-    toast.success("Nusxa olindi!");
+    toast.success(t('ui_copied'));
     setTimeout(() => setCopied(false), 2000);
   };
 
@@ -278,10 +278,10 @@ export default function GrammarCheckerPage() {
               <span className="w-11 h-11 rounded-2xl bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center text-2xl shrink-0 shadow-2xs">
                 <RiQuillPenLine />
               </span>
-              <span>{t('student.grammar.title') || "Klinik Grammatika Tahlilchisi"}</span>
+              <span>{t('student.grammar.title')}</span>
             </h1>
             <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1.5 max-w-2xl leading-relaxed">
-              {t('student.grammar.subtitle') || "Shifokor-bemor muloqoti, tibbiy yozuvlar va klinik hisobotlar uchun grammatikani sun'iy intellekt orqali tekshiring va o'rganing."}
+              {t('student.grammar.subtitle')}
             </p>
           </div>
 
@@ -321,7 +321,7 @@ export default function GrammarCheckerPage() {
             }`}
           >
             <RiBrainLine className="text-base" />
-            <span>Klinik Qoidalar & Formulalar</span>
+            <span>{t('gc_rules_tab')}</span>
           </button>
 
           <button
@@ -333,7 +333,7 @@ export default function GrammarCheckerPage() {
             }`}
           >
             <RiErrorWarningLine className="text-base" />
-            <span>Ko'p Uchraydigan Xatolar</span>
+            <span>{t('gc_mistakes_tab')}</span>
           </button>
 
           <button
@@ -345,7 +345,7 @@ export default function GrammarCheckerPage() {
             }`}
           >
             <RiQuestionLine className="text-base" />
-            <span>Interaktiv Test & Mashq</span>
+            <span>{t('gc_quiz_tab')}</span>
           </button>
         </div>
 
@@ -360,7 +360,7 @@ export default function GrammarCheckerPage() {
                 <div className="flex items-center justify-between">
                   <label className="text-xs font-black text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
                     <RiQuillPenLine className="text-amber-500" />
-                    <span>{t('student.grammar.input_label') || "Tibbiy matn yoki shifokor jumlasi"}</span>
+                    <span>{t('student.grammar.input_label')}</span>
                   </label>
                   <div className="flex items-center gap-2">
                     <span className="text-[11px] text-slate-400 font-bold">{text.length} ta belgi</span>
@@ -371,7 +371,7 @@ export default function GrammarCheckerPage() {
                   rows={8}
                   value={text}
                   onChange={(e) => setText(e.target.value)}
-                  placeholder={t('student.grammar.placeholder') || "Misol: The patient have severe toothache since 3 days and I prescribe him amoxicillin..."}
+                  placeholder={t('student.grammar.placeholder')}
                   className="w-full bg-slate-50/70 border border-slate-200 rounded-2xl p-4 text-xs md:text-sm text-slate-900 placeholder-slate-400 outline-none focus:bg-white focus:border-amber-500 focus:ring-3 focus:ring-amber-100 transition-all font-mono leading-relaxed"
                 />
 
@@ -411,7 +411,7 @@ export default function GrammarCheckerPage() {
                       }}
                       className="btn-secondary-soft text-xs py-2 px-3"
                     >
-                      {t('student.grammar.sample_btn') || "Namuna"}
+                      {t('student.grammar.sample_btn')}
                     </button>
                     {text && (
                       <button
@@ -419,7 +419,7 @@ export default function GrammarCheckerPage() {
                         onClick={() => { setText(""); setResult(null); }}
                         className="btn-secondary-soft text-xs py-2 px-3 text-rose-600 hover:bg-rose-50 border-rose-200"
                       >
-                        {t('student.grammar.clear_btn') || "Tozalash"}
+                        {t('student.grammar.clear_btn')}
                       </button>
                     )}
                   </div>
@@ -434,7 +434,7 @@ export default function GrammarCheckerPage() {
                   style={{ background: 'linear-gradient(135deg, #d97706 0%, #b45309 100%)' }}
                 >
                   <RiSparklingLine className="text-base" />
-                  <span>{loading ? (t('student.grammar.checking') || "AI tahlil qilmoqda...") : (t('student.grammar.check_btn') || "Grammatikani Tekshirish")}</span>
+                  <span>{loading ? (t('student.grammar.checking')) : (t('student.grammar.check_btn'))}</span>
                 </button>
               </div>
             </div>
@@ -446,11 +446,11 @@ export default function GrammarCheckerPage() {
                   <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                     <h2 className="text-sm font-black text-slate-900 flex items-center gap-2">
                       <RiCheckboxCircleLine className="text-emerald-600 text-lg" />
-                      <span>{t('student.grammar.result_title') || "AI Tahlil Natijalari"}</span>
+                      <span>{t('student.grammar.result_title')}</span>
                     </h2>
                     {result.score !== undefined && (
                       <span className="badge-standard badge-emerald font-black">
-                        {t('student.grammar.accuracy_score') || "Aniqlik"}: {result.score}%
+                        {t('student.grammar.accuracy_score')}: {result.score}%
                       </span>
                     )}
                   </div>
@@ -460,12 +460,12 @@ export default function GrammarCheckerPage() {
                     <div className="bg-emerald-50/80 border border-emerald-200 rounded-2xl p-4 space-y-2">
                       <div className="flex items-center justify-between">
                         <span className="text-[11px] font-extrabold text-emerald-800 uppercase tracking-wider">
-                          {t('student.grammar.corrected_version') || "To'g'rilangan klinik jumla"}
+                          {t('student.grammar.corrected_version')}
                         </span>
                         <button
                           onClick={() => handleCopy(result.corrected)}
                           className="p-1.5 rounded-lg bg-white text-emerald-700 hover:bg-emerald-100 transition-colors shadow-2xs cursor-pointer flex items-center gap-1 text-xs font-bold"
-                          title="Nusxa olish"
+                          title={t('ui_copy')}
                         >
                           {copied ? <RiCheckLine /> : <RiFileCopyLine />}
                           <span>{copied ? "Nusxalandi" : "Nusxa"}</span>
@@ -481,7 +481,7 @@ export default function GrammarCheckerPage() {
                   {result.errors?.length > 0 ? (
                     <div className="space-y-2.5">
                       <h3 className="text-xs font-black text-slate-700 uppercase tracking-wider">
-                        {t('student.grammar.detailed_fixes') || "Aniqlangan tuzatishlar"} ({result.errors.length})
+                        {t('student.grammar.detailed_fixes')} ({result.errors.length})
                       </h3>
                       <div className="space-y-2 max-h-[240px] overflow-y-auto pr-1">
                         {result.errors.map((err, i) => (
@@ -504,7 +504,7 @@ export default function GrammarCheckerPage() {
                   ) : (
                     <div className="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center gap-2">
                       <RiCheckLine className="text-lg" />
-                      <span>Jumlada grammatik xatolik topilmadi! A'lo darajadagi klinik muloqot.</span>
+                      <span>{t('gc_no_errors')}</span>
                     </div>
                   )}
 
@@ -512,7 +512,7 @@ export default function GrammarCheckerPage() {
                   {result.suggestions?.length > 0 && (
                     <div className="p-4 rounded-2xl bg-blue-50/70 border border-blue-200 space-y-2">
                       <h3 className="text-xs font-extrabold text-blue-900 uppercase tracking-wider flex items-center gap-1.5">
-                        <RiLightbulbLine /> {t('student.grammar.vocab_suggestions') || "Mavzuga oid tavsiya qilingan terminlar"}
+                        <RiLightbulbLine /> {t('student.grammar.vocab_suggestions')}
                       </h3>
                       <div className="flex flex-wrap gap-1.5 pt-1">
                         {result.suggestions.map((s, idx) => (
@@ -529,7 +529,7 @@ export default function GrammarCheckerPage() {
                   <div className="w-14 h-14 rounded-2xl bg-amber-50 border border-amber-200/80 flex items-center justify-center text-3xl text-amber-600 mb-3.5 shadow-2xs">
                     <RiQuillPenLine />
                   </div>
-                  <h3 className="text-sm font-bold text-slate-700">Tahlil natijalari bu yerda chiqadi</h3>
+                  <h3 className="text-sm font-bold text-slate-700">{t('gc_results_here')}</h3>
                   <p className="text-xs text-slate-400 mt-1 max-w-xs leading-relaxed">
                     Chapdagi tahrirlagichga tibbiy matn kiriting va "Grammatikani Tekshirish" tugmasini bosing.
                   </p>
@@ -550,7 +550,7 @@ export default function GrammarCheckerPage() {
                 <RiSearchLine className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm" />
                 <input
                   type="text"
-                  placeholder="Qoidalar yoki formulalarni qidirish..."
+                  placeholder={t('gc_search_rules')}
                   value={ruleSearch}
                   onChange={(e) => setRuleSearch(e.target.value)}
                   className="input-standard pl-10 text-xs"
@@ -587,7 +587,7 @@ export default function GrammarCheckerPage() {
                   <div className="bg-amber-50/60 border border-amber-200/80 rounded-2xl p-3.5">
                     <div className="flex items-center gap-1.5 text-[10px] font-black text-amber-800 uppercase tracking-wider mb-1">
                       <RiLightbulbLine />
-                      <span>Formula Strukturasi:</span>
+                      <span>{t('gc_formula')}</span>
                     </div>
                     <code className="text-xs font-black text-amber-950 font-mono tracking-tight block">
                       {r.formula}
@@ -628,7 +628,7 @@ export default function GrammarCheckerPage() {
             <div className="card-standard p-6 bg-white border border-slate-200 shadow-xs">
               <h2 className="text-sm font-black text-slate-900 uppercase tracking-wider mb-1 flex items-center gap-2">
                 <RiErrorWarningLine className="text-rose-500 text-lg" />
-                <span>Klinik Muloqotda Eng Ko'p Yo'l Qo'yiladigan Xatolar Tahlili</span>
+                <span>{t('gc_mistakes_title')}</span>
               </h2>
               <p className="text-xs text-slate-500 font-medium">
                 Tibbiy amaliyotda noto'g'ri grammatik jumlalar bemor tushunmovchiligi va xato tashxisga sabab bo'lishi mumkin.
@@ -647,12 +647,12 @@ export default function GrammarCheckerPage() {
                   {/* Bad vs Good */}
                   <div className="space-y-2">
                     <div className="p-3 rounded-xl bg-rose-50/70 border border-rose-200 text-xs">
-                      <span className="text-[10px] font-black uppercase tracking-wider text-rose-600 block mb-0.5">Xato variant:</span>
+                      <span className="text-[10px] font-black uppercase tracking-wider text-rose-600 block mb-0.5">{t('gc_wrong_variant')}</span>
                       <p className="font-bold text-rose-900 line-through">"{m.bad}"</p>
                     </div>
 
                     <div className="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 text-xs">
-                      <span className="text-[10px] font-black uppercase tracking-wider text-emerald-600 block mb-0.5">To'g'ri klinik variant:</span>
+                      <span className="text-[10px] font-black uppercase tracking-wider text-emerald-600 block mb-0.5">{t('gc_correct_variant')}</span>
                       <p className="font-bold text-emerald-950">"{m.good}"</p>
                     </div>
                   </div>
@@ -677,7 +677,7 @@ export default function GrammarCheckerPage() {
               <div>
                 <h2 className="text-sm font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
                   <RiAwardLine className="text-amber-600 text-lg" />
-                  <span>Klinik Grammatika Interaktiv Testi</span>
+                  <span>{t('gc_quiz_title')}</span>
                 </h2>
                 <p className="text-xs text-slate-500 font-medium mt-0.5">
                   Bemor bilan muloqot va anamnez yig'ishga oid grammatik bilimlaringizni sinab ko'ring.
@@ -687,13 +687,13 @@ export default function GrammarCheckerPage() {
               {quizSubmitted && (
                 <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-2xl border border-slate-200 shadow-xs">
                   <div className="text-right">
-                    <p className="text-[10px] font-bold text-slate-400 uppercase">Natijangiz</p>
+                    <p className="text-[10px] font-bold text-slate-400 uppercase">{t('gc_your_result')}</p>
                     <p className="text-lg font-black text-emerald-600">{calculateQuizScore()}%</p>
                   </div>
                   <button
                     onClick={() => { setQuizAnswers({}); setQuizSubmitted(false); }}
                     className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
-                    title="Qayta topshirish"
+                    title={t('gc_retake')}
                   >
                     <RiRefreshLine />
                   </button>
@@ -774,11 +774,11 @@ export default function GrammarCheckerPage() {
               <button
                 onClick={() => {
                   if (Object.keys(quizAnswers).length < PRACTICE_QUESTIONS.length) {
-                    toast.error("Iltimos, barcha savollarga javob bering!");
+                    toast.error(t('gc_answer_all'));
                     return;
                   }
                   setQuizSubmitted(true);
-                  toast.success("Test yakunlandi!");
+                  toast.success(t('gc_quiz_done'));
                 }}
                 className="w-full btn-primary py-3.5 text-xs sm:text-sm font-black shadow-md hover:shadow-lg transition-all"
                 style={{ background: 'linear-gradient(135deg, #d97706 0%, #b45309 100%)' }}

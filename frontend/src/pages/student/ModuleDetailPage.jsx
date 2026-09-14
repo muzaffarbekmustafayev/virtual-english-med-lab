@@ -388,7 +388,7 @@ export default function ModuleDetailPage() {
       setFeedback(normalized);
       setOverallResult(normalized);
       completeAndGoNext(7);
-      toast.success(t('chat_eval_report') || 'Klinik baholash hisoboti tayyorlandi!');
+      toast.success(t('chat_eval_report'));
       return;
     }
     try {
@@ -403,7 +403,7 @@ export default function ModuleDetailPage() {
         setFeedback(data);
         setOverallResult(data);
         completeAndGoNext(7);
-        toast.success(t('chat_eval_report') || 'Klinik baholash hisoboti tayyorlandi!');
+        toast.success(t('chat_eval_report'));
       } else {
         handleTestPass100();
       }
@@ -417,7 +417,7 @@ export default function ModuleDetailPage() {
     const mockEvaluation = {
       score: 100,
       passed: true,
-      feedback: "A'lo darajadagi klinik muloqot! Barcha savollar to'g'ri berildi va bemor holati to'liq o'rganildi.",
+      feedback: t('results_test_mode_feedback'),
       details: {
         grammar: 10,
         vocabulary: 10,
@@ -552,7 +552,7 @@ export default function ModuleDetailPage() {
           <div className="mb-6 bg-white p-3 rounded-2xl border border-slate-200/80 shadow-xs">
             <div className="flex justify-between items-center mb-1.5 text-xs font-bold">
               <span className="text-slate-500">
-                {t('steps_progress_text', { done: doneCount, total: STEPS.length }) || `${doneCount}/${STEPS.length} bosqich yakunlandi`}
+                {t('steps_progress_text', { done: doneCount, total: STEPS.length })}
               </span>
               <span className="text-indigo-600">{pct}%</span>
             </div>
@@ -790,7 +790,7 @@ export default function ModuleDetailPage() {
                     {/* Bemorning namunaviy javobi (Word fayldagi dialogdan) */}
                     {p.patient_response && (
                       <div className="mt-2 text-xs bg-emerald-50/60 border border-emerald-100 rounded-xl p-2.5 flex items-start gap-2">
-                        <span className="text-emerald-600 font-black flex-shrink-0">🗣 {t('phrase_patient_reply') || 'Bemor'}:</span>
+                        <span className="text-emerald-600 font-black flex-shrink-0">🗣 {t('phrase_patient_reply')}:</span>
                         <div className="flex-1 min-w-0">
                           <span className="text-slate-700 italic">"{p.patient_response}"</span>
                           {patientText && <p className="text-[11px] text-slate-500 mt-0.5">{patientText}</p>}
@@ -816,13 +816,13 @@ export default function ModuleDetailPage() {
               <summary className="cursor-pointer select-none px-6 py-4 flex items-center justify-between gap-3">
                 <span className="flex items-center gap-2 text-sm font-extrabold text-slate-900">
                   <RiMessage3Line className="text-indigo-600" />
-                  {t('reference_dialogue_title') || 'Namunaviy klinik dialog'}
+                  {t('reference_dialogue_title')}
                   <span className="text-[11px] font-bold text-slate-500 bg-slate-100 border border-slate-200 rounded-full px-2 py-0.5">
-                    {module.reference_dialogue.length} {t('reference_dialogue_turns') || 'replika'}
+                    {module.reference_dialogue.length} {t('reference_dialogue_turns')}
                   </span>
                 </span>
-                <span className="text-xs text-indigo-600 font-bold group-open:hidden">{t('show') || "Ko'rish"} ▾</span>
-                <span className="text-xs text-indigo-600 font-bold hidden group-open:inline">{t('hide') || 'Yopish'} ▴</span>
+                <span className="text-xs text-indigo-600 font-bold group-open:hidden">{t('show')} ▾</span>
+                <span className="text-xs text-indigo-600 font-bold hidden group-open:inline">{t('hide')} ▴</span>
               </summary>
               <div className="px-6 pb-6 space-y-2 max-h-[480px] overflow-y-auto">
                 {module.reference_dialogue.map((turn, i) => {
@@ -968,20 +968,20 @@ export default function ModuleDetailPage() {
               return passed ? (
                 <div className="flex flex-wrap items-center gap-3">
                   <span className="text-emerald-700 font-extrabold text-xs bg-emerald-50 px-3 py-2 rounded-xl border border-emerald-200">
-                    {t('gap_score_passed', { pct: gapPercent }) || `${gapPercent}% ${lang === 'ru' ? 'Правильно!' : lang === 'en' ? 'Correct!' : 'To\'g\'ri!'}`}
+                    {t('gap_score_passed', { pct: gapPercent })}
                   </span>
                   <button
                     onClick={() => completeAndGoNext(5)}
                     className="px-6 py-3 rounded-2xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-extrabold text-sm shadow-md shadow-indigo-200 transition-all flex items-center gap-2 cursor-pointer"
                   >
-                    <span>{t('gap_next') || 'Keyingisi: Quiz'}</span>
+                    <span>{t('gap_next')}</span>
                     <RiArrowRightLine />
                   </button>
                 </div>
               ) : (
                 <div className="flex flex-wrap items-center gap-3">
                   <span className="text-rose-700 font-extrabold text-xs bg-rose-50 px-3 py-2 rounded-xl border border-rose-200">
-                    {t('gap_score_failed', { pct: gapPercent }) || `${gapPercent}% (${lang === 'ru' ? 'Требуется минимум 60%' : lang === 'en' ? 'Minimum 60% required' : 'Kamida 60% kerak'})`}
+                    {t('gap_score_failed', { pct: gapPercent })}
                   </span>
                   <button
                     onClick={() => {
@@ -1170,11 +1170,11 @@ export default function ModuleDetailPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
                   {[
-                    { key: 'grammar',       name: t('results_grammar'),       desc: 'Grammatika',           icon: RiBrainLine,       color: 'indigo' },
-                    { key: 'vocabulary',    name: t('results_vocab'),         desc: 'Tibbiy Terminlar',     icon: RiBookLine,        color: 'cyan' },
-                    { key: 'fluency',       name: t('results_fluency'),       desc: 'Nutq Ravonligi',       icon: RiSpeakLine,       color: 'emerald' },
-                    { key: 'pronunciation', name: t('results_pronunciation'), desc: 'Talaffuz & Fonetika', icon: RiVolumeUpLine,    color: 'blue' },
-                    { key: 'clinical',      name: t('results_clinical'),      desc: 'Klinik Anamnez',       icon: RiStethoscopeLine, color: 'amber' }
+                    { key: 'grammar',       name: t('results_grammar'),       desc: t('comp_grammar'),           icon: RiBrainLine,       color: 'indigo' },
+                    { key: 'vocabulary',    name: t('results_vocab'),         desc: t('comp_vocabulary'),     icon: RiBookLine,        color: 'cyan' },
+                    { key: 'fluency',       name: t('results_fluency'),       desc: t('comp_fluency_desc'),       icon: RiSpeakLine,       color: 'emerald' },
+                    { key: 'pronunciation', name: t('results_pronunciation'), desc: t('comp_pron_desc'), icon: RiVolumeUpLine,    color: 'blue' },
+                    { key: 'clinical',      name: t('results_clinical'),      desc: t('comp_clinical'),       icon: RiStethoscopeLine, color: 'amber' }
                   ].map((m) => {
                     const rawVal = activeResult.details?.[m.key] ?? (activeResult.score ? Math.round(activeResult.score / 10) : 8);
                     const score10 = typeof rawVal === 'number' ? Math.min(10, Math.max(1, rawVal)) : 8;
@@ -1289,7 +1289,7 @@ export default function ModuleDetailPage() {
                   className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-extrabold text-xs transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <RiArrowLeftLine />
-                  <span>{t('results_all_modules_btn') || 'Barcha modullar'}</span>
+                  <span>{t('results_all_modules_btn')}</span>
                 </button>
 
                 <div className="flex flex-wrap items-center justify-center sm:justify-end gap-3 w-full sm:w-auto">
@@ -1305,7 +1305,7 @@ export default function ModuleDetailPage() {
                     }`}
                   >
                     <RiRepeatLine className="text-base" />
-                    <span>{activeResult.score >= 60 ? (t('results_retry_btn') || 'Qayta urinish') : 'Qayta topshirish (Muloqotga qaytish)'}</span>
+                    <span>{activeResult.score >= 60 ? (t('results_retry_btn')) : t('results_retry_chat')}</span>
                   </button>
 
                   {/* Next Module Button / Course Completion Banner */}
@@ -1317,7 +1317,7 @@ export default function ModuleDetailPage() {
                       >
                         <div className="flex flex-col items-start text-left">
                           <span className="text-[10px] font-bold text-emerald-100 uppercase tracking-wider">
-                            {t('results_next_module_label') || "Keyingi Modul"} #{module.next_module.order_index}
+                            {t('results_next_module_label')} #{module.next_module.order_index}
                           </span>
                           <span className="font-black text-white text-xs sm:text-sm truncate max-w-[200px] sm:max-w-[280px]">
                             {lang === 'ru' ? (module.next_module.title_ru || module.next_module.title) : lang === 'uz' ? (module.next_module.title_uz || module.next_module.title) : (module.next_module.title_en || module.next_module.title)}
@@ -1330,7 +1330,7 @@ export default function ModuleDetailPage() {
                     ) : (
                       <div className="inline-flex items-center gap-2 px-4 py-3 rounded-2xl bg-slate-100 border border-slate-200 text-slate-400 font-extrabold text-xs cursor-not-allowed">
                         <RiLockLine className="text-sm" />
-                        <span>{t('results_next_locked_msg') || "Keyingi modul qulflangan (Kamida 60% kerak)"}</span>
+                        <span>{t('results_next_locked_msg')}</span>
                       </div>
                     )
                   ) : (
@@ -1338,10 +1338,10 @@ export default function ModuleDetailPage() {
                       <RiTrophyLine className="text-amber-500 text-2xl shrink-0" />
                       <div>
                         <p className="text-xs font-black text-slate-900">
-                          {t('results_course_completed_title') || "Tabriklaymiz! Barcha modullar yakunlandi! 🏆"}
+                          {t('results_course_completed_title')}
                         </p>
                         <p className="text-[11px] text-slate-500 font-medium">
-                          {t('results_course_completed_desc') || "Siz mutaxassislik bo'yicha barcha klinik modullarni muvaffaqiyatli tamomladingiz."}
+                          {t('results_course_completed_desc')}
                         </p>
                       </div>
                     </div>
@@ -1353,16 +1353,16 @@ export default function ModuleDetailPage() {
             <div className="text-center py-16 bg-white rounded-3xl border border-slate-200 p-8 shadow-xs">
               <RiAwardLine className="text-5xl text-slate-400 mx-auto mb-3" />
               <h3 className="text-lg font-black text-slate-800">
-                {t('results_not_available_title') || "Natijalar hali mavjud emas"}
+                {t('results_not_available_title')}
               </h3>
               <p className="text-xs text-slate-500 mt-1 mb-6">
-                {t('results_not_available_desc') || "Avval 6-bosqichdagi virtual bemor bilan muloqot qilib, baholash oling."}
+                {t('results_not_available_desc')}
               </p>
               <button
                 onClick={() => setStep(6)}
                 className="px-6 py-3 rounded-2xl bg-indigo-600 text-white font-extrabold text-xs shadow-md shadow-indigo-200 cursor-pointer"
               >
-                {t('chat_virtual_patient_btn_step') || "Virtual Bemor Chati (6-Bosqich)"}
+                {t('chat_virtual_patient_btn_step')}
               </button>
             </div>
           )}

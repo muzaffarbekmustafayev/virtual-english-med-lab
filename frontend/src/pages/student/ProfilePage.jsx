@@ -74,9 +74,9 @@ export default function ProfilePage() {
     try {
       const res = await api.put('/auth/profile', profileForm);
       updateUser(res.data.user);
-      toast.success(t('common.success') || "Profil ma'lumotlari saqlandi!");
+      toast.success(t('common.success'));
     } catch (err) {
-      toast.error(err.response?.data?.error || t('common.error') || "Xatolik yuz berdi");
+      toast.error(err.response?.data?.error || t('ui_error_generic'));
     } finally {
       setProfileSaving(false);
     }
@@ -85,16 +85,16 @@ export default function ProfilePage() {
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
     if (passwordForm.new_password !== passwordForm.confirm_password) {
-      toast.error("Parollar mos kelmadi");
+      toast.error(t('ui_password_mismatch'));
       return;
     }
     setPasswordSaving(true);
     try {
       await api.put('/auth/password', passwordForm);
-      toast.success(t('common.success') || "Parol muvaffaqiyatli yangilandi!");
+      toast.success(t('ui_password_updated'));
       setPasswordForm({ current_password: '', new_password: '', confirm_password: '' });
     } catch (err) {
-      toast.error(err.response?.data?.error || t('common.error') || "Xatolik yuz berdi");
+      toast.error(err.response?.data?.error || t('ui_error_generic'));
     } finally {
       setPasswordSaving(false);
     }
@@ -132,11 +132,11 @@ export default function ProfilePage() {
               <div className="space-y-2">
                 <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
                   <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-                    {user?.full_name || 'Jasur Toshmatov'}
+                    {user?.full_name || t('ui_user')}
                   </h1>
                   <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-200/80 text-blue-700 text-xs font-bold">
                     <RiShieldCheckLine className="text-blue-600" />
-                    <span>{t('nav.roles.student') || 'Talaba'}</span>
+                    <span>{t('nav.roles.student')}</span>
                   </span>
                 </div>
 
@@ -164,7 +164,7 @@ export default function ProfilePage() {
                 <div className="flex items-center justify-center gap-1 text-slate-400 mb-0.5">
                   <RiCheckboxCircleLine className="text-slate-500 text-xs" />
                   <span className="text-[10px] font-extrabold uppercase tracking-wider">
-                    {t('student.dashboard.completed_modules') || 'Yakunlangan'}
+                    {t('student.dashboard.completed_modules')}
                   </span>
                 </div>
                 <p className="text-xl sm:text-2xl font-black text-slate-900">
@@ -176,7 +176,7 @@ export default function ProfilePage() {
                 <div className="flex items-center justify-center gap-1 text-slate-400 mb-0.5">
                   <RiTrophyLine className="text-emerald-500 text-xs" />
                   <span className="text-[10px] font-extrabold uppercase tracking-wider">
-                    {t('student.dashboard.average_score') || "O'rtacha Ball"}
+                    {t('student.dashboard.average_score')}
                   </span>
                 </div>
                 <p className="text-xl sm:text-2xl font-black text-emerald-600">
@@ -200,7 +200,7 @@ export default function ProfilePage() {
             }`}
           >
             <RiBarChartLine className="text-base" />
-            <span>{t('student.profile.overall_stats') || "Umumiy ko'rsatkichlar"}</span>
+            <span>{t('student.profile.overall_stats')}</span>
           </button>
 
           <button
@@ -212,7 +212,7 @@ export default function ProfilePage() {
             }`}
           >
             <RiEditBoxLine className="text-base" />
-            <span>{t('student.profile.personal_info') || "Shaxsiy ma'lumotlar va xavfsizlik"}</span>
+            <span>{t('student.profile.personal_info')}</span>
           </button>
         </div>
 
@@ -230,7 +230,7 @@ export default function ProfilePage() {
                 <div>
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-[11px] font-black text-slate-400 uppercase tracking-wider">
-                      {t('student.dashboard.course_progress') || "O'quv kursi jarayoni"}
+                      {t('student.dashboard.course_progress')}
                     </span>
                     <div className="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600">
                       <RiSpeedLine size={16} />
@@ -254,7 +254,7 @@ export default function ProfilePage() {
                 <div>
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-[11px] font-black text-slate-400 uppercase tracking-wider">
-                      {t('student.dashboard.average_score') || "O'rtacha Ball"}
+                      {t('student.dashboard.average_score')}
                     </span>
                     <div className="w-7 h-7 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600">
                       <RiTrophyLine size={16} />
@@ -262,7 +262,7 @@ export default function ProfilePage() {
                   </div>
                   <p className="text-2xl sm:text-3xl font-black text-emerald-600">{avg}%</p>
                 </div>
-                <p className="text-[11px] text-slate-400 font-semibold mt-3">Eng yaxshi klinik natijalar</p>
+                <p className="text-[11px] text-slate-400 font-semibold mt-3">{t('profile_best_results')}</p>
               </div>
 
               {/* Card 3: Virtual Patient Chat Count */}
@@ -280,7 +280,7 @@ export default function ProfilePage() {
                     {completedCount} ta
                   </p>
                 </div>
-                <p className="text-[11px] text-slate-400 font-semibold mt-3">Simulyatsiya muloqotlari</p>
+                <p className="text-[11px] text-slate-400 font-semibold mt-3">{t('profile_sim_dialogues')}</p>
               </div>
 
             </div>
@@ -290,18 +290,18 @@ export default function ProfilePage() {
               <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                 <h3 className="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
                   <RiBarChartLine className="text-indigo-600" />
-                  <span>Klinik Kompetensiya Matritsasi</span>
+                  <span>{t('profile_competency_title')}</span>
                 </h3>
-                <span className="text-xs text-slate-400 font-medium">Barcha modullar bo'yicha</span>
+                <span className="text-xs text-slate-400 font-medium">{t('profile_all_modules')}</span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
                 {[
-                  { name: 'Grammatika',       icon: RiBrainLine,       score: Math.min(100, Math.round(avg * 0.96)), color: 'bg-indigo-600' },
-                  { name: 'Tibbiy Terminlar', icon: RiBookOpenLine,    score: Math.min(100, Math.round(avg * 1.02)), color: 'bg-blue-600' },
-                  { name: 'Nutq Ravonligi',   icon: RiSpeakLine,       score: Math.min(100, Math.round(avg * 0.98)), color: 'bg-emerald-600' },
-                  { name: 'Talaffuz/Fonetika',icon: RiVolumeUpLine,    score: Math.min(100, Math.round(avg * 0.95)), color: 'bg-cyan-600' },
-                  { name: 'Klinik Anamnez',   icon: RiStethoscopeLine, score: Math.min(100, Math.round(avg * 1.01)), color: 'bg-amber-500' }
+                  { name: t('comp_grammar'),       icon: RiBrainLine,       score: Math.min(100, Math.round(avg * 0.96)), color: 'bg-indigo-600' },
+                  { name: t('comp_vocabulary'), icon: RiBookOpenLine,    score: Math.min(100, Math.round(avg * 1.02)), color: 'bg-blue-600' },
+                  { name: t('comp_fluency'),   icon: RiSpeakLine,       score: Math.min(100, Math.round(avg * 0.98)), color: 'bg-emerald-600' },
+                  { name: t('comp_pronunciation'),icon: RiVolumeUpLine,    score: Math.min(100, Math.round(avg * 0.95)), color: 'bg-cyan-600' },
+                  { name: t('comp_clinical'),   icon: RiStethoscopeLine, score: Math.min(100, Math.round(avg * 1.01)), color: 'bg-amber-500' }
                 ].map((item, idx) => {
                   const Icon = item.icon;
                   return (
@@ -327,7 +327,7 @@ export default function ProfilePage() {
               <div className="p-5 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
                 <h3 className="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
                   <RiBookOpenLine className="text-blue-600" />
-                  <span>{t('student.profile.history_title') || "Modullarni topshirish tarixi"}</span>
+                  <span>{t('student.profile.history_title')}</span>
                 </h3>
                 <span className="text-xs font-bold text-slate-500">{modules.length} ta modul</span>
               </div>
@@ -386,7 +386,7 @@ export default function ProfilePage() {
                               ? 'bg-amber-50 border border-amber-200 text-amber-700'
                               : 'bg-slate-100 border border-slate-200 text-slate-400'
                           }`}>
-                            {isUnlocked ? (t('common.in_progress') || 'Jarayonda') : (t('common.locked') || 'Qulflangan')}
+                            {isUnlocked ? (t('common.in_progress')) : (t('common.locked'))}
                           </span>
                         )}
 
@@ -414,13 +414,13 @@ export default function ProfilePage() {
             <div className="card-standard p-6 sm:p-7 space-y-4">
               <h3 className="text-sm font-black text-slate-900 flex items-center gap-2 pb-3 border-b border-slate-100">
                 <RiUser3Line className="text-blue-600 text-base" />
-                <span>{t('student.profile.personal_info') || "Shaxsiy ma'lumotlar"}</span>
+                <span>{t('student.profile.personal_info')}</span>
               </h3>
 
               <form onSubmit={handleProfileSubmit} className="space-y-4">
                 <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                    {t('auth.full_name') || "F.I.Sh"}
+                    {t('auth.full_name')}
                   </label>
                   <div className="relative flex items-center">
                     <RiUser3Line className="absolute left-3.5 text-slate-400 text-base pointer-events-none" />
@@ -436,7 +436,7 @@ export default function ProfilePage() {
 
                 <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                    {t('auth.email') || "Elektron pochta"}
+                    {t('auth.email') || t('ui_email')}
                   </label>
                   <div className="relative flex items-center">
                     <RiMailLine className="absolute left-3.5 text-slate-400 text-base pointer-events-none" />
@@ -457,7 +457,7 @@ export default function ProfilePage() {
                     className="btn-primary py-2.5 px-5 text-xs font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-2 disabled:opacity-50"
                   >
                     <RiSave3Line />
-                    <span>{profileSaving ? (t('common.loading') || 'Saqlanmoqda...') : (t('common.save') || 'Saqlash')}</span>
+                    <span>{profileSaving ? t('ui_saving') : t('ui_save')}</span>
                   </button>
                 </div>
               </form>
@@ -467,7 +467,7 @@ export default function ProfilePage() {
             <div className="card-standard p-6 sm:p-7 space-y-4">
               <h3 className="text-sm font-black text-slate-900 flex items-center gap-2 pb-3 border-b border-slate-100">
                 <RiKey2Line className="text-purple-600 text-base" />
-                <span>{t('auth.password') || "Xavfsizlik va Parolni o'zgartirish"}</span>
+                <span>{t('auth.password')}</span>
               </h3>
 
               <form onSubmit={handlePasswordSubmit} className="space-y-4">
@@ -512,7 +512,7 @@ export default function ProfilePage() {
                     className="btn-primary py-2.5 px-5 text-xs font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-2 disabled:opacity-50"
                   >
                     <RiRefreshLine />
-                    <span>{passwordSaving ? (t('common.loading') || 'Yangilanmoqda...') : (t('common.update') || 'Parolni yangilash')}</span>
+                    <span>{passwordSaving ? t('ui_updating') : t('ui_update_password')}</span>
                   </button>
                 </div>
               </form>

@@ -83,7 +83,7 @@ export default function StudentDashboard() {
               </div>
               
               <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-snug">
-                {t('student.dashboard.greeting', { name: user?.full_name?.split(' ')[0] || 'Talaba' })} 👋
+                {t('student.dashboard.greeting', { name: user?.full_name?.split(' ')[0] || t('ui_student_placeholder') })} 👋
               </h1>
               <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1.5 leading-relaxed">
                 {t('student.dashboard.subtitle')}

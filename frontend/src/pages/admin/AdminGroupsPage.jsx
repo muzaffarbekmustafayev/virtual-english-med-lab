@@ -236,7 +236,7 @@ export default function AdminGroupsPage() {
                 <button 
                   onClick={() => setSpecForm({ show: true, id: null, name: '' })} 
                   className="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-100 hover:bg-blue-600 text-slate-500 hover:text-white transition-all shadow-sm group"
-                  title="Yo'nalish qo'shish"
+                  title={t('admin_add_specialty')}
                 >
                   <RiAddLine className="group-hover:scale-110 transition-transform" />
                 </button>
@@ -252,12 +252,12 @@ export default function AdminGroupsPage() {
                   }`}
                 >
                   <RiGroupLine size={18} className={selectedSpecId === null ? 'text-blue-200' : 'text-slate-400'} />
-                  <span className="font-semibold text-sm flex-1">Barcha Guruhlar</span>
+                  <span className="font-semibold text-sm flex-1">{t('admin_all_groups')}</span>
                 </div>
 
                 <div className="h-px bg-slate-100 my-2 mx-2"></div>
 
-                {specialties.length === 0 && <p className="text-sm text-slate-400 text-center py-4 font-medium">Yo'nalishlar mavjud emas</p>}
+                {specialties.length === 0 && <p className="text-sm text-slate-400 text-center py-4 font-medium">{t('admin_no_specialties')}</p>}
                 
                 {specialties.map(spec => {
                   const isActive = selectedSpecId === spec.id;
@@ -318,7 +318,7 @@ export default function AdminGroupsPage() {
                 <button 
                   onClick={() => setGroupForm({ show: true, id: null, name: '', specialty_id: selectedSpecId || '' })} 
                   className="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-100 hover:bg-purple-600 text-slate-500 hover:text-white transition-all shadow-sm group"
-                  title="Guruh qo'shish"
+                  title={t('admin_add_group')}
                 >
                   <RiAddLine className="group-hover:scale-110 transition-transform" />
                 </button>
@@ -331,7 +331,7 @@ export default function AdminGroupsPage() {
                       <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-3">
                         <RiGroupLine className="text-2xl text-slate-300" />
                       </div>
-                      <p className="text-sm font-semibold text-slate-500">Bu yerda guruhlar yo'q</p>
+                      <p className="text-sm font-semibold text-slate-500">{t('admin_no_groups_here')}</p>
                       <button 
                         onClick={() => setGroupForm({ show: true, id: null, name: '', specialty_id: selectedSpecId || '' })}
                         className="mt-3 text-xs font-bold text-purple-600 hover:text-purple-700 bg-purple-50 px-3 py-1.5 rounded-lg transition-colors"
@@ -410,7 +410,7 @@ export default function AdminGroupsPage() {
                   <div className="w-20 h-20 bg-white rounded-3xl shadow-sm border border-slate-100 flex items-center justify-center mb-4 transform rotate-12">
                     <RiGraduationCapLine className="text-4xl text-slate-300" />
                   </div>
-                  <h3 className="text-lg font-bold text-slate-700 mb-1">Guruh a'zolari</h3>
+                  <h3 className="text-lg font-bold text-slate-700 mb-1">{t('admin_group_members')}</h3>
                   <p className="text-sm font-medium text-slate-500 max-w-[250px]">
                     Ro'yxatni ko'rish va yangi a'zolar qo'shish uchun chap tomondan guruhni tanlang
                   </p>
@@ -444,13 +444,13 @@ export default function AdminGroupsPage() {
                       onClick={() => setShowAddTeacher(!showAddTeacher)} 
                       className={`text-xs font-bold px-3 py-1.5 rounded-xl transition-colors ${showAddTeacher ? 'bg-slate-200 text-slate-700' : 'bg-amber-50 text-amber-700 hover:bg-amber-100'}`}
                     >
-                      {showAddTeacher ? 'Yopish' : '+ Biriktirish'}
+                      {showAddTeacher ? t('ag_close') : t('ag_assign')}
                     </button>
                   </div>
                   
                   {showAddTeacher && (
                     <div className="mb-4 p-4 bg-amber-50/50 border border-amber-100 rounded-2xl animate-in fade-in slide-in-from-top-2 duration-200">
-                      <label className="block text-xs font-bold text-slate-600 mb-1.5">O'qituvchi tanlang</label>
+                      <label className="block text-xs font-bold text-slate-600 mb-1.5">{t('admin_pick_teacher')}</label>
                       <div className="flex gap-2">
                         <select 
                           className="flex-1 bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-amber-500 outline-none"
@@ -476,7 +476,7 @@ export default function AdminGroupsPage() {
                   <div className="space-y-2.5">
                     {activeGroup?.teachers?.length === 0 && (
                       <div className="text-center py-4 bg-slate-50 border border-dashed border-slate-200 rounded-xl">
-                        <p className="text-xs text-slate-400 font-medium">O'qituvchilar biriktirilmagan</p>
+                        <p className="text-xs text-slate-400 font-medium">{t('admin_no_teachers')}</p>
                       </div>
                     )}
                     {activeGroup?.teachers?.map(t => (
@@ -493,7 +493,7 @@ export default function AdminGroupsPage() {
                         <button 
                           onClick={() => removeTeacher(t.id)} 
                           className="w-8 h-8 flex items-center justify-center text-slate-300 hover:text-rose-500 bg-slate-50 hover:bg-rose-50 rounded-xl transition-colors opacity-0 group-hover:opacity-100"
-                          title="Guruhdan olib tashlash"
+                          title={t('admin_remove_from_group')}
                         >
                           <RiCloseLine size={16} />
                         </button>
@@ -520,7 +520,7 @@ export default function AdminGroupsPage() {
                   
                   {showAddStudent && (
                     <div className="mb-4 p-4 bg-emerald-50/50 border border-emerald-100 rounded-2xl animate-in fade-in slide-in-from-top-2 duration-200">
-                      <label className="block text-xs font-bold text-slate-600 mb-1.5">Talaba tanlang</label>
+                      <label className="block text-xs font-bold text-slate-600 mb-1.5">{t('admin_pick_student')}</label>
                       <div className="flex gap-2">
                         <select 
                           className="flex-1 bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-emerald-500 outline-none"
@@ -530,7 +530,7 @@ export default function AdminGroupsPage() {
                           <option value="">-- Tanlash --</option>
                           {students.filter(s => s.group_id !== selectedGroupId).map(s => (
                             <option key={s.id} value={s.id} disabled={!!s.group_id}>
-                              {s.full_name} {s.group_id ? `(Boshqa guruhda)` : `(Guruhsiz)`}
+                              {s.full_name} {s.group_id ? t('ag_in_other_group') : t('ag_no_group')}
                             </option>
                           ))}
                         </select>
@@ -548,7 +548,7 @@ export default function AdminGroupsPage() {
                   <div className="space-y-2.5">
                     {activeGroup?.students?.length === 0 && (
                       <div className="text-center py-4 bg-slate-50 border border-dashed border-slate-200 rounded-xl">
-                        <p className="text-xs text-slate-400 font-medium">Talabalar yo'q</p>
+                        <p className="text-xs text-slate-400 font-medium">{t('admin_no_students')}</p>
                       </div>
                     )}
                     {activeGroup?.students?.map(s => (
@@ -565,7 +565,7 @@ export default function AdminGroupsPage() {
                         <button 
                           onClick={() => removeStudent(s.id)} 
                           className="w-8 h-8 flex items-center justify-center text-slate-300 hover:text-rose-500 bg-slate-50 hover:bg-rose-50 rounded-xl transition-colors opacity-0 group-hover:opacity-100"
-                          title="Guruhdan olib tashlash"
+                          title={t('admin_remove_from_group')}
                         >
                           <RiCloseLine size={16} />
                         </button>
@@ -612,7 +612,7 @@ export default function AdminGroupsPage() {
                     type="text" 
                     value={specForm.name} 
                     onChange={e => setSpecForm({ ...specForm, name: e.target.value })} 
-                    placeholder="Masalan: Davolash ishi" 
+                    placeholder={t('admin_specialty_placeholder')} 
                     className="block w-full pl-10 pr-3 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-sm bg-slate-50 focus:bg-white"
                     required
                   />
@@ -631,7 +631,7 @@ export default function AdminGroupsPage() {
                   type="submit" 
                   className="px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-semibold rounded-xl shadow-md hover:shadow-lg transition-all focus:ring-2 focus:ring-blue-500 flex items-center gap-2"
                 >
-                  <RiSave3Line /> {specForm.id ? 'Saqlash' : 'Yaratish'}
+                  <RiSave3Line /> {specForm.id ? t('ui_save') : t('ag_create')}
                 </button>
               </div>
             </form>
@@ -648,7 +648,7 @@ export default function AdminGroupsPage() {
                 <span className="w-8 h-8 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center shrink-0">
                   {groupForm.id ? <RiEditLine /> : <RiAddLine />}
                 </span>
-                {groupForm.id ? 'Guruhni Tahrirlash' : 'Yangi Guruh Yaratish'}
+                {groupForm.id ? t('ag_edit_group') : t('ag_new_group')}
               </h3>
               <button 
                 onClick={() => setGroupForm({ show: false, id: null, name: '', specialty_id: '' })}
@@ -673,7 +673,7 @@ export default function AdminGroupsPage() {
                     className="block w-full pl-10 pr-10 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all text-sm bg-slate-50 focus:bg-white appearance-none font-medium"
                     required
                   >
-                    <option value="" disabled>-- Yo'nalish tanlang --</option>
+                    <option value="" disabled>{t('admin_pick_specialty')}</option>
                     {specialties.map(s => (
                       <option key={s.id} value={s.id}>{s.name}</option>
                     ))}
@@ -713,7 +713,7 @@ export default function AdminGroupsPage() {
                   type="submit" 
                   className="px-5 py-2.5 bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-700 hover:to-fuchsia-700 text-white text-sm font-semibold rounded-xl shadow-md hover:shadow-lg transition-all focus:ring-2 focus:ring-purple-500 flex items-center gap-2"
                 >
-                  <RiSave3Line /> {groupForm.id ? 'Saqlash' : 'Yaratish'}
+                  <RiSave3Line /> {groupForm.id ? t('ui_save') : t('ag_create')}
                 </button>
               </div>
             </form>

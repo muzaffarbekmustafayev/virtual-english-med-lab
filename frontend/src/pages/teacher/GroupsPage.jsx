@@ -119,7 +119,7 @@ export default function GroupsPage() {
                 <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
                   <div>
                     <h3 className="text-sm font-black text-slate-900">{selectedGroup.name}</h3>
-                    <p className="text-[11px] text-slate-400 font-medium">Talabalar ro'yxati</p>
+                    <p className="text-[11px] text-slate-400 font-medium">{t('teacher_students_list')}</p>
                   </div>
                   <span className="badge-standard badge-emerald">
                     {students.length} {t('admin.overview.total_students').toLowerCase()}

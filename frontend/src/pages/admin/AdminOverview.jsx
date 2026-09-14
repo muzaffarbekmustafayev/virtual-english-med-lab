@@ -91,7 +91,7 @@ export default function AdminOverview() {
               className="btn-primary-gradient bg-gradient-to-r from-emerald-600 to-teal-600 shadow-emerald-500/20 hover:from-emerald-700 hover:to-teal-700 hover:shadow-emerald-500/30"
             >
               <RiHospitalLine />
-              <span>Yo'nalish qo'shish</span>
+              <span>{t('admin_add_specialty')}</span>
             </button>
             <button
               onClick={() => navigate('/admin/users')}
@@ -224,7 +224,7 @@ export default function AdminOverview() {
                             </p>
                           </div>
                           <div className="text-right">
-                            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest block mb-0.5">Natija</span>
+                            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest block mb-0.5">{t('ui_result')}</span>
                             <span className={`text-lg font-black ${group.avg_score >= 80 ? 'text-emerald-600' : group.avg_score >= 60 ? 'text-amber-500' : group.avg_score > 0 ? 'text-rose-500' : 'text-slate-400'}`}>
                               {group.avg_score}%
                             </span>
