@@ -67,18 +67,20 @@ async function upsertSpecialty(s, dryRun) {
   return { row, created: true };
 }
 
+const cut = (v, n) => { const t = v == null ? '' : String(v); return t.length > n ? t.slice(0, n - 1).trimEnd() + '…' : t; };
+
 function grammarRows(moduleId, grammar) {
   return grammar.map((g, i) => ({
     module_id: moduleId,
-    title: g.title, title_uz: g.title_uz || g.title, title_ru: g.title_ru || g.title, title_en: g.title_en || g.title,
+    title: cut(g.title, 150), title_uz: cut(g.title_uz || g.title, 150), title_ru: cut(g.title_ru || g.title, 150), title_en: cut(g.title_en || g.title, 150),
     rule_explanation:    g.rule_explanation_uz || g.rule_explanation_en || g.rule_explanation_ru || '',
     rule_explanation_uz: g.rule_explanation_uz || '',
     rule_explanation_ru: g.rule_explanation_ru || '',
     rule_explanation_en: g.rule_explanation_en || (g.structure_pattern ? `Structure: ${g.structure_pattern}${g.signal_words ? `. Signal words: ${g.signal_words}` : ''}` : ''),
-    structure_pattern:    g.structure_pattern || '',
-    structure_pattern_uz: g.structure_pattern_uz || g.structure_pattern || '',
-    structure_pattern_ru: g.structure_pattern_ru || g.structure_pattern || '',
-    structure_pattern_en: g.structure_pattern_en || g.structure_pattern || '',
+    structure_pattern:    cut(g.structure_pattern, 255),
+    structure_pattern_uz: cut(g.structure_pattern_uz || g.structure_pattern, 255),
+    structure_pattern_ru: cut(g.structure_pattern_ru || g.structure_pattern, 255),
+    structure_pattern_en: cut(g.structure_pattern_en || g.structure_pattern, 255),
     examples: (g.examples || []).map(e => ({
       sentence: e.sentence,
       translation: e.translation_uz || '', translation_uz: e.translation_uz || '', translation_ru: e.translation_ru || '', translation_en: e.translation_en || '',
@@ -96,7 +98,7 @@ function vocabularyRows(moduleId, vocabulary) {
   return vocabulary.map(v => ({
     module_id: moduleId,
     word: v.word,
-    pronunciation: v.pronunciation || null,
+    pronunciation: cut(v.pronunciation, 255) || null,
     translation:    v.translation_uz || v.translation_ru || '',
     translation_uz: v.translation_uz || '',
     translation_ru: v.translation_ru || '',
@@ -113,8 +115,8 @@ function phrasebookRows(moduleId, phrasebook) {
   return phrasebook.map((p, i) => ({
     module_id: moduleId,
     category: (p.category || 'Clinical Communication').slice(0, 100),
-    phrase: p.phrase.slice(0, 255),
-    pronunciation: p.pronunciation || null,
+    phrase: cut(p.phrase, 255),
+    pronunciation: cut(p.pronunciation, 255) || null,
     hint_uz: p.translation_uz || null,
     hint_ru: p.translation_ru || null,
     hint_en: p.clinical_use || null,
@@ -136,11 +138,11 @@ async function seedModule(specialtyRow, m, dryRun) {
   const where = { specialty_id: specialtyRow.id, order_index: m.order_index };
   const values = {
     ...where,
-    title: m.title, title_uz: m.title_uz, title_ru: m.title_ru, title_en: m.title_en,
+    title: cut(m.title, 150), title_uz: cut(m.title_uz, 150), title_ru: cut(m.title_ru, 150), title_en: cut(m.title_en, 150),
     description: m.description_uz || m.description, description_uz: m.description_uz, description_ru: m.description_ru, description_en: m.description_en,
     patient_context: JSON.stringify(m.scenario.practice),
     final_challenge_context: JSON.stringify(m.scenario.final_challenge),
-    grammar_focus: m.grammar_focus || null,
+    grammar_focus: cut(m.grammar_focus, 255) || null,
     reference_dialogue: m.dialogue || [],
   };
   let row = await Module.findOne({ where, attributes: ['id'] });
