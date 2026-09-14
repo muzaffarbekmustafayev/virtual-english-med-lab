@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Layout from '../../components/Layout';
 import VirtualPatientChat from '../../components/VirtualPatientChat';
+import GrammarStep, { pickLang } from '../../components/GrammarStep';
 import api from '../../lib/api';
 import { useLanguage } from '../../contexts/LanguageContext';
 import {
@@ -80,7 +81,7 @@ export default function ModuleDetailPage() {
     setTestResult(null);
     setFeedback(null);
     setOverallResult(null);
-    toast.success('Modul qaytadan boshlandi!');
+    toast.success(t('module_restarted'));
   };
 
   const completeAndGoNext = (nextStepId) => {
@@ -359,14 +360,14 @@ export default function ModuleDetailPage() {
       const res = await api.post(`/student/modules/${id}/tests/submit`, { answers: testAnswers });
       setTestResult(res.data);
       if (res.data.passed || res.data.score >= 60) {
-        toast.success(`Test muvaffaqiyatli topshirildi: ${res.data.score}% (${res.data.correct}/${res.data.total})`);
+        toast.success(t('quiz_submitted_ok', { score: res.data.score, correct: res.data.correct, total: res.data.total }));
         completeAndGoNext(6);
       } else {
-        toast.error(`Test natijasi: ${res.data.score}% (${res.data.correct}/${res.data.total}). O'tish uchun kamida 60% to'plashingiz kerak.`);
+        toast.error(t('quiz_submitted_fail', { score: res.data.score, correct: res.data.correct, total: res.data.total }));
       }
     } catch (err) {
       console.error('Test submit err:', err);
-      toast.error('Testni topshirishda xatolik yuz berdi');
+      toast.error(t('quiz_submit_error'));
     }
   };
 
@@ -453,7 +454,7 @@ export default function ModuleDetailPage() {
             <span className="text-xs text-slate-500 font-medium">Virtual English Lab</span>
           </div>
           <h1 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight mt-0.5">
-            {module?.title}
+            {getLocalized(module, 'title') || module?.title}
           </h1>
         </div>
       </div>
@@ -518,11 +519,11 @@ export default function ModuleDetailPage() {
         {/* Qaytadan boshlash tugmasi */}
         <button
           onClick={handleRestart}
-          title="Qaytadan boshlash"
+          title={t('module_restart')}
           className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 bg-white text-slate-500 text-xs font-semibold hover:bg-red-50 hover:border-red-200 hover:text-red-600 transition-all shadow-xs"
         >
           <RiRepeatLine className="text-sm" />
-          <span className="hidden sm:inline">Qayta</span>
+          <span className="hidden sm:inline">{t('module_restart_short')}</span>
         </button>
       </div>
 
@@ -549,257 +550,16 @@ export default function ModuleDetailPage() {
       })()}
 
       {/* ════════════════════════════════════════════════════════════════ */}
-      {/* ── STEP 1: Clinical Grammar (3-Language Support & Light Mode) ── */}
+      {/* ── STEP 1: Clinical Grammar (GrammarStep component) ─────────── */}
       {/* ════════════════════════════════════════════════════════════════ */}
       {step === 1 && (
-        <div className="animate-fade-in space-y-6">
-          <div className="flex flex-wrap items-center justify-between gap-3 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-            <div>
-              <h2 className="text-lg font-black text-slate-900 flex items-center gap-2">
-                <RiBrainLine className="text-indigo-600" /> {t('grammar_title')}
-              </h2>
-              <p className="text-xs text-slate-500 font-medium mt-0.5">
-                {t('grammar_subtitle')}
-              </p>
-            </div>
-            <span className="text-xs px-3 py-1 bg-indigo-50 text-indigo-700 font-bold rounded-full border border-indigo-200">
-              {t('step_badge_1')}
-            </span>
-          </div>
-
-          {grammar.length === 0 ? (
-            <div className="bg-white border border-slate-200 rounded-3xl p-8 text-center space-y-3 shadow-xs">
-              <RiLightbulbLine className="text-4xl text-amber-500 mx-auto" />
-              <h3 className="text-base font-extrabold text-slate-800">
-                {t('grammar_no_rules_title') || "Ushbu modul uchun grammatik qoidalar"}
-              </h3>
-              <p className="text-xs text-slate-500 max-w-md mx-auto">
-                {t('grammar_no_rules_desc') || "Klinik muloqotda grammatik to'g'ri jumlalardan foydalanish bemor ishonchini oshiradi va aniq tashxis qo'yishga yordam beradi."}
-              </p>
-            </div>
-          ) : (
-            grammar.map((g, gIdx) => {
-              const ruleText = lang === 'en'
-                ? (g.rule_explanation_en || g.rule_explanation)
-                : lang === 'ru'
-                ? (g.rule_explanation_ru || g.rule_explanation_uz || g.rule_explanation)
-                : (g.rule_explanation_uz || g.rule_explanation);
-
-              const titleText = lang === 'en'
-                ? (g.title_en || g.title)
-                : lang === 'ru'
-                ? (g.title_ru || g.title_uz || g.title)
-                : (g.title_uz || g.title);
-
-              const examplesList = Array.isArray(g.examples)
-                ? g.examples
-                : (typeof g.examples === 'string' ? JSON.parse(g.examples || '[]') : []);
-              const mistakesList = Array.isArray(g.common_mistakes)
-                ? g.common_mistakes
-                : (typeof g.common_mistakes === 'string' ? JSON.parse(g.common_mistakes || '[]') : []);
-
-              return (
-                <div key={g.id || gIdx} className="space-y-5">
-                  {/* Main Rule Card */}
-                  <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xs space-y-4">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-700 font-black text-sm flex items-center justify-center border border-indigo-200">
-                          §{gIdx + 1}
-                        </div>
-                        <div>
-                          <span className="text-[10px] font-extrabold uppercase tracking-wider text-indigo-600 bg-indigo-50/80 px-2 py-0.5 rounded-md border border-indigo-100">
-                            {t('grammar_rule')}
-                          </span>
-                          <h3 className="text-base font-extrabold text-slate-900 mt-1">
-                            {titleText}
-                          </h3>
-                        </div>
-                      </div>
-                    </div>
-
-                    {ruleText && (
-                      <div className="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-4">
-                        <p className="text-xs md:text-sm text-slate-700 font-medium leading-relaxed">
-                          {ruleText}
-                        </p>
-                      </div>
-                    )}
-
-                    {/* Structure / Formula banner */}
-                    {(g.structure_pattern || g.structure_pattern_uz || g.structure_pattern_ru || g.structure_pattern_en) && (
-                      <div className="bg-gradient-to-r from-indigo-500/10 via-blue-500/10 to-teal-500/10 border border-indigo-200 rounded-2xl p-4">
-                        <div className="flex items-center gap-2 mb-1 text-[11px] font-extrabold text-indigo-800 uppercase tracking-wider">
-                          <RiLightbulbLine />
-                          <span>{t('grammar_structure')}</span>
-                        </div>
-                        <code className="text-xs md:text-sm font-black text-indigo-950 font-mono tracking-tight block">
-                          {(() => {
-                            let raw = (
-                              lang === 'en'
-                                ? (g.structure_pattern_en || g.structure_pattern)
-                                : lang === 'ru'
-                                ? (g.structure_pattern_ru || g.structure_pattern_uz || g.structure_pattern)
-                                : (g.structure_pattern_uz || g.structure_pattern)
-                            ) || "";
-
-                            // Strip prefixes like "Formula / Формула:", "Formula:", "Формула:", "Pattern:", "Struktura:"
-                            let cleanCore = raw
-                              .replace(/^(formula\s*\/\s*формула\s*:\s*|formula\s*:\s*|формула\s*:\s*|pattern\s*:\s*|struktura\s*:\s*|gap strukturasi\s*:\s*)/i, '')
-                              .trim();
-
-                            // Fallback token translation for legacy single-language patterns
-                            if (lang === 'uz' && !g.structure_pattern_uz) {
-                              cleanCore = cleanCore
-                                .replace(/\bSubject\b/g, "Ega (Subject)")
-                                .replace(/\bAuxiliary Verb\b/gi, "Yordamchi fe'l")
-                                .replace(/\bMain Verb\b/gi, "Asosiy fe'l")
-                                .replace(/\bBase Verb\b/gi, "Asosiy fe'l (V1)")
-                                .replace(/\bObject\b/gi, "To'ldiruvchi")
-                                .replace(/\bTime Expressions?\b/gi, "Vaqt ko'rsatkichlari");
-                            } else if (lang === 'ru' && !g.structure_pattern_ru) {
-                              cleanCore = cleanCore
-                                .replace(/\bSubject\b/g, "Подлежащее (Subject)")
-                                .replace(/\bAuxiliary Verb\b/gi, "Вспомогательный глагол")
-                                .replace(/\bMain Verb\b/gi, "Основной глагол")
-                                .replace(/\bBase Verb\b/gi, "Начальная форма (V1)")
-                                .replace(/\bObject\b/gi, "Дополнение")
-                                .replace(/\bTime Expressions?\b/gi, "Временные маркеры");
-                            }
-
-                            return `${t('grammar_formula_label')}: ${cleanCore}`;
-                          })()}
-                        </code>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Examples Section */}
-                  {examplesList.length > 0 && (
-                    <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xs space-y-4">
-                      <div className="flex items-center gap-2">
-                        <RiSpeakLine className="text-indigo-600 text-lg" />
-                        <h4 className="text-sm font-extrabold text-slate-900">
-                          {t('grammar_examples')} ({examplesList.length})
-                        </h4>
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-                        {examplesList.map((ex, exIdx) => {
-                          const trans = lang === 'en'
-                            ? (ex.translation_en || null)
-                            : lang === 'ru'
-                            ? (ex.translation_ru || ex.translation)
-                            : (ex.translation_uz || ex.translation);
-
-                          const noteText = lang === 'en'
-                            ? (ex.note_en || ex.note)
-                            : lang === 'ru'
-                            ? (ex.note_ru || ex.note_en || ex.note)
-                            : (ex.note_uz || ex.note_en || ex.note);
-
-                          return (
-                            <div
-                              key={exIdx}
-                              className="bg-slate-50/70 hover:bg-slate-50 border border-slate-200/90 rounded-2xl p-4 transition-all flex flex-col justify-between"
-                            >
-                              <div>
-                                <div className="flex items-start justify-between gap-2 mb-2">
-                                  <span className="text-xs font-black text-indigo-900 leading-snug">
-                                    "{ex.sentence}"
-                                  </span>
-                                  <button
-                                    onClick={() => speakText(ex.sentence)}
-                                    title={t('grammar_listen')}
-                                    className="p-1.5 rounded-xl bg-white border border-slate-200 hover:bg-indigo-50 text-indigo-600 transition-colors shrink-0 shadow-2xs"
-                                  >
-                                    <RiVolumeUpLine size={15} />
-                                  </button>
-                                </div>
-
-                                {trans && (
-                                  <p className="text-xs text-slate-600 font-medium mt-1">
-                                    {trans}
-                                  </p>
-                                )}
-                              </div>
-
-                              {noteText && (
-                                <div className="mt-3 pt-2 border-t border-slate-200/60 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
-                                  📌 {noteText}
-                                </div>
-                              )}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Common Mistakes vs Correct */}
-                  {mistakesList.length > 0 && (
-                    <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xs space-y-4">
-                      <div className="flex items-center gap-2">
-                        <RiAlertLine className="text-amber-500 text-lg" />
-                        <h4 className="text-sm font-extrabold text-slate-900">
-                          {t('grammar_mistakes_title')}
-                        </h4>
-                      </div>
-
-                      <div className="space-y-3">
-                        {mistakesList.map((m, mIdx) => {
-                          const exp = lang === 'en'
-                            ? (m.explanation_en || m.explanation)
-                            : lang === 'ru'
-                            ? (m.explanation_ru || m.explanation_uz || m.explanation)
-                            : (m.explanation_uz || m.explanation);
-
-                          return (
-                            <div key={mIdx} className="bg-slate-50/70 border border-slate-200 rounded-2xl p-4 space-y-2">
-                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                <div className="p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-xs">
-                                  <span className="text-[10px] font-black text-rose-700 uppercase tracking-wider block mb-0.5">
-                                    {t('grammar_incorrect') || "✕ Noto'g'ri"}
-                                  </span>
-                                  <span className="font-semibold text-rose-800 line-through">
-                                    "{m.incorrect}"
-                                  </span>
-                                </div>
-                                <div className="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs">
-                                  <span className="text-[10px] font-black text-emerald-700 uppercase tracking-wider block mb-0.5">
-                                    {t('grammar_correct') || "✓ To'g'ri"}
-                                  </span>
-                                  <span className="font-bold text-emerald-800">
-                                    "{m.correct}"
-                                  </span>
-                                </div>
-                              </div>
-                              {exp && (
-                                <p className="text-xs text-slate-500 font-medium pt-1">
-                                  💡 <b>{t('grammar_explanation_label') || 'Izoh:'}</b> {exp}
-                                </p>
-                              )}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })
-          )}
-
-          <div className="flex justify-end pt-4">
-            <button
-              onClick={() => completeAndGoNext(2)}
-              className="px-6 py-3 rounded-2xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-extrabold text-sm shadow-md shadow-indigo-200 transition-all flex items-center gap-2 cursor-pointer hover:scale-[1.02]"
-            >
-              <span>{t('grammar_all_learned')}</span>
-              <RiArrowRightLine className="text-base" />
-            </button>
-          </div>
-        </div>
+        <GrammarStep
+          module={module}
+          grammar={grammar}
+          speakText={speakText}
+          storageKey={`module_${id}`}
+          onComplete={() => completeAndGoNext(2)}
+        />
       )}
 
       {/* ════════════════════════════════════════════════════════════════ */}
@@ -846,6 +606,9 @@ export default function ModuleDetailPage() {
                         <h3 className="text-base font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
                           {v.word}
                         </h3>
+                        {v.pronunciation && (
+                          <p className="text-[11px] text-slate-400 font-mono tracking-tight">{v.pronunciation}</p>
+                        )}
                         {transText && (
                           <p className="text-xs font-bold text-indigo-600 mt-0.5">
                             {transText}
@@ -869,7 +632,7 @@ export default function ModuleDetailPage() {
                           <button
                             onClick={() => speakText(def)}
                             className="text-slate-400 hover:text-indigo-600 transition-colors"
-                            title="Tinglash"
+                            title={t('listen')}
                           >
                             <RiVolumeUpLine size={13} />
                           </button>
@@ -882,12 +645,12 @@ export default function ModuleDetailPage() {
 
                     {v.example && (
                       <div className="text-xs text-slate-600 italic bg-amber-50/50 p-2.5 rounded-xl border border-amber-100 flex items-start gap-2">
-                        <span className="text-amber-500 font-bold not-italic">Ex:</span>
+                        <span className="text-amber-500 font-bold not-italic">{t('example_short')}:</span>
                         <span className="flex-1">"{v.example}"</span>
                         <button
                           onClick={() => speakText(v.example)}
                           className="text-amber-600 hover:text-amber-800 flex-shrink-0"
-                          title="Misolni tinglash"
+                          title={t('listen_example')}
                         >
                           <RiVolumeUpLine size={14} />
                         </button>
@@ -939,10 +702,15 @@ export default function ModuleDetailPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {phrases.map((p) => {
               const hintText = lang === 'en'
-                ? null
+                ? (p.hint_en || null)
                 : lang === 'ru'
                 ? (p.hint_ru || p.hint_uz || p.hint)
                 : (p.hint_uz || p.hint);
+              const patientText = lang === 'en'
+                ? null
+                : lang === 'ru'
+                ? (p.patient_response_ru || p.patient_response_uz)
+                : p.patient_response_uz;
 
               return (
                 <div
@@ -963,20 +731,71 @@ export default function ModuleDetailPage() {
                       </button>
                     </div>
 
-                    <h3 className="text-sm font-black text-slate-900 leading-snug mb-2">
+                    <h3 className="text-sm font-black text-slate-900 leading-snug mb-1">
                       "{p.phrase}"
                     </h3>
+                    {p.pronunciation && (
+                      <p className="text-[11px] text-slate-400 font-mono tracking-tight mb-2">{p.pronunciation}</p>
+                    )}
 
                     {hintText && (
                       <p className="text-xs text-slate-600 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
                         💡 <span className="font-semibold">{t('phrase_hint')}:</span> {hintText}
                       </p>
                     )}
+
+                    {/* Bemorning namunaviy javobi (Word fayldagi dialogdan) */}
+                    {p.patient_response && (
+                      <div className="mt-2 text-xs bg-emerald-50/60 border border-emerald-100 rounded-xl p-2.5 flex items-start gap-2">
+                        <span className="text-emerald-600 font-black flex-shrink-0">🗣 {t('phrase_patient_reply') || 'Bemor'}:</span>
+                        <div className="flex-1 min-w-0">
+                          <span className="text-slate-700 italic">"{p.patient_response}"</span>
+                          {patientText && <p className="text-[11px] text-slate-500 mt-0.5">{patientText}</p>}
+                        </div>
+                        <button
+                          onClick={() => speakText(p.patient_response)}
+                          className="text-emerald-600 hover:text-emerald-800 flex-shrink-0"
+                          title={t('phrase_listen')}
+                        >
+                          <RiVolumeUpLine size={14} />
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               );
             })}
           </div>
+
+          {/* Namunaviy dialog — Word fayldagi to'liq shifokor–bemor suhbati */}
+          {Array.isArray(module?.reference_dialogue) && module.reference_dialogue.length > 0 && (
+            <details className="bg-white border border-slate-200 rounded-3xl shadow-xs group">
+              <summary className="cursor-pointer select-none px-6 py-4 flex items-center justify-between gap-3">
+                <span className="flex items-center gap-2 text-sm font-extrabold text-slate-900">
+                  <RiMessage3Line className="text-indigo-600" />
+                  {t('reference_dialogue_title') || 'Namunaviy klinik dialog'}
+                  <span className="text-[11px] font-bold text-slate-500 bg-slate-100 border border-slate-200 rounded-full px-2 py-0.5">
+                    {module.reference_dialogue.length} {t('reference_dialogue_turns') || 'replika'}
+                  </span>
+                </span>
+                <span className="text-xs text-indigo-600 font-bold group-open:hidden">{t('show') || "Ko'rish"} ▾</span>
+                <span className="text-xs text-indigo-600 font-bold hidden group-open:inline">{t('hide') || 'Yopish'} ▴</span>
+              </summary>
+              <div className="px-6 pb-6 space-y-2 max-h-[480px] overflow-y-auto">
+                {module.reference_dialogue.map((turn, i) => {
+                  const isStudentSide = turn.role === 'doctor' || (module?.specialty?.student_role === 'nurse' && turn.role === 'nurse');
+                  return (
+                    <div key={i} className={`flex ${isStudentSide ? 'justify-end' : 'justify-start'}`}>
+                      <div className={`max-w-[85%] rounded-2xl px-3.5 py-2 text-xs leading-relaxed shadow-2xs ${isStudentSide ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-800 border border-slate-200'}`}>
+                        <span className={`block text-[10px] font-black uppercase tracking-wider mb-0.5 ${isStudentSide ? 'text-indigo-200' : 'text-slate-500'}`}>{turn.label}</span>
+                        {turn.text}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </details>
+          )}
 
           <div className="flex items-center justify-between pt-4">
             <button
@@ -1160,13 +979,13 @@ export default function ModuleDetailPage() {
             {tests.map((q, i) => (
               <div key={q.id} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
                 <p className="text-sm font-extrabold text-slate-900 mb-3.5">
-                  {i + 1}. {q.question_en || q.question}
+                  {i + 1}. {pickLang(q, 'question', lang) || q.question}
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {['A', 'B', 'C', 'D'].map((opt) => {
                     const optKey = `option_${opt.toLowerCase()}`;
-                    const optText = q[`${optKey}_en`] || q[optKey];
+                    const optText = pickLang(q, optKey, lang) || q[optKey];
                     const isSelected = testAnswers[q.id] === opt;
 
                     return (

@@ -1,4 +1,4 @@
-# Dizaynni To'liq Responsive Qilish (Qo'llanma)
+# Virtual Patient English — Responsive Dizayn Qo'llanmasi
 
 Bu hujjat "Virtual English Med Lab" loyihasidagi frontend (React + Tailwind CSS) qismini barcha qurilmalar (mobil telefon, planshet, kompyuter) uchun to'liq moslashuvchan (responsive) qilish bo'yicha asosiy qoidalarni o'z ichiga oladi.
 

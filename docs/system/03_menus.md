@@ -39,7 +39,7 @@ Tizimda **Role-based Routing** (rolga asoslangan marshrutlash) ishlatiladi. Har 
 
 #### 2. My Modules Sahifasi `/student/modules`
 
-**Maqsad:** Talabaga o'z mutaxassisligiga tegishli 10 ta modulni ro'yxat ko'rinishida taqdim etish.
+**Maqsad:** Talabaga o'z mutaxassisligiga tegishli modullarni ro'yxat ko'rinishida taqdim etish.
 
 **Sahifa komponentlari:**
 
@@ -115,7 +115,7 @@ Bu sahifada 90 daqiqalik o'quv siklini boshqaradigan **Step-by-Step Stepper** (q
 | Element | Tavsif |
 |---------|--------|
 | Matn kiritish maydoni | Katta textarea — talaba inglizcha matn yozadi yoki joylashtiradi |
-| "Tekshirish" tugmasi | Matnni OpenAI orqali tahlil qilish |
+| "Tekshirish" tugmasi | Matnni Gemini AI orqali tahlil qilish |
 | Natija oynasi | Xatolar qizil chiziq bilan belgilanadi — ustiga bosganda to'g'ri variant taklif etiladi |
 
 ---
@@ -250,7 +250,7 @@ O'qituvchi uchun forum talaba forumiday ishlaydi, lekin u **moderator** sifatida
 |---------|--------|
 | Foydalanuvchilar statistikasi | Jami talabalar / o'qituvchilar / adminlar soni |
 | Modullar statistikasi | Jami modullar soni, bajarilgan darslar soni |
-| OpenAI xarajatlari | GPT-4o va Whisper API xarajatlari hisoblagichi ($ da) |
+| Gemini AI xarajatlari | Gemini API xarajatlari hisoblagichi ($ da) |
 | Server holati | MB ulanish holati, server loglari |
 | So'nggi faollik logi | Oxirgi 10 ta muhim tizim hodisasi |
 
@@ -305,7 +305,7 @@ O'qituvchi uchun forum talaba forumiday ishlaydi, lekin u **moderator** sifatida
 
 | Element | Tavsif |
 |---------|--------|
-| Modullar ro'yxati | 10 ta modul — har biri uchun alohida ssenariy |
+| Modullar ro'yxati | Har bir mutaxassislikdagi modullar — har biri uchun alohida ssenariy |
 | Patient Context tahrirlagich | AI-bemor uchun system prompt (1-urinish va Retry uchun): "Siz John, 35 yoshdagi, sovuq suv ichganda tishingiz og'riydi..." |
 | Final Challenge Context | Murakkabroq, yordamsiz sinov uchun AI ssenariysi |
 | Visual Editor | Rich text / markdown tahrirlagich orqali promptni vizual shakllantirish |
@@ -359,8 +359,8 @@ O'qituvchi uchun forum talaba forumiday ishlaydi, lekin u **moderator** sifatida
 
 | Element | Tavsif |
 |---------|--------|
-| OpenAI API Key | GPT-4o va Whisper uchun API kalit maydoni (shifrlangan holda saqlanadi) |
-| GPT model tanlash | `gpt-4o`, `gpt-4o-mini` va h.k. modellardan birini tanlash |
+| Gemini API Key | Gemini AI uchun API kalit maydoni (shifrlangan holda saqlanadi) |
+| Gemini model tanlash | `gemini-2.5-flash`, `gemini-2.0-flash-exp` va h.k. modellardan birini tanlash |
 | Tizim parametrlari | AI feedback uchun scoring mezonlari, max token limiti va h.k. |
 | Hujjatlar yuklash | PDF/Word formatidagi uslubiy qo'llanmalar yuklash bo'limi |
 

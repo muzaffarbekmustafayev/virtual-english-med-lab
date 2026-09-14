@@ -12,30 +12,24 @@ import {
   FaTooth, FaBaby, FaStethoscope
 } from 'react-icons/fa6';
 
-const getSpecialtyTheme = (name = '') => {
-  const lower = name.toLowerCase();
-  if (lower.includes('stomatolog') || lower.includes('dentist')) {
-    return {
-      icon: <FaTooth size={20} />,
-      badgeIcon: '🦷',
-      bgLight: 'bg-blue-50',
-      textColor: 'text-blue-700',
-    };
-  }
-  if (lower.includes('pediatr')) {
-    return {
-      icon: <FaBaby size={20} />,
-      badgeIcon: '👶',
-      bgLight: 'bg-rose-50',
-      textColor: 'text-rose-700',
-    };
-  }
-  return {
-    icon: <FaStethoscope size={20} />,
-    badgeIcon: '🩺',
-    bgLight: 'bg-emerald-50',
-    textColor: 'text-emerald-700',
-  };
+// Yo'nalish bo'yicha rang va belgi (specialty.code bo'lsa u, aks holda nomdan)
+const SPECIALTY_THEMES = {
+  STOM:      { icon: <FaTooth size={20} />,       badgeIcon: '🦷', bgLight: 'bg-blue-50',    textColor: 'text-blue-700' },
+  GEN_MED:   { icon: <FaStethoscope size={20} />, badgeIcon: '🩺', bgLight: 'bg-emerald-50', textColor: 'text-emerald-700' },
+  PED:       { icon: <FaBaby size={20} />,        badgeIcon: '👶', bgLight: 'bg-rose-50',    textColor: 'text-rose-700' },
+  NURSING:   { icon: <FaStethoscope size={20} />, badgeIcon: '💉', bgLight: 'bg-violet-50',  textColor: 'text-violet-700' },
+  FIRST_AID: { icon: <FaStethoscope size={20} />, badgeIcon: '🚑', bgLight: 'bg-amber-50',   textColor: 'text-amber-700' },
+};
+
+const getSpecialtyTheme = (specOrName = '') => {
+  const spec = typeof specOrName === 'object' && specOrName ? specOrName : { name: specOrName };
+  if (spec.code && SPECIALTY_THEMES[spec.code]) return SPECIALTY_THEMES[spec.code];
+  const lower = (spec.name || '').toLowerCase();
+  if (lower.includes('stomatolog') || lower.includes('dentist')) return SPECIALTY_THEMES.STOM;
+  if (lower.includes('pediatr')) return SPECIALTY_THEMES.PED;
+  if (lower.includes('hamshira') || lower.includes('nurs')) return SPECIALTY_THEMES.NURSING;
+  if (lower.includes('tez tibbiy') || lower.includes('first aid') || lower.includes('emergency')) return SPECIALTY_THEMES.FIRST_AID;
+  return SPECIALTY_THEMES.GEN_MED;
 };
 
 export default function AdminOverview() {
@@ -173,7 +167,7 @@ export default function AdminOverview() {
                 </span>
               </button>
               {stats.specialties.map((spec) => {
-                const theme = getSpecialtyTheme(spec.name);
+                const theme = getSpecialtyTheme(spec);
                 const isSel = (selectedSpecialty?.id === spec.id);
                 return (
                   <button

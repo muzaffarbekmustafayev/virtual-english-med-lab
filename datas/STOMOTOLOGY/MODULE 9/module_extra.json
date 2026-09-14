@@ -1,0 +1,45 @@
+{
+  "_comment": "Qo'lda yozilgan qo'shimcha kontent. build_datas.js bu faylni docx fayllardan olingan ma'lumotlarga QO'SHADI. Kalitlar: grammar[], vocabulary[], phrasebook[], tests[].",
+  "grammar": [
+    {
+      "title": "Comparative and Superlative Adjectives in Prosthetic Treatment Planning",
+      "title_uz": "Protezlash Variantlarini Solishtirishda Qiyosiy va Orttirma Darajalar",
+      "title_ru": "Сравнительная и Превосходная Степень Прилагательных при Протезировании",
+      "structure_pattern": "[Option A] + is + more [Adjective] than + [Option B] | [Option] + is the most [Adjective]",
+      "structure_pattern_uz": "[Variant A] + is + more [Sifat] than + [Variant B] | [Variant] + is the most [Sifat]",
+      "structure_pattern_ru": "[Вариант А] + is + more [Прилагательное] than + [Вариант Б] | is the most [Прилагательное]",
+      "structure_pattern_en": "[Option A] + is + more [Adjective] than + [Option B] | [Option] + is the most [Adjective]",
+      "rule_explanation_uz": "Implant, ko'prik va olinadigan protezlar orasidagi farq, chidamlilik va afzalliklarni solishtirishda 'more + sifat + than' (qiyosiy) hamda 'the most + sifat' (orttirma) darajalari qo'llaniladi.",
+      "rule_explanation_ru": "Сравнительные формы (more durable than, better than) и превосходная степень (the most natural) помогают пациенту выбрать вид протезирования.",
+      "rule_explanation_en": "Comparative and superlative forms objectively contrast dental implants vs bridges vs removable dentures.",
+      "examples": [
+        {
+          "sentence": "Dental implants are significantly more durable and stable than removable partial dentures.",
+          "translation_uz": "Dental implantlar olinadigan qisman protezlarga qaraganda ancha chidamli va mustahkamdir.",
+          "translation_ru": "Дентальные имплантаты значительно более долговечны и стабильны, чем съемные протезы.",
+          "note": "Comparative durability",
+          "note_uz": "Qiyosiy daraja (Chidamlilik)",
+          "note_ru": "Сравнительная степень (Долговечность)"
+        },
+        {
+          "sentence": "All-ceramic zirconia crowns offer the most natural cosmetic appearance in the anterior zone.",
+          "translation_uz": "To'liq sirkoniy keramik qoplamalar oldingi estetik sohada eng tabiiy chiroyli ko'rinishni ta'minlaydi.",
+          "translation_ru": "Цельнокерамические коронки из диоксида циркония обеспечивают наиболее естественный эстетический результат.",
+          "note": "Superlative aesthetics",
+          "note_uz": "Orttirma daraja (Estetika)",
+          "note_ru": "Превосходная степень (Эстетика)"
+        }
+      ],
+      "common_mistakes": [
+        {
+          "incorrect": "Implants are more better than dentures.",
+          "correct": "Implants are much better than dentures.",
+          "explanation": "'Better' so'zi oldidan 'more' qo'yilmaydi; kuchaytirish uchun 'much better' ishlatiladi.",
+          "explanation_uz": "'Better' so'zi oldidan 'more' qo'yilmaydi; kuchaytirish uchun 'much better' ishlatiladi.",
+          "explanation_ru": "Сравнительная степень 'better' не сочетается с 'more'. Для усиления используют 'much better'.",
+          "explanation_en": "Never combine 'more' with irregular comparatives like 'better'. Use 'much better'."
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,24 @@
-const { Module, Grammar, Vocabulary, Phrasebook, Conversation, Message, Test, TestResult, User, ModuleResult } = require('../models');
-const { getPatientReply, getPatientReplyStream, generateFeedback, checkGrammar, generatePatientScenario } = require('../services/gemini.service');
+const { Module, Grammar, Vocabulary, Phrasebook, Conversation, Message, Test, TestResult, User, ModuleResult, Specialty } = require('../models');
+const { getPatientReply, getPatientReplyStream, generateFeedback, checkGrammar, generatePatientScenario, tryParseScenario } = require('../services/gemini.service');
+
+// Bemor haqida talabaga ko'rsatsa bo'ladigan qism (tashxis va kutilgan javoblar YASHIRIN qoladi)
+const buildCaseBrief = (patientContext) => {
+  const sc = tryParseScenario(patientContext);
+  if (!sc) return null;
+  const mc = sc.medical_condition || {};
+  return {
+    role_play: sc.role_play || null,
+    setting: sc.setting || null,
+    counterpart_label: sc.counterpart_label || 'Patient',
+    patient: sc.patient_profile ? {
+      name: sc.patient_profile.name, age: sc.patient_profile.age, gender: sc.patient_profile.gender,
+      personality_trait: sc.patient_profile.personality_trait,
+    } : null,
+    chief_complaint: mc.chief_complaint || null,
+    duration: mc.duration || null,
+    symptoms: Array.isArray(mc.symptoms) ? mc.symptoms.slice(0, 6) : [],
+  };
+};
 
 // Modul natijalarini har safar qayta hisoblab saqlash
 const recalculateAndSaveModuleResult = async (studentId, moduleId) => {
@@ -154,7 +173,7 @@ const checkModuleUnlocked = async (studentId, specialtyId, targetModule) => {
 const getModuleById = async (req, res) => {
   try {
     const module = await Module.findByPk(req.params.id, {
-      attributes: { exclude: ['patient_context', 'final_challenge_context'] },
+      include: [{ model: Specialty, as: 'specialty', attributes: ['id', 'name', 'name_uz', 'name_ru', 'name_en', 'code', 'icon', 'student_role'] }],
     });
     if (!module) return res.status(404).json({ error: 'Modul topilmadi' });
 
@@ -180,6 +199,10 @@ const getModuleById = async (req, res) => {
     });
 
     const data = module.toJSON ? module.toJSON() : { ...module };
+    data.case_brief = buildCaseBrief(data.patient_context);          // xavfsiz qisqacha ma'lumot
+    delete data.patient_context;                                       // to'liq ssenariy (tashxis) talabaga yuborilmaydi
+    delete data.final_challenge_context;
+    if (typeof data.reference_dialogue === 'string') { try { data.reference_dialogue = JSON.parse(data.reference_dialogue); } catch (_) { data.reference_dialogue = []; } }
     data.next_module = next ? (next.toJSON ? next.toJSON() : next) : null;
     data.prev_module = prev ? (prev.toJSON ? prev.toJSON() : prev) : null;
 
@@ -386,7 +409,7 @@ const sendMessage = async (req, res) => {
     if (!conversation || conversation.student_id !== req.user.id || conversation.status === 'completed') {
       const targetModuleId = Number(req.body.module_id || req.query.module_id || (conversation?.module_id) || 1);
       const targetMod = await Module.findByPk(targetModuleId);
-      const patientContext = targetMod?.patient_context || "Patient presents with dental complaint and pain.";
+      const patientContext = targetMod?.patient_context || "Patient presents with a general medical complaint.";
       const { generatePatientScenario } = require('../services/gemini.service');
       const dynamicScenario = await generatePatientScenario(patientContext);
 
@@ -458,7 +481,7 @@ const sendMessageStream = async (req, res) => {
     if (!conversation || conversation.student_id !== req.user.id || conversation.status === 'completed') {
       const targetModuleId = conversation?.module_id || req.query.module_id || 4;
       const targetMod = await Module.findByPk(targetModuleId);
-      const patientContext = targetMod?.patient_context || "Patient presents with dental abscess and swelling.";
+      const patientContext = targetMod?.patient_context || "Patient presents with a general medical complaint.";
       const dynamicScenario = await generatePatientScenario(patientContext);
 
       conversation = await Conversation.create({
@@ -540,7 +563,7 @@ const sendAudioMessage = async (req, res) => {
     if (!conversation || conversation.student_id !== req.user.id || conversation.status === 'completed') {
       const targetModuleId = Number(req.body.module_id || req.query.module_id || (conversation?.module_id) || 1);
       const targetMod = await Module.findByPk(targetModuleId);
-      const patientContext = targetMod?.patient_context || "Patient presents with dental complaint and pain.";
+      const patientContext = targetMod?.patient_context || "Patient presents with a general medical complaint.";
       const { generatePatientScenario } = require('../services/gemini.service');
       const dynamicScenario = await generatePatientScenario(patientContext);
 

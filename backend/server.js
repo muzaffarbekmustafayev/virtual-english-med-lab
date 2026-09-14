@@ -13,6 +13,11 @@ async function startServer() {
     await sequelize.sync();
     console.log('✅ Barcha jadvallar sinxronlashtirildi');
 
+    // Additive column migrations (yangi ustunlar: specialties.code, vocabulary.pronunciation, ...)
+    const { ensureColumns } = require('./src/services/schema.service');
+    const added = await ensureColumns({ log: console.log });
+    if (added) console.log(`🧱 ${added} ta yangi ustun qo'shildi`);
+
     // Auto-seed admin@gmail.com / admin123 and base host data
     const { ensureDefaultSeedData } = require('./src/services/initDb.service');
     await ensureDefaultSeedData();

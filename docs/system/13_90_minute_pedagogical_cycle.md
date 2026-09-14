@@ -9,14 +9,12 @@ Ushbu hujjat **Virtual Patient English** platformasidagi **90 daqiqalik o'quv da
 Platformadagi har bir o'quv moduli talabaning **90 daqiqa** davomida uzluksiz, bosqichma-bosqich amaliyot o'tashiga mo'ljallangan. 
 
 ```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                     90 DAQIQALIK O'QUV SIKLI                            │
-├───────────┬───────────────┬──────────────────┬──────────────┬───────────┤
-│ 1. Vocab  │ 2. Phrasebook │ 3. Virtual Chat  │ 4. AI Feedback│ 5. Retry │ 6. Challenge │
-│  (15 min) │   (10 min)    │    (20 min)      │   (10 min)   │ (15 min) │   (15 min)   │
-└───────────┴───────────────┴──────────────────┴──────────────┴───────────┴──────────────┘
-                                                                + 5 min Wrap-up = 90 min
-```
+┌────────────────┬───────────────┬──────────────────┬──────────────┬──────────┬──────────────┐
+│ 1. Vocab       │ 2. Phrasebook │ 3. Virtual Chat  │ 4. Feedback  │ 5. Retry │ 6. Challenge │
+│  (15 min)      │   (10 min)    │    (20 min)      │   (10 min)   │ (15 min) │   (15 min)   │
+└────────────────┴───────────────┴──────────────────┴──────────────┴──────────┴──────────────┘
+                                                                 + 5 min Wrap-up = 90 daqiqa
+`
 
 ---
 
@@ -67,7 +65,7 @@ Platformadagi har bir o'quv moduli talabaning **90 daqiqa** davomida uzluksiz, b
 
 ## 3. 10-Modul Uchun Maxsus 90 Daqiqalik Sikl (Full Consultation)
 
-10-modul (Full Dental Consultation) o'tilgan barcha ko'nikmalarni birlashtirgani sababli unda vaqt taqsimoti quyidagicha o'zgaradi:
+10-modul (Comprehensive Dental Consultation) o'tilgan barcha ko'nikmalarni birlashtirgani sababli unda vaqt taqsimoti quyidagicha o'zgaradi:
 
 | Bosqich | Vazifa | Vaqt |
 | :--- | :--- | :--- |

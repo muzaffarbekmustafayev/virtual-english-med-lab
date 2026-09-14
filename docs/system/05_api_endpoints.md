@@ -332,3 +332,32 @@ Ushbu hujjat **Virtual Patient English** platformasining barcha backend REST API
 | **403** | Forbidden | Ushbu rol uchun ruxsat yo'q |
 | **404** | Not Found | Resurs topilmadi |
 | **500** | Internal Error | Server yoki Gemini API ichki xatosi |
+
+---
+
+## Qo'shimcha: 2026-09 o'zgarishlari (kontent konveyeri)
+
+### `GET /api/student/modules/:id` — kengaytirilgan javob
+```json
+{
+  "id": 32, "order_index": 1,
+  "title": "Diabetic Emergencies (DKA)", "title_uz": "…", "title_ru": "…", "title_en": "…",
+  "description_uz": "…", "grammar_focus": "Present Perfect Continuous + …",
+  "specialty": { "id": 4, "name": "Tez tibbiy yordam", "name_en": "First Aid (Emergency Medicine)", "code": "FIRST_AID", "icon": "🚑", "student_role": "doctor" },
+  "case_brief": {
+    "role_play": "The student is the DOCTOR. You play the PATIENT.",
+    "setting": "emergency department / resuscitation bay",
+    "counterpart_label": "Patient",
+    "patient": { "name": "Emily Watson", "age": "51", "gender": "Female", "personality_trait": "…" },
+    "chief_complaint": "I've been feeling extremely unwell since yesterday…",
+    "duration": "since yesterday",
+    "symptoms": ["extremely unwell"]
+  },
+  "reference_dialogue": [ { "role": "doctor", "label": "Doctor", "text": "What brings you in today?" }, … ],
+  "next_module": { … }, "prev_module": { … }
+}
+```
+- `patient_context` / `final_challenge_context` (tashxis, kutilgan javoblar) **javobga kiritilmaydi**; frontend faqat `case_brief` dan foydalanadi.
+- `GET /api/student/modules/:id/vocabulary` → har bir yozuvda `pronunciation`; `.../phrasebook` → `pronunciation`, `patient_response`, `patient_response_uz`, `patient_response_ru`.
+- `POST /api/auth/login`, `GET /api/auth/me`, `PUT /api/auth/profile` → `user.specialty` endi `{ id, name, name_uz, name_ru, name_en, code, icon, student_role }`.
+- `GET /api/auth/specialties` → 5 ta yo'nalish (`code`, `icon`, `student_role` bilan).

@@ -13,183 +13,47 @@ import {
 } from 'react-icons/ri';
 import { toast } from 'react-hot-toast';
 
-// 10 ta modul uchun klinik mavzular va moslashtirilgan boshlang'ich bemor shikoyatlari
-const MODULE_THEMES = {
-  1: {
-    name: 'Dental Pain & Sensitivity',
-    badge: 'Acute Sensitivity & Pain Assessment',
-    emoji: '🦷',
-    iconTag: 'Tooth Nerve & Cold Pain',
-    accentColor: 'rose',
-    gradientBg: 'from-rose-50 via-slate-50 to-amber-50/60',
-    chiefComplaint: 'Sharp shooting pain when drinking cold liquids & throbbing night ache',
-    initialGreeting: "Hello Doctor. I've had a sharp, throbbing pain in my lower left tooth for three days now, especially with cold liquids.",
-    symptoms: ['Cold Sensitivity', 'Percussion Pain', 'Throbbing Night Ache'],
-  },
-  2: {
-    name: 'Caries & Restorative Care',
-    badge: 'Enamel Decay & Composite Restoration',
-    emoji: '✨',
-    iconTag: 'Enamel Cavity & Filling',
-    accentColor: 'cyan',
-    gradientBg: 'from-cyan-50 via-slate-50 to-blue-50/60',
-    chiefComplaint: 'Food getting caught in upper molar with mild sweet sensitivity',
-    initialGreeting: "Good morning Doctor. Food keeps getting caught in my upper right molar, and I feel a sharp sensitivity with sweets.",
-    symptoms: ['Cavity / Enamel Decay', 'Sweet Sensitivity', 'Dark Fissure Spot'],
-  },
-  3: {
-    name: 'Periodontal Evaluation',
-    badge: 'Gingival Bleeding & Periodontal Pockets',
-    emoji: '🩸',
-    iconTag: 'Gums & Calculus Probe',
-    accentColor: 'emerald',
-    gradientBg: 'from-emerald-50 via-slate-50 to-teal-50/60',
-    chiefComplaint: 'Bleeding gums when brushing & persistent bad breath',
-    initialGreeting: "Hello Doctor. My gums have been bleeding noticeably every time I brush, and they feel sore around my lower teeth.",
-    symptoms: ['Bleeding on Probing', 'Subgingival Calculus', 'Gum Recession'],
-  },
-  4: {
-    name: 'Tooth Extraction & Surgery',
-    badge: 'Surgical Preparation & Local Anesthesia',
-    emoji: '🩺',
-    iconTag: 'Surgical Forceps & Anesthesia',
-    accentColor: 'indigo',
-    gradientBg: 'from-indigo-50 via-slate-50 to-purple-50/60',
-    chiefComplaint: 'Severe broken crown with recurrent abscess in lower right quadrant',
-    initialGreeting: "Doctor, my lower right tooth broke last week and my cheek is swollen with severe throbbing pain. Can you check it?",
-    symptoms: ['Root Rest Retention', 'Local Anesthesia Planning', 'Post-Op Instructions'],
-  },
-  5: {
-    name: 'Endodontic Consultation',
-    badge: 'Root Canal & Pulp Necrosis',
-    emoji: '⚡',
-    iconTag: 'Pulp Chamber & Canal Files',
-    accentColor: 'amber',
-    gradientBg: 'from-amber-50 via-slate-50 to-orange-50/60',
-    chiefComplaint: 'Continuous throbbing radiated pain unresponsive to regular analgesics',
-    initialGreeting: "Hello Doctor, the pain in my back tooth is unbearable and radiates up into my ear. Regular painkillers aren't helping at all.",
-    symptoms: ['Pulpitis / Necrosis', 'Thermal Lingering Pain', 'Apical Tenderness'],
-  },
-  6: {
-    name: 'Orthodontic Assessment',
-    badge: 'Malocclusion & Bracket Alignment',
-    emoji: '📐',
-    iconTag: 'Brackets & Archwire',
-    accentColor: 'blue',
-    gradientBg: 'from-blue-50 via-slate-50 to-sky-50/60',
-    chiefComplaint: 'Crowding of anterior mandibular incisors and difficulty chewing',
-    initialGreeting: "Hi Doctor. I'm concerned about the crowding of my front lower teeth and difficulty with chewing. What options do I have?",
-    symptoms: ['Class II Malocclusion', 'Anterior Crowding', 'Cephalometric Analysis'],
-  },
-  7: {
-    name: 'Prosthodontic Rehabilitation',
-    badge: 'Crowns, Bridges & Dentures',
-    emoji: '👑',
-    iconTag: 'Ceramic Crown & Implant Bridge',
-    accentColor: 'violet',
-    gradientBg: 'from-violet-50 via-slate-50 to-indigo-50/60',
-    chiefComplaint: 'Missing premolar causing aesthetic concern and bite imbalance',
-    initialGreeting: "Good day Doctor. I lost a premolar tooth a few months ago and would like to discuss crowns, bridges, or dental implants.",
-    symptoms: ['Missing Tooth Edentulism', 'Shade Selection A2/A3', 'Impression Taking'],
-  },
-  8: {
-    name: 'Pediatric Dentistry',
-    badge: 'Primary Dentition & Gentle Communication',
-    emoji: '🧸',
-    iconTag: 'Primary Molars & Fluoride Gel',
-    accentColor: 'pink',
-    gradientBg: 'from-pink-50 via-slate-50 to-rose-50/60',
-    chiefComplaint: '7-year-old child with early childhood caries on primary molar',
-    initialGreeting: "Hello Doctor, my tooth hurts when I eat ice cream or cold food. I was a bit scared to visit today.",
-    symptoms: ['Tell-Show-Do Method', 'Pit & Fissure Sealants', 'Fluoride Varnish'],
-  },
-  9: {
-    name: 'Oral Pathology & Biopsy',
-    badge: 'Mucosal Lesions & Differential Diagnosis',
-    emoji: '🔬',
-    iconTag: 'Histopathology & White Plaque',
-    accentColor: 'teal',
-    gradientBg: 'from-teal-50 via-slate-50 to-emerald-50/60',
-    chiefComplaint: 'Painless white patch on buccal mucosa lasting for over 3 weeks',
-    initialGreeting: "Hello Doctor. I noticed a painless white patch inside my cheek about three weeks ago that hasn't gone away.",
-    symptoms: ['Leukoplakia', 'Mucosal Ulceration', 'Biopsy Referral'],
-  },
-  10: {
-    name: 'Dental Trauma & Emergency',
-    badge: 'Tooth Avulsion & Maxillofacial Emergency',
-    emoji: '🚨',
-    iconTag: 'Tooth Luxation & Splinting',
-    accentColor: 'red',
-    gradientBg: 'from-red-50 via-slate-50 to-rose-50/60',
-    chiefComplaint: 'Sports trauma resulting in avulsion of maxillary central incisor',
-    initialGreeting: "Doctor! I was hit during a sports match an hour ago and my front tooth got knocked out. I brought it in a glass of milk!",
-    symptoms: ['Avulsed Incisor 21', 'Storage in Milk', 'Emergency Reimplantation'],
-  },
-};
+// Yo'nalish bo'yicha belgi (module.specialty.icon bo'lmasa)
+const SPECIALTY_EMOJI = { STOM: '🦷', GEN_MED: '🩺', PED: '👶', NURSING: '💉', FIRST_AID: '🚑' };
 
-const MODULE_SUGGESTED_QUESTIONS = {
-  1: [
-    "Hello, what brings you in today?",
-    "Where is the pain located?",
-    "Is it sensitive to hot or cold food?",
-    "How long does the pain linger?"
-  ],
-  2: [
-    "Hello, how can I help you today?",
-    "Which tooth is giving you trouble?",
-    "Does sweet food cause any discomfort?",
-    "Let me examine the cavity under light."
-  ],
-  3: [
-    "Good morning, what seems to be the issue?",
-    "Do your gums bleed when you brush or floss?",
-    "How long have your gums been swollen?",
-    "We need to perform periodontal probing."
-  ],
-  4: [
-    "Hello, what brings you to our dental clinic?",
-    "Where is the swelling located in your mouth?",
-    "Is the tooth broken down to the root?",
-    "We will administer local anesthesia first."
-  ],
-  5: [
-    "Hello, what brings you in today?",
-    "Where is the throbbing pain located, and does it radiate to your ear?",
-    "Does hot or cold drink trigger severe lingering pain?",
-    "Does the tooth hurt when you bite or tap on it?",
-    "We need a periapical X-ray to check for pulp necrosis and root canals."
-  ],
-  6: [
-    "Hello, how can I help with your smile today?",
-    "Are you concerned about crowded or crooked teeth?",
-    "Do you have any difficulty chewing or speaking?",
-    "We can discuss ceramic brackets or clear aligners."
-  ],
-  7: [
-    "Good day, what brings you in today?",
-    "Which missing tooth are you looking to replace?",
-    "Would you prefer a dental crown, bridge, or implant?",
-    "Let's take a dental impression for shade matching."
-  ],
-  8: [
-    "Hello there! How are you feeling today?",
-    "Can you show me where the tooth hurts?",
-    "Does eating ice cream or sweets make it ache?",
-    "Let's count your teeth and apply gentle fluoride gel."
-  ],
-  9: [
-    "Hello, what brings you in for consultation?",
-    "Where is the white patch or lesion located?",
-    "Has the lesion changed in size or color recently?",
-    "We should take a gentle diagnostic biopsy."
-  ],
-  10: [
-    "Hello, what is the dental emergency today?",
-    "Did you experience any dental trauma or accident?",
-    "Is the tooth completely knocked out or loose?",
-    "We will perform an emergency dental splint."
-  ]
-};
+// Modul ma'lumoti hali yuklanmagan yoki admin qo'lda yaratgan modul uchun umumiy savollar
+const FALLBACK_QUESTIONS = [
+  'Hello, what brings you in today?',
+  'When did the symptoms start?',
+  'Could you describe the pain or discomfort?',
+  'Do you have any other symptoms?',
+];
+
+/**
+ * Chat sarlavhasi va "case" kartasi uchun mavzu: backend dagi module.case_brief
+ * (datas.json ssenariysining talabaga ko'rsatsa bo'ladigan qismi) + module.specialty.
+ * Tashxis va kutilgan javoblar bu yerga hech qachon kelmaydi.
+ */
+function buildTheme(module, phrasebook) {
+  const brief = module?.case_brief || null;
+  const spec = module?.specialty || null;
+  const emoji = spec?.icon || SPECIALTY_EMOJI[spec?.code] || '🩺';
+  const patient = brief?.patient || null;
+  const questions = (phrasebook || [])
+    .map(p => p.phrase)
+    .filter(q => q && q.trim().endsWith("?"))
+    .slice(0, 6);
+  return {
+    name: module?.title_en || module?.title || 'Clinical Consultation',
+    badge: spec?.name_en || spec?.name || 'Virtual Patient',
+    emoji,
+    iconTag: brief?.counterpart_label
+      ? `${brief.counterpart_label}${patient?.name ? ' · ' + patient.name : ''}`
+      : 'Virtual Patient',
+    chiefComplaint: brief?.chief_complaint || module?.description_en || module?.description || '',
+    symptoms: Array.isArray(brief?.symptoms) && brief.symptoms.length ? brief.symptoms : [],
+    patient,
+    setting: brief?.setting || null,
+    rolePlay: brief?.role_play || null,
+    duration: brief?.duration || null,
+    suggestedQuestions: questions.length >= 3 ? questions : FALLBACK_QUESTIONS,
+  };
+}
 
 export default function VirtualPatientChat({
   moduleId,
@@ -236,7 +100,7 @@ export default function VirtualPatientChat({
   const activeConvIdRef = useRef(initialConversationId || null);
 
   const parsedModuleId = Number(moduleId) || 1;
-  const currentTheme = MODULE_THEMES[parsedModuleId] || MODULE_THEMES[1];
+  const currentTheme = buildTheme(module, phrasebook);
 
   // Sync activeConvId
   useEffect(() => {
@@ -621,7 +485,7 @@ export default function VirtualPatientChat({
       }
       console.warn('%c⚠️ [STT ERROR/NOTICE]:', 'color: #ef4444;', e.error);
       if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
-        toast.error("Mikrofonga ruxsat berilmagan!");
+        toast.error(t('chat_mic_denied'));
         stopAllAudioAndRecognition();
       }
     };
@@ -888,7 +752,7 @@ export default function VirtualPatientChat({
   const handleFinish = async () => {
     const userMsgCount = chatHistory.filter(m => m.role === 'user').length;
     if (userMsgCount === 0) {
-      toast.error("Baholash olish uchun kamida 1 marta bemor bilan muloqot qiling.");
+      toast.error(t('chat_need_one_message'));
       return;
     }
     stopAllAudioAndRecognition();
@@ -906,7 +770,7 @@ export default function VirtualPatientChat({
       }
     } catch (err) {
       console.error('Evaluation error:', err);
-      toast.error("Baholash hisoboti yaratilmoqda...");
+      toast.error(t('chat_generating_report'));
       if (onFinish) await onFinish();
     } finally {
       setIsSubmitting(false);
@@ -925,27 +789,27 @@ export default function VirtualPatientChat({
   const lastPatientMsg = [...chatHistory].reverse().find(m => m.role === 'patient');
 
   const statusInfo = isIdle ? {
-    title: 'Simulyatsiya Kutilmoqda',
+    title: t('chat_status_idle'),
     badge: 'Offline',
     badgeClass: 'bg-slate-100 text-slate-500 border-slate-200',
     dotClass: 'bg-slate-400'
   } : isListening ? {
-    title: transcript ? "Gapirib bo'lingach avtomatik yuboriladi..." : 'Sizni tinglamoqda... (Gapiring)',
+    title: transcript ? t('chat_status_autosend') : t('chat_listening'),
     badge: 'Microphone Active',
     badgeClass: 'bg-emerald-50 text-emerald-700 border-emerald-200 shadow-sm animate-pulse',
     dotClass: 'bg-emerald-500'
   } : isProcessing ? {
-    title: 'AI bemor javob bermoqda...',
+    title: t('chat_processing'),
     badge: 'AI Processing',
     badgeClass: 'bg-amber-50 text-amber-700 border-amber-200 shadow-sm',
     dotClass: 'bg-amber-500'
   } : isSpeaking ? {
-    title: 'Bemor gapirmoqda (TTS)...',
+    title: t('chat_speaking'),
     badge: 'Patient Speaking',
     badgeClass: 'bg-indigo-50 text-indigo-700 border-indigo-200 shadow-sm',
     dotClass: 'bg-indigo-500'
   } : {
-    title: 'Muloqot Yakunlandi',
+    title: t('chat_ended'),
     badge: 'Finished',
     badgeClass: 'bg-slate-100 text-slate-700 border-slate-200',
     dotClass: 'bg-slate-400'
@@ -1023,12 +887,12 @@ export default function VirtualPatientChat({
               {isSubmitting ? (
                 <>
                   <RiLoader4Line className="animate-spin text-xs" />
-                  <span>Baholanmoqda...</span>
+                  <span>{t('chat_evaluating')}</span>
                 </>
               ) : (
                 <>
                   <RiAwardLine className="text-xs" />
-                  <span>Baholash (7-bosqich)</span>
+                  <span>{t('chat_eval_short')}</span>
                 </>
               )}
             </button>
@@ -1041,7 +905,7 @@ export default function VirtualPatientChat({
               value={speechRate}
               onChange={(e) => setSpeechRate(parseFloat(e.target.value))}
               className="bg-transparent text-slate-800 font-bold focus:outline-hidden cursor-pointer"
-              title="Ovoz tezligi"
+              title="{t('chat_voice_speed')}"
             >
               <option value="0.8">0.8x</option>
               <option value="0.95">1.0x</option>
@@ -1069,9 +933,30 @@ export default function VirtualPatientChat({
             <h3 className="text-2xl font-black text-slate-900 tracking-tight mb-2">
               {currentTheme.name}
             </h3>
-            <p className="text-sm text-slate-600 font-medium mb-6 max-w-md leading-relaxed">
+            <p className="text-sm text-slate-600 font-medium mb-4 max-w-md leading-relaxed">
               {currentTheme.chiefComplaint}
             </p>
+
+            {/* Bemor / suhbatdosh haqida qisqacha (tashxis ko'rsatilmaydi) */}
+            {(currentTheme.patient || currentTheme.setting) && (
+              <div className="flex flex-wrap items-center justify-center gap-2 mb-4 text-[11px] font-bold">
+                {currentTheme.patient?.name && (
+                  <span className="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">
+                    👤 {currentTheme.patient.name}{currentTheme.patient.age ? `, ${currentTheme.patient.age}` : ''}{currentTheme.patient.gender ? ` · ${currentTheme.patient.gender}` : ''}
+                  </span>
+                )}
+                {currentTheme.setting && (
+                  <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                    🏥 {currentTheme.setting}
+                  </span>
+                )}
+                {currentTheme.duration && (
+                  <span className="px-3 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
+                    ⏱ {currentTheme.duration}
+                  </span>
+                )}
+              </div>
+            )}
 
             {/* Quick module symptoms pill list */}
             <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
@@ -1225,12 +1110,12 @@ export default function VirtualPatientChat({
                           {isListening ? (
                             <>
                               <RiStopCircleLine className="text-xl" />
-                              <span>To'xtatish va Yuborish</span>
+                              <span>{t('chat_stop_send')}</span>
                             </>
                           ) : (
                             <>
                               <RiMicLine className="text-xl animate-pulse" />
-                              <span>Gapirishni Boshlash (Mikrofon)</span>
+                              <span>{t('chat_start_speaking')}</span>
                             </>
                           )}
                         </button>
@@ -1261,7 +1146,7 @@ export default function VirtualPatientChat({
                               onClick={() => sendMessage(transcript)}
                               className="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-black text-[10px] transition-all shadow-xs cursor-pointer flex items-center gap-1"
                             >
-                              <RiSendPlane2Line size={11} /> Hozir yuborish
+                              <RiSendPlane2Line size={11} /> {t('chat_send_now')}
                             </button>
                           )}
                         </div>
@@ -1270,11 +1155,11 @@ export default function VirtualPatientChat({
                             <span className="text-emerald-950 font-bold">"{transcript}"</span>
                           ) : isListening ? (
                             <span className="text-slate-400 font-normal italic">
-                              Doktor, bemorga ingliz tilida savol bering yoki ko'rik o'tkazing...
+                              {t('chat_prompt_hint')}
                             </span>
                           ) : (
                             <span className="text-slate-400 font-normal italic">
-                              Muloqot qilish uchun yuqoridagi mikrofon tugmasini bosing.
+                              {t('chat_press_mic')}
                             </span>
                           )}
                         </p>
@@ -1291,7 +1176,7 @@ export default function VirtualPatientChat({
                         <div className="flex items-center justify-between pb-2 mb-2.5 border-b border-slate-100 text-[11px] font-black tracking-wider uppercase">
                           <span className="flex items-center gap-2 text-indigo-700">
                             <RiHeartPulseLine size={15} className={isSpeaking ? "animate-pulse" : ""} />
-                            Bemor Javobi (AI Patient):
+                            {t('chat_patient_reply_label')}
                           </span>
                           {lastPatientMsg && !isSpeaking && (
                             <button
@@ -1305,13 +1190,13 @@ export default function VirtualPatientChat({
                         <p className="text-sm font-medium text-slate-800 leading-relaxed min-h-[50px]">
                           {isProcessing ? (
                             <span className="text-amber-600 font-bold flex items-center gap-2">
-                              <RiLoader4Line className="animate-spin text-base" /> Bemor javob tayyorlamoqda...
+                              <RiLoader4Line className="animate-spin text-base" /> {t('chat_processing')}
                             </span>
                           ) : lastPatientMsg ? (
                             <span className="text-slate-900 font-semibold">{lastPatientMsg.content}</span>
                           ) : (
                             <span className="text-slate-400 font-normal italic">
-                              Bemor bilan muloqotni boshlang.
+                              {t('chat_start_hint')}
                             </span>
                           )}
                         </p>
@@ -1324,15 +1209,15 @@ export default function VirtualPatientChat({
                     <div className="flex items-center justify-between gap-2 mb-2.5">
                       <span className="text-[11px] font-black text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
                         <RiLightbulbLine className="text-amber-500 text-sm" />
-                        Tavsiya etilgan klinik savollar (Bosish orqali yuborish):
+                        {t('chat_suggested_questions')}
                       </span>
                       <span className="text-[10px] text-slate-400 font-semibold hidden sm:inline">
-                        Modul #{parsedModuleId} bo'yicha
+                        {t('chat_for_module', { n: parsedModuleId })}
                       </span>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {(MODULE_SUGGESTED_QUESTIONS[parsedModuleId] || MODULE_SUGGESTED_QUESTIONS[1]).map((q, idx) => (
+                      {currentTheme.suggestedQuestions.map((q, idx) => (
                         <button
                           key={idx}
                           onClick={() => sendMessage(q)}
@@ -1352,10 +1237,10 @@ export default function VirtualPatientChat({
                       <div className="space-y-0.5">
                         <h4 className="text-sm font-black flex items-center gap-2">
                           <RiSparkling2Line className="text-amber-300 text-base" />
-                          Muloqot yetarli ({userMessagesCount} ta savol berildi)
+                          {t('chat_enough_messages', { n: userMessagesCount })}
                         </h4>
                         <p className="text-xs text-emerald-100 font-medium">
-                          Konsultatsiyani yakunlab, AI dan 7-bosqich to'liq klinik baholash hisobotini oling.
+                          {t('chat_finish_hint')}
                         </p>
                       </div>
                       <button
@@ -1366,12 +1251,12 @@ export default function VirtualPatientChat({
                         {isSubmitting ? (
                           <>
                             <RiLoader4Line className="animate-spin text-sm text-indigo-600" />
-                            <span>Baholanmoqda...</span>
+                            <span>{t('chat_evaluating')}</span>
                           </>
                         ) : (
                           <>
                             <RiAwardLine className="text-sm text-amber-500" />
-                            <span>Suhbatni Yakunlash va Baholash (7-bosqich)</span>
+                            <span>{t('chat_finish_and_eval')}</span>
                           </>
                         )}
                       </button>
@@ -1411,7 +1296,7 @@ export default function VirtualPatientChat({
                         >
                           <div className="flex items-center justify-between gap-3 mb-1 text-[11px] opacity-75">
                             <span className="font-bold uppercase tracking-wider">
-                              {isDoctor ? 'Doktor' : 'Bemor'}
+                              {isDoctor ? t('chat_role_doctor') : t('chat_role_patient')}
                             </span>
                             {!isDoctor && (
                               <button
@@ -1541,8 +1426,8 @@ export default function VirtualPatientChat({
                     </h4>
                     <p className="text-xs text-emerald-700">
                       {userMessagesCount >= 1
-                        ? "Bemor bilan konsultatsiya yakunlandi. Endi sun'iy intellekt orqali klinik baholash oling."
-                        : "Baholash olish uchun kamida 1 marta bemor bilan muloqot qiling."}
+                        ? t('chat_consultation_done')
+                        : t('chat_need_one_message')}
                     </p>
                   </div>
 
@@ -1562,7 +1447,7 @@ export default function VirtualPatientChat({
                       {isSubmitting ? (
                         <>
                           <RiLoader4Line className="animate-spin text-sm" />
-                          <span>{t('loading') || "Baholanmoqda..."}</span>
+                          <span>{t('chat_evaluating')}</span>
                         </>
                       ) : (
                         <>

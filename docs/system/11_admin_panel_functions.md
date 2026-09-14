@@ -42,7 +42,7 @@ Admin paneli sidebari platformaning chap qismida joylashgan bo'lib, o'zgarmas `2
 
 ---
 
-## 2. Admin Panel Funksiyalarining Batafsil Sпеsifikatsiyasi
+## 2. Admin Panel Funksiyalarining Batafsil Spesifikatsiyasi
 
 ---
 
@@ -107,10 +107,10 @@ Admin paneli sidebari platformaning chap qismida joylashgan bo'lib, o'zgarmas `2
 
 ### 2.4 Content Manager Sahifasi (`/admin/content`)
 
-**Maqsad:** Platformadagi barcha 10 ta modulning o'quv kontentini boshqarish. Sahifa 4 ta ichki tab (sub-navigation) ga bo'lingan:
+**Maqsad:** Platformadagi barcha modullarning o'quv kontentini boshqarish. Sahifa 4 ta ichki tab (sub-navigation) ga bo'lingan:
 
 #### 1. Module Scenarios Tab (`/admin/content/scenarios`):
-- **AI Patient System Prompt Editor:** 10 ta modul uchun AI bemor xulq-atvorini belgilovchi `patient_context` ni tahrirlash.
+- **AI Patient System Prompt Editor:** Har bir modul uchun AI bemor xulq-atvorini belgilovchi `patient_context` ni tahrirlash.
 - **Final Challenge Context Editor:** Phrasebooksiz yakuniy sinov uchun murakkabroq bemor ssenariysini kiritish.
 - **Rich Text / Visual Editor:** Promptlarni qulay formatda tahrirlash.
 

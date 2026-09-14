@@ -148,11 +148,11 @@ export default function ProfilePage() {
                 <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-1">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-slate-100/80 border border-slate-200/80 text-slate-700 text-xs font-bold">
                     <RiStethoscopeLine className="text-blue-600" />
-                    <span>{user?.specialty?.name || 'Stomatologiya'}</span>
+                    <span>{getLocalized(user?.specialty, 'name') || user?.specialty?.name || t('no_specialty')}</span>
                   </span>
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-slate-100/80 border border-slate-200/80 text-slate-700 text-xs font-bold">
                     <RiGroupLine className="text-indigo-600" />
-                    <span>{user?.group?.name || '401-Stomatologiya'}</span>
+                    <span>{user?.group?.name || '—'}</span>
                   </span>
                 </div>
               </div>

@@ -78,7 +78,7 @@ export default function StudentDashboard() {
                   {t('student.dashboard.badge')}
                 </span>
                 <span className="text-xs text-slate-600 font-bold px-2.5 py-0.5 rounded-full bg-slate-100 border border-slate-200/80">
-                  {user?.specialty?.name || "Stomatologiya"}
+                  {getLocalized(user?.specialty, 'name') || user?.specialty?.name || t('no_specialty')}
                 </span>
               </div>
               

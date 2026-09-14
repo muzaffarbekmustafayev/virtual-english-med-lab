@@ -8,10 +8,14 @@ import { RiMenu4Line, RiUser3Line, RiShieldCheckLine, RiHeartPulseLine, RiSparkl
 export default function Layout({ children }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { user } = useAuth();
-  const { t } = useLanguage();
+  const { t, getLocalized } = useLanguage();
 
-  const specialtyName = user?.specialty?.name || "Stomatologiya";
-  const isDental = specialtyName.toLowerCase().includes('stom') || specialtyName.toLowerCase().includes('dent');
+  const specialtyName = getLocalized(user?.specialty, 'name') || user?.specialty?.name || t('no_specialty');
+  const SPECIALTY_EMOJI = { STOM: '🦷', GEN_MED: '🩺', PED: '👶', NURSING: '💉', FIRST_AID: '🚑' };
+  const lowerName = (user?.specialty?.name || '').toLowerCase();
+  const specialtyEmoji = user?.specialty?.icon
+    || SPECIALTY_EMOJI[user?.specialty?.code]
+    || (lowerName.includes('stom') || lowerName.includes('dent') ? '🦷' : lowerName.includes('pediatr') ? '👶' : lowerName.includes('hamshira') ? '💉' : lowerName.includes('tez tibbiy') ? '🚑' : '🩺');
 
   return (
     <div className="flex min-h-screen bg-slate-50 text-slate-800 antialiased selection:bg-blue-600 selection:text-white">
@@ -44,7 +48,7 @@ export default function Layout({ children }) {
             {/* Medical Department / Specialty Badge */}
             <div className="flex items-center gap-2">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-blue-50 text-blue-700 border border-blue-200/80 shadow-2xs">
-                <span>{isDental ? '🦷' : '🩺'}</span>
+                <span>{specialtyEmoji}</span>
                 <span className="truncate max-w-[180px] sm:max-w-none">{specialtyName}</span>
               </span>
               <span className="hidden lg:inline-block text-xs font-bold text-slate-400">

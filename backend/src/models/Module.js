@@ -15,6 +15,8 @@ const Module = sequelize.define('Module', {
   patient_context:         { type: DataTypes.TEXT, allowNull: false },
   final_challenge_context: { type: DataTypes.TEXT, allowNull: false },
   order_index:             { type: DataTypes.INTEGER, allowNull: false },
+  grammar_focus:           { type: DataTypes.STRING(255), allowNull: true },  // "Present Perfect + Past Simple"
+  reference_dialogue:      { type: DataTypes.JSON, allowNull: true },         // [{role,label,text}] — Word fayldagi namunaviy dialog
 }, {
   tableName: 'modules',
   timestamps: true,

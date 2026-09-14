@@ -1,95 +1,163 @@
 # Virtual Patient English — Sun'iy Intellekt (AI) Integratsiyasi
 
-Ushbu hujjat **Virtual Patient English** platformasida qo'llanilgan Sun'iy Intellekt (AI Engine) arxitekturasi, Google Gemini GenAI SDK (`@google/genai`), prompt muhandisligi (Prompt Engineering), baholash algoritmi va ovoz texnologiyalarini batafsil tushuntiradi.
+Ushbu hujjat **Virtual Patient English** platformasida qo'llanilgan AI Engine arxitekturasi, **Google Gemini GenAI SDK** (`@google/genai`), prompt muhandisligi, baholash algoritmi, ovoz integratsiyasi va xavfsizlik choralarini batafsil tushuntiradi.
 
 ---
 
 ## 1. AI Arxitekturasi va Ishlash Prinsipi
 
-Platforma AI texnologiyasini ikkita asosiy yo'nalishda qo'llaydi:
-1. **Virtual Bemor Agenti (Conversational Patient Agent):** Talaba shifokor rolida savol berganda, AI o'zini real klinik simptomlarga ega bemor kabi tutadi va dinamik javob beradi.
-2. **AI Baholash Tizimi (Evaluation & Assessment Engine):** Suhbat yakunida dialog transkriptini tahlil qilib, 5 mezon bo'yicha baho (Scorecard) va grammatik xatolar tahlilini beradi.
-3. **Mustaqil Grammatika Checker:** Talabaning istalgan matnini tezkor grammatik va imloviy tahlil qiladi.
+Platforma AI texnologiyasini **to'rtta asosiy yo'nalishda** qo'llaydi:
+
+| # | AI Funksiyasi | Gemini Model | Servis Funksiya |
+|---|:-------------|:------------|:----------------|
+| 1 | **Virtual Bemor Agenti** | `gemini-2.5-flash` | `getPatientReply()` / `getPatientReplyStream()` |
+| 2 | **AI Baholash Tizimi** | `gemini-2.5-flash` | `generateFeedback()` |
+| 3 | **Grammatika Tekshirgichi** | `gemini-2.5-flash` | `checkGrammar()` |
+| 4 | **Ovozli Suhbat (Live Audio)** | `gemini-2.0-flash-exp` | `setupLiveAudioWebSocket()` |
+
+**Manba fayllari:**
+- [`gemini.service.js`](file:///c:/Users/welcome/Desktop/projects/virtual-english-med-lab/backend/src/services/gemini.service.js) — Asosiy AI servis (702 qator)
+- [`liveAudio.service.js`](file:///c:/Users/welcome/Desktop/projects/virtual-english-med-lab/backend/src/services/liveAudio.service.js) — WebSocket real-time ovozli suhbat
 
 ---
 
-## 2. Gemini GenAI SDK Integratsiyasi
-
-Loyiha backendida **`@google/genai`** kutubxonasi va **`gemini-2.5-flash`** modeli qo'llanilgan.
-
-- **Servis fayli:** `backend/src/services/gemini.service.js`
-- **Model parametrlari:**
-  - `gemini-2.5-flash` (Tezkor va yuqori aniqlikdagi suhbat va JSON tahlili uchun)
-  - `responseMimeType: 'application/json'` (Qat'iy strukturalangan JSON javoblar uchun)
-
----
-
-## 3. Virtual Bemor Prompt Muhandisligi
-
-### 3.1 Dinamik Persona Generatsiyasi (`generatePatientScenario`)
-Har safar talaba yangi suhbat boshlaganida, modulning tayanch konteksti asosida **takrorlanmas bemor shaxsi (persona)** generatsiya qilinadi:
+## 2. Gemini GenAI SDK Konfiguratsiyasi
 
 ```javascript
-// Input context: "Dental Pain & Sensitivity"
-// Gemini output JSON:
+const { GoogleGenAI } = require('@google/genai');
+const client = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+```
+
+**Model parametrlari:**
+
+| Funksiya | Model | Temperature | Max Tokens | Response Format |
+|:---------|:------|:----------:|:----------:|:---------------|
+| Virtual Bemor Chat | `gemini-2.5-flash` | 0.8 | 300 | Plain text |
+| AI Feedback | `gemini-2.5-flash` | 0.2 | — | `application/json` |
+| Grammar Checker | `gemini-2.5-flash` | 0.1 | — | `application/json` + Schema |
+| Audio Reply | `gemini-2.5-flash` | 0.7 | 800 | `application/json` + Schema |
+| Live Audio WS | `gemini-2.0-flash-exp` | — | — | Audio stream (PCM) |
+
+---
+
+## 3. Virtual Bemor Agenti
+
+### 3.1 Dinamik Persona Generatsiyasi (`generatePatientScenario`)
+
+Har safar talaba yangi suhbat boshlaganida, modulning tayanch konteksti (`patient_context`) asosida **noyob bemor persona** generatsiya qilinadi. Tezlikni oshirish uchun 5 ta oldindan tayyorlangan ssenariy (`MODULE_SCENARIOS`) mavjud:
+
+```json
 {
   "patient_profile": {
-    "name": "John Miller",
-    "age": 34,
-    "gender": "Male",
-    "occupation": "Software Engineer",
-    "personality_trait": "Anxious about dental procedures"
+    "name": "Sarah Jenkins",
+    "age": 29,
+    "gender": "Female",
+    "personality_trait": "Anxious about cold sensitivity"
   },
   "medical_condition": {
-    "exact_diagnosis": "Dentin Hypersensitivity",
-    "chief_complaint": "Sharp pain when drinking cold drinks",
-    "symptoms": ["Cold sensitivity", "Brief sharp pain", "No swelling"],
+    "exact_diagnosis": "Dentin Hypersensitivity / Acute Pulpitis",
+    "chief_complaint": "Sharp shooting pain when drinking cold liquids",
+    "symptoms": ["Cold sensitivity", "Percussion pain", "Night ache"],
     "duration": "4 days",
-    "pain_level": "6/10"
+    "pain_level": "7"
   },
+  "expected_doctor_questions_and_answers": [
+    {
+      "doctor_question_topic": "Onset",
+      "patient_answer": "It started 4 days ago after drinking iced water."
+    }
+  ],
   "questions_to_ask_doctor": [
-    "Will I need a root canal for this?",
-    "Can special toothpaste fix this?"
+    "Can the nerve be saved, Doctor?",
+    "What treatment do you recommend?"
   ]
 }
 ```
 
-### 3.2 Chat Tizim Buyrug'i (System Instruction)
+### 3.2 Bemor System Prompt (`buildPatientSystemInstruction`)
 
-Virtual bemor quyidagi qat'iy tizim yo'riqnomasi asosida muloqot qiladi:
+Har bir suhbat uchun dinamik prompt yaratiladi:
 
 ```text
 You are a patient visiting a doctor's/dentist's clinic. You speak ONLY English.
 Behave realistically as a patient — express emotions (fear, pain, relief).
-Stay strictly in character based on the JSON scenario provided.
+Stay strictly in character based on the JSON scenario provided below.
 Do NOT break character under any circumstances.
 Do NOT give medical advice or act as a doctor.
 
+Your specific persona and scenario for this session:
+{... dinamik ssenariy JSON ...}
+
 IMPORTANT RULES:
-- You already have a specific illness and symptoms defined in the scenario. Do NOT change them.
-- DO NOT state what your exact illness is immediately. Instead, describe your symptoms naturally when asked.
-- Answer questions naturally and conversationally (1-3 sentences max).
+- You already have a specific illness and symptoms defined in the scenario above.
+- DO NOT state what your exact illness is immediately. Describe symptoms naturally.
+- Keep responses short and natural (1-3 sentences max).
 - Use simple everyday English (not medical jargon).
 ```
 
+### 3.3 Chat Rejimlar
+
+| Rejim | Funksiya | Tavsif |
+|:------|:---------|:-------|
+| **Sinxron** | `getPatientReply()` | To'liq javobni kutib qaytaradi |
+| **SSE Streaming** | `getPatientReplyStream()` | Token-by-token real-time streaming (Server-Sent Events) |
+| **Audio Stream** | `getPatientAudioReplyStream()` | Base64 audio qabul qiladi → transkript + javob qaytaradi |
+
+### 3.4 Fallback Mexanizmi (`getContextualPatientFallback`)
+
+Gemini API javob bermasa yoki xatolik yuz bersa, **kontekstual fallback** tizimi ishga tushadi. Talabaning xabaridagi kalit so'zlarga asoslanib, oldindan tayyorlangan javoblardan birini qaytaradi:
+
+| Kalit so'zlar | Fallback javob turi |
+|:-------------|:-------------------|
+| `bring`, `help`, `problem` | Bemor shikoyati (chief complaint) |
+| `how long`, `since when` | Og'riq davomiyligi |
+| `fever`, `swallow` | Sistemik simptomlar |
+| `look`, `x-ray`, `exam` | Tekshiruv va diagnostika |
+| `abscess`, `infection` | Tashxis bo'yicha savol |
+| `antibiotic`, `treat` | Davolash rejasi |
+| `emergency`, `worse` | Ogohlantirilgan holatlar |
+
 ---
 
-## 4. AI Feedback va Baholash Tizimi
+## 4. AI Baholash Tizimi (`generateFeedback`)
 
-Suhbat yakunida `generateFeedback(messages)` funksiyasi barcha dialog transkriptini Gemini'ga yuboradi.
+Suhbat yakunlanganda barcha dialog tarixi AI modeliga yuboriladi va **strukturalangan JSON** natija qaytariladi.
 
-### 4.1 Scoring Mezonlari va Og'irliklari
+### 4.1 Baholash Prompt Tuzilishi
 
-| Mezon | Shkala | Tavsif | Og'irlik |
-|-------|--------|--------|----------|
-| `grammar_score` | 1 - 10 | Zamondoshlik, fe'l moslashuvi va struktura | 20% |
-| `vocabulary_score` | 1 - 10 | Tibbiy terminlar va professional iboralar | 20% |
-| `fluency_score` | 1 - 10 | Savollarning mantiqiy ketma-ketligi va ravonligi | 15% |
-| `pronunciation_score` | 1 - 10 | Matn ravonligi va talaffuz uyg'unligi | 15% |
-| `clinical_score` | 1 - 10 | Anamnez yig'ish (onset, location, severity, triggers) | 30% |
-| **`overall_score`** | **0 - 100** | **Umumiy salmoqli o'rtacha ball** | **100%** |
+```text
+MODULE TOPIC: {moduleTitle}
 
-### 4.2 JSON Structured Feedback Response
+=== TARGET MEDICAL VOCABULARY FOR THIS MODULE ===
+{modulning lug'at so'zlari}
+
+=== TARGET CLINICAL PHRASES FOR THIS MODULE ===
+{modulning phrasebook iboralari}
+
+=== CONVERSATION TRANSCRIPT ===
+DOCTOR: {talaba xabari}
+PATIENT: {AI bemor javobi}
+...
+```
+
+### 4.2 Baholash Mezonlari va Ballar Formulasi
+
+| Mezon | Masshtab | Vazn (%) | Nimani Baholaydi? |
+|:------|:-------:|:--------:|:-----------------|
+| **Grammar** | 1–10 | 20% (×2.0) | Zamolar, fe'l shakllari, gap qurilishi |
+| **Vocabulary** | 1–10 | 25% (×2.5) | Maqsadli tibbiy atamalar qo'llanishi |
+| **Fluency** | 1–10 | 15% (×1.5) | Gaplarning ravonligi va mantiqiy bog'liqligi |
+| **Pronunciation** | 1–10 | 15% (×1.5) | So'zlarning to'g'ri talaffuzi va professional ohang |
+| **Clinical** | 1–10 | 25% (×2.5) | SOCRATES/OPQRST formatida anamnez yig'ish, empatik yondashuv |
+
+**Umumiy ball formulasi:**
+
+$$\text{Overall Score (100)} = G \times 2.0 + V \times 2.5 + F \times 1.5 + P \times 1.5 + C \times 2.5$$
+
+**O'tish balli:** 60 ball va undan yuqori.
+
+### 4.3 Natija JSON Sxemasi
+
 ```json
 {
   "grammar_score": 8,
@@ -97,31 +165,163 @@ Suhbat yakunida `generateFeedback(messages)` funksiyasi barcha dialog transkript
   "fluency_score": 7,
   "pronunciation_score": 8,
   "clinical_score": 9,
-  "overall_score": 83,
-  "general_feedback": "Great bedside manner! You effectively diagnosed the sensitivity triggers.",
+  "overall_score": 82,
+  "target_vocab_used": ["Hypersensitivity", "Percussion", "Thermal test"],
+  "target_phrases_used": ["When did you first notice this?"],
+  "general_feedback": "Excellent clinical inquiry! You accurately asked about...",
   "errors": [
     {
-      "original": "How long it is hurting?",
-      "corrected": "How long has it been hurting?",
-      "explanation": "Use present perfect continuous for an action starting in the past and continuing."
+      "original": "Where is pain location?",
+      "corrected": "Could you point to where exactly the pain is located?",
+      "explanation": "More professional and polite clinical phrasing."
     }
   ]
 }
 ```
 
----
+### 4.4 Fallback Baholash
 
-## 5. Ovoz va Nutq Texnologiyalari (STT / TTS)
-
-1. **Speech-to-Text (STT):**
-   - Web Speech API (brauzer ichida tezkor ovozni matnga o'giriish)
-   - OpenAI Whisper API (Backend orqali audio fayllarni aniq transkripsiyalash)
-2. **Text-to-Speech (TTS):**
-   - Web Speech API SpeechSynthesis orqali bemor javoblarini ovozli o'qish.
+AI javob bera olmasa, talabaning xabarlari tahlil qilinib avtomatik baho beriladi:
+- **Xabarlar soni** va **so'zlar soni** hisoblanadi
+- Maqsadli lug'at so'zlari va iboralar tekshiriladi
+- Savollar mavjudligi (`?` belgisi) tekshiriladi
+- Natijaga qarab 5-10 oralig'ida ball belgilanadi
 
 ---
 
-## 6. Xatolikka Chidamlilik (Fallback Mechanisms)
+## 5. Grammatika Tekshirgichi (`checkGrammar`)
 
-- Agar Gemini API so'rovida tarmoq uzilishi yoki JSON parse xatosi yuz bersa, tizim xatoga uchramaydi.
-- Standart zaxira obyekt (Fallback Response Object) qaytariladi va foydalanuvchi suhbati xavfsiz saqlanadi.
+### 5.1 4 Xil Tekshirish Rejimi
+
+| Rejim | `mode` parametri | Maqsad |
+|:------|:----------------|:-------|
+| **Klinik** | `clinical` | Rasmiy tibbiy uslub (SOAP yozuvlari, shifokorlar muloqoti) |
+| **Bemor bilan** | `patient` | Hamdard va tushunarli shifokor-bemor muloqoti |
+| **Akademik** | `academic` | Ilmiy tibbiy jurnal/tadqiqot uslubi |
+| **Umumiy** | `general` | Standart ingliz tili grammatikasi |
+
+### 5.2 Natija Sxemasi
+
+```json
+{
+  "corrected_text": "Tuzatilgan matn",
+  "has_errors": true,
+  "error_count": 3,
+  "quality_score": 72,
+  "metrics": {
+    "grammar": 75,
+    "vocabulary": 80,
+    "clarity": 85,
+    "medical_accuracy": 70
+  },
+  "readability": "Moderate",
+  "errors": [
+    {
+      "original": "patient have pain",
+      "corrected": "patient has pain",
+      "category": "Grammar",
+      "explanation": "3rd person singular requires 'has'"
+    }
+  ],
+  "medical_enhancements": [
+    {
+      "original": "toothache",
+      "suggested": "dental pain / odontalgia",
+      "reason": "Professional medical terminology preferred in clinical notes"
+    }
+  ],
+  "clinical_tone_advice": "Use present perfect tense for ongoing symptoms."
+}
+```
+
+---
+
+## 6. WebSocket Live Audio (Real-Time Ovozli Suhbat)
+
+### 6.1 Arxitektura
+
+```
+[Talaba Mikrofoni] ──(PCM 16kHz)──► [WebSocket Server]
+                                          │
+                                   [Gemini Live API]
+                                   (gemini-2.0-flash-exp)
+                                          │
+                              ┌───────────┴───────────┐
+                              ▼                       ▼
+                       [Audio Response]        [Text Transcript]
+                              │                       │
+                              ▼                       ▼
+                    [Frontend Speaker]       [Chat UI Display]
+```
+
+### 6.2 WebSocket Message Protocol
+
+| Yo'nalish | `type` | Ma'lumot |
+|:----------|:-------|:---------|
+| Client → Server | `init` | `{ conversationId, moduleId, studentId }` |
+| Server → Client | `ready` | `{ conversationId }` |
+| Client → Server | `audio_chunk` | `{ data: base64_pcm }` |
+| Server → Client | `audio` | `{ data: base64_audio_response }` |
+| Server → Client | `transcript` | `{ text: "AI bemor javobi matni" }` |
+| Server → Client | `error` | `{ message: "Xatolik" }` |
+
+### 6.3 Gemini Live Session Konfiguratsiyasi
+
+```javascript
+const session = await ai.live.connect({
+  model: 'gemini-2.0-flash-exp',
+  config: {
+    systemInstruction: { parts: [{ text: patientPrompt }] },
+    generationConfig: {
+      responseModalities: ["AUDIO"],
+      speechConfig: {
+        voiceConfig: {
+          prebuiltVoiceConfig: { voiceName: 'Aoede' }
+        }
+      }
+    }
+  }
+});
+```
+
+---
+
+## 7. Prompt Muhandisligida Xavfsizlik Choralari
+
+1. **Roldan Chiqishni Bloklash:** "Do NOT break character under any circumstances" — bemor AI hech qachon shifokor yoki AI ekanini oshkor qilmaydi.
+2. **Klinik Doira Cheklovi:** AI faqat tibbiyot mavzusida javob beradi, boshqa mavzularga o'tmaydi.
+3. **Tashxisni Yashirish:** Bemor o'z kasalligini ochiq aytmaydi — talaba mustaqil tashxis qo'yishi kerak.
+4. **JSON Schema Enforcer:** `responseMimeType: 'application/json'` va `responseSchema` orqali AI ning javob formatini qat'iy nazorat qilish.
+5. **Context Retention:** Dialog tarixidagi barcha xabarlar har bir so'rovda kontekst sifatida yuboriladi.
+6. **Fallback zanjiri:** Gemini API xatolik bersa, kontekstual fallback → statik javob ketma-ketligi ishlaydi.
+
+---
+
+## 8. Eksport Qilinadigan AI Funksiyalar
+
+```javascript
+module.exports = {
+  getPatientReply,           // Sinxron bemor javobi
+  getPatientReplyStream,     // SSE streaming bemor javobi
+  getPatientAudioReplyStream,// Audio → transkript + javob
+  generateFeedback,          // Ko'p mezonli suhbat baholashi
+  checkGrammar,              // Grammatika tekshirgichi (4 rejim)
+  generatePatientScenario,   // Dinamik bemor persona generatsiyasi
+};
+```
+
+---
+
+## 9. 2026-09: Yo'nalishga mos Virtual Bemor (ssenariy manbai)
+
+Avval `generatePatientScenario` qat'iy 5 ta **stomatologik** ssenariydan birini qaytarar edi — pediatriya yoki tez tibbiy yordam talabasi ham tish abssessi bilan gaplashardi. Endi ketma-ketlik quyidagicha (`src/services/gemini.service.js`):
+
+1. **Tayyor JSON ssenariy** — `node datas.js` har bir modulning `patient_context` / `final_challenge_context` ustuniga Word dialogidan qurilgan JSON yozadi (`role_play`, `patient_profile`, `medical_condition`, `expected_doctor_questions_and_answers`, `questions_to_ask_doctor`). U bo'lsa — **API chaqiruvisiz, darhol** ishlatiladi.
+2. **Erkin matn** (admin panelda qo'lda yozilgan modul) — Gemini `responseMimeType: application/json` bilan ssenariy generatsiya qiladi.
+3. Gemini ishlamasa — matnning o'zidan **umumiy ssenariy** tuziladi (dental emas).
+
+`buildPatientSystemInstruction` endi `role_play` va `setting` ni hisobga oladi: hamshiralik yo'nalishida talaba **NURSE**, pediatriyada AI **ota-ona** (bola haqida 3-shaxsda gapiradi). Bu funksiya `liveAudio.service.js` (WebSocket ovozli suhbat) uchun ham umumiy.
+
+**Offline fallback** (`getContextualPatientFallback`): Gemini javob bermasa, talaba savoli ssenariydagi `expected_doctor_questions_and_answers` bilan so'z mosligi bo'yicha solishtiriladi va eng yaqin `patient_answer` qaytariladi; salomlashuvga — `chief_complaint`, "how long" ga — `duration`. Shu tufayli barcha yo'nalishlarda AI kalitsiz ham mazmunli mashq qilish mumkin.
+
+Ssenariy qanday quriladi — [`17_data_pipeline_datas_json.md`](./17_data_pipeline_datas_json.md), 5.4-bo'lim.

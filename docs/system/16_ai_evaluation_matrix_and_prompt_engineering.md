@@ -1,6 +1,6 @@
 # Virtual Patient English — AI Baholash Mezonlari va Prompt Muhandisligi
 
-Ushbu hujjat **Virtual Patient English** platformasidagi Sun'iy Intellekt (Gemini AI / OpenAI GPT-4o) tizimli promptlari, baholash mezonlari hamda strukturalangan JSON javob sxemalarini batafsil belgilaydi.
+Ushbu hujjat **Virtual Patient English** platformasidagi Sun'iy Intellekt (Google Gemini AI) tizimli promptlari, baholash mezonlari hamda strukturalangan JSON javob sxemalarini batafsil belgilaydi.
 
 ---
 

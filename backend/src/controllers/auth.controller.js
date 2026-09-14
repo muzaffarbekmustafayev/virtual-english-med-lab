@@ -37,7 +37,7 @@ const login = async (req, res) => {
     const user = await User.findOne({
       where: { email },
       include: [
-        { model: Specialty,    as: 'specialty', attributes: ['id', 'name'] },
+        { model: Specialty,    as: 'specialty', attributes: ['id', 'name', 'name_uz', 'name_ru', 'name_en', 'code', 'icon', 'student_role'] },
         { model: StudentGroup, as: 'group',     attributes: ['id', 'name'] },
       ],
     });
@@ -66,7 +66,7 @@ const getMe = async (req, res) => {
     const user = await User.findByPk(req.user.id, {
       attributes: { exclude: ['password_hash'] },
       include: [
-        { model: Specialty,    as: 'specialty', attributes: ['id', 'name'] },
+        { model: Specialty,    as: 'specialty', attributes: ['id', 'name', 'name_uz', 'name_ru', 'name_en', 'code', 'icon', 'student_role'] },
         { model: StudentGroup, as: 'group',     attributes: ['id', 'name'] },
       ],
     });
@@ -99,7 +99,7 @@ const updateProfile = async (req, res) => {
     const updatedUser = await User.findByPk(user.id, {
       attributes: { exclude: ['password_hash'] },
       include: [
-        { model: Specialty,    as: 'specialty', attributes: ['id', 'name'] },
+        { model: Specialty,    as: 'specialty', attributes: ['id', 'name', 'name_uz', 'name_ru', 'name_en', 'code', 'icon', 'student_role'] },
         { model: StudentGroup, as: 'group',     attributes: ['id', 'name'] },
       ],
     });

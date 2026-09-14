@@ -20,7 +20,7 @@
 
 ## 📌 Loyiha Haqida (Project Overview)
 
-**Virtual Patient English** — tibbiyot va stomatologiya oliy ta'lim muassasalari talabalari uchun yaratilgan, sun'iy intellekt (Google Gemini AI / OpenAI) asosidagi **interaktiv klinik ingliz tili muloqot simulyatori**.
+**Virtual Patient English** — tibbiyot oliy ta'lim muassasalarining **5 ta yo'nalishi** (Davolash ishi, Stomatologiya, Pediatriya ishi, Hamshiralik ishi, Tez tibbiy yordam) talabalari uchun yaratilgan, sun'iy intellekt (Google Gemini AI) asosidagi **interaktiv klinik ingliz tili muloqot simulyatori**. Har bir talaba faqat o'z yo'nalishidagi modullar va shu yo'nalishga mos virtual bemor bilan ishlaydi.
 
 Platforma talabalarga haqiqiy xorijiy bemorlar bilan xavfsiz, virtual muhitda muloqot qilish, kasallik tarixini to'plash (anamnez), klinik etika me'yorlariga rioya etish va kasbiy leksikani amaliyotda qo'llash imkonini beradi. Har bir simulyatsiya yakunida AI talabaning grammatikasi, tibbiy terminologiyasi, ravonligi, talaffuzi va klinik etikasini 100 ballik shkala bo'yicha ko'p omilli baholaydi.
 
@@ -29,7 +29,7 @@ Platforma talabalarga haqiqiy xorijiy bemorlar bilan xavfsiz, virtual muhitda mu
 ## 🚀 Asosiy Imkoniyatlar (Key Features)
 
 ### 👨‍🎓 1. Talaba Portali (Student Portal)
-- **10 ta Stomatologik Modul**: Har biri alohida klinik holat, shikoyatlar va anamnezga ega ssenariylar.
+- **Yo'nalishga mos modullar**: 4 ta faol yo'nalish × 10 modul (+18 ta hamshiralik moduli tayyorlanmoqda) — har biri Word fayllardagi haqiqiy klinik dialog, grammatika, lug'at va iboralardan qurilgan.
 - **6 Bosqichli 90 Daqiqalik O'quv Sikli**:
   1. 📖 **Vocabulary**: Audio talaffuz va o'zbekcha tarjimali maxsus tibbiy atamalar.
   2. 💬 **Smart Phrasebook**: Anamnez olish, tekshirish va tavsiya berish uchun shpargalka iboralar.
@@ -56,20 +56,27 @@ Platforma talabalarga haqiqiy xorijiy bemorlar bilan xavfsiz, virtual muhitda mu
 
 ---
 
-## 🦷 10 ta Stomatologik O'quv Modullari
+## 🏥 Yo'nalishlar va O'quv Modullari
 
-| № | Modul Nomi | Klinik Ssenariy | Asosiy Leksika |
-|---|:---|:---|:---|
-| **01** | **Dental Pain Assessment** | O'tkir tish og'rig'i, davomiyligi va triggerlarini aniqlash | *Throbbing, radiating, sensitivity, percussion* |
-| **02** | **Caries & Restorative Care** | Karies diagnostikasi va plomba variantlarini tushuntirish | *Enamel, composite, filling, restorative* |
-| **03** | **Periodontal Evaluation** | Milklarning qonashi, gingivit va paradontit tekshiruvi | *Bleeding on probing, plaque, calculus, pocket depth* |
-| **04** | **Tooth Extraction & Surgery** | Tish oldirishga tayyorgarlik va behushlik qilish | *Extraction, local anesthesia, forceps, elevator* |
-| **05** | **Dental Abscess & Infection** | Yiringli yallig'lanish, shish va antibiotik terapiyasi | *Swelling, drainage, infection, antibiotics* |
-| **06** | **Orthodontic Consultation** | Tish qatorini to'g'rilash va breketlar bo'yicha konsultatsiya | *Malocclusion, braces, aligners, crowding* |
-| **07** | **Prosthodontics & Crowns** | Protezlash, toj qoplamalar va ko'priksimon protezlar | *Crown, bridge, abutment, impression* |
-| **08** | **Dental Trauma & Emergency** | Shikastlangan tishlar, travma va shoshilinch yordam | *Subluxation, avulsion, splinting, trauma* |
-| **09** | **Pediatric Dental Patient** | Bolalar bilan muloqot va ota-onaga gigiyena tavsiyalari | *Primary teeth, fissure sealant, dental phobia* |
-| **10** | **Post-Operative Care** | Operatsiyadan keyingi parvarish va asoratlarni oldini olish | *Dry socket, gauze, ice pack, soft diet* |
+| # | Yo'nalish | Kod | Modullar | Namunaviy mavzular | Holat |
+|---|:---|:---|:-:|:---|:---|
+| 1 | 🩺 **Davolash ishi** (General Medicine) | `GEN_MED` | 10 | Clinical Consultation, Acute Chest Pain & ACS, Asthma Exacerbation, Type 2 Diabetes, Acute Stroke, Sepsis, Acute Abdomen, UTI & Pyelonephritis, Anemia, Full Consultation | ✅ |
+| 2 | 🦷 **Stomatologiya** (Stomatology) | `STOM` | 10 | Dental Pain & Sensitivity, Tooth Extraction, Toothache & Pulpitis, Dental Abscess, Caries, Gum Problems, Impacted Wisdom Tooth, Dental Emergency, Restoration & Prosthetics, Full Dental Consultation | ✅ |
+| 3 | 👶 **Pediatriya ishi** (Pediatrics) | `PED` | 10 | Newborn Care, Fever & Cough, Vomiting & Dehydration, Childhood Infections & Rashes, Vaccination, Growth & Nutrition, Neurological Problems, Allergies & Asthma, Pediatric Emergencies, Abdominal Pain & Constipation | ✅ |
+| 4 | 💉 **Hamshiralik ishi** (Nursing) | `NURSING` | 18 | Patient Admission, Vital Signs, Medication Safety, Wound Care, Pain, Oxygen Therapy, Emergency Nursing, Discharge Planning, Stroke, AKI, GI Bleeding, Heart Failure … | ⏸ tayyor emas |
+| 5 | 🚑 **Tez tibbiy yordam** (First Aid / Emergency Medicine) | `FIRST_AID` | 10 | DKA, Seizures & Status Epilepticus, Urinary Retention & AKI, Burns, Anaphylaxis, Acute Abdomen, Sepsis, Trauma & Hemorrhagic Shock, Syncope, Intoxication & Overdose | ✅ |
+
+Har bir modul 7 bosqichdan iborat: **Grammatika → Lug'at (IPA) → Smart Phrasebook (+ namunaviy dialog) → Bo'sh joy mashqi → Test → Virtual bemor → Natijalar**. To'liq ro'yxat: [`docs/system/18_specialties_and_curricula.md`](./docs/system/18_specialties_and_curricula.md).
+
+### 📥 Kontent qayerdan keladi?
+
+`datas/` papkasidagi Word fayllar (`<Yo'nalish>/MODULE n/` — dialog, grammatika, lug'at) → `backend/scripts/build_datas.js` → `datas/datas.json` → **`node datas.js`** → MySQL. Serverda faqat bitta buyruq kerak:
+
+```bash
+cd backend && node datas.js
+```
+
+Batafsil: [`docs/system/17_data_pipeline_datas_json.md`](./docs/system/17_data_pipeline_datas_json.md).
 
 ---
 
@@ -131,7 +138,7 @@ $$\text{Umumiy Ball (100)} = \text{Grammar (25)} + \text{Vocabulary (25)} + \tex
 | :---: | :---: |
 | ![Login](screenshots/01_login.png) | ![Student Dashboard](screenshots/03_student_dashboard.png) |
 
-| 10 ta Stomatologik Modul | Virtual Bemor Simulyatori |
+| Yo'nalish Modullari | Virtual Bemor Simulyatori |
 | :---: | :---: |
 | ![Student Modules](screenshots/04_student_modules.png) | ![Module Detail](screenshots/05_student_module_detail.png) |
 
@@ -186,15 +193,17 @@ Barcha batafsil texnik va pedagogik qo'llanmalar [`docs/system/`](./docs/system/
 | 05 | [`05_api_endpoints.md`](./docs/system/05_api_endpoints.md) | REST API marshrutlari, parametrlar va status kodlar |
 | 06 | [`06_ai_integration.md`](./docs/system/06_ai_integration.md) | Gemini AI ulanishi, tizim promptlari va JSON formatlari |
 | 07 | [`07_frontend_architecture.md`](./docs/system/07_frontend_architecture.md) | React komponentlar tuzilmasi va holat boshqaruvi |
-| 08 | [`08_modules_and_content.md`](./docs/system/08_modules_and_content.md) | Stomatologik modullar kontenti va ma'lumotlar strukturasi |
+| 08 | [`08_modules_and_content.md`](./docs/system/08_modules_and_content.md) | Modullar va kontent sxemasi (5 yo'nalish), virtual bemor ssenariysi |
 | 09 | [`09_security_and_auth.md`](./docs/system/09_security_and_auth.md) | JWT, bcrypt, CORS, Role guards va xavfsizlik himoyasi |
 | 10 | [`10_deployment_and_setup.md`](./docs/system/10_deployment_and_setup.md) | Nginx, PM2, SSL sertifikati va ishlab chiqarish konfiguratsiyasi |
 | 11 | [`11_admin_panel_functions.md`](./docs/system/11_admin_panel_functions.md) | Admin paneli funksiyalari, foydalanuvchilar va kontent menejeri |
-| 12 | [`12_curriculum_and_10_dental_modules.md`](./docs/system/12_curriculum_and_10_dental_modules.md) | 10 ta stomatologik modulning to'liq klinik o'quv dasturi |
+| 12 | [`12_curriculum_and_10_dental_modules.md`](./docs/system/12_curriculum_and_10_dental_modules.md) | Stomatologiya modullarining klinik o'quv dasturi (namunaviy yo'nalish) |
 | 13 | [`13_90_minute_pedagogical_cycle.md`](./docs/system/13_90_minute_pedagogical_cycle.md) | 6 bosqichli dars sikli va vaqt taqsimoti |
 | 14 | [`14_speech_and_voice_processing.md`](./docs/system/14_speech_and_voice_processing.md) | Ovozli muloqot, nutqni matnga o'girish (STT) va TTS texnologiyalari |
 | 15 | [`15_business_pricing_and_roadmap.md`](./docs/system/15_business_pricing_and_roadmap.md) | Tijorat paketlari, narxlar va rivojlanish rejasi |
 | 16 | [`16_ai_evaluation_matrix_and_prompt_engineering.md`](./docs/system/16_ai_evaluation_matrix_and_prompt_engineering.md) | AI prompt injiniringi va ko'p faktorli baholash rubrikalari |
+| 17 | [`17_data_pipeline_datas_json.md`](./docs/system/17_data_pipeline_datas_json.md) | Kontent konveyeri: Word → `datas.json` → `node datas.js` → MySQL |
+| 18 | [`18_specialties_and_curricula.md`](./docs/system/18_specialties_and_curricula.md) | 5 ta yo'nalish, kodlar va 58 ta modul ro'yxati |
 
 ---
 
@@ -230,9 +239,9 @@ npm install
 # JWT_SECRET=your_super_jwt_secret_key_here
 # GEMINI_API_KEY=your_gemini_api_key_here
 
-# Ma'lumotlar bazasini yaratish va dastlabki ma'lumotlarni yuklash:
+# Ma'lumotlar bazasini yaratish va o'quv kontentini yuklash:
 node create-db.js
-npm run seed
+node datas.js          # datas/datas.json → yo'nalishlar, modullar, lug'at, iboralar, grammatika, testlar
 
 # Serverni ishga tushirish (Development rejimi):
 npm run dev
@@ -258,9 +267,11 @@ Brauzeringizda quyidagi manzilni oching:
 
 | Rol | Email | Parol | Ruxsatlar |
 |:---|:---|:---|:---|
-| **Admin** | `admin@med.uz` | `admin123` | To'liq tizim boshqaruvi, foydalanuvchilar va kontent CRUD |
-| **Teacher** | `teacher@med.uz` | `teacher123` | Guruhlar monitoringi, talabalar natijalari va Excel eksport |
-| **Student** | `student@med.uz` | `student123` | 10 ta modul, AI suhbat, grammatika tekshiruvi va forum |
+| **Admin** | `admin@gmail.com` | `admin123` | To'liq tizim boshqaruvi, foydalanuvchilar va kontent CRUD |
+| **Teacher** | `teacher@vpe.uz` | `teacher123` | Guruhlar monitoringi, talabalar natijalari va Excel eksport |
+| **Student** | `student@vpe.uz` | `student123` | O'z yo'nalishidagi modullar, AI suhbat, grammatika tekshiruvi va forum |
+
+*(server birinchi ishga tushganda avtomatik yaratiladi — `initDb.service.js`)*
 
 ---
 
@@ -275,7 +286,8 @@ Brauzeringizda quyidagi manzilni oching:
    ```bash
    cd ../backend
    npm install -g pm2
-   pm2 start src/server.js --name "virtual-med-backend"
+   node datas.js                       # o'quv kontentini bazaga yuklash
+   pm2 start server.js --name "virtual-med-backend"
    ```
 3. **Nginx orqali teskari proksi (Reverse Proxy) va SSL (Certbot)** orqali xavfsiz ulanishni ta'minlang.
 

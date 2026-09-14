@@ -1,0 +1,45 @@
+{
+  "_comment": "Qo'lda yozilgan qo'shimcha kontent. build_datas.js bu faylni docx fayllardan olingan ma'lumotlarga QO'SHADI. Kalitlar: grammar[], vocabulary[], phrasebook[], tests[].",
+  "grammar": [
+    {
+      "title": "Direct Imperatives for Emergency First Aid & Dental Trauma Instructions",
+      "title_uz": "Shoshilinch Birinchi Yordam Ko'rsatishda Buyruq Mayli (Direct Imperatives)",
+      "title_ru": "Повелительное Наклонение (Imperatives) для Экстренной Помощи при Травме",
+      "structure_pattern": "[Base Verb] + [Object]! | Do not + [Base Verb] + [Object]!",
+      "structure_pattern_uz": "[Asosiy fe'l] + [To'ldiruvchi]! | Do not + [Asosiy fe'l]!",
+      "structure_pattern_ru": "[Начальная форма глагола]! | Do not + [Глагол]!",
+      "structure_pattern_en": "[Base Verb] + [Object]! | Do not + [Base Verb] + [Object]!",
+      "rule_explanation_uz": "Shoshilinch tish travmalarida (tish tushib ketganda yoki singanda) bemor yoki ota-onaga tezkor yo'l-yo'riq berishda Buyruq mayli (fe'lning o'zi yoki Do not + fe'l) qo'llaniladi.",
+      "rule_explanation_ru": "При травме зуба четкие экстренные инструкции даются в повелительном наклонении (глагол без подлежащего или Do not + глагол).",
+      "rule_explanation_en": "Emergency instructions must be concise and immediate using base imperative forms.",
+      "examples": [
+        {
+          "sentence": "Do not touch or scrape the root surface of the knocked-out tooth.",
+          "translation_uz": "Tushib ketgan tishning ildiz yuzasiga tegmang va uni qirmang.",
+          "translation_ru": "Не прикасайтесь и не соскабливайте поверхность корня выбитого зуба.",
+          "note": "Trauma preservation rule",
+          "note_uz": "Qat'iy taqiq (Periodont tolasini saqlash)",
+          "note_ru": "Категорический запрет при травме"
+        },
+        {
+          "sentence": "Place the tooth in cold milk or saline solution and bring it to our clinic immediately.",
+          "translation_uz": "Tishni sovuq sutga yoki sho'r eritmaga soling va zudlik bilan klinikamizga olib keling.",
+          "translation_ru": "Поместите зуб в холодное молоко или физраствор и немедленно доставьте в клинику.",
+          "note": "Emergency action directive",
+          "note_uz": "Tezkor amaliy ko'rsatma",
+          "note_ru": "Неотложное руководство к действию"
+        }
+      ],
+      "common_mistakes": [
+        {
+          "incorrect": "You should not touching the tooth root.",
+          "correct": "Do not touch the tooth root.",
+          "explanation": "Shoshilinch holatda aniq va keskin buyruq: 'Do not + fe'lning 1-shakli'.",
+          "explanation_uz": "Shoshilinch holatda aniq va keskin buyruq: 'Do not + fe'lning 1-shakli'.",
+          "explanation_ru": "В экстренной ситуации используется прямой запрет: 'Do not touch'.",
+          "explanation_en": "Use the clear, concise imperative 'Do not touch' in emergencies."
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,8 @@
-# Virtual Patient English — 10 ta Stomatologik O'quv Moduli va O'quv Dasturi
+# Virtual Patient English — Stomatologiya O'quv Modullari va O'quv Dasturi
 
-Ushbu hujjat **Virtual Patient English** platformasidagi 10 ta Stomatologik O'quv Modulining to'liq o'quv dasturi, klinik ssenariylari, bemor konteksti (AI prompts), yordamchi iboralar (Phrasebook), lug'at boyligi va baholash mezonlarini o'z ichiga oladi.
+> **Eslatma (2026-09):** bu hujjat Stomatologiya yo'nalishi (`STOM`) o'quv dasturini namunaviy tarzda batafsil yoritadi. Bazadagi joriy modul nomlari va barcha 5 ta yo'nalish (Davolash ishi, Stomatologiya, Pediatriya, Hamshiralik, Tez tibbiy yordam) ro'yxati — [`18_specialties_and_curricula.md`](./18_specialties_and_curricula.md). Kontent Word fayllardan `node datas.js` orqali yuklanadi ([`17_data_pipeline_datas_json.md`](./17_data_pipeline_datas_json.md)).
+
+Ushbu hujjat **Virtual Patient English** platformasidagi Stomatologiya mutaxassisligi bo'yicha 10 ta O'quv Modulining to'liq o'quv dasturi, klinik ssenariylari, bemor konteksti (AI prompts), yordamchi iboralar (Phrasebook), lug'at boyligi va baholash mezonlarini o'z ichiga oladi.
 
 ---
 
@@ -9,13 +11,13 @@ Ushbu hujjat **Virtual Patient English** platformasidagi 10 ta Stomatologik O'qu
 Platformaning birinchi bosqichi **Stomatologiya (Dentistry)** mutaxassisligi talabalari uchun mo'ljallangan bo'lib, 10 ta ketma-ket joylashgan moduldan iborat. Har bir modul 90 daqiqalik to'liq amaliy dars siklini tashkil etadi.
 
 ```
-[Modul 1: Dental Pain & Sensitivity] ➔ [Modul 2: Tooth Extraction] ➔ [Modul 3: Toothache]
+[Modul 1: Dental Pain & Sensitivity] ➔ [Modul 2: Tooth Extraction Consultation] ➔ [Modul 3: Toothache]
                                                                             ↓
-[Modul 6: Gum Problems] ↵ [Modul 5: Dental Caries] ↵ [Modul 4: Dental Abscess]
+[Modul 6: Gum Problems] ↵ [Modul 5: Dental Caries & Restorations] ↵ [Modul 4: Dental Abscess & Swelling]
         ↓
-[Modul 7: Impacted Wisdom Tooth] ➔ [Modul 8: Dental Emergency] ➔ [Modul 9: Restoration & Prosthetics]
+[Modul 7: Impacted Wisdom Tooth] ➔ [Modul 8: Dental Emergency] ➔ [Modul 9: Prosthodontics & Crown Restoration]
                                                                             ↓
-                                                [Modul 10: Full Dental Consultation (Final)]
+                                                [Modul 10: Comprehensive Dental Consultation (Final)]
 ```
 
 ---
@@ -40,13 +42,13 @@ Platformaning birinchi bosqichi **Stomatologiya (Dentistry)** mutaxassisligi tal
 - **Final Challenge Bemor ssenariysi:** Maria Santos, 40 yoshli hamshira. 5 kundan beri og'riq bor. Yuzning chap tomonida shish va subfebril harorat (37.8°C) kuzatilmoqda. Antibiyotik kerakligi haqida so'raydi.
 - **Lug'at (Vocabulary):** Pulpitis, Irreversible, Throbbing pain, Spontaneous, Radiating pain, Analgesic, Inflammation, Root canal, Percussion sensitivity, Thermal test.
 
-### 4-Modul: Dental Abscess (Tish abstsessini aniqlash va infeksiya)
+### 4-Modul: Dental Abscess & Swelling (Tish abstsessi va yuz shishi)
 - **Klinik kontekst:** Yuzning o'ng tomonida 4 kundan beri kuchli og'riq va yuz shishi. Isitma 38.5°C va umumiy holsizlik.
 - **Bemor roli:** Tom Johnson, 38 yoshli oshpaz. Buzilgan tishini oylab e'tiborsiz qoldirgan. Infeksiya xavfliligi haqida tashvishda.
 - **Final Challenge Bemor ssenariysi:** Anna Petrov, 55 yoshli nafaqaxo'r o'qituvchi. Jag' ostida katta shish bor, og'izni to'liq ocha olmaydi (trismus). Qandli diabet (2-tip) bor.
 - **Lug'at (Vocabulary):** Abscess, Infection, Pus, Swelling, Fever, Antibiotics, Drainage, Cellulitis, Lymph node, Trismus.
 
-### 5-Modul: Dental Caries (Karies tashxisi va profilaktika)
+### 5-Modul: Dental Caries & Restorations (Karies tashxisi va restoratsiya)
 - **Klinik kontekst:** Tishda to'q dog' va shirinlikka nisbatan biroz sezuvchanlik. Karies muolajasi va plomba qo'yish jarayoni.
 - **Bemor roli:** Lucy Chen, 24 yoshli grafik dizayner. Birinchi marta karies aniqlangani uchun hayron. Plomba turlari va profilaktika haqida so'raydi.
 - **Final Challenge Bemor ssenariysi:** Michael Torres, 16 yoshli o'quvchi va uning onasi. 4 ta tishda karies aniqlangan. Gazli ichimliklar kop ichadi. Talaba ham o'smir, ham ona bilan muloqot qilishi kerak.
@@ -70,13 +72,13 @@ Platformaning birinchi bosqichi **Stomatologiya (Dentistry)** mutaxassisligi tal
 - **Final Challenge Bemor ssenariysi:** Rachel Green va uning 8 yoshli farzandi. Bola velosipeddan yiqilib, old tishi uchgan va labi shishgan. Talaba yig'layotgan bola va vahimadagi ona bilan baravar muloqot qilishi shart.
 - **Lug'at (Vocabulary):** Trauma, Avulsion, Reimplantation, Fracture, Chipped tooth, Emergency care, Splinting, Soft tissue injury, Ice pack, Immediate treatment.
 
-### 9-Modul: Dental Restoration & Prosthetics (Tish protezlash va implantologiya)
+### 9-Modul: Prosthodontics & Crown Restoration (Protezlash va crown restoratsiya)
 - **Klinik kontekst:** Pastki o'ng tomonda 2 ta tish yo'q. Yechiladigan protezdan charchagan, implantlar va qoplamalar haqida so'raydi.
 - **Bemor roli:** Barbara Taylor, 58 yoshli ijrochi direktor. Narxi, davomiyligi, muvaffaqiyat darajasi va diabetining ta'siri haqida so'raydi.
 - **Final Challenge Bemor ssenariysi:** Frank Robinson, 65 yoshli bemor. Yuqori jag'ga to'liq protez kerak. Osteoporoz uchun bisfosfonatlar qabul qiladi.
 - **Lug'at (Vocabulary):** Dental implant, Crown, Bridge, Denture, Osseointegration, Abutment, Prosthesis, Impression, Bone graft, Chewing function.
 
-### 10-Modul: Full Dental Consultation (To'liq murakkab klinik konsultatsiya)
+### 10-Modul: Comprehensive Dental Consultation (To'liq murakkab klinik konsultatsiya)
 - **Klinik kontekst:** Bir nechta parallel patologiyalarga ega murakkab bemor ssenariysi (Pulpit, milk qonashi, singan tish, allergik status).
 - **Bemor roli:** Margaret Thompson, 50 yoshli bemor. Gipertoniya va penitsillinga allergiyasi bor.
 - **Final Challenge Bemor ssenariysi:** Jonathan Harris, 42 yoshli bemor. Stomatofobiya (dentistdan dahshatli qo'rqish) tufayli 10 yildan beri shifokorga bormagan. VICh-pozitiv statusga ega. Talaba empatik muloqot va to'liq davolash rejasini ingliz tilida tuzishi kerak.

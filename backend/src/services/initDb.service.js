@@ -1,5 +1,35 @@
 const bcrypt = require('bcryptjs');
 const { User, Specialty, StudentGroup } = require('../models');
+const { specialties: SPECIALTIES } = require('../../scripts/config');
+
+const LEGACY_NAMES = {
+  STOM:      ['stomatologiya', 'stomatology', 'dentistry'],
+  GEN_MED:   ['davolash ishi', 'general medicine'],
+  PED:       ['pediatriya ishi', 'pediatriya', 'pediatrics'],
+  NURSING:   ['hamshiralik ishi', 'nursing', 'nursery'],
+  FIRST_AID: ['tez tibbiy yordam', 'first aid', 'emergency medicine'],
+};
+
+/**
+ * Makes sure all 5 yo'nalish rows exist (matched by code, or by legacy name for
+ * databases created before the code column existed). Module content itself is
+ * loaded with `node datas.js`.
+ */
+async function ensureSpecialties() {
+  let hasCode = true;
+  try { await Specialty.findOne({ where: { code: 'STOM' }, attributes: ['id'] }); } catch (_) { hasCode = false; }
+  const rows = await Specialty.findAll(hasCode ? {} : { attributes: ['id', 'name', 'name_uz', 'name_ru', 'name_en'] });
+  for (const spec of SPECIALTIES) {
+    const names = LEGACY_NAMES[spec.code] || [];
+    let row = hasCode ? rows.find(r => r.code === spec.code) : null;
+    if (!row) row = rows.find(r => (!hasCode || !r.code) && [r.name, r.name_uz, r.name_en].filter(Boolean).some(n => names.includes(String(n).trim().toLowerCase())));
+    const values = { name: spec.name, name_uz: spec.name_uz, name_ru: spec.name_ru, name_en: spec.name_en };
+    if (hasCode) Object.assign(values, { code: spec.code, icon: spec.icon, student_role: spec.student_role });
+    if (row) { if (hasCode && !row.code) await row.update(values); }
+    else { row = await Specialty.create(values); rows.push(row); console.log(`🏥 [HOST READY] Yo'nalish yaratildi: ${spec.name} (${spec.code})`); }
+  }
+  return rows;
+}
 
 /**
  * Ensures system baseline accounts and essential data exist on every boot (Production / Host ready).
@@ -29,17 +59,9 @@ async function ensureDefaultSeedData() {
       }
     }
 
-    // 2. Ensure baseline Specialty (Stomatologiya)
-    let specialty = await Specialty.findOne();
-    if (!specialty) {
-      specialty = await Specialty.create({
-        name: 'Stomatologiya',
-        code: 'STOM',
-        description: 'Tish kasalliklari, profilaktikasi va davolash',
-        icon: '🦷',
-      });
-      console.log('🏥 [HOST READY] Boshlang\'ich mutaxassislik yaratildi: Stomatologiya');
-    }
+    // 2. Ensure the 5 specialties (yo'nalishlar) exist — module content is loaded with `node datas.js`
+    const specialties = await ensureSpecialties();
+    const specialty = specialties.find(s => s.code === 'STOM' || /stomatolog/i.test(s.name || '')) || specialties[0];
 
     // 3. Ensure baseline Student Group
     let group = await StudentGroup.findOne();

@@ -12,6 +12,10 @@ const Phrasebook = sequelize.define('Phrasebook', {
   translation_uz: { type: DataTypes.STRING(255), allowNull: true },
   translation_ru: { type: DataTypes.STRING(255), allowNull: true },
   translation_en: { type: DataTypes.STRING(255), allowNull: true },
+  pronunciation:  { type: DataTypes.STRING(255), allowNull: true },   // IPA transkripsiya
+  patient_response:    { type: DataTypes.TEXT, allowNull: true },     // bemorning namunaviy javobi (ingliz)
+  patient_response_uz: { type: DataTypes.TEXT, allowNull: true },
+  patient_response_ru: { type: DataTypes.TEXT, allowNull: true },
   step_order:     { type: DataTypes.INTEGER, defaultValue: 1 },
 }, { tableName: 'phrasebook', timestamps: true, createdAt: 'created_at', updatedAt: false });
 

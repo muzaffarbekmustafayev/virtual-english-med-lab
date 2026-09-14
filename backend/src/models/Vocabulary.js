@@ -14,6 +14,7 @@ const Vocabulary = sequelize.define('Vocabulary', {
   definition_ru:  { type: DataTypes.TEXT, allowNull: true },
   definition_en:  { type: DataTypes.TEXT, allowNull: true },
   example:        { type: DataTypes.TEXT, allowNull: true },
+  pronunciation:  { type: DataTypes.STRING(255), allowNull: true },   // IPA transkripsiya, masalan /ˈfiːvə/
   audio_url:      { type: DataTypes.STRING(255), allowNull: true },
 }, { tableName: 'vocabulary', timestamps: true, createdAt: 'created_at', updatedAt: false });
 

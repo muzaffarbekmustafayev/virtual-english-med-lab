@@ -1,0 +1,45 @@
+{
+  "_comment": "Qo'lda yozilgan qo'shimcha kontent. build_datas.js bu faylni docx fayllardan olingan ma'lumotlarga QO'SHADI. Kalitlar: grammar[], vocabulary[], phrasebook[], tests[].",
+  "grammar": [
+    {
+      "title": "Indirect & Polite Question Formulations in Comprehensive Consultations",
+      "title_uz": "To'liq Konsultatsiyada Bilvosita va Xushmuomala Savol Shakllari",
+      "title_ru": "Косвенные и Вежливые Вопросы при Полной Консультации",
+      "structure_pattern": "Could you please tell me + if / what / when + [Subject + Verb]? | Would you mind describing + [Symptom]?",
+      "structure_pattern_uz": "Could you please tell me + if / what + [Ega + Fe'l]? | Would you mind describing + [Simptom]?",
+      "structure_pattern_ru": "Could you please tell me + if / what + [Подлежащее + Глагол]? | Would you mind describing + [Симптом]?",
+      "structure_pattern_en": "Could you please tell me + if / what / when + [Subject + Verb]? | Would you mind describing + [Symptom]?",
+      "rule_explanation_uz": "Katta konsultatsiyada umumiy kasalliklar, allergiyalar va bemorning xavotirlari haqida so'rashda to'g'ridan-to'g'ri keskin savol o'rniga 'Could you tell me if...', 'Would you mind sharing...' kabi xushmuomala kirish iboralari qo'llaniladi.",
+      "rule_explanation_ru": "Вежливые вводные фразы ('Could you tell me...', 'Would you mind...') помогают деликатно собрать подробный медицинский и аллергологический анамнез.",
+      "rule_explanation_en": "Indirect polite questions create trust and comfort when assessing medical history and dental anxiety.",
+      "examples": [
+        {
+          "sentence": "Could you please tell me if you have any history of hypertension or diabetes?",
+          "translation_uz": "Sizda qon bosimi ko'tarilishi yoki qandli diabet bo'lganmi, aytib bera olasizmi?",
+          "translation_ru": "Не могли бы вы сказать, есть ли у вас в анамнезе гипертония или сахарный диабет?",
+          "note": "Polite systemic screening",
+          "note_uz": "Xushmuomala umumiy anamnez so'rovi",
+          "note_ru": "Вежливый сбор соматического анамнеза"
+        },
+        {
+          "sentence": "Would you mind sharing what specific dental procedures make you feel most anxious?",
+          "translation_uz": "Aynan qaysi stomatologik muolajalar sizda ko'proq xavotir uyg'otishini aytib bera olasizmi?",
+          "translation_ru": "Не могли бы вы поделиться, какие именно стоматологические процедуры вызывают у вас наибольшее беспокойство?",
+          "note": "Gentle dental anxiety evaluation",
+          "note_uz": "Stomatofobiyani muloyim aniqlash",
+          "note_ru": "Деликатная оценка дентофобии"
+        }
+      ],
+      "common_mistakes": [
+        {
+          "incorrect": "Could you tell me what is your allergy?",
+          "correct": "Could you tell me what your allergy is?",
+          "explanation": "Bilvosita savollarda so'z tartibi to'g'ri darak gap kabi bo'ladi (Ega + Fe'l).",
+          "explanation_uz": "Bilvosita savollarda so'z tartibi to'g'ri darak gap kabi bo'ladi (Ega + Fe'l).",
+          "explanation_ru": "В косвенных вопросах сохраняется прямой порядок слов: сначала подлежащее, затем глагол.",
+          "explanation_en": "Indirect questions require normal statement word order (Subject before Verb)."
+        }
+      ]
+    }
+  ]
+}

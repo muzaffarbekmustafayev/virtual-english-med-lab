@@ -117,7 +117,7 @@ Admin tizimning barcha qismlarini nazorat qiladi: foydalanuvchilar, guruhlar, ko
 #### Kontent Boshqaruvi (Content Manager)
 | Imkoniyat | Tavsif |
 |-----------|--------|
-| **Module Scenarios** | 10 ta modul uchun AI-bemor ssenariyini (Patient Context) va Final Challenge ssenariyini vizual tahrirlash. GPT modelining xulq-atvorini belgilovchi system prompt ni sozlash |
+| **Module Scenarios** | Har bir modul uchun AI-bemor ssenariyini (Patient Context) va Final Challenge ssenariyini vizual tahrirlash. Gemini modelining xulq-atvorini belgilovchi system prompt ni sozlash |
 | **Vocabulary (Lug'at)** | Yangi tibbiy so'z qo'shish: so'z, tarjima, ta'rif, misol gap, MP3 audio talaffuz fayli. Mavjud so'zlarni tahrirlash va o'chirish |
 | **Smart Phrasebook** | Dialogda ishlatiluvchi tayyor iboralarni qo'shish, kategoriyalash (masalan: "Asking about pain", "Explaining treatment") va step tartibini belgilash |
 | **Module Quizzes** | Har bir modul uchun 4 variantli test savollarini (A, B, C, D) va to'g'ri javob kalitini kiritish, tahrirlash |
@@ -126,8 +126,8 @@ Admin tizimning barcha qismlarini nazorat qiladi: foydalanuvchilar, guruhlar, ko
 | Imkoniyat | Tavsif |
 |-----------|--------|
 | **System Overview** | Jami foydalanuvchilar, modullar, faol sessiyalar soni ko'rsatkichi |
-| **OpenAI API monitoring** | GPT va Whisper API xarajatlarini (dollarda) so'rovlar kesimida kuzatish |
-| **API kalitlari** | OpenAI API kalit va model parametrlarini sozlash |
+| **Gemini API monitoring** | Gemini API xarajatlarini (dollarda) so'rovlar kesimida kuzatish |
+| **API kalitlari** | Gemini API kalit va model parametrlarini sozlash |
 | **Server loglari** | Ma'lumotlar bazasi holati va tizim loglari |
 | **Hujjatlar yuklash** | Tizim uchun uslubiy qo'llanmalar va rasmiy hujjatlarni yuklash va boshqarish |
 

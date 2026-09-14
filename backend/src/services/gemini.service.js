@@ -13,45 +13,37 @@ const client = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
  * @param {string} studentMessage  - Talabaning so'nggi xabari
  * @returns {string} - AI bemor javobi
  */
-function getContextualPatientFallback(studentMessage, scenarioObj) {
+/**
+ * Offline fallback used when Gemini is unavailable: answer from the module's own
+ * reference dialogue (expected_doctor_questions_and_answers in the scenario) by
+ * picking the reference question that overlaps most with what the student asked.
+ */
+const STOP_WORDS = new Set(['the', 'and', 'you', 'your', 'are', 'have', 'has', 'had', 'been', 'any', 'did', 'does', 'was', 'were', 'what', 'when', 'where', 'how', 'that', 'this', 'with', 'for', 'about', 'can', 'could', 'would', 'please', 'tell', 'there', 'they', 'them', 'from', 'into', 'today', 'feel', 'feeling']);
+
+function getContextualPatientFallback(studentMessage, scenarioObj = {}) {
   const msg = (studentMessage || '').toLowerCase();
-  
-  // Greetings / Chief complaint
-  if (msg.includes('bring') || msg.includes('help') || msg.includes('matter') || msg.includes('problem') || msg.includes('where is the pain') || msg.includes('today') || msg.includes('feel') && !msg.includes('how long')) {
-    return "Hello Doctor. I've had a severe, throbbing pain in my lower left tooth for three days now, and my cheek is noticeably swollen. It hurts constantly.";
+  const words = new Set(msg.replace(/[^a-z' ]/g, ' ').split(/\s+/).filter(w => w.length > 2 && !STOP_WORDS.has(w)));
+  const qa = Array.isArray(scenarioObj.expected_doctor_questions_and_answers) ? scenarioObj.expected_doctor_questions_and_answers : [];
+
+  let best = null, bestScore = 0;
+  for (const item of qa) {
+    const qWords = (item.doctor_question_topic || '').toLowerCase().replace(/[^a-z' ]/g, ' ').split(/\s+/).filter(w => w.length > 2 && !STOP_WORDS.has(w));
+    if (!qWords.length) continue;
+    const overlap = qWords.filter(w => words.has(w)).length;
+    const score = overlap / Math.sqrt(qWords.length);
+    if (overlap >= 1 && score > bestScore) { best = item; bestScore = score; }
   }
-  
-  // Onset & Duration
-  if (msg.includes('how long') || msg.includes('when did') || msg.includes('start') || msg.includes('since when') || msg.includes('duration') || msg.includes('days')) {
-    return "I've had this pain for three days now. It started as a mild ache, but since yesterday it has become constant, throbbing, and much worse.";
+  if (best && best.patient_answer) return best.patient_answer;
+
+  const cc = scenarioObj.medical_condition?.chief_complaint;
+  if (cc && /\b(bring|help|problem|matter|wrong|today|feel|complain|happen)/.test(msg)) return cc;
+  if (/\b(how long|when did|since when|start|began)\b/.test(msg) && scenarioObj.medical_condition?.duration) {
+    return `It started ${scenarioObj.medical_condition.duration}, and it has not really improved since then.`;
   }
-  
-  // Fever / Systemic symptoms / Trismus / Swallowing
-  if (msg.includes('fever') || msg.includes('temperature') || msg.includes('chill') || msg.includes('mouth') || msg.includes('open') || msg.includes('swallow') || msg.includes('trouble')) {
-    return "Yes, Doctor, I've been feeling slightly feverish and exhausted since yesterday. I also have difficulty opening my mouth fully because of the swelling.";
-  }
-  
-  // Examination / Looking / X-ray
-  if (msg.includes('look') || msg.includes('exam') || msg.includes('x-ray') || msg.includes('xray') || msg.includes('radiograph') || msg.includes('open wide') || msg.includes('picture')) {
-    return "Okay, Doctor, I'll open as wide as I can. Will I need a digital X-ray to see if the infection has spread to the bone?";
-  }
-  
-  // Diagnosis / Abscess / Infection
-  if (msg.includes('abscess') || msg.includes('infection') || msg.includes('bacteria') || msg.includes('cavity') || msg.includes('pulp') || msg.includes('confirm')) {
-    return "A dental abscess? That sounds alarming, Doctor. Can the tooth still be saved with treatment, or will it need to be pulled out?";
-  }
-  
-  // Treatment / Root canal / Antibiotics / Prescribe / Medication / Salt water
-  if (msg.includes('root canal') || msg.includes('antibiotic') || msg.includes('prescribe') || msg.includes('painkiller') || msg.includes('reliever') || msg.includes('treat') || msg.includes('drain') || msg.includes('save') || msg.includes('priority')) {
-    return "I understand, Doctor. I will take the full course of antibiotics as directed and rinse with warm salt water. How soon will the pain and swelling subside?";
-  }
-  
-  // Warning signs / Emergency / Red flags / Advice
-  if (msg.includes('emergency') || msg.includes('worse') || msg.includes('increase') || msg.includes('contact') || msg.includes('breath') || msg.includes('department') || msg.includes('immediately')) {
-    return "Thank you very much for the clear explanation and care plan, Doctor. I will follow your instructions carefully and contact you immediately if the swelling worsens.";
-  }
-  
-  return "I understand, Doctor. The throbbing pressure is quite painful. What do you recommend we do next?";
+  if (/\b(thank|bye|take care|see you)\b/.test(msg)) return 'Thank you, Doctor. I will follow your advice.';
+  const asks = Array.isArray(scenarioObj.questions_to_ask_doctor) ? scenarioObj.questions_to_ask_doctor : [];
+  const ask = asks.length ? asks[Math.floor(Math.random() * asks.length)] : null;
+  return ask ? `I'm not sure I understand, Doctor. ${ask}` : "I'm not sure I understand the question, Doctor. Could you explain what you mean?";
 }
 
 function formatGeminiContents(history, lastUserParts) {
@@ -264,127 +256,111 @@ Output strictly in valid JSON format with keys 'transcript' and 'reply'.
   }
 }
 
-function buildPatientSystemInstruction(scenarioObj) {
+function buildPatientSystemInstruction(scenarioObj = {}) {
+  const rolePlay = scenarioObj.role_play || 'The student is the DOCTOR. You play the PATIENT.';
+  const setting = scenarioObj.setting ? `Setting: ${scenarioObj.setting}.` : '';
+  const extra = scenarioObj.difficulty === 'final_challenge' && scenarioObj.instructions ? `\nFINAL CHALLENGE MODE: ${scenarioObj.instructions}` : '';
   return `
-You are a patient visiting a doctor's/dentist's clinic. You speak ONLY English.
-Behave realistically as a patient — express emotions (fear, pain, relief).
-Stay strictly in character based on the JSON scenario provided below.
-Do NOT break character under any circumstances.
-Do NOT give medical advice or act as a doctor.
+You are taking part in a medical English role-play. ${rolePlay} ${setting}
+You speak ONLY English. Behave realistically — express emotions (fear, pain, relief, worry).
+Stay strictly in character based on the JSON scenario below. Do NOT break character under any circumstances.
+Do NOT give medical advice or act as the clinician.
 
 Your specific persona and scenario for this session:
 ${JSON.stringify(scenarioObj, null, 2)}
 
 IMPORTANT RULES:
-- You already have a specific illness and symptoms defined in the scenario above. Do NOT change them.
-- DO NOT state what your exact illness is immediately. Instead, describe your symptoms naturally when the doctor asks, and let the doctor diagnose it.
-- Answer questions about your symptoms naturally and conversationally, strictly based on the symptoms listed in your scenario.
-- If the student (doctor) asks unclear questions, ask for clarification as a real patient would.
-- Keep responses short and natural (1-3 sentences max).
-- Use simple everyday English (not medical jargon).
-- At appropriate times, you may ask the doctor questions listed in your "questions_to_ask_doctor" from the scenario.
+- You already have a specific condition, history and symptoms defined in the scenario above. Do NOT change them.
+- DO NOT state the exact diagnosis yourself. Describe your symptoms naturally when asked and let the student work it out.
+- Use "expected_doctor_questions_and_answers" as your factual memory: when the student asks something similar, answer consistently with it (in your own words).
+- If the student asks something not covered, invent a realistic, consistent detail and keep it for the rest of the conversation.
+- If you play a parent or relative, speak about the patient (your child / relative) in the third person.
+- If the student's question is unclear, ask for clarification as a real person would.
+- Keep responses short and natural (1-3 sentences). Use simple everyday English, not medical jargon.
+- At appropriate moments you may ask one of the "questions_to_ask_doctor".${extra}
 `.trim();
 }
 
-const MODULE_SCENARIOS = {
-  1: {
-    patient_profile: { name: "Sarah Jenkins", age: 29, gender: "Female", personality_trait: "Anxious about cold sensitivity" },
-    medical_condition: { exact_diagnosis: "Dentin Hypersensitivity / Acute Pulpitis", chief_complaint: "Sharp shooting pain when drinking cold liquids & throbbing night ache", symptoms: ["Cold sensitivity", "Percussion pain", "Night ache"], duration: "4 days", pain_level: "7" },
-    expected_doctor_questions_and_answers: [
-      { doctor_question_topic: "Onset", patient_answer: "It started 4 days ago after drinking iced water." },
-      { doctor_question_topic: "Location", patient_answer: "It is in the upper right first molar." }
-    ],
-    questions_to_ask_doctor: ["Can the nerve be saved, Doctor?", "What treatment do you recommend?"]
-  },
-  2: {
-    patient_profile: { name: "Michael Vance", age: 35, gender: "Male", personality_trait: "Practical, wants filling" },
-    medical_condition: { exact_diagnosis: "Dental Caries / Enamel Decay", chief_complaint: "Food getting caught in upper molar with mild sweet sensitivity", symptoms: ["Cavity", "Sweet sensitivity", "Dark fissure spot"], duration: "2 weeks", pain_level: "4" },
-    expected_doctor_questions_and_answers: [
-      { doctor_question_topic: "Location", patient_answer: "In the second upper left premolar." }
-    ],
-    questions_to_ask_doctor: ["Will I need a tooth-colored filling?", "Is the cavity very deep?"]
-  },
-  3: {
-    patient_profile: { name: "Elena Rostova", age: 42, gender: "Female", personality_trait: "Concerned about bleeding gums" },
-    medical_condition: { exact_diagnosis: "Chronic Periodontitis / Gingivitis", chief_complaint: "Bleeding gums when brushing & persistent bad breath", symptoms: ["Gingival bleeding", "Subgingival calculus", "Gum recession"], duration: "1 month", pain_level: "5" },
-    expected_doctor_questions_and_answers: [
-      { doctor_question_topic: "Bleeding frequency", patient_answer: "Every time I brush my teeth." }
-    ],
-    questions_to_ask_doctor: ["Will I need deep scaling and root planing?", "Can my gums recover fully?"]
-  },
-  4: {
-    patient_profile: { name: "David Miller", age: 48, gender: "Male", personality_trait: "In severe pain, noticeably swollen" },
-    medical_condition: { exact_diagnosis: "Acute Dental Abscess / Root Rest Retention", chief_complaint: "Severe broken crown with recurrent abscess in lower right quadrant", symptoms: ["Root rest retention", "Facial swelling", "Feverish sensation", "Trismus"], duration: "3 days", pain_level: "8" },
-    expected_doctor_questions_and_answers: [
-      { doctor_question_topic: "Onset and duration", patient_answer: "I've had this pain for 3 days and the cheek swelled up yesterday." },
-      { doctor_question_topic: "Fever and opening mouth", patient_answer: "Yes Doctor, I feel feverish and have trouble opening my mouth fully." }
-    ],
-    questions_to_ask_doctor: ["Will I need an X-ray to check the infection?", "Can the tooth still be saved, Doctor?"]
-  },
-  5: {
-    patient_profile: { name: "James Carter", age: 39, gender: "Male", personality_trait: "Exhausted from sleepless night" },
-    medical_condition: { exact_diagnosis: "Irreversible Pulpitis / Pulp Necrosis", chief_complaint: "Continuous throbbing radiated pain unresponsive to regular analgesics", symptoms: ["Pulpitis", "Thermal lingering pain", "Apical tenderness"], duration: "5 days", pain_level: "9" },
-    expected_doctor_questions_and_answers: [
-      { doctor_question_topic: "Pain type", patient_answer: "It is a severe, continuous throbbing pain that radiates to my ear." }
-    ],
-    questions_to_ask_doctor: ["Will a root canal treatment relieve the pain immediately?", "How many visits will it take?"]
-  }
-};
+function tryParseScenario(text) {
+  if (!text) return null;
+  if (typeof text === 'object') return text;
+  const s = String(text).trim();
+  if (!s.startsWith('{')) return null;
+  try {
+    const obj = JSON.parse(s);
+    return obj && (obj.medical_condition || obj.patient_profile || obj.expected_doctor_questions_and_answers) ? obj : null;
+  } catch (_) { return null; }
+}
+
+/** Scenario used when the module context is free text and Gemini is unavailable. */
+function genericScenarioFromText(patientContext) {
+  const text = String(patientContext || '').trim();
+  return {
+    role_play: 'The student is the DOCTOR. You play the PATIENT.',
+    setting: 'outpatient clinic',
+    patient_profile: { name: 'Alex Morgan', age: 'adult', gender: 'unspecified', personality_trait: 'cooperative but worried' },
+    medical_condition: {
+      exact_diagnosis: 'described in scenario_text',
+      chief_complaint: text ? text.slice(0, 300) : 'I have not been feeling well recently.',
+      symptoms: [], duration: 'a few days', pain_level: 'n/a',
+    },
+    scenario_text: text,
+    expected_doctor_questions_and_answers: [],
+    questions_to_ask_doctor: ['What do you think is wrong with me, Doctor?', 'Will I need any tests?'],
+  };
+}
 
 /**
- * Generate a specific patient scenario for a given module context
- * @param {string} patientContext - Module's base patient context
- * @returns {string} - JSON string of the scenario
+ * Resolve the scenario for a new conversation.
+ *  1. Modules seeded from datas.json store a ready JSON scenario in patient_context /
+ *     final_challenge_context — used as-is (instant, no API call, specialty-specific).
+ *  2. Legacy / admin-written free-text contexts are expanded into a scenario by Gemini.
+ *  3. If Gemini fails, a generic scenario is built from the text itself.
+ * @param {string} patientContext
+ * @returns {Promise<string>} JSON string
  */
 async function generatePatientScenario(patientContext) {
-  const prompt = `
-Generate a specific, unique patient persona and medical scenario based on the following general module context:
-CONTEXT: "${patientContext}"
+  const ready = tryParseScenario(patientContext);
+  if (ready) return JSON.stringify(ready);
 
-You must create ONE specific case that perfectly matches this context.
+  const prompt = `
+Generate a specific, unique patient persona and medical scenario based on the following module context:
+CONTEXT: "${String(patientContext || '').slice(0, 2000)}"
+
 Return a valid JSON object strictly matching this format:
 {
-  "patient_profile": {
-    "name": "Full Name",
-    "age": <number>,
-    "gender": "Male/Female",
-    "occupation": "Occupation (if relevant)",
-    "personality_trait": "e.g., Anxious, Calm, In pain, Talkative"
-  },
+  "role_play": "The student is the DOCTOR. You play the PATIENT.",
+  "setting": "e.g. emergency department / dental clinic / paediatric clinic",
+  "patient_profile": { "name": "Full Name", "age": <number>, "gender": "Male/Female", "occupation": "...", "personality_trait": "e.g. Anxious, Calm, In pain, Talkative" },
   "medical_condition": {
-    "exact_diagnosis": "The exact medical/dental condition (the doctor must guess this)",
+    "exact_diagnosis": "The exact condition (the student must work it out)",
     "chief_complaint": "What the patient says initially",
     "symptoms": ["Symptom 1", "Symptom 2", "Symptom 3"],
     "duration": "How long they have had symptoms",
-    "pain_level": "1-10"
+    "pain_level": "1-10 or n/a"
   },
-  "expected_doctor_questions_and_answers": [
-    {
-      "doctor_question_topic": "e.g., When did it start?",
-      "patient_answer": "e.g., It started 3 days ago."
-    }
-  ],
-  "questions_to_ask_doctor": [
-    "Question 1 the patient might ask",
-    "Question 2 the patient might ask"
-  ]
+  "expected_doctor_questions_and_answers": [ { "doctor_question_topic": "e.g. When did it start?", "patient_answer": "e.g. It started 3 days ago." } ],
+  "questions_to_ask_doctor": ["Question 1 the patient might ask", "Question 2"]
 }
-
-Ensure the scenario is medically realistic but uses everyday language for the patient. 
-Return ONLY valid JSON. No markdown formatting (\`\`\`json), no extra text.
+The scenario must match the CONTEXT's medical specialty and topic exactly. Use everyday language for the patient.
+Return ONLY valid JSON. No markdown, no extra text.
 `.trim();
 
-  // Bypass Gemini API generation for Instant Loading (0ms delay)
-  let matchedScenario = MODULE_SCENARIOS[4];
-  const ctx = (patientContext || '').toLowerCase();
-  if (ctx.includes('sensitiv') || ctx.includes('pain')) matchedScenario = MODULE_SCENARIOS[1];
-  else if (ctx.includes('caries') || ctx.includes('restor')) matchedScenario = MODULE_SCENARIOS[2];
-  else if (ctx.includes('periodont') || ctx.includes('bleed') || ctx.includes('gum')) matchedScenario = MODULE_SCENARIOS[3];
-  else if (ctx.includes('extract') || ctx.includes('abscess') || ctx.includes('swell')) matchedScenario = MODULE_SCENARIOS[4];
-  else if (ctx.includes('endodont') || ctx.includes('canal') || ctx.includes('pulp')) matchedScenario = MODULE_SCENARIOS[5];
-
-  return JSON.stringify(matchedScenario);
+  try {
+    const result = await client.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: [{ role: 'user', parts: [{ text: prompt }] }],
+      config: { temperature: 0.7, maxOutputTokens: 1200, responseMimeType: 'application/json' },
+    });
+    const raw = (result && result.text ? result.text : '').replace(/```json|```/g, '').trim();
+    const obj = JSON.parse(raw);
+    if (obj && obj.medical_condition) return JSON.stringify(obj);
+  } catch (err) {
+    console.error('generatePatientScenario: Gemini unavailable, using generic scenario —', err.message);
+  }
+  return JSON.stringify(genericScenarioFromText(patientContext));
 }
+
 /**
  * Talabaning AI bemor bilan o'tkazgan suhbatini baholaydi va grammatik/klinik xatolarini tahlil qiladi
  * Modulning asosiy Vocabulary va Phrasebook iboralari asosida baholaydi
@@ -697,5 +673,7 @@ module.exports = {
   getPatientAudioReplyStream,
   generateFeedback,
   checkGrammar,
-  generatePatientScenario
+  generatePatientScenario,
+  buildPatientSystemInstruction,
+  tryParseScenario,
 };

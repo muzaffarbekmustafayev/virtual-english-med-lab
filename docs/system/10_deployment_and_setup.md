@@ -42,11 +42,14 @@ JWT_SECRET=vpe_local_secret_2026
 GEMINI_API_KEY=AIzaSy...
 ```
 
-Ma'lumotlar bazasini yaratish va urug'lantirish (seed):
+Ma'lumotlar bazasini yaratish va o'quv kontentini yuklash:
 ```bash
-node create-db.js
-npm run seed
+node create-db.js        # bazani yaratadi (bir marta)
+node datas.js            # datas/datas.json → 4 ta faol yo'nalish, 40 ta modul, lug'at, iboralar, grammatika, testlar
 ```
+> Standart akkauntlar (admin@gmail.com / admin123, teacher@vpe.uz / teacher123, student@vpe.uz / student123) va 5 ta yo'nalish server birinchi ishga tushganda avtomatik yaratiladi (`initDb.service.js`). `npm run seed` (`src/seeders/seed.js`) — **eski** namunaviy seed, u bazani `force: true` bilan **tozalab yuboradi**; production'da ishlatmang.
+>
+> Word fayllar o'zgargan bo'lsa: `node datas.js --build`. Hamshiralik yo'nalishini ham yuklash: `node datas.js --all`. Batafsil: [`17_data_pipeline_datas_json.md`](./17_data_pipeline_datas_json.md).
 
 Backend dev serverini ishga tushirish:
 ```bash
@@ -105,9 +108,21 @@ server {
 ```bash
 cd /var/www/virtual-english-med-lab/backend
 npm install --production
+node datas.js --dry-run          # (ixtiyoriy) nima yoziladi — tekshirish
+node datas.js                    # o'quv kontentini bazaga yuklash
 pm2 start server.js --name "vpe-backend"
 pm2 save
 pm2 startup
+```
+
+### B2. Kontent yangilanganda (keyingi deploylar)
+```bash
+cd /var/www/virtual-english-med-lab
+git pull
+cd backend && npm install --production
+node datas.js                    # modullar yangilanadi, talabalar natijalari saqlanadi
+pm2 restart vpe-backend
+cd ../frontend && npm install && npm run build
 ```
 
 ### C. SSL Sertifikati (Certbot / HTTPS)

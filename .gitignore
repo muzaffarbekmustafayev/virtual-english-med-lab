@@ -70,3 +70,8 @@ Thumbs.db
 *.sw?
 .gemini/
 **/.gemini/
+
+# Word vaqtinchalik fayllari va lokal IDE sozlamalari
+~$*
+*.tmp
+.claude/
