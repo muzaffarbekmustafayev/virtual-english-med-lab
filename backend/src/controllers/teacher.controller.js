@@ -409,9 +409,10 @@ const postForumMessage = async (req, res) => {
     let file_url = req.body.file_url || null;
     let audio_url = req.body.audio_url || null;
 
-    if (req.file) {
-      const relativePath = `/uploads/${req.file.filename}`;
-      if (req.file.mimetype.startsWith('audio/')) {
+    const uploaded = req.file || req.files?.voice?.[0] || req.files?.file?.[0] || null;
+    if (uploaded) {
+      const relativePath = `/uploads/${uploaded.filename}`;
+      if (uploaded.mimetype.startsWith('audio/') || uploaded.fieldname === 'voice') {
         audio_url = relativePath;
       } else {
         file_url = relativePath;

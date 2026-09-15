@@ -17,7 +17,8 @@ router.get('/conversations/:id/transcript',      isTeacherOrAdmin, c.getTranscri
 // Forum (barcha foydalanuvchilar uchun)
 router.get('/forum/channels',                    isAuthenticated,              c.getForumChannels);
 router.get('/forum/messages',                    isAuthenticated,              c.getForumMessages);
-router.post('/forum/messages',                   [...isAuthenticated, upload.single('file')], c.postForumMessage);
+// Frontend ovozli xabarni `voice`, faylni `file` maydonida yuboradi — ikkalasi ham qabul qilinadi
+router.post('/forum/messages',                   [...isAuthenticated, upload.fields([{ name: 'file', maxCount: 1 }, { name: 'voice', maxCount: 1 }])], c.postForumMessage);
 router.put('/forum/messages/:id/pin',            isTeacherOrAdmin,             c.togglePinMessage);
 
 module.exports = router;

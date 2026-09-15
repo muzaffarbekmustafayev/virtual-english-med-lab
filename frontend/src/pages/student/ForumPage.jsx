@@ -13,6 +13,15 @@ import {
   RiMegaphoneLine, RiVolumeUpLine
 } from 'react-icons/ri';
 
+// Backend /uploads ni o'zi xizmat qiladi; API boshqa hostda bo'lsa (VITE_API_URL absolyut) — o'sha hostdan olinadi
+const API_BASE = import.meta.env.VITE_API_URL || '/api';
+const fileUrl = (u) => {
+  if (!u) return null;
+  if (/^https?:\/\//.test(u)) return u;
+  if (/^https?:\/\//.test(API_BASE)) return API_BASE.replace(/\/api\/?$/, '') + u;
+  return u;
+};
+
 export default function ForumPage() {
   const { user } = useAuth();
   const { t, language } = useLanguage();
@@ -260,9 +269,12 @@ export default function ForumPage() {
                         }`}>
                           {m.message_text && <p className="whitespace-pre-wrap font-medium">{m.message_text}</p>}
 
-                          {m.voice_url && (
+                          {m.file_url && (
+                            <a href={fileUrl(m.file_url)} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-xs font-bold underline underline-offset-2 opacity-90 hover:opacity-100 mt-1">📎 {m.file_url.split("/").pop()}</a>
+                          )}
+                          {(m.audio_url || m.voice_url) && (
                             <div className="mt-2 pt-2 border-t border-white/20 flex items-center gap-2">
-                              <audio controls src={m.voice_url} className="h-8 max-w-full" />
+                              <audio controls preload="none" src={fileUrl(m.audio_url || m.voice_url)} className="h-8 max-w-full" />
                             </div>
                           )}
                         </div>
