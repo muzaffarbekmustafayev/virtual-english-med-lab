@@ -13,7 +13,7 @@ import ModulesPage       from './pages/student/ModulesPage';
 import ModuleDetailPage  from './pages/student/ModuleDetailPage';
 import GrammarCheckerPage from './pages/student/GrammarCheckerPage';
 import ForumPage         from './pages/student/ForumPage';
-import ProfilePage       from './pages/student/ProfilePage';
+import ProfilePage       from './pages/ProfilePage';
 
 // Teacher
 import TeacherDashboard from './pages/teacher/TeacherDashboard';
@@ -30,6 +30,12 @@ import ContentManager   from './pages/admin/ContentManager';
 import ProtectedRoute from './components/ProtectedRoute';
 import './index.css';
 
+function ProfileRedirect() {
+  const { user } = useAuth();
+  if (!user) return <Navigate to="/login" replace />;
+  return <Navigate to={`/${user.role}/profile`} replace />;
+}
+
 function RoleRedirect() {
   const { user } = useAuth();
   if (!user) return <Navigate to="/login" replace />;
@@ -40,7 +46,7 @@ export default function App() {
   return (
     <AuthProvider>
       <LanguageProvider>
-        <Toaster position="top-right" toastOptions={{ duration: 3500, style: { background: '#1e293b', color: '#fff', borderRadius: '10px' } }} />
+        <Toaster position="top-right" toastOptions={{ duration: 3500, style: { background: '#0f172a', color: '#fff', borderRadius: '14px', fontSize: '13px', fontWeight: 600, boxShadow: '0 12px 30px -8px rgba(15,23,42,0.45)' } }} />
         <BrowserRouter>
         <Routes>
           {/* Public */}
@@ -69,6 +75,15 @@ export default function App() {
           }/>
           <Route path="/student/profile" element={
             <ProtectedRoute allowedRoles={['student']}><ProfilePage /></ProtectedRoute>
+          }/>
+
+          {/* ─── PROFILE (barcha rollar) ────────────────── */}
+          <Route path="/profile" element={<ProfileRedirect />} />
+          <Route path="/teacher/profile" element={
+            <ProtectedRoute allowedRoles={['teacher']}><ProfilePage /></ProtectedRoute>
+          }/>
+          <Route path="/admin/profile" element={
+            <ProtectedRoute allowedRoles={['admin']}><ProfilePage /></ProtectedRoute>
           }/>
 
           {/* ─── TEACHER ────────────────────────────────── */}

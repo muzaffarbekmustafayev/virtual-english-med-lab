@@ -3,30 +3,32 @@ const { Op } = require('sequelize');
 const {
   User, Specialty, StudentGroup, TeacherGroup,
   Module, Grammar, Vocabulary, Phrasebook, Test,
-  Conversation, TestResult,
+  Conversation, TestResult, ForumMessage,
 } = require('../models');
 
 // ── GET /api/admin/overview ──────────────────────────────────
+const avgOf = (arr) => (arr.length ? Math.round(arr.reduce((a, b) => a + b, 0) / arr.length) : 0);
+const dayKey = (d) => new Date(d).toISOString().slice(0, 10);
+
 const getOverview = async (req, res) => {
   try {
-    const [studentsCount, teachersCount, adminsCount, modulesCount, completedConvsCount] = await Promise.all([
+    const [studentsCount, teachersCount, adminsCount, modulesCount, completedConvsCount,
+           grammarCount, vocabCount, phraseCount, testCount, forumCount] = await Promise.all([
       User.count({ where: { role: 'student' } }),
       User.count({ where: { role: 'teacher' } }),
       User.count({ where: { role: 'admin' } }),
       Module.count(),
       Conversation.count({ where: { status: 'completed' } }),
+      Grammar.count(), Vocabulary.count(), Phrasebook.count(), Test.count(), ForumMessage.count(),
     ]);
 
-    const allConversations = await Conversation.findAll({ where: { status: 'completed' } });
-    const globalAvgScore = allConversations.length
-      ? Math.round(allConversations.reduce((s, c) => s + (c.overall_score || 0), 0) / allConversations.length)
-      : 0;
-
-    // Fetch all specialties, modules, groups, and students
-    const [specialties, allModules, allGroups, allStudents] = await Promise.all([
+    // Fetch all specialties, modules, groups, teachers, and students (with results)
+    const [specialties, allModules, allGroups, teacherLinks, allTeachers, allStudents] = await Promise.all([
       Specialty.findAll({ order: [['name', 'ASC']] }),
-      Module.findAll({ attributes: ['id', 'title', 'order_index', 'specialty_id'] }),
+      Module.findAll({ attributes: ['id', 'title', 'title_uz', 'title_ru', 'title_en', 'order_index', 'specialty_id'] }),
       StudentGroup.findAll({ attributes: ['id', 'name', 'specialty_id'], order: [['name', 'ASC']] }),
+      TeacherGroup.findAll({ attributes: ['teacher_id', 'group_id'] }),
+      User.findAll({ where: { role: 'teacher' }, attributes: ['id', 'full_name', 'specialty_id'] }),
       User.findAll({
         where: { role: 'student' },
         attributes: ['id', 'full_name', 'email', 'specialty_id', 'group_id', 'created_at'],
@@ -34,176 +36,222 @@ const getOverview = async (req, res) => {
           {
             model: Conversation,
             where: { status: 'completed' },
-            attributes: ['id', 'overall_score', 'module_id', 'created_at'],
+            attributes: ['id', 'overall_score', 'grammar_score', 'vocabulary_score', 'fluency_score', 'pronunciation_score', 'clinical_score', 'module_id', 'created_at'],
             required: false,
           },
-          {
-            model: TestResult,
-            attributes: ['id', 'score', 'module_id', 'created_at'],
-            required: false,
-          },
+          { model: TestResult, attributes: ['id', 'score', 'module_id', 'created_at'], required: false },
         ],
         order: [['full_name', 'ASC']],
       }),
     ]);
+
+    const allConversations = allStudents.flatMap((st) =>
+      (st.Conversations || []).map((c) => ({ ...c.toJSON(), student_id: st.id, student_name: st.full_name, group_id: st.group_id }))
+    );
+    const globalAvgScore = avgOf(allConversations.map((c) => c.overall_score || 0));
+    const groupById = new Map(allGroups.map((g) => [g.id, g]));
+    const moduleById = new Map(allModules.map((m) => [m.id, m]));
+    const specById = new Map(specialties.map((s) => [s.id, s]));
+    const teacherById = new Map(allTeachers.map((t) => [t.id, t]));
+    const teachersOfGroup = new Map();
+    teacherLinks.forEach((l) => {
+      if (!teachersOfGroup.has(l.group_id)) teachersOfGroup.set(l.group_id, []);
+      const t = teacherById.get(l.teacher_id);
+      if (t) teachersOfGroup.get(l.group_id).push({ id: t.id, full_name: t.full_name });
+    });
+
+    const enrichStudent = (st, groupName) => {
+      const convs = st.Conversations || [];
+      const tests = st.TestResults || [];
+      const convScores = convs.map((c) => c.overall_score || 0);
+      const last = convs.reduce((m, c) => (!m || new Date(c.created_at) > new Date(m) ? c.created_at : m), null);
+      return {
+        id: st.id,
+        full_name: st.full_name,
+        email: st.email,
+        created_at: st.created_at,
+        group_name: groupName,
+        completed_conversations: convs.length,
+        tests_taken: tests.length,
+        avg_score: avgOf(convScores),
+        last_activity: last,
+      };
+    };
 
     // Map analytics per specialty
     const specialtiesAnalytics = specialties.map((spec) => {
       const specId = spec.id;
       const specModules = allModules.filter((m) => m.specialty_id === specId);
       const specGroups = allGroups.filter((g) => g.specialty_id === specId);
-
-      // Students belonging to this specialty (either directly or via their group)
       const specGroupIds = new Set(specGroups.map((g) => g.id));
       const specStudents = allStudents.filter(
         (st) => st.specialty_id === specId || (st.group_id && specGroupIds.has(st.group_id))
       );
+      const specTeachers = allTeachers.filter((t) => t.specialty_id === specId
+        || specGroups.some((g) => (teachersOfGroup.get(g.id) || []).some((x) => x.id === t.id)));
 
-      let specConvScores = [];
-      let specCompletedConvs = 0;
-
-      // Group-level analytics
+      const specConvs = [];
       const enrichedGroups = specGroups.map((group) => {
         const groupStudents = specStudents.filter((st) => st.group_id === group.id);
-        let groupConvScores = [];
-        let groupCompletedConvs = 0;
-
-        const enrichedStudents = groupStudents.map((st) => {
-          const convs = st.Conversations || [];
-          const tests = st.TestResults || [];
-          const convScores = convs.map((c) => c.overall_score || 0);
-          const studentAvg = convScores.length
-            ? Math.round(convScores.reduce((a, b) => a + b, 0) / convScores.length)
-            : 0;
-
-          groupConvScores.push(...convScores);
-          groupCompletedConvs += convs.length;
-
-          return {
-            id: st.id,
-            full_name: st.full_name,
-            email: st.email,
-            created_at: st.created_at,
-            group_name: group.name,
-            completed_conversations: convs.length,
-            tests_taken: tests.length,
-            avg_score: studentAvg,
-          };
-        });
-
-        const groupAvgScore = groupConvScores.length
-          ? Math.round(groupConvScores.reduce((a, b) => a + b, 0) / groupConvScores.length)
-          : 0;
-
-        specConvScores.push(...groupConvScores);
-        specCompletedConvs += groupCompletedConvs;
-
+        const enrichedStudents = groupStudents.map((st) => enrichStudent(st, group.name));
+        const groupConvs = groupStudents.flatMap((st) => st.Conversations || []);
+        specConvs.push(...groupConvs);
         return {
           id: group.id,
           name: group.name,
           student_count: groupStudents.length,
-          completed_conversations: groupCompletedConvs,
-          avg_score: groupAvgScore,
+          completed_conversations: groupConvs.length,
+          avg_score: avgOf(groupConvs.map((c) => c.overall_score || 0)),
+          teachers: teachersOfGroup.get(group.id) || [],
           students: enrichedStudents,
         };
       });
 
-      // Ungrouped students
-      const ungroupedStudents = specStudents.filter(
-        (st) => !st.group_id || !specGroupIds.has(st.group_id)
-      );
+      const ungroupedStudents = specStudents.filter((st) => !st.group_id || !specGroupIds.has(st.group_id));
       if (ungroupedStudents.length > 0) {
-        const enrichedUngrouped = ungroupedStudents.map((st) => {
-          const convs = st.Conversations || [];
-          const tests = st.TestResults || [];
-          const convScores = convs.map((c) => c.overall_score || 0);
-          const studentAvg = convScores.length
-            ? Math.round(convScores.reduce((a, b) => a + b, 0) / convScores.length)
-            : 0;
-
-          specConvScores.push(...convScores);
-          specCompletedConvs += convs.length;
-
-          return {
-            id: st.id,
-            full_name: st.full_name,
-            email: st.email,
-            created_at: st.created_at,
-            group_name: 'Guruhsiz',
-            completed_conversations: convs.length,
-            tests_taken: tests.length,
-            avg_score: studentAvg,
-          };
-        });
-
+        const enrichedUngrouped = ungroupedStudents.map((st) => enrichStudent(st, 'Guruhsiz'));
+        const ungroupedConvs = ungroupedStudents.flatMap((st) => st.Conversations || []);
+        specConvs.push(...ungroupedConvs);
         enrichedGroups.push({
           id: 0,
           name: 'Guruh biriktirilmagan',
           student_count: ungroupedStudents.length,
-          completed_conversations: enrichedUngrouped.reduce((a, b) => a + b.completed_conversations, 0),
-          avg_score: enrichedUngrouped.length
-            ? Math.round(enrichedUngrouped.reduce((a, b) => a + b.avg_score, 0) / enrichedUngrouped.length)
-            : 0,
+          completed_conversations: ungroupedConvs.length,
+          avg_score: avgOf(ungroupedConvs.map((c) => c.overall_score || 0)),
+          teachers: [],
           students: enrichedUngrouped,
         });
       }
 
-      const specAvgScore = specConvScores.length
-        ? Math.round(specConvScores.reduce((a, b) => a + b, 0) / specConvScores.length)
-        : 0;
-
+      const activeStudents = specStudents.filter((st) => (st.Conversations || []).length > 0).length;
       return {
         id: spec.id,
         name: spec.name,
+        name_uz: spec.name_uz, name_ru: spec.name_ru, name_en: spec.name_en,
+        code: spec.code, icon: spec.icon,
         total_students: specStudents.length,
+        student_count: specStudents.length,
+        active_students: activeStudents,
+        total_teachers: specTeachers.length,
+        total_groups: specGroups.length,
         total_modules: specModules.length,
-        total_conversations: specCompletedConvs,
-        avg_score: specAvgScore,
+        total_conversations: specConvs.length,
+        avg_score: avgOf(specConvs.map((c) => c.overall_score || 0)),
+        competencies: {
+          grammar: avgOf(specConvs.map((c) => c.grammar_score || 0)),
+          vocabulary: avgOf(specConvs.map((c) => c.vocabulary_score || 0)),
+          fluency: avgOf(specConvs.map((c) => c.fluency_score || 0)),
+          pronunciation: avgOf(specConvs.map((c) => c.pronunciation_score || 0)),
+          clinical: avgOf(specConvs.map((c) => c.clinical_score || 0)),
+        },
         groups: enrichedGroups,
       };
     });
 
     // Global Academic Groups Leaderboard Ranking
     const groupsRanking = allGroups.map((group) => {
-      const spec = specialties.find((s) => s.id === group.specialty_id);
+      const spec = specById.get(group.specialty_id);
       const groupStudents = allStudents.filter((st) => st.group_id === group.id);
-
-      let groupScores = [];
-      let completedConvs = 0;
-      let totalTests = 0;
-
-      groupStudents.forEach((st) => {
-        const convs = st.Conversations || [];
-        const tests = st.TestResults || [];
-        const scores = convs.map((c) => c.overall_score || 0);
-        groupScores.push(...scores);
-        completedConvs += convs.length;
-        totalTests += tests.length;
-      });
-
-      const avgScore = groupScores.length
-        ? Math.round(groupScores.reduce((a, b) => a + b, 0) / groupScores.length)
-        : 0;
-
+      const convs = groupStudents.flatMap((st) => st.Conversations || []);
+      const tests = groupStudents.flatMap((st) => st.TestResults || []);
       return {
         id: group.id,
         name: group.name,
         specialty_name: spec ? spec.name : 'Biriktirilmagan',
         specialty_id: group.specialty_id,
         student_count: groupStudents.length,
-        completed_conversations: completedConvs,
-        tests_taken: totalTests,
-        avg_score: avgScore,
+        active_students: groupStudents.filter((st) => (st.Conversations || []).length > 0).length,
+        completed_conversations: convs.length,
+        tests_taken: tests.length,
+        avg_score: avgOf(convs.map((c) => c.overall_score || 0)),
+        teachers: teachersOfGroup.get(group.id) || [],
       };
     }).sort((a, b) => b.avg_score - a.avg_score || b.completed_conversations - a.completed_conversations || b.student_count - a.student_count);
+
+    // ── Time-based analytics ──
+    const now = Date.now();
+    const DAY = 86400000;
+    const since = (days) => new Date(now - days * DAY);
+    const activeIds = (days) => new Set(allConversations.filter((c) => new Date(c.created_at) >= since(days)).map((c) => c.student_id));
+    const timeline = [];
+    for (let i = 13; i >= 0; i--) {
+      const key = dayKey(now - i * DAY);
+      const dayConvs = allConversations.filter((c) => dayKey(c.created_at) === key);
+      timeline.push({ date: key, sessions: dayConvs.length, avg_score: avgOf(dayConvs.map((c) => c.overall_score || 0)) });
+    }
+    const buckets = [
+      { label: '0-39', min: 0, max: 39 }, { label: '40-59', min: 40, max: 59 },
+      { label: '60-79', min: 60, max: 79 }, { label: '80-100', min: 80, max: 100 },
+    ].map((b) => ({ ...b, count: allConversations.filter((c) => (c.overall_score || 0) >= b.min && (c.overall_score || 0) <= b.max).length }));
+
+    // ── Module performance ──
+    const moduleStats = allModules.map((m) => {
+      const convs = allConversations.filter((c) => c.module_id === m.id);
+      const spec = specById.get(m.specialty_id);
+      const studentIds = new Set(convs.map((c) => c.student_id));
+      const passed = convs.filter((c) => (c.overall_score || 0) >= 60).length;
+      return {
+        id: m.id, title: m.title, title_uz: m.title_uz, title_ru: m.title_ru, title_en: m.title_en,
+        order_index: m.order_index, specialty_name: spec ? spec.name : '—', specialty_code: spec ? spec.code : null,
+        attempts: convs.length, students: studentIds.size,
+        avg_score: avgOf(convs.map((c) => c.overall_score || 0)),
+        pass_rate: convs.length ? Math.round((passed / convs.length) * 100) : 0,
+      };
+    }).filter((m) => m.attempts > 0).sort((a, b) => b.attempts - a.attempts);
+
+    // ── Top students & recent activity ──
+    const rankedStudents = allStudents
+      .map((st) => ({ ...enrichStudent(st, st.group_id && groupById.get(st.group_id) ? groupById.get(st.group_id).name : '—'),
+        specialty_name: st.specialty_id && specById.get(st.specialty_id) ? specById.get(st.specialty_id).name : '—' }))
+      .filter((s) => s.completed_conversations > 0)
+      .sort((a, b) => b.avg_score - a.avg_score || b.completed_conversations - a.completed_conversations);
+    const recentActivity = [...allConversations]
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+      .slice(0, 10)
+      .map((c) => {
+        const m = moduleById.get(c.module_id);
+        return {
+          id: c.id, student_id: c.student_id, student_name: c.student_name,
+          group_name: c.group_id && groupById.get(c.group_id) ? groupById.get(c.group_id).name : '—',
+          module_title: m ? m.title : '—', module_order: m ? m.order_index : null,
+          score: c.overall_score || 0, created_at: c.created_at,
+        };
+      });
 
     res.json({
       students: studentsCount,
       teachers: teachersCount,
       admins: adminsCount,
       modules: modulesCount,
+      groups: allGroups.length,
       completed_conversations: completedConvsCount,
       avg_score: globalAvgScore,
+      active_students_7d: activeIds(7).size,
+      active_students_30d: activeIds(30).size,
+      new_students_30d: allStudents.filter((st) => new Date(st.created_at) >= since(30)).length,
+      sessions_7d: allConversations.filter((c) => new Date(c.created_at) >= since(7)).length,
+      pass_rate: allConversations.length ? Math.round((allConversations.filter((c) => (c.overall_score || 0) >= 60).length / allConversations.length) * 100) : 0,
+      competencies: {
+        grammar: avgOf(allConversations.map((c) => c.grammar_score || 0)),
+        vocabulary: avgOf(allConversations.map((c) => c.vocabulary_score || 0)),
+        fluency: avgOf(allConversations.map((c) => c.fluency_score || 0)),
+        pronunciation: avgOf(allConversations.map((c) => c.pronunciation_score || 0)),
+        clinical: avgOf(allConversations.map((c) => c.clinical_score || 0)),
+      },
+      content: { grammar: grammarCount, vocabulary: vocabCount, phrasebook: phraseCount, tests: testCount, forum_messages: forumCount },
+      alerts: {
+        ungrouped_students: allStudents.filter((st) => !st.group_id).length,
+        students_without_specialty: allStudents.filter((st) => !st.specialty_id).length,
+        groups_without_teacher: allGroups.filter((g) => !(teachersOfGroup.get(g.id) || []).length).length,
+        empty_groups: allGroups.filter((g) => !allStudents.some((st) => st.group_id === g.id)).length,
+        specialties_without_modules: specialties.filter((s) => !allModules.some((m) => m.specialty_id === s.id)).length,
+        inactive_students: allStudents.filter((st) => !(st.Conversations || []).length).length,
+      },
+      activity_timeline: timeline,
+      score_distribution: buckets.map(({ label, count }) => ({ label, count })),
+      module_stats: moduleStats,
+      top_students: rankedStudents.slice(0, 8),
+      recent_activity: recentActivity,
       specialties: specialtiesAnalytics,
       groups_ranking: groupsRanking,
     });

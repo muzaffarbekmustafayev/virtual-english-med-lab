@@ -29,7 +29,7 @@ const FALLBACK_QUESTIONS = [
  * (datas.json ssenariysining talabaga ko'rsatsa bo'ladigan qismi) + module.specialty.
  * Tashxis va kutilgan javoblar bu yerga hech qachon kelmaydi.
  */
-function buildTheme(module, phrasebook) {
+function buildTheme(module, phrasebook, t = (k) => k) {
   const brief = module?.case_brief || null;
   const spec = module?.specialty || null;
   const emoji = spec?.icon || SPECIALTY_EMOJI[spec?.code] || '🩺';
@@ -100,7 +100,7 @@ export default function VirtualPatientChat({
   const activeConvIdRef = useRef(initialConversationId || null);
 
   const parsedModuleId = Number(moduleId) || 1;
-  const currentTheme = buildTheme(module, phrasebook);
+  const currentTheme = buildTheme(module, phrasebook, t);
 
   // Sync activeConvId
   useEffect(() => {

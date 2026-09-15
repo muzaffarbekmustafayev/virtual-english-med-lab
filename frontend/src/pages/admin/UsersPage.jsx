@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
+import { PageHeader, Avatar, EmptyState } from '../../components/ui';
 import api from '../../lib/api';
 import toast from 'react-hot-toast';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -48,7 +49,7 @@ function UserModal({ user, onClose, onSaved, specialties, groups }) {
       if (form.password) {
         payload.password = form.password;
       } else if (!isEditing) {
-        setError(t('auth.password') + ' talab qilinadi');
+        setError(t('users_password_required'));
         setLoading(false);
         return;
       }
@@ -131,7 +132,7 @@ function UserModal({ user, onClose, onSaved, specialties, groups }) {
           <div>
             <label className="block text-sm font-semibold text-slate-700 mb-1.5 flex items-center gap-2">
               {t('auth.password')}
-              {isEditing && <span className="text-[10px] text-slate-400 font-normal px-2 py-0.5 bg-slate-100 rounded-full">Ixtiyoriy</span>}
+              {isEditing && <span className="text-[10px] text-slate-400 font-normal px-2 py-0.5 bg-slate-100 rounded-full">{t('users_optional')}</span>}
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -139,7 +140,7 @@ function UserModal({ user, onClose, onSaved, specialties, groups }) {
               </div>
               <input
                 type="password"
-                placeholder={isEditing ? "O'zgartirish uchun yangi parol kiriting" : "••••••••"}
+                placeholder={isEditing ? t('users_new_password_ph') : '••••••••'}
                 value={form.password}
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
                 className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-sm bg-slate-50 focus:bg-white"
@@ -279,32 +280,22 @@ export default function UsersPage() {
 
   return (
     <Layout>
-      <div className="space-y-6">
+      <div className="space-y-5 sm:space-y-6">
         {/* ── 1. Header ── */}
-        <div className="card-standard p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2 mb-1.5">
-              <span className="badge-standard badge-blue">
-                {users.length} {t('admin.users.title')}
-              </span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
-              <span className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 border border-blue-200 flex items-center justify-center text-xl shrink-0">
-                <RiTeamLine />
-              </span>
-              {t('admin.users.title')}
-            </h1>
-            <p className="text-slate-500 text-xs sm:text-sm mt-1 font-medium">{t('admin.users.subtitle')}</p>
-          </div>
-
-          <button
-            onClick={() => { setModalUser(null); setShowModal(true); }}
-            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-bold rounded-xl shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/30 hover:-translate-y-0.5"
-          >
-            <RiAddLine className="text-base" />
-            <span>{t('admin.users.add_user_btn')}</span>
-          </button>
-        </div>
+        <PageHeader
+          tone="hero-purple"
+          badge={`${users.length} ${t('admin.users.title')}`}
+          badgeIcon={RiTeamLine}
+          badgeTone="purple"
+          title={t('admin.users.title')}
+          subtitle={t('admin.users.subtitle')}
+          actions={
+            <button onClick={() => { setModalUser(null); setShowModal(true); }} className="btn-primary">
+              <RiAddLine className="text-base" />
+              <span>{t('admin.users.add_user_btn')}</span>
+            </button>
+          }
+        />
 
         {/* ── 2. Filters & Search ── */}
         <div className="card-standard p-4 flex flex-wrap items-center justify-between gap-3">
@@ -348,49 +339,45 @@ export default function UsersPage() {
               <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
             </div>
           ) : filtered.length === 0 ? (
-            <div className="py-16 text-center text-slate-400 text-xs font-medium">
-              Foydalanuvchilar topilmadi.
-            </div>
+            <EmptyState icon={RiTeamLine} title={t('users_not_found')} />
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
+              <table className="table-premium min-w-[640px]">
                 <thead>
-                  <tr className="border-b border-slate-100 bg-slate-50/40 text-[10px] font-black text-slate-400 uppercase tracking-wider">
-                    <th className="px-5 py-3">{t('ui_user')}</th>
-                    <th className="px-5 py-3">{t('auth.role')}</th>
-                    <th className="px-5 py-3">{t('auth.specialty')} / {t('auth.group')}</th>
-                    <th className="px-5 py-3 text-right">{t('common.actions')}</th>
+                  <tr>
+                    <th>{t('ui_user')}</th>
+                    <th>{t('auth.role')}</th>
+                    <th>{t('auth.specialty')} / {t('auth.group')}</th>
+                    <th className="text-right">{t('common.actions')}</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 text-xs">
+                <tbody>
                   {filtered.map(u => {
                     const badgeClass = ROLE_BADGE[u.role] || 'badge-slate';
                     return (
-                      <tr key={u.id} className="hover:bg-slate-50/80 transition-colors">
-                        <td className="px-5 py-3.5">
+                      <tr key={u.id}>
+                        <td className="">
                           <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white text-xs font-black shadow-2xs shrink-0">
-                              {u.full_name?.[0]?.toUpperCase()}
-                            </div>
+                            <Avatar name={u.full_name} seed={u.id} size="w-9 h-9 text-xs" />
                             <div>
                               <p className="font-bold text-slate-900">{u.full_name}</p>
                               <p className="text-[11px] text-slate-400 font-medium">{u.email}</p>
                             </div>
                           </div>
                         </td>
-                        <td className="px-5 py-3.5">
+                        <td className="">
                           <span className={`badge-standard ${badgeClass}`}>
-                            {u.role}
+                            {{ student: t('role_student'), teacher: t('role_teacher'), admin: t('role_admin') }[u.role] || u.role}
                           </span>
                         </td>
-                        <td className="px-5 py-3.5 text-slate-600 font-medium">
+                        <td className=" text-slate-600 font-medium">
                           {u.role === 'student' ? (
                             <span>{u.specialty?.name || '—'} {u.group?.name ? `(${u.group.name})` : ''}</span>
                           ) : (
                             <span className="text-slate-400">—</span>
                           )}
                         </td>
-                        <td className="px-5 py-3.5 text-right">
+                        <td className=" text-right">
                           <div className="flex items-center justify-end gap-1">
                             <button
                               onClick={() => { setModalUser(u); setShowModal(true); }}

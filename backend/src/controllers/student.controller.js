@@ -360,11 +360,17 @@ const startConversation = async (req, res) => {
     const module = await Module.findByPk(req.params.id);
     if (!module) return res.status(404).json({ error: 'Modul topilmadi' });
 
-    // Avvalgi active sessiyani yopish (agar chala qolgan bo'lsa)
-    await Conversation.update(
-      { status: 'completed' },
-      { where: { student_id: req.user.id, module_id: req.params.id, status: 'active' } }
-    );
+    // Chala qolgan (baholanmagan) active sessiyalarni o'chirish — ular "completed" 0 ball
+    // sifatida saqlansa, talaba/guruh/admin statistikasini buzadi
+    const stale = await Conversation.findAll({
+      where: { student_id: req.user.id, module_id: req.params.id, status: 'active' },
+      attributes: ['id'],
+    });
+    if (stale.length) {
+      const staleIds = stale.map((c) => c.id);
+      await Message.destroy({ where: { conversation_id: staleIds } });
+      await Conversation.destroy({ where: { id: staleIds } });
+    }
 
     // Attempt type ga qarab tegishli kontekstni tanlash
     const patientContext =

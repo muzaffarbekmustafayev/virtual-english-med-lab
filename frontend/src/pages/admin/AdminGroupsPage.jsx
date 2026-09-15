@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
+import { PageHeader } from '../../components/ui';
 import api from '../../lib/api';
 import toast from 'react-hot-toast';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -197,41 +198,32 @@ export default function AdminGroupsPage() {
 
   return (
     <Layout>
-      <div className="space-y-6 max-w-[1600px] mx-auto">
+      <div className="space-y-5 sm:space-y-6">
         {/* Header */}
-        <div className="bg-white rounded-3xl p-6 sm:p-8 flex flex-wrap items-center justify-between gap-4 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] border border-slate-100 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-full blur-3xl -mr-20 -mt-20 opacity-60"></div>
-          
-          <div className="relative z-10">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-purple-50 border border-purple-100 text-purple-700 text-[10px] font-bold tracking-wide uppercase">
-                <RiShieldCheckLine size={12} /> {t('nav.admin_portal')}
-              </span>
-            </div>
-            <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight flex items-center gap-3">
-              Tashkilot Tuzilmasi
-            </h1>
-            <p className="text-slate-500 text-sm mt-1.5 font-medium max-w-xl">
-              Universitet yo'nalishlari, o'quv guruhlari hamda ularga biriktirilgan o'qituvchi va talabalarni markazlashgan holda boshqaring.
-            </p>
-          </div>
-        </div>
+        <PageHeader
+          tone="hero-purple"
+          badge={t('nav.admin_portal')}
+          badgeIcon={RiShieldCheckLine}
+          badgeTone="purple"
+          title={t('admin.groups_page.title')}
+          subtitle={t('admin.groups_page.subtitle')}
+        />
 
         {loading && specialties.length === 0 ? (
           <div className="flex justify-center p-16">
             <div className="w-10 h-10 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-[700px]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:h-[calc(100dvh-230px)] lg:min-h-[620px]">
             
             {/* COLUMN 1: SPECIALTIES */}
-            <div className="lg:col-span-3 bg-white rounded-3xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07)] border border-slate-100 flex flex-col overflow-hidden">
+            <div className="lg:col-span-3 card-standard flex flex-col overflow-hidden max-h-[420px] lg:max-h-none">
               <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
                 <h3 className="font-bold text-slate-800 flex items-center gap-2.5">
                   <div className="w-8 h-8 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center shadow-inner">
                     <RiStethoscopeLine size={18} />
                   </div>
-                  Yo'nalishlar
+                  {t('admin.groups_page.specialties_title')}
                 </h3>
                 <button 
                   onClick={() => setSpecForm({ show: true, id: null, name: '' })} 
@@ -276,7 +268,7 @@ export default function AdminGroupsPage() {
                           {spec.name}
                         </h4>
                         <p className={`text-xs font-medium mt-0.5 ${isActive ? 'text-indigo-600/80' : 'text-slate-500'}`}>
-                          {spec.groups?.length || 0} ta guruh
+                          {t('admin_groups_count', { n: spec.groups?.length || 0 })}
                         </p>
                       </div>
                       <div className={`flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity ${isActive ? 'opacity-100' : ''}`}>
@@ -300,14 +292,14 @@ export default function AdminGroupsPage() {
             </div>
 
             {/* COLUMN 2: GROUPS */}
-            <div className="lg:col-span-4 bg-white rounded-3xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07)] border border-slate-100 flex flex-col overflow-hidden">
+            <div className="lg:col-span-4 card-standard flex flex-col overflow-hidden max-h-[480px] lg:max-h-none">
               <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
                 <div className="flex flex-col">
                   <h3 className="font-bold text-slate-800 flex items-center gap-2.5">
                     <div className="w-8 h-8 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center shadow-inner">
                       <RiGroupLine size={18} />
                     </div>
-                    Guruhlar
+                    {t('admin.groups_page.groups_title')}
                   </h3>
                   {selectedSpecId && (
                     <span className="text-[10px] font-bold uppercase tracking-wider text-purple-600 mt-1 ml-10">
@@ -404,7 +396,7 @@ export default function AdminGroupsPage() {
             </div>
 
             {/* COLUMN 3: USERS IN GROUP */}
-            <div className="lg:col-span-5 bg-white rounded-3xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07)] border border-slate-100 flex flex-col overflow-hidden relative">
+            <div className="lg:col-span-5 card-standard flex flex-col overflow-hidden relative max-h-[560px] lg:max-h-none">
               {!selectedGroupId ? (
                 <div className="absolute inset-0 bg-slate-50/50 flex flex-col items-center justify-center text-center p-6 backdrop-blur-[2px] z-10">
                   <div className="w-20 h-20 bg-white rounded-3xl shadow-sm border border-slate-100 flex items-center justify-center mb-4 transform rotate-12">
@@ -412,7 +404,7 @@ export default function AdminGroupsPage() {
                   </div>
                   <h3 className="text-lg font-bold text-slate-700 mb-1">{t('admin_group_members')}</h3>
                   <p className="text-sm font-medium text-slate-500 max-w-[250px]">
-                    Ro'yxatni ko'rish va yangi a'zolar qo'shish uchun chap tomondan guruhni tanlang
+                    {t('admin_group_members_hint')}
                   </p>
                 </div>
               ) : null}
@@ -423,7 +415,7 @@ export default function AdminGroupsPage() {
                     <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shadow-inner">
                       <RiGraduationCapLine size={18} />
                     </div>
-                    Guruh A'zolari
+                    {t('admin_group_members')}
                   </h3>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 mt-1 ml-10 truncate max-w-[200px]">
                     {activeGroup?.name || '...'}
@@ -437,7 +429,7 @@ export default function AdminGroupsPage() {
                   <div className="flex items-center justify-between mb-4">
                     <h4 className="text-sm font-bold text-slate-800 flex items-center gap-2">
                       <RiUserStarLine className="text-amber-500" /> 
-                      O'qituvchilar 
+                      {t('ui_teachers')}
                       <span className="bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full text-[10px]">{activeGroup?.teachers?.length || 0}</span>
                     </h4>
                     <button 
@@ -467,7 +459,7 @@ export default function AdminGroupsPage() {
                           disabled={!selectedTeacherId}
                           className="bg-amber-500 hover:bg-amber-600 disabled:opacity-50 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-sm transition-colors"
                         >
-                          Qo'shish
+                          {t('admin_add_btn')}
                         </button>
                       </div>
                     </div>
@@ -507,7 +499,7 @@ export default function AdminGroupsPage() {
                   <div className="flex items-center justify-between mb-4">
                     <h4 className="text-sm font-bold text-slate-800 flex items-center gap-2">
                       <RiUser3Line className="text-emerald-500" /> 
-                      Talabalar 
+                      {t('ui_students')}
                       <span className="bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full text-[10px]">{activeGroup?.students?.length || 0}</span>
                     </h4>
                     <button 
@@ -539,7 +531,7 @@ export default function AdminGroupsPage() {
                           disabled={!selectedStudentId}
                           className="bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-sm transition-colors"
                         >
-                          Qo'shish
+                          {t('admin_add_btn')}
                         </button>
                       </div>
                     </div>
@@ -694,7 +686,7 @@ export default function AdminGroupsPage() {
                     type="text" 
                     value={groupForm.name} 
                     onChange={e => setGroupForm({ ...groupForm, name: e.target.value })} 
-                    placeholder="Masalan: 401-Stomatologiya" 
+                    placeholder={t('groups_name_ph')} 
                     className="block w-full pl-10 pr-3 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all text-sm bg-slate-50 focus:bg-white"
                     required
                   />

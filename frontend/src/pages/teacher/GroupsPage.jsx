@@ -3,11 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import api from '../../lib/api';
 import { useLanguage } from '../../contexts/LanguageContext';
-import { RiGroupLine, RiArrowRightLine, RiUser3Line, RiTrophyLine } from 'react-icons/ri';
+import { PageHeader, SectionCard, EmptyState, Skeleton, Avatar, ScoreBadge, RadialScore, useRelativeTime } from '../../components/ui';
+import { RiGroupLine, RiArrowRightLine, RiUser3Line, RiBarChartLine, RiMessage3Line } from 'react-icons/ri';
+
+const SPECIALTY_EMOJI = { STOM: '🦷', GEN_MED: '🩺', PED: '👶', NURSING: '💉', FIRST_AID: '🚑' };
 
 export default function GroupsPage() {
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, getLocalized } = useLanguage();
+  const rel = useRelativeTime();
   const [groups, setGroups]           = useState([]);
   const [selectedGroup, setSelected]  = useState(null);
   const [students, setStudents]       = useState([]);
@@ -16,11 +20,9 @@ export default function GroupsPage() {
 
   useEffect(() => {
     api.get('/teacher/groups')
-      .then(r => {
+      .then((r) => {
         setGroups(r.data || []);
-        if (r.data?.length > 0) {
-          loadStudents(r.data[0]);
-        }
+        if (r.data?.length > 0) loadStudents(r.data[0]);
       })
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -39,68 +41,48 @@ export default function GroupsPage() {
     }
   };
 
+  const specName = (g) => (g.specialty ? (getLocalized(g.specialty, 'name') || g.specialty.name) : g.specialty_name) || '—';
+  const specIcon = (g) => g.specialty?.icon || SPECIALTY_EMOJI[g.specialty?.code] || '🎓';
+
   return (
     <Layout>
-      <div className="space-y-6">
-        {/* ── 1. Header ── */}
-        <div className="card-standard p-6 sm:p-8 flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2 mb-1.5">
-              <span className="badge-standard badge-emerald">
-                {groups.length} {t('teacher.groups.title')}
-              </span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
-              <span className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center justify-center text-xl shrink-0">
-                <RiGroupLine />
-              </span>
-              {t('teacher.groups.title')}
-            </h1>
-            <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">{t('teacher.groups.subtitle')}</p>
-          </div>
-        </div>
+      <div className="space-y-5 sm:space-y-6">
+        <PageHeader
+          tone="hero-emerald"
+          badge={`${groups.length} ${t('ui_group_short')}`}
+          badgeIcon={RiGroupLine}
+          badgeTone="emerald"
+          title={t('teacher.groups.title')}
+          subtitle={t('teacher.groups.subtitle')}
+          actions={<button onClick={() => navigate('/teacher/dashboard')} className="btn-secondary-soft"><RiBarChartLine className="text-emerald-600" /> {t('nav_dashboard')}</button>}
+        />
 
-        {/* ── 2. Groups & Student Roster Split ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
           {/* Groups list */}
           <div className="lg:col-span-4 space-y-3">
-            <h2 className="text-xs text-slate-400 font-black uppercase tracking-wider px-1">
-              {t('teacher.groups.select_group')}
-            </h2>
-
+            <p className="text-[11px] text-slate-400 font-extrabold uppercase tracking-wider px-1">{t('teacher.groups.select_group')}</p>
             {loading ? (
-              <div className="space-y-3">
-                {[...Array(3)].map((_, i) => (
-                  <div key={i} className="h-20 bg-white rounded-2xl border border-slate-200 animate-pulse" />
-                ))}
-              </div>
+              <div className="space-y-3">{[...Array(3)].map((_, i) => <Skeleton key={i} className="h-24" />)}</div>
             ) : groups.length === 0 ? (
-              <div className="card-standard p-6 text-center text-xs text-slate-400">
-                Guruhlar topilmadi
-              </div>
+              <div className="card-standard"><EmptyState icon={RiGroupLine} title={t('stats_no_groups_teacher')} hint={t('stats_no_groups_teacher_hint')} /></div>
             ) : (
               <div className="space-y-2.5">
-                {groups.map(g => {
+                {groups.map((g) => {
                   const isSel = selectedGroup?.id === g.id;
                   return (
-                    <button
-                      key={g.id}
-                      onClick={() => loadStudents(g)}
-                      className={`w-full text-left p-4 rounded-2xl border transition-all cursor-pointer ${
-                        isSel
-                          ? 'border-emerald-500 bg-emerald-50/70 text-emerald-950 shadow-xs font-bold'
-                          : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50 shadow-2xs'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <p className="font-extrabold text-sm text-slate-900">{g.name}</p>
-                        <span className={`badge-standard ${isSel ? 'badge-emerald bg-white' : 'badge-slate'}`}>
-                          {g.student_count || 0} talaba
-                        </span>
+                    <button key={g.id} onClick={() => loadStudents(g)}
+                      className={`w-full text-left p-4 rounded-2xl border transition-all ${isSel ? 'border-emerald-400 bg-emerald-50/60 ring-2 ring-emerald-500/10 shadow-sm' : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm'}`}>
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="font-extrabold text-sm text-slate-900 truncate">{specIcon(g)} {g.name}</p>
+                          <p className="text-[11px] text-slate-500 font-medium mt-0.5 truncate">{specName(g)}</p>
+                          <p className="text-[11px] text-slate-500 font-medium mt-1.5 flex items-center gap-2">
+                            <span className="inline-flex items-center gap-1"><RiUser3Line className="text-slate-400" /> {g.student_count || 0}</span>
+                            <span className="inline-flex items-center gap-1"><RiMessage3Line className="text-slate-400" /> {g.completed_sessions || 0}</span>
+                          </p>
+                        </div>
+                        <RadialScore value={g.average_score || 0} size={52} stroke={5} />
                       </div>
-                      <p className="text-xs text-slate-500 font-medium mt-1">
-                        Mutaxassislik: {g.specialty_name || 'Stomatologiya'}
-                      </p>
                     </button>
                   );
                 })}
@@ -111,69 +93,51 @@ export default function GroupsPage() {
           {/* Students table */}
           <div className="lg:col-span-8">
             {!selectedGroup ? (
-              <div className="card-standard flex items-center justify-center h-64 text-slate-400 text-sm font-semibold">
-                {t('teacher.groups.select_group')}
-              </div>
+              <div className="card-standard"><EmptyState icon={RiGroupLine} title={t('teacher.groups.select_group')} /></div>
             ) : (
-              <div className="card-standard overflow-hidden">
-                <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
-                  <div>
-                    <h3 className="text-sm font-black text-slate-900">{selectedGroup.name}</h3>
-                    <p className="text-[11px] text-slate-400 font-medium">{t('teacher_students_list')}</p>
+              <SectionCard icon={RiGroupLine} iconClass="text-emerald-600" title={selectedGroup.name} desc={`${specName(selectedGroup)} · ${t('teacher_students_list')}`}
+                right={
+                  <div className="flex items-center gap-2">
+                    <span className="badge-standard badge-emerald">{students.length} {t('groups_total_students')}</span>
+                    <button onClick={() => navigate(`/teacher/reports?group_id=${selectedGroup.id}`)} className="btn-secondary-soft text-xs py-1.5 px-3"><RiBarChartLine className="text-emerald-600" /> {t('stats_view_group_report')}</button>
                   </div>
-                  <span className="badge-standard badge-emerald">
-                    {students.length} {t('admin.overview.total_students').toLowerCase()}
-                  </span>
-                </div>
-
+                }>
                 {studLoading ? (
-                  <div className="flex justify-center py-16">
-                    <div className="w-8 h-8 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin" />
-                  </div>
+                  <div className="p-5 space-y-3">{[...Array(4)].map((_, i) => <Skeleton key={i} className="h-12" />)}</div>
                 ) : students.length === 0 ? (
-                  <div className="py-16 text-center text-slate-400 text-xs font-medium">
-                    Ushbu guruhda talabalar mavjud emas.
-                  </div>
+                  <EmptyState icon={RiUser3Line} title={t('groups_no_students')} />
                 ) : (
                   <div className="overflow-x-auto">
-                    <table className="w-full text-left">
+                    <table className="table-premium min-w-[560px]">
                       <thead>
-                        <tr className="border-b border-slate-100 bg-slate-50/40 text-[10px] font-black text-slate-400 uppercase tracking-wider">
-                          <th className="px-6 py-3">{t('teacher.groups.student_name')}</th>
-                          <th className="px-6 py-3 hidden sm:table-cell">{t('teacher.groups.average_score')}</th>
-                          <th className="px-6 py-3 hidden md:table-cell">{t('teacher.groups.last_active')}</th>
-                          <th className="px-6 py-3 text-right">{t('common.actions')}</th>
+                        <tr>
+                          <th>{t('teacher.groups.student_name')}</th>
+                          <th className="text-center">{t('teacher.groups.average_score')}</th>
+                          <th>{t('teacher.groups.last_active')}</th>
+                          <th className="text-right">{t('common.actions')}</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-100 text-xs">
-                        {students.map(s => (
-                          <tr key={s.id} className="hover:bg-slate-50/80 transition-colors">
-                            <td className="px-6 py-3.5">
+                      <tbody>
+                        {students.map((s) => (
+                          <tr key={s.id}>
+                            <td>
                               <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white text-xs font-black shadow-2xs shrink-0">
-                                  {s.full_name?.[0]?.toUpperCase()}
-                                </div>
-                                <div>
-                                  <p className="text-xs font-bold text-slate-900">{s.full_name}</p>
-                                  <p className="text-[11px] text-slate-400">{s.email}</p>
+                                <Avatar name={s.full_name} seed={s.id} size="w-9 h-9 text-xs" />
+                                <div className="min-w-0">
+                                  <p className="font-extrabold text-slate-900 truncate">{s.full_name}</p>
+                                  <p className="text-[11px] text-slate-400 font-medium truncate">{s.email}</p>
                                 </div>
                               </div>
                             </td>
-                            <td className="px-6 py-3.5 hidden sm:table-cell">
-                              <span className="badge-standard badge-amber">
-                                {s.average_score || 0}%
-                              </span>
+                            <td className="text-center"><ScoreBadge value={s.average_score || 0} /></td>
+                            <td>
+                              <p className="text-xs font-bold text-slate-700 truncate max-w-[220px]">{s.last_module || '—'}</p>
+                              <p className="text-[11px] text-slate-400 font-medium">{rel(s.last_activity)}</p>
                             </td>
-                            <td className="px-6 py-3.5 hidden md:table-cell">
-                              <span className="text-xs text-slate-600 font-medium">{s.last_module || '—'}</span>
-                            </td>
-                            <td className="px-6 py-3.5 text-right">
-                              <button
-                                onClick={() => navigate('/teacher/reports')}
-                                className="p-2 rounded-xl text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 transition-colors cursor-pointer"
-                                title={t('teacher.groups.view_student_details')}
-                              >
-                                <RiArrowRightLine className="text-base" />
+                            <td className="text-right">
+                              <button onClick={() => navigate(`/teacher/reports?search=${encodeURIComponent(s.full_name)}&group_id=${selectedGroup.id}`)}
+                                className="btn-secondary-soft text-xs py-1.5 px-3 hover:border-emerald-300 hover:text-emerald-700" title={t('teacher.groups.view_student_details')}>
+                                {t('ui_report')} <RiArrowRightLine />
                               </button>
                             </td>
                           </tr>
@@ -182,7 +146,7 @@ export default function GroupsPage() {
                     </table>
                   </div>
                 )}
-              </div>
+              </SectionCard>
             )}
           </div>
         </div>

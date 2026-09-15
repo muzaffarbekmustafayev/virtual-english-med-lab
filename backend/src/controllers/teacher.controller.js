@@ -1,55 +1,58 @@
 const {
-  User, StudentGroup, TeacherGroup, Module,
+  User, StudentGroup, TeacherGroup, Module, Specialty,
   Conversation, Message, TestResult, ForumMessage, ModuleResult
 } = require('../models');
 const { Op } = require('sequelize');
 
 // ── GET /api/teacher/dashboard ──────────────────────────────
+const avgOf = (arr) => (arr.length ? Math.round(arr.reduce((a, b) => a + b, 0) / arr.length) : 0);
+const dayKey = (d) => new Date(d).toISOString().slice(0, 10);
+const DAY = 86400000;
+
 const getDashboard = async (req, res) => {
   try {
     const teacherGroupLinks = await TeacherGroup.findAll({ where: { teacher_id: req.user.id } });
     const groupIds = teacherGroupLinks.map((tg) => tg.group_id);
 
-    const students = await User.findAll({
-      where: { role: 'student', group_id: { [Op.in]: groupIds } },
-      include: [{ model: StudentGroup, as: 'group', attributes: ['id', 'name'] }]
-    });
+    const [students, groups, allModules] = await Promise.all([
+      User.findAll({
+        where: { role: 'student', group_id: { [Op.in]: groupIds } },
+        include: [{ model: StudentGroup, as: 'group', attributes: ['id', 'name', 'specialty_id'] }],
+      }),
+      StudentGroup.findAll({
+        where: { id: { [Op.in]: groupIds } },
+        include: [{ model: Specialty, as: 'specialty', attributes: ['id', 'name', 'name_uz', 'name_ru', 'name_en', 'code', 'icon'] }],
+      }),
+      Module.findAll({ attributes: ['id', 'title', 'title_uz', 'title_ru', 'title_en', 'order_index', 'specialty_id'], order: [['order_index', 'ASC']] }),
+    ]);
 
     const studentIds = students.map((s) => s.id);
 
     // 1. All conversations and module results
     const conversations = await Conversation.findAll({
-      where: {
-        student_id: { [Op.in]: studentIds },
-        status: 'completed',
-      },
+      where: { student_id: { [Op.in]: studentIds }, status: 'completed' },
       order: [['created_at', 'DESC']],
-      include: [{ model: Module, as: 'module', attributes: ['id', 'title', 'order_index'] }]
+      include: [{ model: Module, as: 'module', attributes: ['id', 'title', 'title_uz', 'title_ru', 'title_en', 'order_index'] }],
     });
+    const moduleResults = await ModuleResult.findAll({ where: { student_id: { [Op.in]: studentIds } } });
 
-    const moduleResults = await ModuleResult.findAll({
-      where: {
-        student_id: { [Op.in]: studentIds }
-      }
-    });
+    const modulesOfSpecialty = (specId) => allModules.filter((m) => !specId || m.specialty_id === specId);
+    const totalModulesFallback = allModules.length;
 
-    const totalModulesCount = await Module.count();
-
-    // 2. Fetch all groups for this teacher
-    const groups = await StudentGroup.findAll({ where: { id: { [Op.in]: groupIds } } });
-
-    // 3. Map all students with comprehensive percentages and competency scores
-    const allStudentsList = students.map(s => {
-      const studentConvs = conversations.filter(c => c.student_id === s.id);
-      const studentModRes = moduleResults.filter(mr => mr.student_id === s.id);
+    // 2. Map all students with comprehensive percentages and competency scores
+    const allStudentsList = students.map((s) => {
+      const studentConvs = conversations.filter((c) => c.student_id === s.id);
+      const studentModRes = moduleResults.filter((mr) => mr.student_id === s.id);
+      const specId = s.specialty_id || s.group?.specialty_id || null;
+      const totalModulesCount = specId ? modulesOfSpecialty(specId).length || totalModulesFallback : totalModulesFallback;
 
       // Best score per module
       const moduleMap = new Map();
-      studentConvs.forEach(c => {
+      studentConvs.forEach((c) => {
         const cur = moduleMap.get(c.module_id) || 0;
         if (c.overall_score > cur) moduleMap.set(c.module_id, c.overall_score);
       });
-      studentModRes.forEach(mr => {
+      studentModRes.forEach((mr) => {
         const cur = moduleMap.get(mr.module_id) || 0;
         const best = Math.max(mr.combined_score || 0, mr.best_chat_score || 0, mr.best_quiz_score || 0);
         if (best > cur) moduleMap.set(mr.module_id, best);
@@ -65,23 +68,13 @@ const getDashboard = async (req, res) => {
       const sAvg = moduleMap.size > 0 ? Math.round(totalSum / moduleMap.size) : 0;
       const progressPercent = totalModulesCount > 0 ? Math.min(100, Math.round((passedCount / totalModulesCount) * 100)) : 0;
 
-      // CEFR
       let cefr = 'A2 Foundation';
       if (sAvg >= 85) cefr = 'B2 Clinical';
       else if (sAvg >= 60) cefr = 'B1 Medical';
 
-      // Competencies
-      let gSum = 0, vSum = 0, fSum = 0, pSum = 0, cSum = 0, cCount = 0;
-      studentConvs.forEach(c => {
-        if (c.grammar_score || c.vocabulary_score || c.fluency_score || c.pronunciation_score || c.clinical_score) {
-          gSum += c.grammar_score || 0;
-          vSum += c.vocabulary_score || 0;
-          fSum += c.fluency_score || 0;
-          pSum += c.pronunciation_score || 0;
-          cSum += c.clinical_score || 0;
-          cCount++;
-        }
-      });
+      const scored = studentConvs.filter((c) => c.grammar_score || c.vocabulary_score || c.fluency_score || c.pronunciation_score || c.clinical_score);
+      const comp = (key, factor) => (scored.length ? avgOf(scored.map((c) => c[key] || 0)) : Math.min(100, Math.round(sAvg * factor)));
+      const lastActivity = studentConvs.length > 0 ? studentConvs[0].created_at : null;
 
       return {
         id: s.id,
@@ -96,45 +89,114 @@ const getDashboard = async (req, res) => {
         progress_percent: progressPercent,
         cefr_level: cefr,
         completed_sessions: studentConvs.length,
+        best_scores: Object.fromEntries(moduleMap),
         competencies: {
-          grammar: cCount > 0 ? Math.round(gSum / cCount) : Math.min(100, Math.round(sAvg * 0.95)),
-          vocabulary: cCount > 0 ? Math.round(vSum / cCount) : Math.min(100, Math.round(sAvg * 1.02)),
-          fluency: cCount > 0 ? Math.round(fSum / cCount) : Math.min(100, Math.round(sAvg * 0.98)),
-          pronunciation: cCount > 0 ? Math.round(pSum / cCount) : Math.min(100, Math.round(sAvg * 0.94)),
-          clinical: cCount > 0 ? Math.round(cSum / cCount) : Math.min(100, Math.round(sAvg * 1.01)),
+          grammar: comp('grammar_score', 0.95),
+          vocabulary: comp('vocabulary_score', 1.02),
+          fluency: comp('fluency_score', 0.98),
+          pronunciation: comp('pronunciation_score', 0.94),
+          clinical: comp('clinical_score', 1.01),
         },
-        last_activity: studentConvs.length > 0 ? studentConvs[0].created_at : s.created_at
+        last_activity: lastActivity || s.created_at,
+        days_inactive: lastActivity ? Math.floor((Date.now() - new Date(lastActivity)) / DAY) : null,
       };
     });
 
     const totalStudents = allStudentsList.length;
-    const globalAvg = totalStudents > 0
-      ? Math.round(allStudentsList.reduce((sum, s) => sum + s.average_score, 0) / totalStudents)
-      : 0;
+    const activeList = allStudentsList.filter((s) => s.completed_sessions > 0);
+    const globalAvg = avgOf(activeList.map((s) => s.average_score));
 
-    // 4. Map groups with stats
-    const groupsWithStats = groups.map(g => {
-      const groupStudents = allStudentsList.filter(s => s.group_id === g.id);
-      const gAvg = groupStudents.length
-        ? Math.round(groupStudents.reduce((sum, st) => sum + st.average_score, 0) / groupStudents.length)
-        : 0;
+    // helpers shared by group + global analytics
+    const buildTimeline = (convs, days = 14) => {
+      const out = [];
+      for (let i = days - 1; i >= 0; i--) {
+        const key = dayKey(Date.now() - i * DAY);
+        const dayConvs = convs.filter((c) => dayKey(c.created_at) === key);
+        out.push({ date: key, sessions: dayConvs.length, avg_score: avgOf(dayConvs.map((c) => c.overall_score || 0)) });
+      }
+      return out;
+    };
+    const buildDistribution = (convs) => [
+      { label: '0-39', min: 0, max: 39 }, { label: '40-59', min: 40, max: 59 },
+      { label: '60-79', min: 60, max: 79 }, { label: '80-100', min: 80, max: 100 },
+    ].map((b) => ({ label: b.label, count: convs.filter((c) => (c.overall_score || 0) >= b.min && (c.overall_score || 0) <= b.max).length }));
+    const buildCompetencies = (convs) => ({
+      grammar: avgOf(convs.map((c) => c.grammar_score || 0)),
+      vocabulary: avgOf(convs.map((c) => c.vocabulary_score || 0)),
+      fluency: avgOf(convs.map((c) => c.fluency_score || 0)),
+      pronunciation: avgOf(convs.map((c) => c.pronunciation_score || 0)),
+      clinical: avgOf(convs.map((c) => c.clinical_score || 0)),
+    });
+    const buildModuleMatrix = (mods, list, convs) => mods.map((m) => {
+      const mConvs = convs.filter((c) => c.module_id === m.id);
+      const bests = list.map((s) => s.best_scores[m.id]).filter((v) => v !== undefined);
+      return {
+        id: m.id, order_index: m.order_index,
+        title: m.title, title_uz: m.title_uz, title_ru: m.title_ru, title_en: m.title_en,
+        attempts: mConvs.length,
+        students_attempted: bests.length,
+        students_passed: bests.filter((v) => v >= 60).length,
+        avg_score: avgOf(bests),
+        completion_rate: list.length ? Math.round((bests.filter((v) => v >= 60).length / list.length) * 100) : 0,
+      };
+    });
+    const recent = (convs, n = 8) => convs.slice(0, n).map((c) => {
+      const st = allStudentsList.find((s) => s.id === c.student_id);
+      return {
+        id: c.id, student_id: c.student_id, student_name: st ? st.full_name : '—', group_name: st ? st.group_name : '—',
+        module_title: c.module?.title || '—', module_order: c.module?.order_index || null,
+        score: c.overall_score || 0, created_at: c.created_at,
+      };
+    });
 
+    // 3. Map groups with stats
+    const groupsWithStats = groups.map((g) => {
+      const groupStudents = allStudentsList.filter((s) => s.group_id === g.id);
+      const gIds = new Set(groupStudents.map((s) => s.id));
+      const gConvs = conversations.filter((c) => gIds.has(c.student_id));
+      const gActive = groupStudents.filter((s) => s.completed_sessions > 0);
+      const gMods = modulesOfSpecialty(g.specialty_id);
+      const ranked = [...gActive].sort((a, b) => b.average_score - a.average_score);
       return {
         id: g.id,
         name: g.name,
+        specialty: g.specialty || null,
+        specialty_name: g.specialty ? g.specialty.name : null,
         student_count: groupStudents.length,
-        average_score: gAvg,
-        students: groupStudents
+        active_students: gActive.length,
+        inactive_students: groupStudents.filter((s) => s.days_inactive === null || s.days_inactive > 14).length,
+        average_score: avgOf(gActive.map((s) => s.average_score)),
+        average_progress: avgOf(groupStudents.map((s) => s.progress_percent)),
+        completed_sessions: gConvs.length,
+        sessions_7d: gConvs.filter((c) => Date.now() - new Date(c.created_at) <= 7 * DAY).length,
+        pass_rate: gConvs.length ? Math.round((gConvs.filter((c) => (c.overall_score || 0) >= 60).length / gConvs.length) * 100) : 0,
+        total_modules: gMods.length || totalModulesFallback,
+        competencies: buildCompetencies(gConvs),
+        activity_timeline: buildTimeline(gConvs),
+        score_distribution: buildDistribution(gConvs),
+        module_matrix: buildModuleMatrix(gMods.length ? gMods : allModules, groupStudents, gConvs),
+        top_students: ranked.slice(0, 3),
+        weak_students: ranked.filter((s) => s.average_score < 60).slice(-3).reverse(),
+        recent_activity: recent(gConvs, 6),
+        students: groupStudents,
       };
     });
 
     res.json({
       total_groups: groupIds.length,
       total_students: students.length,
+      active_students: activeList.length,
       average_score: globalAvg,
+      average_progress: avgOf(allStudentsList.map((s) => s.progress_percent)),
       recent_conversations: conversations.length,
+      sessions_7d: conversations.filter((c) => Date.now() - new Date(c.created_at) <= 7 * DAY).length,
+      pass_rate: conversations.length ? Math.round((conversations.filter((c) => (c.overall_score || 0) >= 60).length / conversations.length) * 100) : 0,
+      competencies: buildCompetencies(conversations),
+      activity_timeline: buildTimeline(conversations),
+      score_distribution: buildDistribution(conversations),
+      recent_activity: recent(conversations, 8),
       all_students: allStudentsList,
-      groups: groupsWithStats
+      groups: groupsWithStats,
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -147,12 +209,27 @@ const getGroups = async (req, res) => {
     const links = await TeacherGroup.findAll({ where: { teacher_id: req.user.id } });
     const groupIds = links.map((l) => l.group_id);
 
-    const groups = await StudentGroup.findAll({ where: { id: { [Op.in]: groupIds } } });
+    const groups = await StudentGroup.findAll({
+      where: { id: { [Op.in]: groupIds } },
+      include: [{ model: Specialty, as: 'specialty', attributes: ['id', 'name', 'name_uz', 'name_ru', 'name_en', 'code', 'icon'] }],
+    });
 
     const result = await Promise.all(
       groups.map(async (g) => {
-        const studentCount = await User.count({ where: { group_id: g.id, role: 'student' } });
-        return { ...g.toJSON(), student_count: studentCount };
+        const students = await User.findAll({ where: { group_id: g.id, role: 'student' }, attributes: ['id'] });
+        const ids = students.map((s) => s.id);
+        const convs = ids.length
+          ? await Conversation.findAll({ where: { student_id: { [Op.in]: ids }, status: 'completed' }, attributes: ['student_id', 'overall_score'] })
+          : [];
+        const activeIds = new Set(convs.map((c) => c.student_id));
+        return {
+          ...g.toJSON(),
+          specialty_name: g.specialty ? g.specialty.name : null,
+          student_count: ids.length,
+          active_students: activeIds.size,
+          completed_sessions: convs.length,
+          average_score: convs.length ? Math.round(convs.reduce((a, c) => a + (c.overall_score || 0), 0) / convs.length) : 0,
+        };
       })
     );
 

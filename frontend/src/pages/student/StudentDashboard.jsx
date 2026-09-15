@@ -66,10 +66,10 @@ export default function StudentDashboard() {
 
   return (
     <Layout>
-      <div className="space-y-6 max-w-7xl mx-auto">
+      <div className="space-y-5 sm:space-y-6 max-w-7xl mx-auto">
         
         {/* ── 1. Hero Welcome & Diagnostic Banner ── */}
-        <div className="card-standard p-6 sm:p-8 relative overflow-hidden bg-gradient-to-br from-white via-slate-50/50 to-blue-50/30 border border-slate-200/90 shadow-xs">
+        <div className="card-hero p-5 sm:p-7">
           <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="max-w-2xl">
               <div className="flex flex-wrap items-center gap-2 mb-3">
@@ -82,7 +82,7 @@ export default function StudentDashboard() {
                 </span>
               </div>
               
-              <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-snug">
+              <h1 className="text-2xl sm:text-[1.9rem] font-extrabold text-slate-900 tracking-tight leading-tight">
                 {t('student.dashboard.greeting', { name: user?.full_name?.split(' ')[0] || t('ui_student_placeholder') })} 👋
               </h1>
               <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1.5 leading-relaxed">
@@ -211,7 +211,7 @@ export default function StudentDashboard() {
                     {t('dash_module_results_sub')}
                   </p>
                 </div>
-                <span className="text-xs font-bold text-slate-500">{moduleResults.length} ta modul</span>
+                <span className="badge-standard badge-slate">{moduleResults.length} {t('ui_module_short')}</span>
               </div>
 
               <div className="divide-y divide-slate-100">
@@ -245,17 +245,17 @@ export default function StudentDashboard() {
                           <div className="flex items-center gap-2 mt-1">
                             {m.quiz_score !== null && (
                               <span className="text-[11px] font-bold text-slate-500">
-                                Test: <strong className="text-slate-800">{m.quiz_score}%</strong>
+                                {t('ui_test')}: <strong className="text-slate-800">{m.quiz_score}%</strong>
                               </span>
                             )}
                             {m.chat_score !== null && (
                               <span className="text-[11px] font-bold text-slate-500">
-                                · Muloqot: <strong className="text-slate-800">{m.chat_score}%</strong>
+                                · {t('ui_chat')}: <strong className="text-slate-800">{m.chat_score}%</strong>
                               </span>
                             )}
                             {m.attempts > 0 && (
                               <span className="text-[11px] text-slate-400">
-                                ({m.attempts} ta urinish)
+                                ({m.attempts} {t('ui_attempt_short')})
                               </span>
                             )}
                           </div>
@@ -266,11 +266,11 @@ export default function StudentDashboard() {
                         {sc !== null && sc > 0 ? (
                           <span className={`badge-standard ${scBadge} font-black text-xs px-3 py-1`}>
                             <RiSparkling2Line className="text-xs" />
-                            <span>Yakuniy: {sc}%</span>
+                            <span>{t('ui_final')}: {sc}%</span>
                           </span>
                         ) : (
                           <span className="badge-standard badge-slate text-xs">
-                            Topshirilmagan
+                            {t('ui_not_submitted')}
                           </span>
                         )}
 
@@ -293,7 +293,7 @@ export default function StudentDashboard() {
                   <RiTimeLine className="text-blue-600 text-lg" />
                   <h2 className="text-xs font-black text-slate-900 uppercase tracking-wider">{t('student.dashboard.recent_activity')}</h2>
                 </div>
-                <span className="text-[11px] font-bold text-slate-400">{data.recent_activity.length} ta so'nggi urinish</span>
+                <span className="badge-standard badge-slate">{data.recent_activity.length} {t('ui_recent_attempts')}</span>
               </div>
 
               <div className="divide-y divide-slate-100">

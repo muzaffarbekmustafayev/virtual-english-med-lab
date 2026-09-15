@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
+import { PageHeader } from '../../components/ui';
 import api from '../../lib/api';
 import toast from 'react-hot-toast';
 import {
@@ -32,7 +33,7 @@ const COLOR_MAP = {
 
 export default function ContentManager() {
   const { tab = 'grammar' }       = useParams();
-  const { t } = useLanguage();
+  const { t, getLocalized } = useLanguage();
   const navigate                  = useNavigate();
   const [modules, setModules]     = useState([]);
   const [specialties, setSpec]    = useState([]);
@@ -118,34 +119,28 @@ export default function ContentManager() {
 
   return (
     <Layout>
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2.5 py-0.5 rounded-md border border-purple-200">
-              Admin Kontent Boshqaruvi
-            </span>
-          </div>
-          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-            <RiBookOpenLine className="text-purple-600" /> Kontent & Ma'lumotlar Menejeri
-          </h1>
-          <p className="text-sm text-gray-500 mt-1">
-            Modullar, lug'at, iboralar va test savollarini oson boshqaring
-          </p>
-        </div>
-        <button
-          onClick={() => { setEdit(null); setShowModal(true); }}
-          className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white text-sm font-bold rounded-xl shadow-md shadow-indigo-500/20 transition-all hover:shadow-lg hover:shadow-indigo-500/30 hover:-translate-y-0.5"
-        >
-          <RiAddLine className="text-lg" />
-          {tab === 'scenarios' ? t('cm_new_module') : t('cm_add_new')}
-        </button>
+      <div className="mb-5 sm:mb-6">
+        <PageHeader
+          tone="hero-purple"
+          badge={t('cm_badge')}
+          badgeIcon={RiBookOpenLine}
+          badgeTone="purple"
+          title={t('admin.content.title')}
+          subtitle={t('admin.content.subtitle')}
+          actions={
+            <button onClick={() => { setEdit(null); setShowModal(true); }} className="btn-primary bg-gradient-to-r from-indigo-600 to-purple-600">
+              <RiAddLine className="text-lg" />
+              {tab === 'scenarios' ? t('cm_new_module') : t('cm_add_new')}
+            </button>
+          }
+        />
       </div>
 
-      <div className="bg-white border border-gray-200 rounded-2xl p-4 mb-6 shadow-sm">
-        <div className="flex flex-col sm:flex-row gap-4 mb-4 border-b border-gray-100 pb-4">
+      <div className="bg-white border border-slate-200 rounded-2xl p-4 mb-6 shadow-sm">
+        <div className="flex flex-col sm:flex-row gap-4 mb-4 border-b border-slate-100 pb-4">
           <div className="flex-1">
-            <label className="text-xs font-bold uppercase tracking-wider text-gray-500 flex items-center gap-1.5 mb-2">
-              <RiStethoscopeLine className="text-purple-500" /> Yo'nalishni Tanlang:
+            <label className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5 mb-2">
+              <RiStethoscopeLine className="text-purple-500" /> {t('cm_select_specialty')}:
             </label>
             <select
               value={selSpec || ''}
@@ -156,10 +151,10 @@ export default function ContentManager() {
                 if (firstMod) setSelMod(firstMod.id);
                 else setSelMod(null);
               }}
-              className="w-full max-w-sm bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded-xl focus:ring-purple-500 focus:border-purple-500 block p-2.5"
+              className="w-full max-w-sm bg-slate-50 border border-slate-200 text-slate-700 text-sm rounded-xl focus:ring-purple-500 focus:border-purple-500 block p-2.5"
             >
               {specialties.map(s => (
-                <option key={s.id} value={s.id}>{s.name}</option>
+                <option key={s.id} value={s.id}>{getLocalized(s, 'name') || s.name}</option>
               ))}
             </select>
           </div>
@@ -168,11 +163,11 @@ export default function ContentManager() {
         {tab !== 'scenarios' && (
           <div>
             <div className="flex items-center justify-between gap-2 mb-3">
-              <label className="text-xs font-bold uppercase tracking-wider text-gray-500 flex items-center gap-1.5">
-                <RiLayoutGridLine className="text-indigo-500" /> O'quv Modulini Tanlang:
+              <label className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+                <RiLayoutGridLine className="text-indigo-500" /> {t('cm_select_module')}:
               </label>
-              <span className="text-xs text-gray-400">
-                Tanlangan: <b className="text-gray-700">{activeModule?.order_index}-modul — {activeModule?.title}</b>
+              <span className="text-xs text-slate-400">
+                {t('cm_selected')}: <b className="text-slate-700">#{activeModule?.order_index} — {activeModule?.title}</b>
               </span>
             </div>
             
@@ -186,11 +181,11 @@ export default function ContentManager() {
                     className={`p-3 rounded-xl border text-left transition-all ${
                       isSel
                         ? 'bg-indigo-600 text-white border-indigo-600 shadow-md shadow-indigo-500/20'
-                        : 'bg-gray-50/70 hover:bg-gray-100 border-gray-200 text-gray-700'
+                        : 'bg-slate-50/70 hover:bg-slate-100 border-slate-200 text-slate-700'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className={`text-[10px] font-bold uppercase ${isSel ? 'text-indigo-200' : 'text-gray-400'}`}>
+                      <span className={`text-[10px] font-bold uppercase ${isSel ? 'text-indigo-200' : 'text-slate-400'}`}>
                         Modul {m.order_index}
                       </span>
                       {isSel && <RiCheckLine className="text-sm" />}
@@ -205,23 +200,23 @@ export default function ContentManager() {
       </div>
 
       {/* ── 3. Jadval / Ro'yxat ── */}
-      <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+      <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
         {/* Sub-header */}
-        <div className="p-4 border-b border-gray-200 bg-gray-50/60 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="p-4 border-b border-slate-200 bg-slate-50/60 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-gray-900 uppercase">{t(activeTab?.name)}</span>
-            <span className="text-xs text-gray-500 bg-gray-200 px-2 py-0.5 rounded-full font-semibold">
-              {filteredItems.length} ta
+            <span className="text-xs font-bold text-slate-900 uppercase">{t(activeTab?.name)}</span>
+            <span className="text-xs text-slate-500 bg-slate-200 px-2 py-0.5 rounded-full font-semibold">
+              {filteredItems.length} {t('cm_items')}
             </span>
           </div>
           <div className="relative w-full sm:w-64">
-            <RiSearchLine className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm" />
+            <RiSearchLine className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Qidirish..."
-              className="w-full bg-white border border-gray-200 rounded-xl pl-9 pr-3 py-1.5 text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder={t('ui_search')}
+              className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
         </div>
@@ -232,27 +227,27 @@ export default function ContentManager() {
           </div>
         ) : filteredItems.length === 0 ? (
           <div className="text-center py-16 px-4">
-            <div className="w-14 h-14 rounded-2xl bg-gray-100 text-gray-400 flex items-center justify-center text-3xl mx-auto mb-3">
+            <div className="w-14 h-14 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center text-3xl mx-auto mb-3">
               <RiInformationLine />
             </div>
-            <p className="text-sm font-bold text-gray-700">{t('cm_no_data')}</p>
-            <p className="text-xs text-gray-400 mt-1 max-w-xs mx-auto">
-              Yuqoridagi tugma orqali yangi yozuv qo'shishingiz mumkin.
+            <p className="text-sm font-bold text-slate-700">{t('cm_no_data')}</p>
+            <p className="text-xs text-slate-400 mt-1 max-w-xs mx-auto">
+              {t('cm_empty_hint')}
             </p>
           </div>
         ) : (
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-slate-100">
 
             {/* GRAMMAR */}
             {tab === 'grammar' && filteredItems.map((item, idx) => (
-              <div key={item.id || idx} className="p-5 hover:bg-gray-50/70 transition flex items-start justify-between gap-4">
+              <div key={item.id || idx} className="p-5 hover:bg-slate-50/70 transition flex items-start justify-between gap-4">
                 <div className="flex items-start gap-3.5 w-full max-w-3xl">
                   <span className="w-8 h-8 rounded-xl bg-amber-50 text-amber-700 font-black text-xs flex items-center justify-center shrink-0 mt-0.5 border border-amber-200">
                     §{idx + 1}
                   </span>
                   <div className="space-y-2 w-full">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h4 className="text-sm font-black text-gray-900">{item.title}</h4>
+                      <h4 className="text-sm font-black text-slate-900">{item.title}</h4>
                       {item.title_uz && (
                         <span className="text-xs font-bold text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
                           {item.title_uz}
@@ -260,8 +255,8 @@ export default function ContentManager() {
                       )}
                     </div>
                     {(item.rule_explanation || item.rule_explanation_uz) && (
-                      <p className="text-xs text-gray-600 bg-slate-50 p-2.5 rounded-xl border border-slate-100 leading-relaxed">
-                        <b>Qoida:</b> {item.rule_explanation_uz || item.rule_explanation}
+                      <p className="text-xs text-slate-600 bg-slate-50 p-2.5 rounded-xl border border-slate-100 leading-relaxed">
+                        <b>{t('cm_rule')}:</b> {item.rule_explanation_uz || item.rule_explanation}
                       </p>
                     )}
                     {(item.structure_pattern || item.structure_pattern_uz || item.structure_pattern_ru || item.structure_pattern_en) && (
@@ -289,23 +284,23 @@ export default function ContentManager() {
 
             {/* VOCABULARY */}
             {tab === 'vocabulary' && filteredItems.map((item, idx) => (
-              <div key={item.id || idx} className="p-4 hover:bg-gray-50/70 transition flex items-start justify-between gap-4">
+              <div key={item.id || idx} className="p-4 hover:bg-slate-50/70 transition flex items-start justify-between gap-4">
                 <div className="flex items-start gap-3">
                   <span className="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
                     {idx + 1}
                   </span>
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
-                      <p className="text-sm font-black text-gray-900">{item.word}</p>
+                      <p className="text-sm font-black text-slate-900">{item.word}</p>
                       <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">
                         {item.translation}
                       </span>
                     </div>
                     {item.definition && (
-                      <p className="text-xs text-gray-600 mt-1"><b>Ta'rif:</b> {item.definition}</p>
+                      <p className="text-xs text-slate-600 mt-1"><b>Ta'rif:</b> {item.definition}</p>
                     )}
                     {item.example && (
-                      <p className="text-xs text-gray-500 italic mt-0.5 bg-gray-50 px-2.5 py-1 rounded border border-gray-100">
+                      <p className="text-xs text-slate-500 italic mt-0.5 bg-slate-50 px-2.5 py-1 rounded border border-slate-100">
                         "{item.example}"
                       </p>
                     )}
@@ -317,7 +312,7 @@ export default function ContentManager() {
 
             {/* PHRASEBOOK */}
             {tab === 'phrasebook' && filteredItems.map((item, idx) => (
-              <div key={item.id || idx} className="p-4 hover:bg-gray-50/70 transition flex items-start justify-between gap-4">
+              <div key={item.id || idx} className="p-4 hover:bg-slate-50/70 transition flex items-start justify-between gap-4">
                 <div className="flex items-start gap-3">
                   <span className="w-7 h-7 rounded-lg bg-cyan-50 text-cyan-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
                     {idx + 1}
@@ -328,9 +323,9 @@ export default function ContentManager() {
                         {item.category || t('cm_clinical_phrase')}
                       </span>
                     </div>
-                    <p className="text-sm font-bold text-gray-900 leading-snug">"{item.phrase}"</p>
+                    <p className="text-sm font-bold text-slate-900 leading-snug">"{item.phrase}"</p>
                     {item.hint_uz && (
-                      <p className="text-xs text-gray-500 mt-1"><b>Ma'nosi:</b> {item.hint_uz}</p>
+                      <p className="text-xs text-slate-500 mt-1"><b>Ma'nosi:</b> {item.hint_uz}</p>
                     )}
                   </div>
                 </div>
@@ -340,13 +335,13 @@ export default function ContentManager() {
 
             {/* QUIZZES */}
             {tab === 'quizzes' && filteredItems.map((item, idx) => (
-              <div key={item.id || idx} className="p-5 hover:bg-gray-50/70 transition flex items-start justify-between gap-4">
+              <div key={item.id || idx} className="p-5 hover:bg-slate-50/70 transition flex items-start justify-between gap-4">
                 <div className="flex items-start gap-3 w-full max-w-3xl">
                   <span className="w-7 h-7 rounded-lg bg-purple-50 text-purple-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
                     #{idx + 1}
                   </span>
                   <div className="space-y-2 w-full">
-                    <p className="text-sm font-bold text-gray-900">{item.question}</p>
+                    <p className="text-sm font-bold text-slate-900">{item.question}</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                       {['A', 'B', 'C', 'D'].map((opt) => {
                         const val       = item[`option_${opt.toLowerCase()}`];
@@ -355,10 +350,10 @@ export default function ContentManager() {
                           <div key={opt} className={`p-2.5 rounded-xl border flex items-center gap-2 ${
                             isCorrect
                               ? 'bg-emerald-50 border-emerald-300 text-emerald-900 font-bold'
-                              : 'bg-gray-50 border-gray-200 text-gray-600'
+                              : 'bg-slate-50 border-slate-200 text-slate-600'
                           }`}>
                             <span className={`w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-bold ${
-                              isCorrect ? 'bg-emerald-600 text-white' : 'bg-gray-200 text-gray-600'
+                              isCorrect ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-600'
                             }`}>{opt}</span>
                             <span className="truncate">{val || '—'}</span>
                           </div>
@@ -373,27 +368,27 @@ export default function ContentManager() {
 
             {/* SCENARIOS / MODULES */}
             {tab === 'scenarios' && filteredItems.map((item) => (
-              <div key={item.id} className="p-6 space-y-4 hover:bg-gray-50/40 transition">
-                <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+              <div key={item.id} className="p-6 space-y-4 hover:bg-slate-50/40 transition">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 font-bold text-xs flex items-center justify-center">
                         {item.order_index}
                       </span>
-                      <h3 className="text-base font-bold text-gray-900">{item.title}</h3>
+                      <h3 className="text-base font-bold text-slate-900">{item.title}</h3>
                     </div>
                     {item.description && (
-                      <p className="text-xs text-gray-500 mt-1 ml-9">{item.description}</p>
+                      <p className="text-xs text-slate-500 mt-1 ml-9">{item.description}</p>
                     )}
                   </div>
                   <ItemActions onEdit={() => { setEdit(item); setShowModal(true); }} onDelete={() => handleDelete(item.id)} editLabel={t('ui_edit')} />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ml-9">
-                  <div className="p-4 bg-gray-50 border border-gray-200 rounded-xl space-y-2">
+                  <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
                     <span className="text-[11px] font-bold uppercase tracking-wider text-indigo-600 flex items-center gap-1.5">
                       <RiStethoscopeLine /> Bemor Konteksti
                     </span>
-                    <p className="text-xs text-gray-700 whitespace-pre-wrap leading-relaxed">
+                    <p className="text-xs text-slate-700 whitespace-pre-wrap leading-relaxed">
                       {item.patient_context || t('cm_no_context')}
                     </p>
                   </div>
@@ -401,7 +396,7 @@ export default function ContentManager() {
                     <span className="text-[11px] font-bold uppercase tracking-wider text-purple-700 flex items-center gap-1.5">
                       <RiBrainLine /> Final Challenge
                     </span>
-                    <p className="text-xs text-gray-700 whitespace-pre-wrap leading-relaxed">
+                    <p className="text-xs text-slate-700 whitespace-pre-wrap leading-relaxed">
                       {item.final_challenge_context || t('cm_no_final')}
                     </p>
                   </div>
@@ -436,6 +431,7 @@ export default function ContentManager() {
 
 /* ── Kichik yordamchi: Amallar tugmalari ── */
 function ItemActions({ onEdit, onDelete, editLabel }) {
+  const { t } = useLanguage();
   return (
     <div className="flex items-center gap-1 shrink-0">
       {editLabel ? (
@@ -447,12 +443,12 @@ function ItemActions({ onEdit, onDelete, editLabel }) {
         </button>
       ) : (
         <button onClick={onEdit}
-          className="p-1.5 rounded-lg text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 transition" title={t('ui_edit')}>
+          className="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition" title={t('ui_edit')}>
           <RiEditLine className="text-base" />
         </button>
       )}
       <button onClick={onDelete}
-        className="p-1.5 rounded-lg text-gray-400 hover:text-rose-600 hover:bg-rose-50 transition" title={t('ui_delete')}>
+        className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition" title={t('ui_delete')}>
         <RiDeleteBinLine className="text-base" />
       </button>
     </div>
@@ -464,6 +460,7 @@ function ItemActions({ onEdit, onDelete, editLabel }) {
    Step-by-step wizard: 3 bosqich
 ══════════════════════════════════════════════ */
 function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved }) {
+  const { t } = useLanguage();
   const isEdit = !!initialData?.id;
   const [step, setStep] = useState(1);
   const [saving, setSaving] = useState(false);
@@ -615,7 +612,7 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
                   className="form-input"
                   maxLength={150}
                 />
-                <p className="text-xs text-gray-400 mt-1 text-right">{form.title.length}/150</p>
+                <p className="text-xs text-slate-400 mt-1 text-right">{form.title.length}/150</p>
               </FormField>
 
               <FormField label={t('cm_short_desc')} icon={RiListCheck2}>
@@ -627,7 +624,7 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
                   className="form-input resize-none"
                   maxLength={400}
                 />
-                <p className="text-xs text-gray-400 mt-1 text-right">{form.description.length}/400</p>
+                <p className="text-xs text-slate-400 mt-1 text-right">{form.description.length}/400</p>
               </FormField>
             </div>
           )}
@@ -647,10 +644,10 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
                   className="form-input resize-none font-mono text-xs leading-relaxed"
                 />
                 <div className="flex items-center justify-between mt-1">
-                  <span className={`text-xs font-medium ${form.patient_context.length > 10 ? 'text-emerald-600' : 'text-gray-400'}`}>
+                  <span className={`text-xs font-medium ${form.patient_context.length > 10 ? 'text-emerald-600' : 'text-slate-400'}`}>
                     {form.patient_context.length > 10 ? '✓ Yaxshi!' : 'Kamida 10 ta belgi'}
                   </span>
-                  <span className="text-xs text-gray-400">{form.patient_context.length} belgi</span>
+                  <span className="text-xs text-slate-400">{form.patient_context.length} belgi</span>
                 </div>
               </FormField>
             </div>
@@ -670,20 +667,20 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
                   rows={9}
                   className="form-input resize-none font-mono text-xs leading-relaxed"
                 />
-                <span className="text-xs text-gray-400 mt-1 block text-right">{form.final_challenge_context.length} belgi</span>
+                <span className="text-xs text-slate-400 mt-1 block text-right">{form.final_challenge_context.length} belgi</span>
               </FormField>
 
               {/* Preview */}
               {form.title && (
-                <div className="p-4 bg-gray-50 border border-gray-200 rounded-xl">
-                  <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">{t('cm_preview')}</p>
+                <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                  <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">{t('cm_preview')}</p>
                   <div className="flex items-center gap-3">
                     <span className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 font-black text-sm flex items-center justify-center">
                       {form.order_index}
                     </span>
                     <div>
-                      <p className="text-sm font-bold text-gray-900">{form.title}</p>
-                      {form.description && <p className="text-xs text-gray-500">{form.description}</p>}
+                      <p className="text-sm font-bold text-slate-900">{form.title}</p>
+                      {form.description && <p className="text-xs text-slate-500">{form.description}</p>}
                     </div>
                   </div>
                 </div>
@@ -693,11 +690,11 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
         </div>
 
         {/* Modal Footer */}
-        <div className="p-5 border-t border-gray-100 bg-gray-50/80 flex items-center justify-between">
+        <div className="p-5 border-t border-slate-100 bg-slate-50/80 flex items-center justify-between">
           <button
             type="button"
             onClick={() => step > 1 ? setStep(s => s - 1) : onClose()}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-gray-300 text-gray-700 text-sm font-bold hover:bg-gray-100 transition"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 text-sm font-bold hover:bg-slate-100 transition"
           >
             <RiArrowLeftLine /> {step > 1 ? t('cm_back') : t('cm_cancel')}
           </button>
@@ -705,7 +702,7 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
           <div className="flex items-center gap-1.5">
             {STEPS.map(s => (
               <div key={s.num} className={`h-2 rounded-full transition-all ${
-                step === s.num ? 'w-6 bg-emerald-600' : step > s.num ? 'w-2 bg-emerald-400' : 'w-2 bg-gray-300'
+                step === s.num ? 'w-6 bg-emerald-600' : step > s.num ? 'w-2 bg-emerald-400' : 'w-2 bg-slate-300'
               }`} />
             ))}
           </div>
@@ -739,6 +736,7 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
    KONTENT (Vocabulary / Phrasebook / Quiz) MODALI
 ══════════════════════════════════════════════ */
 function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
+  const { t } = useLanguage();
   const isEdit = !!initialData?.id;
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState(() => {
@@ -1020,7 +1018,7 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                 </FormField>
 
                 <div>
-                  <label className="block text-xs font-bold text-gray-600 mb-2">
+                  <label className="block text-xs font-bold text-slate-600 mb-2">
                     {t('cm_options_hint')}
                   </label>
                   <div className="space-y-2">
@@ -1029,14 +1027,14 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                       const isChecked = form.correct_option === opt;
                       return (
                         <div key={opt} className={`flex items-center gap-2 p-2 rounded-xl border transition-all ${
-                          isChecked ? 'bg-emerald-50 border-emerald-300' : 'bg-gray-50 border-gray-200'
+                          isChecked ? 'bg-emerald-50 border-emerald-300' : 'bg-slate-50 border-slate-200'
                         }`}>
                           <button
                             type="button"
                             onClick={() => set('correct_option', opt)}
                             title={t('cm_correct_answer')}
                             className={`w-8 h-8 rounded-lg font-black text-xs shrink-0 flex items-center justify-center transition ${
-                              isChecked ? 'bg-emerald-600 text-white shadow-sm' : 'bg-white text-gray-600 border border-gray-300 hover:border-emerald-400'
+                              isChecked ? 'bg-emerald-600 text-white shadow-sm' : 'bg-white text-slate-600 border border-slate-300 hover:border-emerald-400'
                             }`}
                           >
                             {isChecked ? <RiCheckLine /> : opt}
@@ -1046,7 +1044,7 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                             value={form[key] || ''}
                             onChange={e => set(key, e.target.value)}
                             placeholder={`Variant ${opt}...`}
-                            className="flex-1 bg-transparent text-xs text-gray-800 placeholder-gray-400 outline-none"
+                            className="flex-1 bg-transparent text-xs text-slate-800 placeholder-gray-400 outline-none"
                             required
                           />
                           {isChecked && (
@@ -1064,9 +1062,9 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
           </div>
 
           {/* Footer */}
-          <div className="p-5 border-t border-gray-100 bg-gray-50/80 flex items-center justify-end gap-3">
+          <div className="p-5 border-t border-slate-100 bg-slate-50/80 flex items-center justify-end gap-3">
             <button type="button" onClick={onClose}
-              className="px-4 py-2.5 rounded-xl border border-gray-300 text-gray-700 text-sm font-bold hover:bg-gray-100 transition">
+              className="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 text-sm font-bold hover:bg-slate-100 transition">
               Bekor Qilish
             </button>
             <button type="submit" disabled={saving}
@@ -1083,13 +1081,13 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
 /* ── Yordamchi komponentlar ── */
 function SectionHeader({ icon: Icon, title, desc }) {
   return (
-    <div className="flex items-start gap-3 pb-4 border-b border-gray-100">
-      <div className="w-9 h-9 rounded-xl bg-gray-100 text-gray-600 flex items-center justify-center text-lg shrink-0">
+    <div className="flex items-start gap-3 pb-4 border-b border-slate-100">
+      <div className="w-9 h-9 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center text-lg shrink-0">
         <Icon />
       </div>
       <div>
-        <h4 className="text-sm font-bold text-gray-900">{title}</h4>
-        <p className="text-xs text-gray-500 mt-0.5">{desc}</p>
+        <h4 className="text-sm font-bold text-slate-900">{title}</h4>
+        <p className="text-xs text-slate-500 mt-0.5">{desc}</p>
       </div>
     </div>
   );

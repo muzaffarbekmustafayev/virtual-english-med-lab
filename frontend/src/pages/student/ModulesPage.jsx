@@ -67,16 +67,16 @@ export default function ModulesPage() {
 
   return (
     <Layout>
-      <div className="space-y-6">
+      <div className="space-y-5 sm:space-y-6">
         {/* ── 1. Page Header ── */}
-        <div className="card-standard p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-5">
+        <div className="card-hero p-5 sm:p-7 flex flex-col md:flex-row md:items-center justify-between gap-5">
           <div>
             <div className="flex items-center gap-2 mb-1.5">
               <span className="badge-standard badge-blue">
                 {modules.length} {t('nav.modules')}
               </span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
+            <h1 className="text-2xl sm:text-[1.9rem] font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5">
               <span className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 border border-blue-200 flex items-center justify-center text-xl shrink-0">
                 <RiBookOpenLine />
               </span>
@@ -88,14 +88,14 @@ export default function ModulesPage() {
           </div>
 
           {/* Search Box */}
-          <div className="relative w-full md:w-72">
+          <div className="relative w-full md:w-72 z-10">
             <RiSearchLine className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm" />
             <input
               type="text"
               placeholder={t('common.search')}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="input-standard pl-10 text-xs"
+              className="input-standard has-icon-left text-xs bg-white"
             />
           </div>
         </div>
