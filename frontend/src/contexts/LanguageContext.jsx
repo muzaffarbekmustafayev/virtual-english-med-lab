@@ -5,6 +5,18 @@ const LanguageContext = createContext(null);
 export const TRANSLATIONS = {
   uz: {
     // App header
+    enroll_change_specialty_title: "Yo'nalishni o'zgartirasizmi?",
+    enroll_change_specialty_desc: "Modullar to'plami yangi yo'nalishga almashadi. Hozirgi guruhingizdan chiqarilasiz — yangi yo'nalishdagi guruhni tanlashingiz mumkin. Avvalgi natijalaringiz saqlanib qoladi.",
+    enroll_confirm: "Ha, o'zgartirish",
+    enroll_group_locked: "Guruhni o'zgartirish uchun administratorga murojaat qiling",
+    enroll_group_pick_hint: "Yo'nalishingizdagi guruhni tanlang — o'qituvchingiz natijalaringizni ko'ra oladi",
+    enroll_no_groups: "Bu yo'nalishda hali guruhlar yo'q",
+    enroll_specialty_changed: "Yo'nalish o'zgartirildi — modullar yangilandi",
+    enroll_no_specialty_title: "Yo'nalish tanlanmagan",
+    enroll_no_specialty_desc: "Modullar va virtual bemor yo'nalishingizga qarab ochiladi. Profil sozlamalaridan yo'nalishingizni tanlang.",
+    enroll_choose_specialty: "Yo'nalishni tanlash",
+    enroll_register_specialty_hint: "Ixtiyoriy — keyin profilda o'zgartirish mumkin",
+    enroll_current: "Hozirgi",
     admin_groups_count: "{n} ta guruh",
     admin_group_members_hint: "Ro'yxatni ko'rish va yangi a'zolar qo'shish uchun chap tomondan guruhni tanlang",
     admin_add_btn: "Qo'shish",
@@ -1011,6 +1023,18 @@ export const TRANSLATIONS = {
 
   ru: {
     // App header
+    enroll_change_specialty_title: "Изменить направление?",
+    enroll_change_specialty_desc: "Набор модулей сменится на новое направление. Вы будете исключены из текущей группы — можно выбрать группу нового направления. Прежние результаты сохранятся.",
+    enroll_confirm: "Да, изменить",
+    enroll_group_locked: "Для смены группы обратитесь к администратору",
+    enroll_group_pick_hint: "Выберите группу своего направления — преподаватель увидит ваши результаты",
+    enroll_no_groups: "В этом направлении пока нет групп",
+    enroll_specialty_changed: "Направление изменено — модули обновлены",
+    enroll_no_specialty_title: "Направление не выбрано",
+    enroll_no_specialty_desc: "Модули и виртуальный пациент зависят от направления. Выберите направление в настройках профиля.",
+    enroll_choose_specialty: "Выбрать направление",
+    enroll_register_specialty_hint: "Необязательно — можно изменить позже в профиле",
+    enroll_current: "Текущее",
     admin_groups_count: "{n} групп",
     admin_group_members_hint: "Выберите группу слева, чтобы увидеть список и добавить участников",
     admin_add_btn: "Добавить",
@@ -2017,6 +2041,18 @@ export const TRANSLATIONS = {
 
   en: {
     // App header
+    enroll_change_specialty_title: "Change your specialty?",
+    enroll_change_specialty_desc: "Your module set will switch to the new specialty. You will leave your current group and can pick a group in the new specialty. Your previous results are kept.",
+    enroll_confirm: "Yes, change",
+    enroll_group_locked: "Contact an administrator to change your group",
+    enroll_group_pick_hint: "Pick a group in your specialty so your teacher can see your results",
+    enroll_no_groups: "No groups in this specialty yet",
+    enroll_specialty_changed: "Specialty changed — modules updated",
+    enroll_no_specialty_title: "No specialty selected",
+    enroll_no_specialty_desc: "Modules and the virtual patient depend on your specialty. Choose it in your profile settings.",
+    enroll_choose_specialty: "Choose specialty",
+    enroll_register_specialty_hint: "Optional — you can change it later in your profile",
+    enroll_current: "Current",
     admin_groups_count: "{n} groups",
     admin_group_members_hint: "Select a group on the left to view the roster and add members",
     admin_add_btn: "Add",

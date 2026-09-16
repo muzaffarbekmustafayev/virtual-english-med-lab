@@ -1,6 +1,7 @@
 const bcrypt   = require('bcryptjs');
 const jwt      = require('jsonwebtoken');
 const { User, Specialty, StudentGroup } = require('../models');
+const { resolveEnrollment } = require('../services/enrollment.service');
 
 const generateToken = (user) =>
   jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '7d' });
@@ -17,9 +18,10 @@ const register = async (req, res) => {
     if (existing) return res.status(400).json({ error: 'Bu email allaqachon ro\'yxatda bor' });
 
     const password_hash = await bcrypt.hash(password, 10);
-    const clean_specialty_id = specialty_id ? parseInt(specialty_id) : null;
-    const clean_group_id     = group_id ? parseInt(group_id) : null;
-    const user = await User.create({ full_name, email, password_hash, role, specialty_id: clean_specialty_id, group_id: clean_group_id });
+    // ro'yxatdan o'tishda faqat talaba roli; yo'nalish/guruh ixtiyoriy, lekin bir-biriga mos bo'lishi shart
+    const enroll = await resolveEnrollment({ specialty_id, group_id }, { specialty_id: null, group_id: null }, { actor: 'student' });
+    if (!enroll.ok) return res.status(400).json({ error: enroll.error });
+    const user = await User.create({ full_name, email, password_hash, role: 'student', ...enroll.updates });
 
     const token = generateToken(user);
     res.status(201).json({ token, user: { id: user.id, full_name, email, role } });
@@ -90,9 +92,17 @@ const updateProfile = async (req, res) => {
       user.email = email;
     }
 
-    if (full_name) user.full_name = full_name;
-    if (specialty_id !== undefined) user.specialty_id = specialty_id || null;
-    if (group_id !== undefined) user.group_id = group_id || null;
+    if (full_name) user.full_name = String(full_name).trim();
+
+    // Yo'nalish/guruh — faqat talabalar uchun; mosligini enrollment servisi tekshiradi
+    let specialtyChanged = false;
+    if (user.role === 'student' && (specialty_id !== undefined || group_id !== undefined)) {
+      const enroll = await resolveEnrollment({ specialty_id, group_id }, { specialty_id: user.specialty_id, group_id: user.group_id }, { actor: 'student' });
+      if (!enroll.ok) return res.status(400).json({ error: enroll.error });
+      user.specialty_id = enroll.updates.specialty_id;
+      user.group_id = enroll.updates.group_id;
+      specialtyChanged = enroll.specialtyChanged;
+    }
 
     await user.save();
 
@@ -104,7 +114,7 @@ const updateProfile = async (req, res) => {
       ],
     });
 
-    res.json({ message: 'Profil muvaffaqiyatli yangilandi', user: updatedUser });
+    res.json({ message: 'Profil muvaffaqiyatli yangilandi', user: updatedUser, specialty_changed: specialtyChanged });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

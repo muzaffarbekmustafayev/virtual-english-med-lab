@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import api from '../../lib/api';
@@ -7,13 +7,15 @@ import AuthShell from './AuthShell';
 import { Progress } from '../../components/ui';
 import {
   RiUser3Line, RiMailLine, RiLockPasswordLine, RiEyeLine, RiEyeOffLine,
-  RiLoader4Line, RiArrowRightLine, RiErrorWarningFill, RiCheckLine
+  RiLoader4Line, RiArrowRightLine, RiErrorWarningFill, RiCheckLine, RiStethoscopeLine
 } from 'react-icons/ri';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
-  const { t } = useLanguage();
-  const [form, setForm]         = useState({ full_name: '', email: '', password: '' });
+  const { t, getLocalized } = useLanguage();
+  const [form, setForm]         = useState({ full_name: '', email: '', password: '', specialty_id: '' });
+  const [specialties, setSpecialties] = useState([]);
+  useEffect(() => { api.get('/auth/specialties').then((r) => setSpecialties(r.data || [])).catch(() => {}); }, []);
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading]   = useState(false);
   const [error, setError]       = useState('');
@@ -26,7 +28,7 @@ export default function RegisterPage() {
     setError('');
     try {
       // Ro'yxatdan o'tishda guruh/yo'nalish talab qilinmaydi — talaba keyin profilda tanlaydi
-      await api.post('/auth/register', { full_name: form.full_name.trim(), email: form.email.trim(), password: form.password, role: 'student', specialty_id: null, group_id: null });
+      await api.post('/auth/register', { full_name: form.full_name.trim(), email: form.email.trim(), password: form.password, role: 'student', specialty_id: form.specialty_id ? Number(form.specialty_id) : null, group_id: null });
       toast.success(`${t('common.success')}! ${t('auth.login_title')}`);
       navigate('/login');
     } catch (err) {
@@ -100,6 +102,18 @@ export default function RegisterPage() {
               <p className="text-[11px] text-slate-400 font-medium">{t('ui_password_min')}</p>
             </div>
           )}
+        </div>
+
+        <div>
+          <label htmlFor="reg-spec" className="field-label uppercase tracking-wide">{t('ui_specialty')}</label>
+          <div className="relative flex items-center">
+            <RiStethoscopeLine className="absolute left-4 text-slate-400 text-lg pointer-events-none z-10" />
+            <select id="reg-spec" value={form.specialty_id} onChange={(e) => setForm({ ...form, specialty_id: e.target.value })} className="input-standard has-icon-left py-3.5 bg-slate-50 focus:bg-white">
+              <option value="">{t('ui_not_selected')}</option>
+              {specialties.map((s) => <option key={s.id} value={s.id}>{s.icon ? `${s.icon} ` : ''}{getLocalized(s, 'name') || s.name}</option>)}
+            </select>
+          </div>
+          <p className="text-[11px] text-slate-400 font-medium mt-1.5">{t('enroll_register_specialty_hint')}</p>
         </div>
 
         <button id="register-submit" type="submit" disabled={loading} className="btn-dark w-full py-3.5 text-sm mt-1">

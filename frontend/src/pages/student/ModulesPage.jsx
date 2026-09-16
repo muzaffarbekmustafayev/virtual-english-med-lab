@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import api from '../../lib/api';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useAuth } from '../../contexts/AuthContext';
+import { NoSpecialtyBanner } from '../../components/ui';
 import {
   RiBookOpenLine, RiCheckboxCircleLine, RiTimeLine, RiLockLine,
   RiArrowRightLine, RiTrophyLine, RiFirstAidKitLine, RiStethoscopeLine,
@@ -19,6 +21,7 @@ const MODULE_ICONS = [
 export default function ModulesPage() {
   const navigate = useNavigate();
   const { t, getLocalized } = useLanguage();
+  const { user } = useAuth();
   const [modules, setModules] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter]   = useState('all');
@@ -68,6 +71,7 @@ export default function ModulesPage() {
   return (
     <Layout>
       <div className="space-y-5 sm:space-y-6">
+        <NoSpecialtyBanner user={user} onChoose={() => navigate('/student/profile?tab=settings')} />
         {/* ── 1. Page Header ── */}
         <div className="card-hero p-5 sm:p-7 flex flex-col md:flex-row md:items-center justify-between gap-5">
           <div>

@@ -172,7 +172,7 @@ function UserModal({ user, onClose, onSaved, specialties, groups }) {
                 <label className="block text-xs font-bold text-slate-700 mb-1.5">{t('auth.specialty')}</label>
                 <select
                   value={form.specialty_id}
-                  onChange={(e) => setForm({ ...form, specialty_id: e.target.value })}
+                  onChange={(e) => setForm({ ...form, specialty_id: e.target.value, group_id: '' })}
                   className="block w-full px-3 py-2 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-xs bg-slate-50 focus:bg-white"
                 >
                   <option value="">{t('ui_select')}</option>

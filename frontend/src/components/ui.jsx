@@ -132,6 +132,22 @@ export function EmptyState({ icon: Icon = RiInboxLine, title, hint, className = 
   );
 }
 
+/* ── "Yo'nalish tanlanmagan" banner (talaba) ──────────────── */
+export function NoSpecialtyBanner({ user, onChoose }) {
+  const { t } = useLanguage();
+  if (!user || user.role !== 'student' || user.specialty?.id || user.specialty_id) return null;
+  return (
+    <div className="card-standard p-5 border-amber-200 bg-amber-50/60 flex flex-col sm:flex-row sm:items-center gap-4">
+      <div className="w-11 h-11 rounded-2xl bg-white text-amber-600 border border-amber-200 flex items-center justify-center shrink-0 text-xl">🩺</div>
+      <div className="flex-1 min-w-0">
+        <p className="text-sm font-extrabold text-slate-900">{t('enroll_no_specialty_title')}</p>
+        <p className="text-xs text-slate-600 font-medium mt-0.5">{t('enroll_no_specialty_desc')}</p>
+      </div>
+      <button onClick={onChoose} className="btn-primary shrink-0">{t('enroll_choose_specialty')} →</button>
+    </div>
+  );
+}
+
 /* ── Skeleton ──────────────────────────────────────────────── */
 export function Skeleton({ className = 'h-24' }) {
   return <div className={`skeleton ${className}`} />;

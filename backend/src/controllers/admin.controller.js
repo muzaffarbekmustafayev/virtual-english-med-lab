@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const { Op } = require('sequelize');
+const { resolveEnrollment } = require('../services/enrollment.service');
 const {
   User, Specialty, StudentGroup, TeacherGroup,
   Module, Grammar, Vocabulary, Phrasebook, Test,
@@ -295,16 +296,21 @@ const createUser = async (req, res) => {
     if (existing) return res.status(400).json({ error: 'Bu email allaqachon mavjud' });
 
     const password_hash = await bcrypt.hash(password, 10);
-    const clean_specialty_id = specialty_id ? parseInt(specialty_id) : null;
-    const clean_group_id     = group_id ? parseInt(group_id) : null;
+    const userRole = role || 'student';
+    // guruh faqat talabalarga; yo'nalish o'qituvchi uchun ham bo'lishi mumkin (ma'lumot sifatida)
+    const enroll = await resolveEnrollment(
+      { specialty_id, group_id: userRole === 'student' ? group_id : null },
+      { specialty_id: null, group_id: null },
+      { actor: 'admin' }
+    );
+    if (!enroll.ok) return res.status(400).json({ error: enroll.error });
 
     const user = await User.create({
       full_name,
       email,
       password_hash,
-      role: role || 'student',
-      specialty_id: clean_specialty_id,
-      group_id: clean_group_id
+      role: userRole,
+      ...enroll.updates,
     });
 
     res.status(201).json({ ...user.toJSON(), password_hash: undefined });
@@ -320,18 +326,26 @@ const updateUser = async (req, res) => {
     if (!user) return res.status(404).json({ error: 'Foydalanuvchi topilmadi' });
 
     const { full_name, email, role, specialty_id, group_id, password } = req.body;
-    const clean_group_id = group_id ? parseInt(group_id) : null;
-    
-    if (user.role === 'student' && clean_group_id !== null && user.group_id !== null && user.group_id !== clean_group_id) {
-      return res.status(400).json({ error: "Talaba allaqachon boshqa guruhga biriktirilgan. Boshqa guruhga o'tkazish uchun avval hozirgi guruhidan o'chiring." });
+    const nextRole = role || user.role;
+
+    if (email && email !== user.email) {
+      const dup = await User.findOne({ where: { email } });
+      if (dup && dup.id !== user.id) return res.status(400).json({ error: 'Bu email allaqachon mavjud' });
     }
 
+    // admin guruhdan guruhga to'g'ridan-to'g'ri o'tkaza oladi; yo'nalish/guruh mosligi tekshiriladi
+    const enroll = await resolveEnrollment(
+      { specialty_id, group_id: nextRole === 'student' ? group_id : null },
+      { specialty_id: user.specialty_id, group_id: user.group_id },
+      { actor: 'admin' }
+    );
+    if (!enroll.ok) return res.status(400).json({ error: enroll.error });
+
     const updates = {
-      full_name,
-      email,
-      role,
-      specialty_id: specialty_id ? parseInt(specialty_id) : null,
-      group_id: clean_group_id
+      full_name: full_name || user.full_name,
+      email: email || user.email,
+      role: nextRole,
+      ...enroll.updates,
     };
     if (password) updates.password_hash = await bcrypt.hash(password, 10);
 
@@ -471,29 +485,16 @@ const assignStudentGroup = async (req, res) => {
     const { student_id, group_id, specialty_id } = req.body;
     const student = await User.findOne({ where: { id: student_id, role: 'student' } });
     if (!student) return res.status(404).json({ error: 'Talaba topilmadi' });
-    
-    if (group_id !== null && group_id !== undefined && student.group_id && student.group_id !== group_id) {
-      return res.status(400).json({ error: "Talaba allaqachon boshqa guruhga biriktirilgan. Boshqa guruhga o'tkazish uchun avval hozirgi guruhidan o'chiring." });
-    }
 
-    const updates = {};
-    if (group_id !== undefined) {
-      updates.group_id = group_id;
-      if (group_id !== null) {
-        const StudentGroup = require('../models/StudentGroup');
-        const group = await StudentGroup.findByPk(group_id);
-        if (group) {
-          updates.specialty_id = group.specialty_id;
-        }
-      } else {
-        // If removing from group, optionally keep the specialty or set to null
-        updates.specialty_id = null;
-      }
-    } else if (specialty_id !== undefined) {
-      updates.specialty_id = specialty_id;
-    }
-    
-    await student.update(updates);
+    // group_id: null → guruhdan chiqarish (yo'nalish saqlanadi); son → biriktirish/o'tkazish (yo'nalish guruhniki bo'ladi)
+    const enroll = await resolveEnrollment(
+      { specialty_id, group_id },
+      { specialty_id: student.specialty_id, group_id: student.group_id },
+      { actor: 'admin' }
+    );
+    if (!enroll.ok) return res.status(400).json({ error: enroll.error });
+
+    await student.update(enroll.updates);
     res.json({ message: 'Talaba biriktirildi', student });
   } catch (err) {
     res.status(500).json({ error: err.message });

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Layout from '../components/Layout';
 import { useAuth } from '../contexts/AuthContext';
@@ -15,7 +15,7 @@ import {
   RiShieldCheckLine, RiUserStarLine, RiRobot2Line, RiArrowRightLine,
   RiSparkling2Line, RiSave3Line, RiRefreshLine, RiLockPasswordLine,
   RiEyeLine, RiEyeOffLine, RiCalendarLine, RiTeamLine, RiSettings4Line,
-  RiHospitalLine, RiMessage3Line, RiSpeedLine, RiFileListLine
+  RiHospitalLine, RiMessage3Line, RiSpeedLine, RiFileListLine, RiAlertLine
 } from 'react-icons/ri';
 
 const ROLE_META = {
@@ -32,7 +32,8 @@ export default function ProfilePage() {
   const meta = ROLE_META[role] || ROLE_META.student;
   const RoleIcon = meta.icon;
 
-  const [activeTab, setActiveTab] = useState('overview');
+  const [searchParams] = useSearchParams();
+  const [activeTab, setActiveTab] = useState(() => (['overview', 'settings', 'security'].includes(searchParams.get('tab')) ? searchParams.get('tab') : 'overview'));
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);          // rolga qarab: student dashboard / teacher dashboard / admin overview
   const [modules, setModules] = useState([]);
@@ -46,6 +47,7 @@ export default function ProfilePage() {
     group_id: user?.group?.id || user?.group_id || '',
   });
   const [profileSaving, setProfileSaving] = useState(false);
+  const [confirmSpecialty, setConfirmSpecialty] = useState(false); // yo'nalish o'zgarishini tasdiqlash oynasi
   const [pwd, setPwd] = useState({ current_password: '', new_password: '', confirm_password: '' });
   const [showPwd, setShowPwd] = useState({ current: false, next: false, confirm: false });
   const [pwdSaving, setPwdSaving] = useState(false);
@@ -92,9 +94,17 @@ export default function ProfilePage() {
   const ROLE_DESC = { student: t('profile_student_role_desc'), teacher: t('profile_teacher_role_desc'), admin: t('profile_admin_role_desc') }[role];
   const COMP_LABELS = { grammar: t('comp_grammar'), vocabulary: t('comp_vocabulary'), fluency: t('comp_fluency'), pronunciation: t('comp_pronunciation'), clinical: t('comp_clinical') };
 
+  const currentSpecialtyId = user?.specialty?.id || user?.specialty_id || '';
+  const currentGroupId = user?.group?.id || user?.group_id || '';
+  const specialtyWillChange = role === 'student' && String(profileForm.specialty_id || '') !== String(currentSpecialtyId || '');
+  // guruhdan guruhga o'tkazishni faqat admin qiladi; yo'nalish o'zgarsa eski guruh baribir tozalanadi
+  const groupLocked = role === 'student' && !!currentGroupId && !specialtyWillChange;
+
   const handleProfileSubmit = async (e) => {
-    e.preventDefault();
+    e?.preventDefault?.();
     if (!profileForm.full_name.trim()) return;
+    if (specialtyWillChange && currentSpecialtyId && !confirmSpecialty) { setConfirmSpecialty(true); return; }
+    setConfirmSpecialty(false);
     setProfileSaving(true);
     try {
       const payload = { full_name: profileForm.full_name.trim() };
@@ -104,7 +114,14 @@ export default function ProfilePage() {
       }
       const res = await api.put('/auth/profile', payload);
       updateUser(res.data.user);
-      toast.success(t('profile_saved'));
+      setProfileForm((f) => ({ ...f, specialty_id: res.data.user?.specialty?.id || '', group_id: res.data.user?.group?.id || '' }));
+      if (res.data.specialty_changed) {
+        toast.success(t('enroll_specialty_changed'));
+        api.get('/student/dashboard').then((d) => setData(d.data)).catch(() => {});
+        api.get('/student/modules').then((m) => setModules(m.data || [])).catch(() => {});
+      } else {
+        toast.success(t('profile_saved'));
+      }
     } catch (err) {
       toast.error(err.response?.data?.error || t('ui_error_generic'));
     } finally {
@@ -280,12 +297,25 @@ export default function ProfilePage() {
                       </div>
                       <div>
                         <label className="field-label" htmlFor="pf-group">{t('ui_group')}</label>
-                        <select id="pf-group" value={profileForm.group_id} onChange={(e) => setProfileForm({ ...profileForm, group_id: e.target.value })} className="input-standard text-sm">
+                        <select id="pf-group" value={profileForm.group_id} disabled={groupLocked || !profileForm.specialty_id}
+                          onChange={(e) => setProfileForm({ ...profileForm, group_id: e.target.value })} className="input-standard text-sm">
                           <option value="">{t('ui_not_selected')}</option>
                           {filteredGroups.map((g) => <option key={g.id} value={g.id}>{g.name}</option>)}
                         </select>
+                        <p className="text-[11px] font-medium mt-1.5 text-slate-400">
+                          {groupLocked ? <span className="inline-flex items-center gap-1"><RiLockLine /> {t('enroll_group_locked')}</span>
+                            : !profileForm.specialty_id ? t('ui_not_selected')
+                            : filteredGroups.length === 0 ? t('enroll_no_groups')
+                            : t('enroll_group_pick_hint')}
+                        </p>
                       </div>
                     </div>
+                    {specialtyWillChange && currentSpecialtyId && (
+                      <div className="mt-3 p-3 rounded-xl bg-amber-50 border border-amber-200 text-[11px] font-medium text-amber-800 flex items-start gap-2">
+                        <RiAlertLine className="text-base shrink-0 mt-0.5" />
+                        <span>{t('enroll_change_specialty_desc')}</span>
+                      </div>
+                    )}
                   </div>
                 )}
 
@@ -354,6 +384,24 @@ export default function ProfilePage() {
           </div>
         )}
       </div>
+
+      {confirmSpecialty && (
+        <div className="fixed inset-0 z-[120] bg-slate-950/50 backdrop-blur-[2px] flex items-center justify-center p-4 animate-fade-in" onClick={() => setConfirmSpecialty(false)}>
+          <div className="card-standard w-full max-w-md p-6 animate-scale-in" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
+            <div className="w-11 h-11 rounded-2xl bg-amber-50 text-amber-600 border border-amber-100 flex items-center justify-center mb-3"><RiAlertLine className="text-xl" /></div>
+            <h3 className="text-base font-extrabold text-slate-900">{t('enroll_change_specialty_title')}</h3>
+            <p className="text-xs text-slate-500 font-medium mt-1.5 leading-relaxed">{t('enroll_change_specialty_desc')}</p>
+            <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
+              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200"><p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">{t('enroll_current')}</p><p className="font-bold text-slate-800 truncate">{specialtyName || t('ui_not_selected')}</p></div>
+              <div className="p-2.5 rounded-xl bg-blue-50 border border-blue-200"><p className="text-[10px] font-bold uppercase tracking-wider text-blue-500">→</p><p className="font-bold text-blue-800 truncate">{(() => { const sp = specialties.find((x) => String(x.id) === String(profileForm.specialty_id)); return sp ? (getLocalized(sp, 'name') || sp.name) : t('ui_not_selected'); })()}</p></div>
+            </div>
+            <div className="mt-5 flex justify-end gap-2">
+              <button type="button" onClick={() => setConfirmSpecialty(false)} className="btn-secondary-soft">{t('common.cancel')}</button>
+              <button type="button" onClick={() => handleProfileSubmit()} disabled={profileSaving} className="btn-primary">{profileSaving ? t('ui_saving') : t('enroll_confirm')}</button>
+            </div>
+          </div>
+        </div>
+      )}
     </Layout>
   );
 }

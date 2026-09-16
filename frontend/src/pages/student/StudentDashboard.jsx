@@ -4,6 +4,7 @@ import Layout from "../../components/Layout";
 import { useAuth } from "../../contexts/AuthContext";
 import { useLanguage } from "../../contexts/LanguageContext";
 import api from "../../lib/api";
+import { NoSpecialtyBanner } from "../../components/ui";
 import {
   RiBookOpenLine, RiTrophyLine, RiCheckboxCircleLine, RiBarChartLine,
   RiArrowRightLine, RiTimeLine, RiSparklingLine, RiStethoscopeLine,
@@ -67,7 +68,8 @@ export default function StudentDashboard() {
   return (
     <Layout>
       <div className="space-y-5 sm:space-y-6 max-w-7xl mx-auto">
-        
+        <NoSpecialtyBanner user={user} onChoose={() => navigate('/student/profile?tab=settings')} />
+
         {/* ── 1. Hero Welcome & Diagnostic Banner ── */}
         <div className="card-hero p-5 sm:p-7">
           <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
