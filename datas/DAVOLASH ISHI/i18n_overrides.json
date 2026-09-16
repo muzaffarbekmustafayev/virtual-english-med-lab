@@ -309,6 +309,18 @@
     "10|Mixed Grammar — Clinical Comparison|Blood samples will be taken": {
       "note_en": "Passive Voice — emphasis on the medical procedure.",
       "note_ru": "Passive Voice — акцент на медицинской процедуре."
+    },
+    "1|Important: Dialogue Has Other Tenses Too|I usually have normal blood pressure": {
+      "note_en": "This is Present Simple, not Past Simple; 'usually' signals a habitual state.",
+      "note_ru": "Это Present Simple, а не Past Simple; 'usually' указывает на привычное состояние."
+    },
+    "6|Passive Voice|Appropriate antimicrobial treatment shou": {
+      "note_en": "Appropriate antimicrobial treatment should be started promptly.",
+      "note_ru": "Соответствующую антимикробную терапию следует начать незамедлительно."
+    },
+    "10|Present Perfect Continuous|I've been becoming breathless much more": {
+      "note_en": "Shows that the breathlessness is a recently worsening, ongoing process.",
+      "note_ru": "Показывает, что одышка — недавно усиливающийся, продолжающийся процесс."
     }
   },
   "example_translations": {
@@ -1044,5 +1056,6 @@
       "translation_uz": "Simptomlarni davolagandan ko'ra sababini topganim ma'qul.",
       "translation_ru": "Я бы предпочёл найти причину, чем лечить симптомы."
     }
-  }
+  },
+  "phrase_translations": {}
 }

@@ -98,7 +98,7 @@ function buildModule(spec, num, dir, warnings, verbose, overrides = null) {
   const known = new Set(vocabulary.map(v => T.keyOf(v.word)));
   for (const g of grammarDocs) {
     for (const item of g.glossary || []) {
-      if (!item.en || known.has(T.keyOf(item.en)) || T.wordCount(item.en) > 5 || T.looksLikeSentence(item.en)) continue;
+      if (!item.en || known.has(T.keyOf(item.en)) || T.wordCount(item.en) > 5 || T.looksLikeSentence(item.en) || /\s\+\s|^\s*grammar\s+focus/i.test(item.en)) continue;
       known.add(T.keyOf(item.en));
       vocabulary.push({ word: item.en, translation_uz: T.normalizeUz(item.uz || ''), translation_ru: item.ru || '', pronunciation: '', definition_en: '', example: '', source: 'grammar-glossary' });
     }
@@ -142,6 +142,10 @@ function buildModule(spec, num, dir, warnings, verbose, overrides = null) {
     } catch (e) { warnings.push(`${path.relative(DATAS, extraFile)}: ${e.message}`); }
   }
   phrases = T.mergeBy(phrases, p => T.keyOf(p.phrase));
+  // "→ Batafsil anamnez olish." kabi strelkali qatorlar — ibora emas, o'qituvchi izohi: tashlab yuboriladi;
+  // tarjima ustuniga tushib qolgan strelkali izohlar tozalanadi (override to'ldiradi)
+  phrases = phrases.filter(p => !/^\s*[→➜►]/.test(p.phrase || ''));
+  for (const p of phrases) if (/^\s*[→➜►]/.test(p.translation_uz || '')) p.translation_uz = '';
   // trilingual titles, knowledge-base fallbacks for explanations / formulas, translations from the phrasebook
   const translated = fillExampleTranslations(rules, phrases, dialogue.turns);
   rules.forEach(r => enrichRule(r));
@@ -161,6 +165,11 @@ function buildModule(spec, num, dir, warnings, verbose, overrides = null) {
       if (key) Object.assign(ex, overrides.example_notes[key]);
     }
   }
+  // "O'zbekcha tushuntirish" kabi to'ldiruvchi izohlar — izoh emas, tashlab yuboriladi
+  for (const r of rules) for (const ex of r.examples || []) {
+    const PLACEHOLDER = /^\s*(o['ʻ’]zbekcha tushuntirish|tushuntirish|izoh|объяснение на русском|перевод|explanation in english)\s*\.?\s*$/i;
+    for (const f of ['note', 'translation_uz', 'translation_ru', 'translation_en']) if (ex[f] && PLACEHOLDER.test(ex[f])) ex[f] = '';
+  }
   if (overrides?.example_translations) {
     // misol gapi (aniq mos) → { translation_uz, translation_ru } — faqat bo'sh maydonlar to'ldiriladi
     for (const r of rules) for (const ex of r.examples || []) {
@@ -179,6 +188,15 @@ function buildModule(spec, num, dir, warnings, verbose, overrides = null) {
   const title_ru = conf ? conf[2] : title_en;
   if (!conf) warnings.push(`${spec.code} module ${num}: no title in config — using "${title_en}"`);
 
+  if (overrides?.phrase_translations) {
+    // ibora (aniq mos) → { translation_uz?, translation_ru? } — faqat bo'sh maydonlar to'ldiriladi
+    for (const p of phrases) {
+      const tr = overrides.phrase_translations[(p.phrase || '').trim()];
+      if (!tr) continue;
+      if (!p.translation_uz && tr.translation_uz) p.translation_uz = tr.translation_uz;
+      if ((!p.translation_ru || !/[Ѐ-ӿ]/.test(p.translation_ru)) && tr.translation_ru) p.translation_ru = tr.translation_ru;
+    }
+  }
   vocabulary = attachExamples(vocabulary, dialogue.turns, phrases);
   if (overrides?.vocabulary) {
     for (const v of vocabulary) {

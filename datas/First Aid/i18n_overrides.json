@@ -1,0 +1,797 @@
+{
+  "_comment": "Word fayllarda faqat bir tilda bo'lgan qismlar uchun qo'lda yozilgan tarjimalar. build_datas.js qo'llaydi.",
+  "grammar": {
+    "5|Backshift": {
+      "rule_explanation_en": "In Reported Speech, when the reporting verb is in the past, the tense in the reported clause usually moves one step back: Present Simple → Past Simple, Present Continuous → Past Continuous.",
+      "rule_explanation_ru": "В косвенной речи, если глагол, вводящий речь, стоит в прошедшем времени, время во второй части обычно сдвигается на шаг назад: Present Simple → Past Simple, Present Continuous → Past Continuous."
+    },
+    "5|Example From the Dialogue": {
+      "rule_explanation_ru": "am having → was having (Present Continuous → Past Continuous): пример из диалога — «I am having an allergic reaction» → She said that she was having an allergic reaction (она сказала, что у неё аллергическая реакция)."
+    },
+    "5|Reporting Verb: Said": {
+      "rule_explanation_en": "Structure: said is usually followed by that + clause: She said that she had a nut allergy.",
+      "rule_explanation_uz": "Structure: said dan keyin ko'pincha that + clause keladi: She said that she had a nut allergy.",
+      "rule_explanation_ru": "Структура: после said обычно следует that + придаточное: She said that she had a nut allergy."
+    },
+    "5|Reporting Verb: Told": {
+      "rule_explanation_en": "Told always needs an object — the person who was told: She told me that I should sit down and try to stay calm.",
+      "rule_explanation_uz": "Told har doim to'ldiruvchi — kimga aytilganini talab qiladi: She told me that I should sit down and try to stay calm.",
+      "rule_explanation_ru": "Told всегда требует дополнения — кому было сказано: She told me that I should sit down and try to stay calm."
+    },
+    "5|Said vs Told": {
+      "rule_explanation_en": "say → the listener does not have to be named. tell → the listener is named (tell + someone + that…).",
+      "rule_explanation_ru": "say → указывать слушателя не обязательно. tell → слушатель указывается (tell + someone + that…)."
+    },
+    "5|Tell + Object": {
+      "rule_explanation_en": "Structure: tell + object + that + clause: The paramedic told me that I was having an allergic reaction.",
+      "rule_explanation_uz": "Structure: tell + to'ldiruvchi + that + clause: The paramedic told me that I was having an allergic reaction.",
+      "rule_explanation_ru": "Структура: tell + дополнение + that + придаточное: The paramedic told me that I was having an allergic reaction."
+    },
+    "5|Reporting Verbs + Medical History": {
+      "rule_explanation_en": "This shows that the patient is passing on earlier medical advice: My doctor told me that I should always carry an adrenaline pen.",
+      "rule_explanation_ru": "Это показывает, что пациент передаёт полученный ранее медицинский совет: My doctor told me that I should always carry an adrenaline pen."
+    },
+    "5|Reporting Verbs — Important Medical Verbs": {
+      "rule_explanation_en": "Reporting verbs used in emergency medicine: said, told, explained, reported, mentioned, confirmed, advised, warned — e.g. The nurse reported that her blood pressure was low.",
+      "rule_explanation_uz": "Shoshilinch tibbiyotda ishlatiladigan reporting fe'llar: said, told, explained, reported, mentioned, confirmed, advised, warned — masalan, The nurse reported that her blood pressure was low.",
+      "rule_explanation_ru": "Глаголы косвенной речи в неотложной медицине: said, told, explained, reported, mentioned, confirmed, advised, warned — например, The nurse reported that her blood pressure was low."
+    },
+    "5|Tenses in the Dialogue": {
+      "rule_explanation_en": "This dialogue contains several important tenses: Past Simple for the sudden event (I suddenly became very unwell), Past Continuous for the background action (I was having an allergic reaction), and Past Perfect Continuous for what had been going on before (I had been eating for about half an hour).",
+      "rule_explanation_ru": "В этом диалоге несколько важных времён: Past Simple для внезапного события (I suddenly became very unwell), Past Continuous для фонового действия (I was having an allergic reaction) и Past Perfect Continuous для того, что происходило до этого (I had been eating for about half an hour)."
+    },
+    "7|Important Difference: -ing vs V3": {
+      "rule_explanation_en": "Structure: V-ing | V3. The -ing participle is active — the noun performs the action (the nurse monitoring the patient); the V3 participle is passive — the action is done to the noun (the infected wound).",
+      "rule_explanation_uz": "Structure: V-ing | V3. -ing sifatdoshi faol — ot harakatni o'zi bajaradi (the nurse monitoring the patient); V3 sifatdoshi majhul — harakat otga nisbatan bajarilgan (the infected wound).",
+      "rule_explanation_ru": "Структура: V-ing | V3. Причастие на -ing — активное, существительное само выполняет действие (the nurse monitoring the patient); причастие V3 — пассивное, действие совершено над существительным (the infected wound)."
+    },
+    "9|Where": {
+      "rule_explanation_en": "Where is used to refer to a place: the ward where the patient collapsed.",
+      "rule_explanation_ru": "Where используется для указания места: the ward where the patient collapsed."
+    },
+    "9|Clinical Application": {
+      "rule_explanation_en": "Relative clauses let the clinician identify exactly which patient, symptom or medication is meant: The patient who collapsed needs an ECG. The medication that he takes may affect his blood pressure.",
+      "rule_explanation_uz": "Nisbiy ergash gaplar shifokorga aynan qaysi bemor, simptom yoki dori nazarda tutilayotganini aniqlashga yordam beradi: The patient who collapsed needs an ECG. The medication that he takes may affect his blood pressure.",
+      "rule_explanation_ru": "Придаточные определительные позволяют врачу точно указать, какой пациент, симптом или препарат имеется в виду: The patient who collapsed needs an ECG. The medication that he takes may affect his blood pressure."
+    },
+    "10|\"if You Had Known...\" — Past Consequence": {
+      "rule_explanation_en": "had known → Past Perfect; might have avoided → a possible result in the past. If he had known the tablets were dangerous, he might not have taken them.",
+      "rule_explanation_ru": "had known → Past Perfect; might have avoided → возможный результат в прошлом. If he had known the tablets were dangerous, he might not have taken them."
+    },
+    "10|\"if He Had Known...\" vs \"if He Had Taken... Now\"": {
+      "rule_explanation_en": "Third Conditional (past condition → past result): If he had known…, he might not have taken them. Mixed Conditional (past condition → present result): If he had taken less, he might not be this drowsy now.",
+      "rule_explanation_uz": "Third Conditional (o'tmishdagi shart → o'tmishdagi natija): If he had known…, he might not have taken them. Mixed Conditional (o'tmishdagi shart → hozirgi natija): If he had taken less, he might not be this drowsy now.",
+      "rule_explanation_ru": "Third Conditional (условие в прошлом → результат в прошлом): If he had known…, he might not have taken them. Mixed Conditional (условие в прошлом → результат в настоящем): If he had taken less, he might not be this drowsy now."
+    },
+    "10|Important Clinical Expressions": {
+      "rule_explanation_en": "Key expressions for an overdose case: we need to treat this as a potentially serious overdose; we cannot predict the outcome yet; our priority is to prevent further complications; please do not give him anything to eat or drink until we have assessed his swallowing.",
+      "rule_explanation_uz": "Dozani oshirib yuborish holati uchun asosiy iboralar: we need to treat this as a potentially serious overdose; we cannot predict the outcome yet; our priority is to prevent further complications; please do not give him anything to eat or drink until we have assessed his swallowing.",
+      "rule_explanation_ru": "Ключевые выражения для случая передозировки: we need to treat this as a potentially serious overdose; we cannot predict the outcome yet; our priority is to prevent further complications; please do not give him anything to eat or drink until we have assessed his swallowing."
+    },
+    "10|Quick Comparison": {
+      "rule_explanation_en": "First Conditional — real future: If he becomes unconscious, we will assess his airway. Second Conditional — hypothetical present: If we knew the dose, we could assess the risk. Third Conditional — past: If he had taken less, he might not have become so drowsy. Mixed — past → now: If he had taken less, he might not be this drowsy now.",
+      "rule_explanation_uz": "First Conditional — real kelajak: If he becomes unconscious, we will assess his airway. Second Conditional — faraziy hozirgi: If we knew the dose, we could assess the risk. Third Conditional — o'tmish: If he had taken less, he might not have become so drowsy. Mixed — o'tmish → hozir: If he had taken less, he might not be this drowsy now.",
+      "rule_explanation_ru": "First Conditional — реальное будущее: If he becomes unconscious, we will assess his airway. Second Conditional — гипотетическое настоящее: If we knew the dose, we could assess the risk. Third Conditional — прошлое: If he had taken less, he might not have become so drowsy. Mixed — прошлое → настоящее: If he had taken less, he might not be this drowsy now."
+    },
+    "10|Common Errors": {
+      "rule_explanation_en": "Do not use would in the if-clause: ❌ If he would have taken less medication… ✅ If he had taken less medication… ❌ If we would know the exact dose… ✅ If we knew the exact dose…",
+      "rule_explanation_uz": "If qismida would ishlatilmaydi: ❌ If he would have taken less medication… ✅ If he had taken less medication… ❌ If we would know the exact dose… ✅ If we knew the exact dose…",
+      "rule_explanation_ru": "Не используйте would в части с if: ❌ If he would have taken less medication… ✅ If he had taken less medication… ❌ If we would know the exact dose… ✅ If we knew the exact dose…"
+    }
+  },
+  "vocabulary": {
+    "6|dull pain": {
+      "translation_ru": "тупая боль"
+    },
+    "6|cramping pain": {
+      "translation_ru": "схваткообразная боль"
+    },
+    "6|severe pain": {
+      "translation_ru": "сильная боль"
+    },
+    "6|worsening pain": {
+      "translation_ru": "усиливающаяся боль"
+    },
+    "6|come in": {
+      "translation_ru": "прийти (в больницу)"
+    },
+    "6|throw up": {
+      "translation_ru": "рвать (о рвоте)"
+    },
+    "6|get worse": {
+      "translation_ru": "ухудшаться"
+    },
+    "6|calm down": {
+      "translation_ru": "успокоиться"
+    },
+    "6|find out": {
+      "translation_ru": "выяснить"
+    },
+    "6|come back": {
+      "translation_ru": "вернуться"
+    },
+    "8|apply firm direct pressure": {
+      "translation_ru": "оказывать сильное прямое давление"
+    },
+    "8|lose a lot of blood": {
+      "translation_ru": "потерять много крови"
+    },
+    "8|show signs of hemorrhagic shock": {
+      "translation_ru": "проявлять признаки геморрагического шока"
+    },
+    "8|assess the airway and breathing": {
+      "translation_ru": "оценить проходимость дыхательных путей и дыхание"
+    },
+    "8|establish two large-bore IV lines": {
+      "translation_ru": "установить два внутривенных катетера большого диаметра"
+    },
+    "8|give oxygen": {
+      "translation_ru": "дать кислород"
+    },
+    "8|look for internal bleeding": {
+      "translation_ru": "искать внутреннее кровотечение"
+    },
+    "9|who": {
+      "translation_ru": "который (о людях)"
+    },
+    "9|which": {
+      "translation_ru": "который (о предметах, состояниях)"
+    },
+    "9|that": {
+      "translation_ru": "который (о людях или предметах)"
+    }
+  },
+  "example_notes": {
+    "1|Present Perfect Continuous vs Present Perfect|I've been feeling extremely unwell": {
+      "note_en": "Present Perfect Continuous — Continuous → an ongoing process / Present Perfect → an event or result",
+      "note_ru": "Present Perfect Continuous — Continuous → продолжающийся процесс / Present Perfect → событие или результат"
+    },
+    "1|Present Perfect Continuous vs Present Perfect|I've vomited several times": {
+      "note_en": "Present Perfect — Continuous → an ongoing process / Present Perfect → an event or result",
+      "note_ru": "Present Perfect — Continuous → продолжающийся процесс / Present Perfect → событие или результат"
+    },
+    "3|Present Perfect vs Present Perfect Continuous|I haven't seen any blood": {
+      "note_en": "Present Perfect — whether blood was seen = status/result; difficulty urinating = an ongoing process",
+      "note_ru": "Present Perfect — наличие крови = статус/результат; трудности при мочеиспускании = продолжающийся процесс"
+    },
+    "3|Present Perfect vs Present Perfect Continuous|I've been having increasing difficulty": {
+      "note_en": "Present Perfect Continuous — an ongoing process (difficulty urinating)",
+      "note_ru": "Present Perfect Continuous — продолжающийся процесс (трудности при мочеиспускании)"
+    },
+    "3|Present Perfect vs Present Perfect Continuous|I've never had anything like this before": {
+      "note_en": "Present Perfect — previous experience vs a state repeating up to now",
+      "note_ru": "Present Perfect — прошлый опыт vs состояние, повторяющееся до сих пор"
+    },
+    "3|Present Perfect vs Present Perfect Continuous|I've been passing only small amounts": {
+      "note_en": "Present Perfect Continuous — a state repeating up to now",
+      "note_ru": "Present Perfect Continuous — состояние, повторяющееся до сих пор"
+    },
+    "3|Present Perfect vs Present Perfect Continuous|Your urine output has been significantly": {
+      "note_en": "Present Perfect — current clinical result vs an ongoing/repeated process",
+      "note_ru": "Present Perfect — текущий клинический результат vs продолжающийся/повторяющийся процесс"
+    },
+    "3|Present Perfect vs Present Perfect Continuous|I've been producing much less urine": {
+      "note_en": "Present Perfect Continuous — an ongoing/repeated process",
+      "note_ru": "Present Perfect Continuous — продолжающийся/повторяющийся процесс"
+    },
+    "3|Present Perfect vs Present Perfect Continuous|I haven't had diarrhoea": {
+      "note_en": "Present Perfect — current status vs an ongoing change in intake",
+      "note_ru": "Present Perfect — текущий статус vs продолжающееся изменение потребления"
+    },
+    "3|Present Perfect vs Present Perfect Continuous|I've been drinking much less than usual": {
+      "note_en": "Present Perfect Continuous — an ongoing change in intake",
+      "note_ru": "Present Perfect Continuous — продолжающееся изменение потребления"
+    },
+    "3|Other Tenses in This Dialogue|I started taking a new medication": {
+      "note_en": "Past Simple — about a week ago → a definite event that started in the past",
+      "note_ru": "Past Simple — about a week ago → конкретное событие, начавшееся в прошлом"
+    },
+    "4|Passive Voice|Your vital signs will be checked": {
+      "note_en": "be + V3 — Your vital signs will be checked.",
+      "note_ru": "be + V3 — Ваши жизненные показатели будут проверены."
+    },
+    "4|Passive Voice|you've been examined": {
+      "note_en": "have/has been + V3 — you have been examined",
+      "note_ru": "have/has been + V3 — вас осмотрели"
+    },
+    "4|Future Passive — Will Be + V3|Your vital signs will be checked first": {
+      "note_en": "will be checked = Future Passive → vital signs are checked first",
+      "note_ru": "will be checked = Future Passive → сначала проверяются жизненные показатели"
+    },
+    "4|Future Passive — Will Be + V3|You'll be given clear instructions": {
+      "note_en": "will be given = the patient is given instructions",
+      "note_ru": "will be given = пациенту дают инструкции"
+    },
+    "4|Present Perfect Passive — Have/Has Been + V3|after you've been examined": {
+      "note_en": "you've been examined = have been + examined → after you have been examined",
+      "note_ru": "you've been examined = have been + examined → после того, как вас осмотрели"
+    },
+    "4|Past Passive — Was/Were + V3|Were any of your clothes stuck": {
+      "note_en": "were + stuck → asking whether clothing was stuck to the skin",
+      "note_ru": "were + stuck → вопрос о том, прилипла ли одежда к коже"
+    },
+    "4|Modal Passive — May/Can + Be + V3|You may be referred to a specialist burn": {
+      "note_en": "may + be + referred — You may be referred to a specialist burns unit.",
+      "note_ru": "may + be + referred — Вас могут направить в специализированное ожоговое отделение."
+    },
+    "7|Important Difference: -ing vs V3|the nurse monitoring the patient": {
+      "note_en": "V-ing — active — performs the action itself",
+      "note_ru": "V-ing — активное — само выполняет действие"
+    },
+    "8|Present Perfect|Have you used a tourniquet": {
+      "note_en": "Have you applied a tourniquet?",
+      "note_ru": "Вы накладывали жгут?"
+    },
+    "9|Defining Relative Clauses|The patient who collapsed needs further": {
+      "note_en": "Which patient?",
+      "note_ru": "Какой пациент?"
+    },
+    "10|\"if We Knew...\" — Hypothetical Present|If we knew": {
+      "note_en": "used for a hypothetical present situation",
+      "note_ru": "используется для гипотетической ситуации в настоящем"
+    }
+  },
+  "example_translations": {
+    "I've vomited several times.": {
+      "translation_uz": "Bir necha marta qusdim.",
+      "translation_ru": "Меня несколько раз вырвало."
+    },
+    "I vomited several times yesterday.": {
+      "translation_uz": "Kecha bir necha marta qusdim.",
+      "translation_ru": "Вчера меня несколько раз вырвало."
+    },
+    "I've missed several doses.": {
+      "translation_uz": "Bir nechta dozani o'tkazib yubordim.",
+      "translation_ru": "Я пропустил несколько доз."
+    },
+    "for almost a week": {
+      "translation_uz": "deyarli bir haftadan beri",
+      "translation_ru": "почти неделю"
+    },
+    "for almost a year": {
+      "translation_uz": "deyarli bir yildan beri",
+      "translation_ru": "почти год"
+    },
+    "What had happened before another past event?": {
+      "translation_uz": "Boshqa o'tgan voqeadan oldin nima sodir bo'lgan edi?",
+      "translation_ru": "Что произошло до другого события в прошлом?"
+    },
+    "What had been happening, and for how long, before another past event?": {
+      "translation_uz": "Boshqa o'tgan voqeadan oldin nima va qancha vaqt davom etib kelgan edi?",
+      "translation_ru": "Что происходило и как долго до другого события в прошлом?"
+    },
+    "The patient had missed his medication and had been sleeping poorly for almost a week before the seizure occurred.": {
+      "translation_uz": "Tutqanoq boshlanishidan oldin bemor dorisini o'tkazib yuborgan va deyarli bir hafta yomon uxlab kelgan edi.",
+      "translation_ru": "До приступа пациент пропустил приём лекарства и почти неделю плохо спал."
+    },
+    "My urine has become darker than usual.": {
+      "translation_uz": "Siydigim odatdagidan to'qroq bo'lib qoldi.",
+      "translation_ru": "Моя моча стала темнее обычного."
+    },
+    "I haven't been drinking enough fluids recently.": {
+      "translation_uz": "So'nggi paytlarda yetarli suyuqlik ichmayapman.",
+      "translation_ru": "В последнее время я пью недостаточно жидкости."
+    },
+    "I've been drinking much less than usual.": {
+      "translation_uz": "Odatdagidan ancha kam ichyapman.",
+      "translation_ru": "Я пью гораздо меньше обычного."
+    },
+    "for the last two days": {
+      "translation_uz": "so'nggi ikki kun davomida",
+      "translation_ru": "последние два дня"
+    },
+    "since yesterday": {
+      "translation_uz": "kechadan beri",
+      "translation_ru": "со вчерашнего дня"
+    },
+    "hozirgi klinik natija/status muhim.": {
+      "translation_uz": "hozirgi klinik natija/status muhim.",
+      "translation_ru": "важен текущий клинический результат/статус."
+    },
+    "I passed a normal amount yesterday morning.": {
+      "translation_uz": "Kecha ertalab normal miqdorda siydim.",
+      "translation_ru": "Вчера утром я мочился в нормальном объёме."
+    },
+    "I started taking a new medication about a week ago.": {
+      "translation_uz": "Taxminan bir hafta oldin yangi dori ichishni boshladim.",
+      "translation_ru": "Около недели назад я начал принимать новое лекарство."
+    },
+    "It's a strong painkiller.": {
+      "translation_uz": "Bu kuchli og'riqsizlantiruvchi.",
+      "translation_ru": "Это сильное обезболивающее."
+    },
+    "Your recent medication changes may all be relevant.": {
+      "translation_uz": "Yaqindagi dori o'zgarishlaringizning barchasi ahamiyatli bo'lishi mumkin.",
+      "translation_ru": "Все ваши недавние изменения в лекарствах могут иметь значение."
+    },
+    "We'll check your blood tests…": {
+      "translation_uz": "Qon tahlillaringizni tekshiramiz…",
+      "translation_ru": "Мы проверим ваши анализы крови…"
+    },
+    "The amount of urine remaining in your bladder will be measured.": {
+      "translation_uz": "Qovug'ingizda qolgan siydik miqdori o'lchanadi.",
+      "translation_ru": "Объём мочи, оставшейся в мочевом пузыре, будет измерен."
+    },
+    "you've been examined": {
+      "translation_uz": "siz tekshirilgansiz",
+      "translation_ru": "вас осмотрели"
+    },
+    "you may be referred": {
+      "translation_uz": "siz yuborilishingiz mumkin",
+      "translation_ru": "вас могут направить"
+    },
+    "they'll be cleaned and covered": {
+      "translation_uz": "ular tozalanadi va yopiladi",
+      "translation_ru": "их очистят и закроют"
+    },
+    "after you've been examined": {
+      "translation_uz": "siz tekshirilganingizdan keyin",
+      "translation_ru": "после того, как вас осмотрят"
+    },
+    "how much of your body surface has been affected": {
+      "translation_uz": "tana yuzangizning qancha qismi zararlangani",
+      "translation_ru": "какая часть поверхности тела поражена"
+    },
+    "The nurse will check your vital signs.": {
+      "translation_uz": "Hamshira hayotiy ko'rsatkichlaringizni tekshiradi.",
+      "translation_ru": "Медсестра проверит ваши жизненные показатели."
+    },
+    "The doctor will examine the burns.": {
+      "translation_uz": "Shifokor kuyishlarni tekshiradi.",
+      "translation_ru": "Врач осмотрит ожоги."
+    },
+    "The burns will be examined.": {
+      "translation_uz": "Kuyishlar tekshiriladi.",
+      "translation_ru": "Ожоги будут осмотрены."
+    },
+    "The team will clean the burns.": {
+      "translation_uz": "Jamoa kuyishlarni tozalaydi.",
+      "translation_ru": "Бригада очистит ожоги."
+    },
+    "The burns will be cleaned.": {
+      "translation_uz": "Kuyishlar tozalanadi.",
+      "translation_ru": "Ожоги будут очищены."
+    },
+    "Once the burns have been assessed, they'll be cleaned.": {
+      "translation_uz": "Kuyishlar baholangach, ular tozalanadi.",
+      "translation_ru": "Как только ожоги будут оценены, их очистят."
+    },
+    "If they're more extensive..., you may be referred...": {
+      "translation_uz": "Agar ular kengroq bo'lsa…, siz yuborilishingiz mumkin…",
+      "translation_ru": "Если они обширнее…, вас могут направить…"
+    },
+    "will be checked": {
+      "translation_uz": "tekshiriladi",
+      "translation_ru": "будет проверено"
+    },
+    "has been affected": {
+      "translation_uz": "zararlangan",
+      "translation_ru": "было поражено"
+    },
+    "were stuck": {
+      "translation_uz": "yopishib qolgan edi",
+      "translation_ru": "прилипли"
+    },
+    "may be referred": {
+      "translation_uz": "yuborilishi mumkin",
+      "translation_ru": "может быть направлен"
+    },
+    "will be given": {
+      "translation_uz": "beriladi",
+      "translation_ru": "будет дано"
+    },
+    "You are having an allergic reaction.": {
+      "translation_uz": "Sizda allergik reaksiya bo'lyapti.",
+      "translation_ru": "У вас аллергическая реакция."
+    },
+    "I have a nut allergy.": {
+      "translation_uz": "Menda yong'oqqa allergiya bor.",
+      "translation_ru": "У меня аллергия на орехи."
+    },
+    "She said that she had a nut allergy.": {
+      "translation_uz": "U yong'oqqa allergiyasi borligini aytdi.",
+      "translation_ru": "Она сказала, что у неё аллергия на орехи."
+    },
+    "I am having an allergic reaction.": {
+      "translation_uz": "Menda allergik reaksiya bo'lyapti.",
+      "translation_ru": "У меня аллергическая реакция."
+    },
+    "She said that she was having an allergic reaction.": {
+      "translation_uz": "U allergik reaksiya bo'layotganini aytdi.",
+      "translation_ru": "Она сказала, что у неё аллергическая реакция."
+    },
+    "She said that she was feeling faint.": {
+      "translation_uz": "U hushidan ketgudek bo'layotganini aytdi.",
+      "translation_ru": "Она сказала, что ей дурно."
+    },
+    "She told me that I should sit down and try to stay calm.": {
+      "translation_uz": "U menga o'tirib, xotirjam bo'lishga harakat qilishim kerakligini aytdi.",
+      "translation_ru": "Она сказала мне, что мне следует сесть и постараться сохранять спокойствие."
+    },
+    "tell + someone + that...": {
+      "translation_uz": "tell + kimgadir + that…",
+      "translation_ru": "tell + кому-либо + that…"
+    },
+    "She said that I was having an allergic reaction.": {
+      "translation_uz": "U menda allergik reaksiya bo'layotganini aytdi.",
+      "translation_ru": "Она сказала, что у меня аллергическая реакция."
+    },
+    "She said that...": {
+      "translation_uz": "U … dedi.",
+      "translation_ru": "Она сказала, что…"
+    },
+    "She told me that...": {
+      "translation_uz": "U menga … dedi.",
+      "translation_ru": "Она сказала мне, что…"
+    },
+    "She told me...": {
+      "translation_uz": "U menga … dedi.",
+      "translation_ru": "Она сказала мне…"
+    },
+    "You should sit down and try to stay calm.": {
+      "translation_uz": "O'tirib, xotirjam bo'lishga harakat qiling.",
+      "translation_ru": "Вам следует сесть и постараться сохранять спокойствие."
+    },
+    "You should sit down.": {
+      "translation_uz": "O'tirishingiz kerak.",
+      "translation_ru": "Вам следует сесть."
+    },
+    "I suddenly became very unwell after eating some food at a restaurant.": {
+      "translation_uz": "Restoranda ovqatlanganimdan keyin to'satdan o'zimni juda yomon his qildim.",
+      "translation_ru": "После еды в ресторане мне внезапно стало очень плохо."
+    },
+    "My mouth started tingling.": {
+      "translation_uz": "Og'zim jimirlashni boshladi.",
+      "translation_ru": "Во рту началось покалывание."
+    },
+    "I was having an allergic reaction.": {
+      "translation_uz": "Menda allergik reaksiya bo'layotgan edi.",
+      "translation_ru": "У меня была аллергическая реакция."
+    },
+    "I had been eating for about half an hour when I suddenly felt that something was wrong.": {
+      "translation_uz": "Taxminan yarim soat ovqatlanayotgan edim, to'satdan nimadir noto'g'ri ekanini his qildim.",
+      "translation_ru": "Я ел около получаса, когда внезапно почувствовал, что что-то не так."
+    },
+    "I suddenly felt that something was wrong.": {
+      "translation_uz": "To'satdan nimadir noto'g'ri ekanini his qildim.",
+      "translation_ru": "Я внезапно почувствовал, что что-то не так."
+    },
+    "a worsening wound": {
+      "translation_uz": "yomonlashayotgan yara",
+      "translation_ru": "ухудшающаяся рана"
+    },
+    "The redness is spreading.": {
+      "translation_uz": "Qizarish tarqalmoqda.",
+      "translation_ru": "Покраснение распространяется."
+    },
+    "an infected wound": {
+      "translation_uz": "infeksiyalangan yara",
+      "translation_ru": "инфицированная рана"
+    },
+    "a swollen area": {
+      "translation_uz": "shishgan joy",
+      "translation_ru": "отёкшая область"
+    },
+    "the patient who is lying in bed": {
+      "translation_uz": "karavotda yotgan bemor",
+      "translation_ru": "пациент, который лежит в постели"
+    },
+    "the patient lying in bed": {
+      "translation_uz": "karavotda yotgan bemor",
+      "translation_ru": "пациент, лежащий в постели"
+    },
+    "the redness that is spreading": {
+      "translation_uz": "tarqalayotgan qizarish",
+      "translation_ru": "покраснение, которое распространяется"
+    },
+    "the spreading redness": {
+      "translation_uz": "tarqalayotgan qizarish",
+      "translation_ru": "распространяющееся покраснение"
+    },
+    "the tissue that requires treatment": {
+      "translation_uz": "davolashni talab qiladigan to'qima",
+      "translation_ru": "ткань, которая требует лечения"
+    },
+    "the tissue requiring treatment": {
+      "translation_uz": "davolash talab qiladigan to'qima",
+      "translation_ru": "ткань, требующая лечения"
+    },
+    "blood samples that were taken immediately": {
+      "translation_uz": "darhol olingan qon namunalari",
+      "translation_ru": "образцы крови, которые были взяты немедленно"
+    },
+    "the wound that was infected": {
+      "translation_uz": "infeksiyalangan yara",
+      "translation_ru": "рана, которая была инфицирована"
+    },
+    "the infected wound": {
+      "translation_uz": "infeksiyalangan yara",
+      "translation_ru": "инфицированная рана"
+    },
+    "the skin that is covered with redness": {
+      "translation_uz": "qizarish bilan qoplangan teri",
+      "translation_ru": "кожа, покрытая покраснением"
+    },
+    "Check + his blood pressure.": {
+      "translation_uz": "Check + uning qon bosimi.",
+      "translation_ru": "Check + его артериальное давление."
+    },
+    "I / You / We / They": {
+      "translation_uz": "I / You / We / They",
+      "translation_ru": "I / You / We / They"
+    },
+    "He / She / It": {
+      "translation_uz": "He / She / It",
+      "translation_ru": "He / She / It"
+    },
+    "Did + subject + V1?": {
+      "translation_uz": "Did + ega + V1?",
+      "translation_ru": "Did + подлежащее + V1?"
+    },
+    "Can + subject + V1?": {
+      "translation_uz": "Can + ega + V1?",
+      "translation_ru": "Can + подлежащее + V1?"
+    },
+    "He is becoming weak.": {
+      "translation_uz": "U kuchsizlanib bormoqda.",
+      "translation_ru": "Он слабеет."
+    },
+    "Give / Check / Call": {
+      "translation_uz": "Give / Check / Call",
+      "translation_ru": "Give / Check / Call"
+    },
+    "The patient who collapsed needs an ECG. ✅": {
+      "translation_uz": "Hushidan ketgan bemorga EKG kerak. ✅",
+      "translation_ru": "Пациенту, который потерял сознание, нужна ЭКГ. ✅"
+    },
+    "The patient who collapsed needs assessment.": {
+      "translation_uz": "Hushidan ketgan bemorni baholash kerak.",
+      "translation_ru": "Пациент, который потерял сознание, нуждается в обследовании."
+    },
+    "The symptoms which occurred before the collapse are important.": {
+      "translation_uz": "Hushdan ketishdan oldin bo'lgan simptomlar muhim.",
+      "translation_ru": "Симптомы, возникшие до потери сознания, важны."
+    },
+    "The medication that he takes may affect his blood pressure.": {
+      "translation_uz": "U ichadigan dori qon bosimiga ta'sir qilishi mumkin.",
+      "translation_ru": "Лекарство, которое он принимает, может влиять на давление."
+    },
+    "The patients who experienced palpitations need an ECG.": {
+      "translation_uz": "Yurak urishini sezgan bemorlarga EKG kerak.",
+      "translation_ru": "Пациентам, у которых было сердцебиение, нужна ЭКГ."
+    },
+    "The patient whose blood pressure was low...": {
+      "translation_uz": "Qon bosimi past bo'lgan bemor…",
+      "translation_ru": "Пациент, у которого было низкое давление…"
+    },
+    "The patient whose symptoms started suddenly...": {
+      "translation_uz": "Simptomlari to'satdan boshlangan bemor…",
+      "translation_ru": "Пациент, у которого симптомы начались внезапно…"
+    },
+    "The medication that the patient takes may affect his blood pressure.": {
+      "translation_uz": "Bemor ichadigan dori qon bosimiga ta'sir qilishi mumkin.",
+      "translation_ru": "Лекарство, которое принимает пациент, может влиять на давление."
+    },
+    "The medication the patient takes may affect his blood pressure.": {
+      "translation_uz": "Bemor ichadigan dori qon bosimiga ta'sir qilishi mumkin.",
+      "translation_ru": "Лекарство, которое принимает пациент, может влиять на давление."
+    },
+    "The patient collapsed needs an ECG. ❌": {
+      "translation_uz": "The patient collapsed needs an ECG. ❌ (noto'g'ri — who tushib qolgan)",
+      "translation_ru": "The patient collapsed needs an ECG. ❌ (неверно — пропущено who)"
+    },
+    "The medication that the patient takes...": {
+      "translation_uz": "Bemor ichadigan dori…",
+      "translation_ru": "Лекарство, которое принимает пациент…"
+    },
+    "The medication the patient takes...": {
+      "translation_uz": "Bemor ichadigan dori…",
+      "translation_ru": "Лекарство, которое принимает пациент…"
+    },
+    "The patient collapsed. He had palpitations before that.": {
+      "translation_uz": "Bemor hushidan ketdi. Undan oldin yurak urishini sezgan edi.",
+      "translation_ru": "Пациент потерял сознание. До этого у него было сердцебиение."
+    },
+    "The patient which collapsed...": {
+      "translation_uz": "The patient which collapsed… ❌ (odam uchun who)",
+      "translation_ru": "The patient which collapsed… ❌ (для людей — who)"
+    },
+    "The patient who collapsed...": {
+      "translation_uz": "Hushidan ketgan bemor…",
+      "translation_ru": "Пациент, который потерял сознание…"
+    },
+    "My father, that had a heart attack,...": {
+      "translation_uz": "My father, that had a heart attack,… ❌ (vergul bilan that ishlatilmaydi)",
+      "translation_ru": "My father, that had a heart attack,… ❌ (that не используется с запятыми)"
+    },
+    "My father, who had a heart attack,...": {
+      "translation_uz": "Infarkt bo'lgan otam, …",
+      "translation_ru": "Мой отец, у которого был инфаркт, …"
+    },
+    "My father who had a heart attack at 52 has hypertension.": {
+      "translation_uz": "52 yoshida infarkt bo'lgan otamda gipertoniya bor.",
+      "translation_ru": "У моего отца, перенёсшего инфаркт в 52 года, гипертония."
+    },
+    "If we knew...": {
+      "translation_uz": "Agar bilganimizda…",
+      "translation_ru": "Если бы мы знали…"
+    },
+    "If he had known the tablets were dangerous, he might not have taken them.": {
+      "translation_uz": "Agar u tabletkalar xavfli ekanini bilganida, ularni ichmagan bo'lardi.",
+      "translation_ru": "Если бы он знал, что таблетки опасны, он, возможно, не принял бы их."
+    },
+    "If he had known..., he might not have taken them.": {
+      "translation_uz": "Agar u bilganida…, ularni ichmagan bo'lardi.",
+      "translation_ru": "Если бы он знал…, он, возможно, не принял бы их."
+    },
+    "If he had taken..., he might not be this drowsy now.": {
+      "translation_uz": "Agar u … ichganida, hozir bunchalik uyquchan bo'lmasdi.",
+      "translation_ru": "Если бы он принял…, он, возможно, не был бы сейчас таким сонливым."
+    },
+    "If he becomes unconscious, we will assess his airway.": {
+      "translation_uz": "Agar u hushini yo'qotsa, nafas yo'llarini baholaymiz.",
+      "translation_ru": "Если он потеряет сознание, мы оценим проходимость дыхательных путей."
+    },
+    "If we knew the dose, we could assess the risk.": {
+      "translation_uz": "Agar dozani bilganimizda, xavfni baholay olardik.",
+      "translation_ru": "Если бы мы знали дозу, мы могли бы оценить риск."
+    },
+    "If he had taken less, he might not be this drowsy now.": {
+      "translation_uz": "Agar u kamroq ichganida, hozir bunchalik uyquchan bo'lmasdi.",
+      "translation_ru": "Если бы он принял меньше, он, возможно, не был бы сейчас таким сонливым."
+    },
+    "If he would have taken less medication, he might be better now.": {
+      "translation_uz": "If he would have taken less medication… ❌ (noto'g'ri — if qismida would yo'q)",
+      "translation_ru": "If he would have taken less medication… ❌ (неверно — в части с if нет would)"
+    },
+    "If we would know the exact dose, we could assess the risk.": {
+      "translation_uz": "If we would know the exact dose… ❌ (noto'g'ri — if qismida would yo'q)",
+      "translation_ru": "If we would know the exact dose… ❌ (неверно — в части с if нет would)"
+    },
+    "If he had taken less, he might not have become so drowsy.": {
+      "translation_uz": "Agar u kamroq ichganida, bunchalik uyquchan bo'lib qolmasdi.",
+      "translation_ru": "Если бы он принял меньше, он, возможно, не стал бы таким сонливым."
+    },
+    "The patient who collapsed needs further assessment.": {
+      "translation_uz": "Hushidan ketgan bemorni qo'shimcha baholash kerak.",
+      "translation_ru": "Пациент, который потерял сознание, нуждается в дополнительном обследовании."
+    },
+    "If he had taken a smaller amount, he might not be this drowsy now.": {
+      "translation_uz": "Agar u kamroq miqdorda ichganida, hozir bunchalik uyquchan bo'lmasdi.",
+      "translation_ru": "Если бы он принял меньшее количество, он, возможно, не был бы сейчас таким сонливым."
+    }
+  },
+  "phrase_translations": {
+    "Have you experienced anything like this before?": {
+      "translation_ru": "Вы испытывали что-либо подобное раньше?"
+    },
+    "Did the medication help?": {
+      "translation_ru": "Лекарство помогло?"
+    },
+    "Is this area tender?": {
+      "translation_ru": "Эта область болезненна при надавливании?"
+    },
+    "I can see that you're uncomfortable.": {
+      "translation_ru": "Я вижу, что вам некомфортно."
+    },
+    "Let us know immediately if...": {
+      "translation_ru": "Немедленно сообщите нам, если…"
+    },
+    "If the pain becomes suddenly worse...": {
+      "translation_ru": "Если боль внезапно усилится…"
+    },
+    "If you develop severe vomiting...": {
+      "translation_ru": "Если появится сильная рвота…"
+    },
+    "If you develop dizziness...": {
+      "translation_ru": "Если появится головокружение…"
+    },
+    "If you develop any new symptoms...": {
+      "translation_ru": "Если появятся новые симптомы…"
+    },
+    "You should come back for reassessment.": {
+      "translation_ru": "Вам следует вернуться для повторного осмотра."
+    },
+    "It's one possibility, but we need to carry out some tests.": {
+      "translation_ru": "Это один из вариантов, но нам нужно провести несколько исследований."
+    },
+    "Did you have any warning symptoms before you collapsed?": {
+      "translation_uz": "Hushingizdan ketishdan oldin biror ogohlantiruvchi belgi bo'lganmi?",
+      "translation_ru": "Были ли у вас предвестники перед тем, как вы потеряли сознание?"
+    },
+    "Did anyone notice any shaking or unusual movements?": {
+      "translation_uz": "Kimdir titrash yoki g'ayrioddiy harakatlarni sezdimi?",
+      "translation_ru": "Кто-нибудь заметил дрожь или необычные движения?"
+    },
+    "Depending on the results, we may need further cardiac assessment.": {
+      "translation_uz": "Natijalarga qarab, yurakni qo'shimcha tekshirish kerak bo'lishi mumkin.",
+      "translation_ru": "В зависимости от результатов может потребоваться дополнительное кардиологическое обследование."
+    },
+    "If you develop chest pain, severe shortness of breath, or another episode of collapse, tell us immediately.": {
+      "translation_uz": "Agar ko'krak og'rig'i, kuchli nafas qisilishi yoki yana hushdan ketish bo'lsa, darhol bizga ayting.",
+      "translation_ru": "Если появится боль в груди, сильная одышка или ещё один эпизод потери сознания, немедленно сообщите нам."
+    },
+    "Because the amount and type of medication are uncertain, we need to treat this as a potentially serious overdose.": {
+      "translation_uz": "Dori miqdori va turi noaniq bo'lgani uchun buni ehtimoliy jiddiy dozani oshirib yuborish sifatida davolashimiz kerak.",
+      "translation_ru": "Поскольку количество и тип препарата неизвестны, мы должны рассматривать это как потенциально серьёзную передозировку."
+    },
+    "We cannot predict the outcome yet, but we are going to monitor you closely.": {
+      "translation_uz": "Natijani hali bashorat qila olmaymiz, lekin sizni yaqindan kuzatib boramiz.",
+      "translation_ru": "Мы пока не можем предсказать исход, но будем внимательно за вами наблюдать."
+    },
+    "Our priority is to prevent further complications.": {
+      "translation_uz": "Bizning asosiy vazifamiz — keyingi asoratlarning oldini olish.",
+      "translation_ru": "Наш приоритет — предотвратить дальнейшие осложнения."
+    },
+    "Please do not give him anything to eat or drink until we have assessed his swallowing and level of consciousness.": {
+      "translation_uz": "Yutish va hushini baholamagunimizcha, iltimos, unga hech narsa yedirmang va ichirmang.",
+      "translation_ru": "Пожалуйста, не давайте ему есть и пить, пока мы не оценим глотание и уровень сознания."
+    },
+    "have an episode of collapse": {
+      "translation_uz": "hushdan ketish (kollaps) epizodi bo'lmoq"
+    },
+    "feel as if I am going to faint": {
+      "translation_uz": "hushimdan ketadigandek his qilmoq"
+    },
+    "lose consciousness": {
+      "translation_uz": "hushni yo'qotmoq"
+    },
+    "regain consciousness": {
+      "translation_uz": "hushga kelmoq"
+    },
+    "experience palpitations": {
+      "translation_uz": "yurak urishini sezmoq"
+    },
+    "rule out a cardiac cause": {
+      "translation_uz": "yurak sababini istisno qilmoq"
+    },
+    "contribute to a fainting episode": {
+      "translation_uz": "hushdan ketishga sabab bo'lmoq"
+    },
+    "further cardiac assessment": {
+      "translation_uz": "yurakni qo'shimcha tekshirish"
+    },
+    "develop chest pain": {
+      "translation_uz": "ko'krak og'rig'i paydo bo'lmoq"
+    },
+    "severe shortness of breath": {
+      "translation_uz": "kuchli nafas qisilishi"
+    },
+    "another episode of collapse": {
+      "translation_uz": "yana hushdan ketish epizodi"
+    },
+    "take an overdose": {
+      "translation_uz": "dozani oshirib yubormoq"
+    },
+    "the amount is uncertain": {
+      "translation_uz": "miqdori noaniq"
+    },
+    "identify the substance": {
+      "translation_uz": "moddani aniqlamoq"
+    },
+    "estimate the amount taken": {
+      "translation_uz": "qabul qilingan miqdorni taxmin qilmoq"
+    },
+    "monitor the patient closely": {
+      "translation_uz": "bemorni yaqindan kuzatmoq"
+    },
+    "assess the level of consciousness": {
+      "translation_uz": "hush darajasini baholamoq"
+    },
+    "assess the risk": {
+      "translation_uz": "xavfni baholamoq"
+    },
+    "prevent further complications": {
+      "translation_uz": "keyingi asoratlarning oldini olmoq"
+    },
+    "potentially serious overdose": {
+      "translation_uz": "ehtimoliy jiddiy dozani oshirib yuborish"
+    },
+    "contact the toxicology team": {
+      "translation_uz": "toksikologiya jamoasi bilan bog'lanmoq"
+    },
+    "the priority is to keep the patient safe": {
+      "translation_uz": "asosiy vazifa — bemor xavfsizligini ta'minlash"
+    }
+  }
+}

@@ -1,0 +1,554 @@
+{
+  "_comment": "Word fayllarda faqat bir tilda bo'lgan qismlar uchun qo'lda yozilgan tarjimalar. build_datas.js qo'llaydi.",
+  "grammar": {
+    "2|Quick reminder": {
+      "rule_explanation_en": "Note: the main English examples in this file are taken directly from the \"Tooth Extraction\" dialogue.",
+      "rule_explanation_ru": "Примечание: основные английские примеры в этом файле взяты непосредственно из диалога «Tooth Extraction»."
+    },
+    "6|Mini Check": {
+      "rule_explanation_en": "1. \"My gums are becoming quite uncomfortable.\" — Which tense, and why? 2. \"I'm trying to brush regularly.\" — Which tense and what is the formula? 3. \"It might be one of the reasons.\" — What does might express? 4. \"You should continue flossing carefully.\" — What are should and flossing doing here? 5. \"If I follow all these recommendations, will my gums return to normal?\" — Which Conditional is this? 6. \"The teeth aren't being cleaned thoroughly.\" — Which Passive form is this? 7. \"to remove the plaque and tartar\" — What does to + V1 express here? Rule for this module: tenses from earlier modules are only briefly reviewed; the focus is on the Present Continuous, be going to, modal verbs, First Conditional, Passive Voice, gerund and infinitive constructions actually used in the Gum Problems dialogue.",
+      "rule_explanation_ru": "1. «My gums are becoming quite uncomfortable.» — Какое время и почему? 2. «I'm trying to brush regularly.» — Какое время и какова формула? 3. «It might be one of the reasons.» — Что выражает might? 4. «You should continue flossing carefully.» — Какую функцию выполняют should и flossing? 5. «If I follow all these recommendations, will my gums return to normal?» — Какой это Conditional? 6. «The teeth aren't being cleaned thoroughly.» — Какая это форма Passive? 7. «to remove the plaque and tartar» — Что здесь выражает to + V1? Правило модуля: времена из предыдущих модулей только кратко повторяются; основное внимание — Present Continuous, be going to, модальные глаголы, First Conditional, Passive Voice, герундий и инфинитив, реально использованные в диалоге Gum Problems."
+    },
+    "7|Review: tenses from previous modules": {
+      "rule_explanation_en": "Review — Present Simple: a fact, a habitual state or a clinical description. Present Perfect: a past action connected to a present result or experience. Past Simple: an action or decision completed in the past. Future (will): a future action or decision.",
+      "rule_explanation_ru": "Повторение — Present Simple: факт, привычное состояние или клиническое описание. Present Perfect: прошедшее действие, связанное с настоящим результатом или опытом. Past Simple: действие или решение, завершённое в прошлом. Future (will): будущее действие или решение."
+    }
+  },
+  "vocabulary": {},
+  "example_notes": {
+    "4|Modal Verbs|The tooth can be saved": {
+      "note_en": "with the Passive",
+      "note_ru": "с пассивным залогом"
+    },
+    "4|Imperative|Avoid extreme temperatures": {
+      "note_en": "Please open your mouth wide.",
+      "note_ru": "Пожалуйста, откройте рот пошире."
+    },
+    "4|Have to + Passive|I've had pain for three days": {
+      "note_en": "Present Perfect — past → now",
+      "note_ru": "Present Perfect — прошлое → настоящее"
+    },
+    "4|Have to + Passive|I've been feeling feverish": {
+      "note_en": "Present Perfect Continuous — an ongoing symptom",
+      "note_ru": "Present Perfect Continuous — продолжающийся симптом"
+    },
+    "4|Have to + Passive|is caused by": {
+      "note_en": "Passive Voice — process / state",
+      "note_ru": "Passive Voice — процесс / состояние"
+    }
+  },
+  "example_translations": {
+    "for three days = uch kundan beri.": {
+      "translation_uz": "for three days = uch kundan beri.",
+      "translation_ru": "for three days = в течение трёх дней."
+    },
+    "was / were + V-ing": {
+      "translation_uz": "was / were + V-ing",
+      "translation_ru": "was / were + V-ing"
+    },
+    "I've had this pain for three days.": {
+      "translation_uz": "Bu og'riq menda uch kundan beri bor.",
+      "translation_ru": "Эта боль у меня уже три дня."
+    },
+    "We'll use a local anaesthetic...": {
+      "translation_uz": "Mahalliy og'riqsizlantiruvchi ishlatamiz…",
+      "translation_ru": "Мы используем местную анестезию…"
+    },
+    "I'll give you the local anaesthetic...": {
+      "translation_uz": "Sizga mahalliy og'riqsizlantiruvchi qilaman…",
+      "translation_ru": "Я сделаю вам местную анестезию…"
+    },
+    "have/has + been + V-ing": {
+      "translation_uz": "have/has + been + V-ing",
+      "translation_ru": "have/has + been + V-ing"
+    },
+    "will + V1": {
+      "translation_uz": "will + V1",
+      "translation_ru": "will + V1"
+    },
+    "I have had pain.": {
+      "translation_uz": "Menda og'riq bo'ldi (hozirgacha).",
+      "translation_ru": "У меня была боль (до настоящего момента)."
+    },
+    "She has had a fever.": {
+      "translation_uz": "Unda isitma bo'ldi.",
+      "translation_ru": "У неё была температура."
+    },
+    "He has experienced swelling.": {
+      "translation_uz": "U shishni boshdan kechirdi.",
+      "translation_ru": "У него был отёк."
+    },
+    "She has had a fever since yesterday.": {
+      "translation_uz": "Kechadan beri unda isitma bor.",
+      "translation_ru": "У неё температура со вчерашнего дня."
+    },
+    "I have been feeling feverish.": {
+      "translation_uz": "O'zimni isitmali his qilyapman.",
+      "translation_ru": "Я чувствую жар."
+    },
+    "She has been having headaches.": {
+      "translation_uz": "Uning boshi og'rib yuribdi.",
+      "translation_ru": "У неё бывают головные боли."
+    },
+    "He has been experiencing pain.": {
+      "translation_uz": "U og'riq sezib yuribdi.",
+      "translation_ru": "Он испытывает боль."
+    },
+    "I've had pain for three days.": {
+      "translation_uz": "Uch kundan beri og'riq bor.",
+      "translation_ru": "У меня боль уже три дня."
+    },
+    "The infection typically originates in the pulp.": {
+      "translation_uz": "Infeksiya odatda pulpadan boshlanadi.",
+      "translation_ru": "Инфекция обычно начинается в пульпе."
+    },
+    "Antibiotics control the spread.": {
+      "translation_uz": "Antibiotiklar tarqalishni nazorat qiladi.",
+      "translation_ru": "Антибиотики контролируют распространение."
+    },
+    "A dental abscess is a localized accumulation of pus.": {
+      "translation_uz": "Tish abssessi — yiringning mahalliy to'planishi.",
+      "translation_ru": "Зубной абсцесс — это локальное скопление гноя."
+    },
+    "A bacterial infection causes a dental abscess.": {
+      "translation_uz": "Bakterial infeksiya tish abssessiga sabab bo'ladi.",
+      "translation_ru": "Бактериальная инфекция вызывает зубной абсцесс."
+    },
+    "The tooth is infected.": {
+      "translation_uz": "Tish infeksiyalangan.",
+      "translation_ru": "Зуб инфицирован."
+    },
+    "The tissue is inflamed.": {
+      "translation_uz": "To'qima yallig'langan.",
+      "translation_ru": "Ткань воспалена."
+    },
+    "The canals are cleaned.": {
+      "translation_uz": "Kanallar tozalanadi.",
+      "translation_ru": "Каналы очищаются."
+    },
+    "The infection is treated.": {
+      "translation_uz": "Infeksiya davolanadi.",
+      "translation_ru": "Инфекция лечится."
+    },
+    "Patient: Could that explain why I've also been feeling slightly feverish?": {
+      "translation_uz": "Bemor: Bu nima uchun o'zimni biroz isitmali his qilayotganimni tushuntira oladimi?",
+      "translation_ru": "Пациент: Может ли это объяснить, почему я также чувствую небольшой жар?"
+    },
+    "I'll order a digital X-ray right away to check the condition of the bone and roots.": {
+      "translation_uz": "Suyak va ildizlar holatini tekshirish uchun darhol raqamli rentgen buyuraman.",
+      "translation_ru": "Я сразу назначу цифровой рентген, чтобы проверить состояние кости и корней."
+    },
+    "Real / Possible Condition": {
+      "translation_uz": "Real / ehtimoliy shart",
+      "translation_ru": "Реальное / возможное условие"
+    },
+    "If the structure is intact, we can perform a root canal.": {
+      "translation_uz": "Agar tuzilma saqlangan bo'lsa, ildiz kanalini davolashimiz mumkin.",
+      "translation_ru": "Если структура цела, мы можем провести лечение корневого канала."
+    },
+    "Please open wide.": {
+      "translation_uz": "Iltimos, og'zingizni kattaroq oching.",
+      "translation_ru": "Пожалуйста, откройте рот пошире."
+    },
+    "Gently rinse with warm salt water.": {
+      "translation_uz": "Iliq sho'r suv bilan ehtiyotkorlik bilan chaying.",
+      "translation_ru": "Аккуратно полощите тёплой солёной водой."
+    },
+    "Avoid extreme hot or cold temperatures.": {
+      "translation_uz": "Juda issiq yoki sovuqdan saqlaning.",
+      "translation_ru": "Избегайте очень горячего или холодного."
+    },
+    "Rinse with warm salt water.": {
+      "translation_uz": "Iliq sho'r suv bilan chaying.",
+      "translation_ru": "Полощите тёплой солёной водой."
+    },
+    "Avoid extreme temperatures.": {
+      "translation_uz": "Keskin haroratlardan saqlaning.",
+      "translation_ru": "Избегайте экстремальных температур."
+    },
+    "Does this mean the tooth has to be extracted?": {
+      "translation_uz": "Bu tishni sug'urish kerak deganimi?",
+      "translation_ru": "Это значит, что зуб придётся удалить?"
+    },
+    "We have to extract the tooth.": {
+      "translation_uz": "Tishni sug'urishimiz kerak.",
+      "translation_ru": "Нам придётся удалить зуб."
+    },
+    "The infection typically originates...": {
+      "translation_uz": "Infeksiya odatda … dan boshlanadi",
+      "translation_ru": "Инфекция обычно начинается…"
+    },
+    "is caused by...": {
+      "translation_uz": "… sababli yuzaga keladi",
+      "translation_ru": "вызывается…"
+    },
+    "difficulty opening...": {
+      "translation_uz": "… ochishda qiyinchilik",
+      "translation_ru": "трудность при открывании…"
+    },
+    "to check the roots": {
+      "translation_uz": "ildizlarni tekshirish uchun",
+      "translation_ru": "чтобы проверить корни"
+    },
+    "will + V1.": {
+      "translation_uz": "will + V1.",
+      "translation_ru": "will + V1."
+    },
+    "I've been having pain for three days.": {
+      "translation_uz": "Uch kundan beri og'riq sezib yuribman.",
+      "translation_ru": "У меня боль уже три дня."
+    },
+    "Could this cause an infection?": {
+      "translation_uz": "Bu infeksiyaga sabab bo'lishi mumkinmi?",
+      "translation_ru": "Может ли это вызвать инфекцию?"
+    },
+    "The pain could become worse.": {
+      "translation_uz": "Og'riq kuchayishi mumkin.",
+      "translation_ru": "Боль может усилиться."
+    },
+    "The tooth is called an impacted wisdom tooth.": {
+      "translation_uz": "Bu tish retensiyalangan aql tishi deb ataladi.",
+      "translation_ru": "Этот зуб называется ретинированным зубом мудрости."
+    },
+    "If the tooth is left untreated, the pain may recur.": {
+      "translation_uz": "Agar tish davolanmasa, og'riq qaytalanishi mumkin.",
+      "translation_ru": "Если зуб не лечить, боль может повториться."
+    },
+    "I need to have my wisdom tooth extracted.": {
+      "translation_uz": "Aql tishimni sug'urtirishim kerak.",
+      "translation_ru": "Мне нужно удалить зуб мудрости."
+    },
+    "Once we get the X-ray, we'll decide what to do.": {
+      "translation_uz": "Rentgenni olganimizdan so'ng nima qilishni hal qilamiz.",
+      "translation_ru": "Как только получим рентген, решим, что делать."
+    },
+    "Patient: I've had a severe, throbbing pain in my lower left tooth for three days now.": {
+      "translation_uz": "Bemor: Pastki chap tishimda uch kundan beri kuchli, lo'qillovchi og'riq bor.",
+      "translation_ru": "Пациент: У меня уже три дня сильная пульсирующая боль в нижнем левом зубе."
+    },
+    "Patient: I've also been feeling slightly feverish.": {
+      "translation_uz": "Bemor: Shuningdek, o'zimni biroz isitmali his qilyapman.",
+      "translation_ru": "Пациент: Кроме того, я чувствую небольшой жар."
+    },
+    "Doctor: The infection typically originates in the tooth's pulp.": {
+      "translation_uz": "Shifokor: Infeksiya odatda tish pulpasidan boshlanadi.",
+      "translation_ru": "Врач: Инфекция обычно начинается в пульпе зуба."
+    },
+    "A dental abscess is caused by a bacterial infection.": {
+      "translation_uz": "Tish abssessi bakterial infeksiya tufayli yuzaga keladi.",
+      "translation_ru": "Зубной абсцесс вызывается бактериальной инфекцией."
+    },
+    "Could that explain...?": {
+      "translation_uz": "Bu … ni tushuntira oladimi?",
+      "translation_ru": "Может ли это объяснить…?"
+    },
+    "Could that explain the fever?": {
+      "translation_uz": "Bu isitmani tushuntira oladimi?",
+      "translation_ru": "Может ли это объяснить температуру?"
+    },
+    "I've also been having trouble opening my mouth fully.": {
+      "translation_uz": "Og'zimni to'liq ochishda ham qiynalyapman.",
+      "translation_ru": "Мне также трудно полностью открыть рот."
+    },
+    "I'll order an X-ray to check the roots.": {
+      "translation_uz": "Ildizlarni tekshirish uchun rentgen buyuraman.",
+      "translation_ru": "Я назначу рентген, чтобы проверить корни."
+    },
+    "If the structure is intact, we can perform a root canal procedure.": {
+      "translation_uz": "Agar tuzilma saqlangan bo'lsa, ildiz kanalini davolashimiz mumkin.",
+      "translation_ru": "Если структура цела, мы можем провести лечение корневого канала."
+    },
+    "Head straight to the emergency department.": {
+      "translation_uz": "To'g'ridan-to'g'ri shoshilinch yordam bo'limiga boring.",
+      "translation_ru": "Немедленно отправляйтесь в отделение неотложной помощи."
+    },
+    "The tooth has to be extracted.": {
+      "translation_uz": "Tishni sug'urish kerak.",
+      "translation_ru": "Зуб необходимо удалить."
+    }
+  },
+  "phrase_translations": {
+    "What brings you in today?": {
+      "translation_ru": "Что привело вас сегодня?"
+    },
+    "Can you tell me about your tooth pain?": {
+      "translation_ru": "Расскажите о вашей зубной боли."
+    },
+    "How long have you had this pain?": {
+      "translation_ru": "Как давно у вас эта боль?"
+    },
+    "When did the pain start?": {
+      "translation_ru": "Когда началась боль?"
+    },
+    "Has it become worse?": {
+      "translation_ru": "Она усилилась?"
+    },
+    "Does it hurt when you eat or drink something cold or hot?": {
+      "translation_ru": "Болит ли, когда вы едите или пьёте что-то холодное или горячее?"
+    },
+    "What usually makes the pain worse?": {
+      "translation_ru": "Что обычно усиливает боль?"
+    },
+    "How would you describe the pain?": {
+      "translation_ru": "Как бы вы описали боль?"
+    },
+    "Is the pain constant?": {
+      "translation_ru": "Боль постоянная?"
+    },
+    "How would you rate the worst pain on a scale of 0 to 10?": {
+      "translation_ru": "Как бы вы оценили самую сильную боль по шкале от 0 до 10?"
+    },
+    "How severe is the pain?": {
+      "translation_ru": "Насколько сильная боль?"
+    },
+    "Where exactly do you feel the pain?": {
+      "translation_ru": "Где именно вы чувствуете боль?"
+    },
+    "Does the pain spread anywhere else?": {
+      "translation_ru": "Боль отдаёт куда-нибудь ещё?"
+    },
+    "Have you had any pain without eating or drinking anything?": {
+      "translation_ru": "Бывала ли боль, когда вы ничего не ели и не пили?"
+    },
+    "How long does the pain usually last after something triggers it?": {
+      "translation_ru": "Как долго обычно длится боль после того, как что-то её спровоцировало?"
+    },
+    "Please let me know if you feel any discomfort during the examination.": {
+      "translation_ru": "Пожалуйста, скажите, если почувствуете дискомфорт во время осмотра."
+    },
+    "I'd like to examine the tooth now.": {
+      "translation_ru": "Сейчас я хотел бы осмотреть зуб."
+    },
+    "What seems to be the problem?": {
+      "translation_ru": "Что вас беспокоит?"
+    },
+    "When did the pain first start, and has it been getting worse recently?": {
+      "translation_ru": "Когда боль впервые началась и усиливалась ли она в последнее время?"
+    },
+    "Does anything make the pain worse, such as chewing or putting pressure on the tooth?": {
+      "translation_ru": "Что-нибудь усиливает боль, например жевание или давление на зуб?"
+    },
+    "Let me examine the tooth.": {
+      "translation_ru": "Позвольте осмотреть зуб."
+    },
+    "I may also need to take an X-ray to see what is happening underneath the gum.": {
+      "translation_ru": "Возможно, потребуется рентген, чтобы увидеть, что происходит под десной."
+    },
+    "Unfortunately, the tooth is badly damaged, and the infection has affected the surrounding area.": {
+      "translation_ru": "К сожалению, зуб сильно повреждён, и инфекция затронула окружающие ткани."
+    },
+    "We'll use a local anaesthetic to numb the area.": {
+      "translation_ru": "Мы используем местную анестезию, чтобы обезболить область."
+    },
+    "You may feel some pressure during the extraction, but you shouldn't feel any sharp pain.": {
+      "translation_ru": "Во время удаления вы можете почувствовать давление, но резкой боли быть не должно."
+    },
+    "The tooth has been removed successfully. I'm placing a piece of gauze over the extraction site.": {
+      "translation_ru": "Зуб успешно удалён. Я накладываю марлю на место удаления."
+    },
+    "Bite down on it firmly for about 30 to 45 minutes.": {
+      "translation_ru": "Плотно прикусите её примерно на 30–45 минут."
+    },
+    "What should I avoid after the extraction?": {
+      "translation_ru": "Чего мне следует избегать после удаления?"
+    },
+    "Be very gentle around the extraction site.": {
+      "translation_ru": "Будьте очень осторожны в области удаления."
+    },
+    "If you develop severe swelling, persistent bleeding, fever, or increasing pain, contact the clinic immediately.": {
+      "translation_ru": "Если появится сильный отёк, продолжительное кровотечение, температура или усиливающаяся боль, немедленно обратитесь в клинику."
+    },
+    "Follow the aftercare instructions carefully, and you should recover well.": {
+      "translation_ru": "Внимательно следуйте рекомендациям по уходу, и вы хорошо восстановитесь."
+    },
+    "What brings you to the clinic today?": {
+      "translation_ru": "Что привело вас сегодня в клинику?"
+    },
+    "Was the pain sudden, or had you been experiencing mild discomfort before it became this severe?": {
+      "translation_ru": "Боль возникла внезапно или до этого вы испытывали лёгкий дискомфорт?"
+    },
+    "Has the pain been continuous, or does it come and go in waves?": {
+      "translation_ru": "Боль постоянная или приходит волнами?"
+    },
+    "Does the pain get worse in any specific position?": {
+      "translation_ru": "Усиливается ли боль в каком-то определённом положении?"
+    },
+    "Let's have a look inside. Please open wide.": {
+      "translation_ru": "Давайте посмотрим. Пожалуйста, откройте рот пошире."
+    },
+    "I need to take a digital radiograph to assess the extent of the damage to the root canals.": {
+      "translation_ru": "Мне нужно сделать цифровой снимок, чтобы оценить степень повреждения корневых каналов."
+    },
+    "If the pulp is infected, saving the tooth will require removing the inflamed tissue.": {
+      "translation_ru": "Если пульпа инфицирована, для сохранения зуба потребуется удалить воспалённую ткань."
+    },
+    "It is usually completed in one or two visits with minimal discomfort.": {
+      "translation_ru": "Обычно это завершается за один-два визита с минимальным дискомфортом."
+    },
+    "We always aim to preserve your natural teeth whenever possible.": {
+      "translation_ru": "Мы всегда стремимся сохранить ваши естественные зубы, когда это возможно."
+    },
+    "Have you been feeling feverish?": {
+      "translation_ru": "Вы чувствуете жар?"
+    },
+    "Are you having trouble opening your mouth fully?": {
+      "translation_ru": "Вам трудно полностью открыть рот?"
+    },
+    "Does the swelling seem to be getting worse?": {
+      "translation_ru": "Отёк, похоже, увеличивается?"
+    },
+    "Let's take a look.": {
+      "translation_ru": "Давайте посмотрим."
+    },
+    "Please open wide.": {
+      "translation_ru": "Пожалуйста, откройте рот пошире."
+    },
+    "It appears you have a dental abscess.": {
+      "translation_ru": "Похоже, у вас зубной абсцесс."
+    },
+    "The infection is caused by bacteria.": {
+      "translation_ru": "Инфекция вызвана бактериями."
+    },
+    "I'll order a digital X-ray right away.": {
+      "translation_ru": "Я сразу назначу цифровой рентген."
+    },
+    "We can perform a root canal procedure if the structure is intact.": {
+      "translation_ru": "Если структура цела, мы можем провести лечение корневого канала."
+    },
+    "Our main priority is to eliminate the infection.": {
+      "translation_ru": "Наша главная задача — устранить инфекцию."
+    },
+    "We can clean out the infected tissue and seal the canals.": {
+      "translation_ru": "Мы можем очистить инфицированную ткань и запломбировать каналы."
+    },
+    "Given the facial swelling and fever, I'll prescribe antibiotics.": {
+      "translation_ru": "Учитывая отёк лица и температуру, я назначу антибиотики."
+    },
+    "Antibiotics only control the spread; the dental procedure is necessary.": {
+      "translation_ru": "Антибиотики лишь сдерживают распространение; стоматологическая процедура необходима."
+    },
+    "Gently rinse with warm salt water and avoid extreme temperatures.": {
+      "translation_ru": "Аккуратно полощите тёплой солёной водой и избегайте экстремальных температур."
+    },
+    "If you have difficulty breathing or sudden swelling toward your eye or neck, go straight to the emergency department.": {
+      "translation_ru": "Если вам трудно дышать или отёк внезапно распространяется к глазу или шее, немедленно обратитесь в отделение неотложной помощи."
+    },
+    "Does anything in particular bring on the discomfort?": {
+      "translation_ru": "Что-то конкретное вызывает дискомфорт?"
+    },
+    "Have you noticed any swelling or tenderness around the tooth?": {
+      "translation_ru": "Вы замечали отёк или болезненность вокруг зуба?"
+    },
+    "Let me take a closer look.": {
+      "translation_ru": "Позвольте рассмотреть поближе."
+    },
+    "Does that mean I have dental caries?": {
+      "translation_ru": "Это значит, что у меня кариес?"
+    },
+    "What might have caused it?": {
+      "translation_ru": "Что могло это вызвать?"
+    },
+    "So, what kind of treatment would I need?": {
+      "translation_ru": "Так какое лечение мне потребуется?"
+    },
+    "What if I feel pain during the procedure?": {
+      "translation_ru": "А если я почувствую боль во время процедуры?"
+    },
+    "What can I do to prevent another cavity?": {
+      "translation_ru": "Что я могу сделать, чтобы предотвратить новый кариес?"
+    },
+    "Would regular dental check-ups help as well?": {
+      "translation_ru": "Помогут ли также регулярные осмотры у стоматолога?"
+    },
+    "Has it become difficult to chew on that side?": {
+      "translation_ru": "Стало ли трудно жевать на этой стороне?"
+    },
+    "Could you tilt your head back and open your mouth as wide as you comfortably can?": {
+      "translation_ru": "Не могли бы вы откинуть голову назад и открыть рот настолько широко, насколько вам удобно?"
+    },
+    "I can see that your lower back molar hasn't fully come through.": {
+      "translation_ru": "Я вижу, что ваш нижний задний моляр прорезался не полностью."
+    },
+    "It appears so. The tooth seems to be coming in at an angle.": {
+      "translation_ru": "Похоже на то. Зуб, кажется, растёт под углом."
+    },
+    "It can exert constant pressure against the adjacent tooth.": {
+      "translation_ru": "Он может оказывать постоянное давление на соседний зуб."
+    },
+    "Food debris and bacteria tend to gather under the gum flap.": {
+      "translation_ru": "Остатки пищи и бактерии склонны скапливаться под десневым капюшоном."
+    },
+    "The next step is to take a panoramic X-ray.": {
+      "translation_ru": "Следующий шаг — сделать панорамный рентген."
+    },
+    "Quite possibly. Extraction is usually the safest long-term solution.": {
+      "translation_ru": "Вполне возможно. Удаление обычно является самым безопасным долгосрочным решением."
+    },
+    "If left untreated, the inflammation and pain are very likely to recur.": {
+      "translation_ru": "Если не лечить, воспаление и боль, скорее всего, повторятся."
+    },
+    "I'd rather take care of it now.": {
+      "translation_ru": "Я бы предпочёл решить это сейчас."
+    },
+    "Once I review the image, I'll explain the findings and discuss the safest options with you.": {
+      "translation_ru": "Как только я изучу снимок, я объясню результаты и обсужу с вами самые безопасные варианты."
+    },
+    "HAD YOU BEEN EXPERIENCING any discomfort before the pain reached that level?": {
+      "translation_ru": "Испытывали ли вы дискомфорт до того, как боль достигла такого уровня?"
+    },
+    "HAD YOU NOTICED any swelling or sensitivity prior to last night?": {
+      "translation_ru": "Замечали ли вы отёк или чувствительность до вчерашнего вечера?"
+    },
+    "HAD YOU TAKEN any painkillers before coming to the clinic?": {
+      "translation_ru": "Принимали ли вы обезболивающие перед приходом в клинику?"
+    },
+    "HAD YOU BEEN CHEWING hard food or HAD YOU INJURED the tooth?": {
+      "translation_ru": "Жевали ли вы твёрдую пищу или травмировали зуб?"
+    },
+    "It looks as though the infection HAD BEEN SPREADING under the surface and reached the root.": {
+      "translation_ru": "Похоже, инфекция распространялась под поверхностью и достигла корня."
+    },
+    "HAD THE TOOTH RECEIVED any treatment in the past?": {
+      "translation_ru": "Лечили ли этот зуб раньше?"
+    },
+    "The old filling HAD DETERIORATED, and bacteria HAD BEEN ENTERING over time.": {
+      "translation_ru": "Старая пломба разрушилась, и бактерии проникали со временем."
+    },
+    "I'll use a local anesthetic to numb the area. You shouldn't feel sharp pain.": {
+      "translation_ru": "Я использую местную анестезию, чтобы обезболить область. Резкой боли быть не должно."
+    },
+    "If you HAD COME when the discomfort first started, we could have treated it faster.": {
+      "translation_ru": "Если бы вы пришли, когда дискомфорт только начался, мы могли бы вылечить это быстрее."
+    },
+    "The root canal treatment was successful, but the remaining structure is heavily compromised. We need to discuss a permanent restorative solution.": {
+      "translation_ru": "Лечение корневого канала прошло успешно, но оставшаяся структура сильно ослаблена. Нам нужно обсудить постоянное восстановительное решение."
+    },
+    "Because over 50% of the clinical crown is missing, a simple filling wouldn't withstand normal masticatory forces. I strongly recommend a full-coverage dental crown.": {
+      "translation_ru": "Поскольку отсутствует более 50% клинической коронки, простая пломба не выдержит обычной жевательной нагрузки. Я настоятельно рекомендую полную коронку."
+    },
+    "Zirconia is exceptionally strong, biocompatible, and provides a seamless match. PFM is durable, but over time, a dark metallic line might become visible near the gumline.": {
+      "translation_ru": "Диоксид циркония исключительно прочен, биосовместим и идеально подходит по цвету. Металлокерамика долговечна, но со временем у края десны может стать видна тёмная металлическая линия."
+    },
+    "For the gap, we have two options: a dental bridge or a dental implant. A bridge anchors onto adjacent teeth, while an implant acts as an artificial root in the jawbone.": {
+      "translation_ru": "Для промежутка есть два варианта: зубной мост или имплантат. Мост крепится к соседним зубам, а имплантат действует как искусственный корень в челюстной кости."
+    },
+    "It's a standard minor surgical procedure. Osseointegration usually takes about 3 to 4 months. In the meantime, we can fit a Zirconia crown first.": {
+      "translation_ru": "Это стандартная небольшая хирургическая процедура. Остеоинтеграция обычно занимает 3–4 месяца. Тем временем мы можем сначала установить циркониевую коронку."
+    },
+    "What brings you in for a full consultation today?": {
+      "translation_ru": "Что привело вас сегодня на полную консультацию?"
+    },
+    "Do you have any pre-existing medical conditions, allergies, or are you taking any medications?": {
+      "translation_ru": "Есть ли у вас хронические заболевания, аллергии или принимаете ли вы какие-либо лекарства?"
+    },
+    "Let's start with a thorough clinical examination. I'll also perform an oral cancer screening.": {
+      "translation_ru": "Начнём с тщательного клинического осмотра. Я также проведу скрининг на рак полости рта."
+    },
+    "I can see plaque build-up and localized gingival inflammation. There's also discoloration on your premolar.": {
+      "translation_ru": "Я вижу зубной налёт и локальное воспаление дёсен. Также есть изменение цвета на вашем премоляре."
+    },
+    "It could be an early-stage carious lesion. We can schedule a dental cleaning and outline a tailored plan right now.": {
+      "translation_ru": "Это может быть кариес на ранней стадии. Мы можем запланировать чистку зубов и прямо сейчас составить индивидуальный план."
+    }
+  }
+}
