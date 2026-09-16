@@ -163,12 +163,12 @@ function enrichRule(rule) {
   // and replace a non-English "English" explanation with the knowledge-base text
   const isEn = (x) => x && !/[Ѐ-ӿ]/.test(x) && T.detectLang(x.replace(/[+→/()|]/g, ' ')) !== 'uz' && !/[oOgG]'/.test(x);
   if (rule.structure_pattern) {
-    const kept = rule.structure_pattern.split(/s*|s*/).filter(f => f && !/[Ѐ-ӿ]/.test(f) && !/[oOgG]'|(dan|keyin|bilan|uchun|kerak|keladi|ko'pincha)/.test(f));
+    const kept = rule.structure_pattern.split(/\s*\|\s*/).filter(f => f && !/[Ѐ-ӿ]/.test(f) && !/[oOgG]'|\b(dan|keyin|bilan|uchun|kerak|keladi|ko'pincha)\b/.test(f));
     rule.structure_pattern = kept.join(' | ') || (kb.length ? kb.map(k => k.formula).filter(Boolean).join(' | ') : '');
   }
   if (rule.signal_words && !isEn(rule.signal_words)) rule.signal_words = kb.map(k => k.signal).filter(Boolean)[0] || '';
   if (rule.rule_explanation_en && !isEn(rule.rule_explanation_en)) rule.rule_explanation_en = kb.length ? join('en') : (rule.structure_pattern ? `Structure: ${rule.structure_pattern}.` : '');
-  if (rule.rule_explanation_en) rule.rule_explanation_en = rule.rule_explanation_en.split(/(?<=[.!?])s+/).filter(sn => isEn(sn)).join(' ');
+  if (rule.rule_explanation_en) rule.rule_explanation_en = rule.rule_explanation_en.split(/(?<=[.!?])\s+/).filter(sn => isEn(sn)).join(' ');
   if (rule.rule_explanation_ru && !/[Ѐ-ӿ]/.test(rule.rule_explanation_ru) && kb.length) rule.rule_explanation_ru = join('ru');
 
   if (rule.signal_words) {

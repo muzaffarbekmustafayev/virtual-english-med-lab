@@ -127,6 +127,17 @@ export default function VirtualPatientChat({
   const autoCommitTriggeredRef = useRef(false);
   const voiceFrameCountRef = useRef(0);
   const speechDetectedRef = useRef(false);
+  const micDeniedRef = useRef(false);
+
+  // Mikrofon ruxsati yo'q: bir marta ogohlantiramiz va matn rejimiga o'tamiz (qayta-qayta so'ramaymiz)
+  const handleMicDenied = () => {
+    if (micDeniedRef.current) return;
+    micDeniedRef.current = true;
+    toast.error(t('chat_mic_denied'), { id: 'mic-denied', duration: 5000 });
+    setChatMode('text');
+    chatModeRef.current = 'text';
+    stopAllAudioAndRecognition();
+  };
 
   // Audio Context & Mic Visualizer with Noise Suppression & 60fps Hardware JS VAD
   const initAudioAnalyser = async () => {
@@ -211,6 +222,7 @@ export default function VirtualPatientChat({
       return stream;
     } catch (e) {
       console.warn('Audio Visualizer setup skipped or permission denied:', e);
+      if (e && (e.name === 'NotAllowedError' || e.name === 'PermissionDeniedError' || e.name === 'SecurityError')) handleMicDenied();
       return null;
     }
   };
@@ -382,6 +394,7 @@ export default function VirtualPatientChat({
 
   // Speech-To-Text (STT) Recognition with Fast Turn-Taking
   const startListening = useCallback(() => {
+    if (micDeniedRef.current) return;
     if (chatModeRef.current !== 'audio') return;
     if (callStateRef.current !== 'active') return;
     if (isSpeakingRef.current || isProcessingRef.current) return;
@@ -485,8 +498,7 @@ export default function VirtualPatientChat({
       }
       console.warn('%c⚠️ [STT ERROR/NOTICE]:', 'color: #ef4444;', e.error);
       if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
-        toast.error(t('chat_mic_denied'));
-        stopAllAudioAndRecognition();
+        handleMicDenied();
       }
     };
 
@@ -694,12 +706,13 @@ export default function VirtualPatientChat({
     callStateRef.current = 'active';
 
     if (mode === 'audio') {
-      await initAudioAnalyser();
+      const stream = await initAudioAnalyser();
+      if (!stream || micDeniedRef.current) { mode = 'text'; setChatMode('text'); chatModeRef.current = 'text'; }
     }
 
     // Wait for the doctor/student to speak first
     if (callStateRef.current === 'active') {
-      setMicState('listening');
+      setMicState(mode === 'audio' ? 'listening' : 'idle');
       if (mode === 'audio') {
         startListening();
       }

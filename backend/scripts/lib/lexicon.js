@@ -345,9 +345,12 @@ function parseLexiconDoc(blocks) {
   }
   flushParas();
 
+  // Sarlavha ("Grammar focus: ...") va grammatik shablon ("Once + present simple, will + verb")
+  // qatorlari lug'at/ibora emas — ular tarjimasiz "so'z" bo'lib qolmasligi uchun tashlab yuboriladi
+  const isTemplate = (s) => /^\s*grammar\s+focus/i.test(s || '') || /\s\+\s/.test(s || '');
   return {
-    vocabulary: T.mergeBy(vocabulary, v => T.keyOf(v.word)),
-    phrases: T.mergeBy(phrases, p => T.keyOf(p.phrase)),
+    vocabulary: T.mergeBy(vocabulary.filter(v => v.word && !isTemplate(v.word)), v => T.keyOf(v.word)),
+    phrases: T.mergeBy(phrases.filter(p => p.phrase && !(isTemplate(p.phrase) && !p.translation_uz && !p.translation_ru)), p => T.keyOf(p.phrase)),
   };
 }
 

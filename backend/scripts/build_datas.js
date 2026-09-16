@@ -69,7 +69,7 @@ function listDocx(dir) {
     .sort();
 }
 
-function buildModule(spec, num, dir, warnings, verbose) {
+function buildModule(spec, num, dir, warnings, verbose, overrides = null) {
   const files = listDocx(dir);
   const parts = { dialogue: [], grammar: [], lexicon: [] };
   const sources = [];
@@ -145,6 +145,31 @@ function buildModule(spec, num, dir, warnings, verbose) {
   // trilingual titles, knowledge-base fallbacks for explanations / formulas, translations from the phrasebook
   const translated = fillExampleTranslations(rules, phrases, dialogue.turns);
   rules.forEach(r => enrichRule(r));
+  if (overrides?.grammar) {
+    for (const r of rules) {
+      const ov = overrides.grammar[`${num}|${r.title}`] || overrides.grammar[`${num}|${r.title_en}`];
+      if (ov) Object.assign(r, ov);
+    }
+  }
+  if (overrides?.example_notes) {
+    // "<modul>|<qoida sarlavhasi>|<misol gapining boshi>" → { note_en, note_ru }
+    for (const r of rules) for (const ex of r.examples || []) {
+      const key = Object.keys(overrides.example_notes).find(k => {
+        const [n, title, prefix] = k.split('|');
+        return +n === num && (title === r.title || title === r.title_en) && (ex.sentence || '').startsWith(prefix);
+      });
+      if (key) Object.assign(ex, overrides.example_notes[key]);
+    }
+  }
+  if (overrides?.example_translations) {
+    // misol gapi (aniq mos) → { translation_uz, translation_ru } — faqat bo'sh maydonlar to'ldiriladi
+    for (const r of rules) for (const ex of r.examples || []) {
+      const tr = overrides.example_translations[(ex.sentence || '').trim()];
+      if (!tr) continue;
+      if (!ex.translation_uz && tr.translation_uz) ex.translation_uz = tr.translation_uz;
+      if (!ex.translation_ru && tr.translation_ru) ex.translation_ru = tr.translation_ru;
+    }
+  }
   rules.forEach((r, i) => { r.step_order = i + 1; });
 
   // canonical titles
@@ -155,6 +180,12 @@ function buildModule(spec, num, dir, warnings, verbose) {
   if (!conf) warnings.push(`${spec.code} module ${num}: no title in config — using "${title_en}"`);
 
   vocabulary = attachExamples(vocabulary, dialogue.turns, phrases);
+  if (overrides?.vocabulary) {
+    for (const v of vocabulary) {
+      const ov = overrides.vocabulary[`${num}|${v.word}`];
+      if (ov) Object.assign(v, ov);
+    }
+  }
 
   const scenario = buildScenario({ spec, moduleIndex: num, title: title_en, dialogue, vocabulary, phrases });
   const tests = [...buildQuizzes({ spec, moduleIndex: num, vocabulary, phrases, grammar: rules }), ...extraTests];
@@ -215,7 +246,14 @@ function build({ only = null, verbose = false } = {}) {
       .map(f => ({ num: moduleNumber(f), dir: path.join(dir, f) }))
       .sort((a, b) => a.num - b.num);
     if (verbose) console.log(`\n▶ ${spec.code} — ${spec.name_en} (${moduleDirs.length} module folders)`);
-    const modules = moduleDirs.map(m => buildModule(spec, m.num, m.dir, warnings, verbose));
+    // <folder>/i18n_overrides.json — Word faylda faqat bir tilda bo'lgan izohlar uchun qo'lda yozilgan tarjimalar
+    let overrides = null;
+    const ovFile = path.join(dir, 'i18n_overrides.json');
+    if (fs.existsSync(ovFile)) {
+      try { overrides = JSON.parse(fs.readFileSync(ovFile, 'utf8')); }
+      catch (e) { warnings.push(`${path.relative(DATAS, ovFile)}: ${e.message}`); }
+    }
+    const modules = moduleDirs.map(m => buildModule(spec, m.num, m.dir, warnings, verbose, overrides));
     for (const n of Object.keys(spec.modules)) if (!moduleDirs.find(m => m.num === +n)) warnings.push(`${spec.code} module ${n}: folder missing under ${spec.folder}/`);
     specialties.push({
       code: spec.code, order: spec.order,

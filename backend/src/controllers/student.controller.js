@@ -1,4 +1,5 @@
 const { Module, Grammar, Vocabulary, Phrasebook, Conversation, Message, Test, TestResult, User, ModuleResult, Specialty } = require('../models');
+const { UNLOCK_ALL_MODULES } = require('../config/features');
 const { getPatientReply, getPatientReplyStream, generateFeedback, checkGrammar, generatePatientScenario, tryParseScenario } = require('../services/gemini.service');
 
 // Bemor haqida talabaga ko'rsatsa bo'ladigan qism (tashxis va kutilgan javoblar YASHIRIN qoladi)
@@ -122,7 +123,7 @@ const getModules = async (req, res) => {
       const bestScore = Math.max(chatScore, combinedScore);
 
       const is_completed = bestScore >= 60 || (modRes && modRes.is_completed);
-      const is_unlocked = prevPassed;
+      const is_unlocked = UNLOCK_ALL_MODULES || prevPassed;
       
       results.push({
         ...m.toJSON(),
@@ -146,6 +147,8 @@ const { Op } = require('sequelize');
 const checkModuleUnlocked = async (studentId, specialtyId, targetModule) => {
   if (!targetModule) return { unlocked: false };
   if (targetModule.order_index <= 1) return { unlocked: true };
+
+  if (UNLOCK_ALL_MODULES) return { unlocked: true }; // test rejimi: ketma-ketlik sharti o'chirilgan
 
   const prevModules = await Module.findAll({
     where: {

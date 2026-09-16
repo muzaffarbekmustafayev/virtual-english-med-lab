@@ -1,0 +1,1048 @@
+{
+  "_comment": "Word fayllarda faqat o'zbekcha bo'lgan grammatika izohlari uchun qo'lda yozilgan EN/RU tarjimalar. Kalit: '<modul raqami>|<qoida sarlavhasi>'. build_datas.js enrichRule'dan keyin qo'llaydi.",
+  "grammar": {
+    "1|Important: Dialogue Has Other Tenses Too": {
+      "rule_explanation_en": "Although the grammar focus is Present Simple + Present Continuous, a natural clinical conversation also contains other tenses. Do not hide them or mislabel them as Present Simple/Continuous — recognise each form by its own meaning.",
+      "rule_explanation_ru": "Хотя грамматический фокус — Present Simple + Present Continuous, в естественном клиническом диалоге встречаются и другие времена. Их не нужно скрывать или ошибочно относить к Present Simple/Continuous — распознавайте каждую форму по её собственному значению."
+    },
+    "2|Other Tenses in This Dialogue": {
+      "rule_explanation_en": "Even though the grammar focus is Past Simple + Past Continuous, a natural clinical dialogue also includes other tenses and constructions. Learn to recognise each of them by its exact form and meaning.",
+      "rule_explanation_ru": "Хотя грамматический фокус — Past Simple + Past Continuous, естественный клинический диалог включает и другие времена и конструкции. Учитесь распознавать каждую из них по точной форме и значению."
+    },
+    "3|Other Tenses in This Dialogue": {
+      "rule_explanation_en": "Although the grammar focus is on two tenses, a natural clinical dialogue also contains other tenses and constructions.",
+      "rule_explanation_ru": "Хотя грамматический фокус направлен на два времени, естественный клинический диалог также содержит другие времена и конструкции."
+    },
+    "4|Signal Words": {
+      "rule_explanation_en": "Past Simple: three years ago, last week, six months ago, two weeks ago, this morning (used in this dialogue as a completed event). Signal words help, but meaning is decisive: a specific finished time → Past Simple; current relevance or experience → Present Perfect.",
+      "rule_explanation_ru": "Past Simple: three years ago, last week, six months ago, two weeks ago, this morning (в этом диалоге — как завершённое событие). Сигнальные слова помогают, но решающим является смысл: конкретное завершённое время → Past Simple; связь с настоящим или опыт → Present Perfect."
+    },
+    "4|Important Extra Tense in the Dialogue": {
+      "rule_explanation_en": "Although the main focus is Present Perfect vs Past Simple, the dialogue also uses Present Perfect Continuous to sound natural — for a recent, ongoing change or a repeated action over a recent period.",
+      "rule_explanation_ru": "Хотя основной фокус — Present Perfect и Past Simple, для естественности в диалоге также используется Present Perfect Continuous — для недавнего продолжающегося изменения или повторяющегося действия за последний период."
+    },
+    "5|Sequencing a Clinical Event": {
+      "rule_explanation_en": "In acute history-taking, Past Simple is often used to put events in order. This approach teaches the student not only grammar but also how to build a clinical timeline.",
+      "rule_explanation_ru": "При сборе анамнеза острого состояния Past Simple часто используется, чтобы выстроить события по порядку. Такой подход учит студента не только грамматике, но и построению клинической хронологии."
+    },
+    "6|Smart Phrases for Clinical Communication": {
+      "rule_explanation_en": "Useful clinical phrases from this dialogue: asking how long the patient has been unwell, cautiously stating the current clinical possibility (\"At the moment, we need to consider…\"), and explaining that the source of infection must be identified as quickly as possible — provided this does not cause a significant delay.",
+      "rule_explanation_ru": "Полезные клинические фразы из этого диалога: вопрос о том, как долго пациент плохо себя чувствует, осторожное обозначение текущей клинической вероятности («At the moment, we need to consider…») и объяснение, что источник инфекции нужно определить как можно быстрее — если это не приведёт к значительной задержке."
+    },
+    "7|Sequencing a Clinical Event": {
+      "rule_explanation_en": "In this timeline, Past Perfect marks the earlier events, while Past Simple marks the later, main events.",
+      "rule_explanation_ru": "В этой хронологии Past Perfect обозначает более ранние события, а Past Simple — последующие основные события."
+    },
+    "8|Clinical Functions in the Dialogue": {
+      "rule_explanation_en": "Modal verbs express clinical functions: advice (should — \"You should maintain adequate hydration\"), a strong clinical requirement (must — \"You must provide a urine sample\") and possibility (may/might — \"The infection may involve the upper urinary tract\").",
+      "rule_explanation_uz": "Modal fe'llar klinik vazifalarni ifodalaydi: maslahat (should — \"You should maintain adequate hydration\"), qat'iy klinik talab (must — \"You must provide a urine sample\") va ehtimol (may/might — \"The infection may involve the upper urinary tract\").",
+      "rule_explanation_ru": "Модальные глаголы выражают клинические функции: совет (should — «You should maintain adequate hydration»), строгое клиническое требование (must — «You must provide a urine sample») и возможность (may/might — «The infection may involve the upper urinary tract»)."
+    },
+    "10|Grammar focus: Mixed Grammar / Revision": {
+      "rule_explanation_en": "Present Perfect — an experience or state connected to the present. Present Perfect Continuous — a process that started in the past and continues now. Past Simple — a definite, completed past event. Past Perfect — a state that happened before another past event. Past Perfect Continuous — a process that had been continuing before another past event. Passive Voice — when the medical procedure matters more than who performs it. First Conditional — a real future risk or likely situation. Would rather — preferring one option to another. This module revises mixed grammar: the aim is to use previously studied structures together and naturally in a clinical consultation — Present Perfect, Present Perfect Continuous, Past Simple, Past Perfect, Past Perfect Continuous, modal verbs, First Conditional, Passive Voice and \"would rather\". Key clinical tasks: establishing the duration and progression of symptoms, describing earlier events, discussing possible causes, and giving investigation and safety-netting instructions professionally."
+    },
+    "10|Mixed Grammar — Clinical Comparison": {
+      "rule_explanation_en": "Compare the tenses side by side in clinical sentences: Present Perfect for something not observed up to now (\"I haven't noticed bleeding\"), Present Perfect Continuous for a symptom that started in the past and continues (\"I've been feeling increasingly tired for a month\"), and Past Simple for a completed event at a definite past time (\"I first noticed it four weeks ago\").",
+      "rule_explanation_uz": "Zamonlarni klinik gaplarda yonma-yon solishtiring: hozirgacha kuzatilmagan holat uchun Present Perfect (\"I haven't noticed bleeding\"), o'tmishda boshlanib hozirgacha davom etayotgan simptom uchun Present Perfect Continuous (\"I've been feeling increasingly tired for a month\"), aniq o'tgan vaqtdagi tugallangan voqea uchun Past Simple (\"I first noticed it four weeks ago\").",
+      "rule_explanation_ru": "Сравните времена в клинических предложениях: Present Perfect — состояние, не наблюдавшееся до настоящего момента («I haven't noticed bleeding»), Present Perfect Continuous — симптом, начавшийся в прошлом и продолжающийся сейчас («I've been feeling increasingly tired for a month»), Past Simple — завершённое событие в определённое время в прошлом («I first noticed it four weeks ago»)."
+    },
+    "10|Learning Tip": {
+      "rule_explanation_en": "First pay attention to time and signal words: for a month, four weeks ago, before, ever, since, once, if. Then decide on the meaning of the sentence: an ongoing symptom → Present Perfect Continuous; a definite past event → Past Simple; a state before another past event → Past Perfect or Past Perfect Continuous; when the medical procedure matters → Passive Voice; a safety-netting instruction → First Conditional + modal verb.",
+      "rule_explanation_ru": "Сначала обратите внимание на слова времени и сигнальные слова: for a month, four weeks ago, before, ever, since, once, if. Затем определите смысл предложения: продолжающийся симптом → Present Perfect Continuous; конкретное прошедшее событие → Past Simple; состояние до другого события в прошлом → Past Perfect или Past Perfect Continuous; когда важна медицинская процедура → Passive Voice; инструкция по безопасности → First Conditional + модальный глагол."
+    },
+    "5|Questions Used in Acute History-Taking": {
+      "rule_explanation_en": "Structure: Did + subject + base verb. For example: Did you lose…, Did you develop…, Did you notice….",
+      "rule_explanation_ru": "Структура: Did + подлежащее + базовая форма глагола. Например: Did you lose…, Did you develop…, Did you notice…."
+    }
+  },
+  "vocabulary": {
+    "6|feel progressively weaker": {
+      "definition_en": "To become gradually less strong over time."
+    },
+    "6|severe systemic infection": {
+      "definition_en": "A serious infection that affects the whole body rather than one organ."
+    },
+    "6|organism and its sensitivities": {
+      "definition_en": "The microbe causing the infection and the antibiotics it responds to (culture result)."
+    },
+    "10|increasingly tired": {
+      "definition_en": "Feeling more and more fatigued over a period of time."
+    },
+    "10|short of breath": {
+      "definition_en": "Having difficulty breathing or not getting enough air."
+    },
+    "10|breathlessness": {
+      "definition_en": "The sensation of difficult or laboured breathing (dyspnoea)."
+    },
+    "10|exertion": {
+      "definition_en": "Physical effort or activity, such as climbing stairs or exercising."
+    },
+    "10|light-headed": {
+      "definition_en": "Feeling faint or dizzy, as if you might pass out."
+    },
+    "10|tachycardia": {
+      "definition_en": "An abnormally fast heart rate, usually over 100 beats per minute."
+    },
+    "10|chronic condition": {
+      "definition_en": "A long-term illness that persists or recurs over months or years."
+    },
+    "10|hypertension": {
+      "definition_en": "Persistently high blood pressure."
+    },
+    "10|miss a dose": {
+      "definition_en": "To fail to take a scheduled dose of a medication."
+    },
+    "10|pallor": {
+      "definition_en": "Unusual paleness of the skin, often a sign of anaemia."
+    },
+    "10|weight loss": {
+      "definition_en": "A decrease in body weight, especially when unintentional."
+    },
+    "10|black stools": {
+      "definition_en": "Dark, tarry faeces that may indicate bleeding in the upper digestive tract (melaena)."
+    },
+    "10|fluid retention": {
+      "definition_en": "Abnormal build-up of fluid in the body tissues, causing swelling."
+    },
+    "10|peripheral circulation": {
+      "definition_en": "Blood flow to the limbs, hands and feet."
+    },
+    "10|hematological": {
+      "definition_en": "Relating to the blood and blood-forming organs."
+    },
+    "10|cardiovascular": {
+      "definition_en": "Relating to the heart and blood vessels."
+    },
+    "10|endocrine": {
+      "definition_en": "Relating to hormones and the glands that produce them."
+    },
+    "10|metabolic": {
+      "definition_en": "Relating to the chemical processes that keep the body functioning."
+    },
+    "10|exclude a cause": {
+      "definition_en": "To rule out a possible explanation for the symptoms."
+    },
+    "10|differential diagnosis": {
+      "definition_en": "The list of possible conditions that could explain the patient's symptoms."
+    },
+    "10|full blood count": {
+      "definition_en": "A blood test measuring red cells, white cells, haemoglobin and platelets (FBC)."
+    },
+    "10|ferritin": {
+      "definition_en": "A protein that stores iron; its blood level reflects the body's iron stores."
+    },
+    "10|iron studies": {
+      "definition_en": "A group of blood tests that assess iron levels and iron metabolism."
+    },
+    "10|renal function": {
+      "definition_en": "How well the kidneys are working, usually assessed by blood tests."
+    },
+    "10|thyroid function": {
+      "definition_en": "How well the thyroid gland is working, measured by hormone levels in the blood."
+    },
+    "10|electrolytes": {
+      "definition_en": "Minerals in the blood such as sodium and potassium that are vital for body function."
+    },
+    "10|ECG": {
+      "definition_en": "Electrocardiogram — a recording of the heart's electrical activity."
+    },
+    "10|strenuous activity": {
+      "definition_en": "Physical activity that requires a lot of effort or energy."
+    },
+    "10|fainting": {
+      "definition_en": "A brief loss of consciousness caused by reduced blood flow to the brain (syncope)."
+    },
+    "10|underlying cause": {
+      "definition_en": "The basic condition that is responsible for the symptoms."
+    },
+    "10|evidence-based management": {
+      "definition_en": "Treatment decisions based on the best available scientific evidence."
+    },
+    "10|become breathless": {
+      "definition_en": "To start having difficulty breathing."
+    },
+    "10|feel light-headed": {
+      "definition_en": "To feel faint or dizzy."
+    },
+    "10|miss several doses": {
+      "definition_en": "To fail to take a number of scheduled doses of a medication."
+    },
+    "10|notice weight loss": {
+      "definition_en": "To become aware that one has lost weight."
+    },
+    "10|look unusually pale": {
+      "definition_en": "To appear paler than normal."
+    },
+    "10|exclude a cardiovascular cause": {
+      "definition_en": "To rule out a heart or blood-vessel problem as the explanation."
+    },
+    "10|request blood tests": {
+      "definition_en": "To order laboratory tests on a blood sample."
+    },
+    "10|review the findings": {
+      "definition_en": "To examine and discuss the test results."
+    },
+    "10|narrow the differential diagnosis": {
+      "definition_en": "To reduce the list of possible conditions to the most likely ones."
+    },
+    "10|seek emergency medical attention": {
+      "definition_en": "To get urgent medical help immediately."
+    }
+  },
+  "example_notes": {
+    "1|Present Continuous|I've been feeling increasingly weak": {
+      "note_en": "In the dialogue this expresses a longer-lasting current state; the sentence is actually Present Perfect Continuous, so it is covered separately.",
+      "note_ru": "В диалоге это выражает более длительное текущее состояние; на самом деле это Present Perfect Continuous, поэтому рассматривается отдельно."
+    },
+    "1|Important: Dialogue Has Other Tenses Too|I've been feeling increasingly weak": {
+      "note_en": "Present Perfect Continuous — for the past few weeks → a state that started in the past and continues now.",
+      "note_ru": "Present Perfect Continuous — for the past few weeks → состояние, начавшееся в прошлом и продолжающееся сейчас."
+    },
+    "1|Important: Dialogue Has Other Tenses Too|I've lost about three kilograms": {
+      "note_en": "Present Perfect — a recent event with a result in the present.",
+      "note_ru": "Present Perfect — недавнее событие с результатом в настоящем."
+    },
+    "1|Important: Dialogue Has Other Tenses Too|I was told I had mild hypertension": {
+      "note_en": "Past Simple — two years ago → a definite past time.",
+      "note_ru": "Past Simple — two years ago → конкретное время в прошлом."
+    },
+    "1|Important: Dialogue Has Other Tenses Too|I'm going to examine you now": {
+      "note_en": "be going to — a planned, immediate action.",
+      "note_ru": "be going to — заранее намеченное ближайшее действие."
+    },
+    "2|Past Simple|It was a crushing pressure": {
+      "note_en": "a past state",
+      "note_ru": "состояние в прошлом"
+    },
+    "2|Past Simple|It spread towards my left shoulder": {
+      "note_en": "describing symptom radiation in the past",
+      "note_ru": "описание иррадиации симптома в прошлом"
+    },
+    "2|Past Continuous|I was carrying some boxes upstairs": {
+      "note_en": "an ongoing action + the acute event that interrupted it",
+      "note_ru": "продолжающееся действие + острое событие, которое его прервало"
+    },
+    "2|Past Continuous|He was also extremely anxious": {
+      "note_en": "describing a past state",
+      "note_ru": "описание состояния в прошлом"
+    },
+    "2|Past Continuous + Past Simple|I was carrying some boxes": {
+      "note_en": "Past Continuous — the action was in progress; the pain began suddenly.",
+      "note_ru": "Past Continuous — действие продолжалось; боль началась внезапно."
+    },
+    "2|Past Continuous + Past Simple|when I suddenly felt chest pressure": {
+      "note_en": "Past Simple — the sudden onset of pain during the ongoing action.",
+      "note_ru": "Past Simple — внезапное начало боли во время продолжающегося действия."
+    },
+    "3|Present Perfect|I had a mild cold last week": {
+      "note_en": "This is NOT Present Perfect: because of the finished time expression 'last week', Past Simple is used.",
+      "note_ru": "Это НЕ Present Perfect: из-за указания завершённого времени 'last week' используется Past Simple."
+    },
+    "6|Present Perfect Continuous|I've also been having repeated episodes": {
+      "note_en": "Shows that recurring symptoms have continued over a period of time.",
+      "note_ru": "Показывает, что повторяющиеся симптомы продолжаются в течение некоторого времени."
+    },
+    "6|Present Perfect Continuous|Have you been coughing or experiencing": {
+      "note_en": "Asks about symptoms that have continued until recently.",
+      "note_ru": "Вопрос о симптомах, продолжавшихся до недавнего времени."
+    },
+    "6|Passive Voice|Blood samples will be taken for cultures": {
+      "note_en": "Blood samples are taken for various laboratory tests.",
+      "note_ru": "Образцы крови берутся для различных лабораторных исследований."
+    },
+    "6|Passive Voice|Supplemental oxygen will be given": {
+      "note_en": "States that oxygen will be given and the patient's response closely monitored.",
+      "note_ru": "Сообщается, что будет дан кислород и реакция пациента будет тщательно контролироваться."
+    },
+    "6|Passive Voice|Treatment may be adjusted when culture": {
+      "note_en": "Treatment may be changed according to the culture results.",
+      "note_ru": "Лечение может быть изменено в соответствии с результатами посева."
+    },
+    "6|Smart Phrases for Clinical Communication|How long have you been feeling unwell": {
+      "note_en": "Asking how long the patient's condition has lasted.",
+      "note_ru": "Вопрос о длительности состояния пациента."
+    },
+    "6|Smart Phrases for Clinical Communication|At the moment, we need to consider": {
+      "note_en": "Cautiously stating the current clinical possibility.",
+      "note_ru": "Осторожное обозначение текущей клинической вероятности."
+    },
+    "6|Smart Phrases for Clinical Communication|We'll assess his response to initial": {
+      "note_en": "Assessing the response to initial treatment.",
+      "note_ru": "Оценка ответа на начальное лечение."
+    },
+    "6|Smart Phrases for Clinical Communication|Treatment may be adjusted": {
+      "note_en": "Explaining that treatment may be changed later.",
+      "note_ru": "Объяснение, что лечение может быть скорректировано позже."
+    },
+    "10|Present Perfect Continuous|I've been feeling increasingly tired": {
+      "note_en": "Shows that the tiredness and breathlessness have continued for a month.",
+      "note_ru": "Показывает, что усталость и одышка продолжаются в течение месяца."
+    },
+    "10|Past Perfect|Before the symptoms began, I had missed": {
+      "note_en": "Shows which of two past events happened first.",
+      "note_ru": "Показывает, какое из двух прошедших событий произошло раньше."
+    },
+    "10|Passive Voice|Blood samples will be taken for further": {
+      "note_en": "Blood samples are taken for further tests.",
+      "note_ru": "Образцы крови берутся для дополнительных исследований."
+    },
+    "10|Mixed Grammar — Clinical Comparison|I haven't noticed bleeding": {
+      "note_en": "Present Perfect — a state not observed up to now.",
+      "note_ru": "Present Perfect — состояние, не наблюдавшееся до настоящего момента."
+    },
+    "10|Mixed Grammar — Clinical Comparison|I've been feeling increasingly tired": {
+      "note_en": "Present Perfect Continuous — a symptom that started in the past and continues now.",
+      "note_ru": "Present Perfect Continuous — симптом, начавшийся в прошлом и продолжающийся сейчас."
+    },
+    "10|Mixed Grammar — Clinical Comparison|I first noticed it four weeks ago": {
+      "note_en": "Past Simple — a completed event at a definite past time.",
+      "note_ru": "Past Simple — завершённое событие в определённое время в прошлом."
+    },
+    "10|Mixed Grammar — Clinical Comparison|I hadn't had any major infection": {
+      "note_en": "Past Perfect — a state before another past event.",
+      "note_ru": "Past Perfect — состояние до другого события в прошлом."
+    },
+    "10|Mixed Grammar — Clinical Comparison|I had been experiencing stress before": {
+      "note_en": "Past Perfect Continuous — a process that had continued before another past event.",
+      "note_ru": "Past Perfect Continuous — процесс, продолжавшийся до другого события в прошлом."
+    },
+    "10|Mixed Grammar — Clinical Comparison|Blood samples will be taken": {
+      "note_en": "Passive Voice — emphasis on the medical procedure.",
+      "note_ru": "Passive Voice — акцент на медицинской процедуре."
+    }
+  },
+  "example_translations": {
+    "I usually have normal blood pressure.": {
+      "translation_uz": "Odatda qon bosimim normal bo'ladi.",
+      "translation_ru": "Обычно у меня нормальное давление."
+    },
+    "It usually happens when I stand up quickly.": {
+      "translation_uz": "Bu odatda tez o'rnimdan turganimda bo'ladi.",
+      "translation_ru": "Обычно это случается, когда я резко встаю."
+    },
+    "I don't have chest pain.": {
+      "translation_uz": "Ko'krak qafasimda og'riq yo'q.",
+      "translation_ru": "У меня нет боли в груди."
+    },
+    "He doesn't take any regular medication.": {
+      "translation_uz": "U doimiy dori ichmaydi.",
+      "translation_ru": "Он не принимает никаких лекарств постоянно."
+    },
+    "Do you have any diagnosed conditions?": {
+      "translation_uz": "Sizga tashxis qo'yilgan kasalliklar bormi?",
+      "translation_ru": "У вас есть диагностированные заболевания?"
+    },
+    "Do you have any regular medication?": {
+      "translation_uz": "Doimiy qabul qiladigan dorilaringiz bormi?",
+      "translation_ru": "Вы принимаете какие-либо лекарства постоянно?"
+    },
+    "I take an antihypertensive every morning.": {
+      "translation_uz": "Har kuni ertalab qon bosimiga qarshi dori ichaman.",
+      "translation_ru": "Каждое утро я принимаю антигипертензивный препарат."
+    },
+    "My mother has iron-deficiency anaemia.": {
+      "translation_uz": "Onamda temir tanqisligi anemiyasi bor.",
+      "translation_ru": "У моей матери железодефицитная анемия."
+    },
+    "My father has type 2 diabetes.": {
+      "translation_uz": "Otamda 2-tur diabet bor.",
+      "translation_ru": "У моего отца сахарный диабет 2 типа."
+    },
+    "I'm feeling increasingly weak.": {
+      "translation_uz": "O'zimni tobora kuchsiz his qilyapman.",
+      "translation_ru": "Я чувствую всё большую слабость."
+    },
+    "I'm also getting short of breath.": {
+      "translation_uz": "Nafasim ham qisilyapti.",
+      "translation_ru": "У меня также появляется одышка."
+    },
+    "I'm not having chest pain.": {
+      "translation_uz": "Hozir ko'krak qafasimda og'riq yo'q.",
+      "translation_ru": "Сейчас у меня нет боли в груди."
+    },
+    "Are you experiencing chest pain?": {
+      "translation_uz": "Ko'krak qafasingizda og'riq sezyapsizmi?",
+      "translation_ru": "Вы испытываете боль в груди?"
+    },
+    "I've been feeling increasingly weak and light-headed…": {
+      "translation_uz": "O'zimni tobora kuchsiz va boshim aylangandek his qilyapman…",
+      "translation_ru": "Я чувствую всё большую слабость и головокружение…"
+    },
+    "I'm also getting short of breath when I walk upstairs.": {
+      "translation_uz": "Zinadan chiqqanimda nafasim ham qisilyapti.",
+      "translation_ru": "Когда я поднимаюсь по лестнице, у меня также появляется одышка."
+    },
+    "Are you experiencing chest pain, palpitations, nausea, or unusual sweating?": {
+      "translation_uz": "Ko'krak og'rig'i, yurak urishini sezish, ko'ngil aynishi yoki g'ayrioddiy terlash bormi?",
+      "translation_ru": "Вы испытываете боль в груди, сердцебиение, тошноту или необычную потливость?"
+    },
+    "I'll check your pulse…": {
+      "translation_uz": "Pulsingizni tekshiraman…",
+      "translation_ru": "Я проверю ваш пульс…"
+    },
+    "I've been feeling increasingly weak and light-headed for the past few weeks.": {
+      "translation_uz": "So'nggi bir necha hafta davomida o'zimni tobora kuchsiz va boshim aylangandek his qilyapman.",
+      "translation_ru": "Последние несколько недель я чувствую всё большую слабость и головокружение."
+    },
+    "I've lost about three kilograms without trying.": {
+      "translation_uz": "Hech qanday harakat qilmasdan taxminan uch kilogramm vazn yo'qotdim.",
+      "translation_ru": "Я похудел примерно на три килограмма без всяких усилий."
+    },
+    "I was told I had mild hypertension two years ago.": {
+      "translation_uz": "Ikki yil oldin menda yengil gipertoniya borligini aytishgan.",
+      "translation_ru": "Два года назад мне сказали, что у меня лёгкая гипертония."
+    },
+    "My blood pressure is 98 over 62 today.": {
+      "translation_uz": "Bugun qon bosimim 98 ga 62.",
+      "translation_ru": "Сегодня моё давление 98 на 62."
+    },
+    "I'm feeling light-headed at the moment.": {
+      "translation_uz": "Hozir boshim aylanayotgandek.",
+      "translation_ru": "В данный момент у меня кружится голова."
+    },
+    "I'm taking it irregularly at the moment.": {
+      "translation_uz": "Hozir uni muntazam ichmayapman.",
+      "translation_ru": "Сейчас я принимаю его нерегулярно."
+    },
+    "The episodes last a couple of minutes.": {
+      "translation_uz": "Xurujlar bir-ikki daqiqa davom etadi.",
+      "translation_ru": "Эпизоды длятся пару минут."
+    },
+    "The patient is experiencing several episodes today.": {
+      "translation_uz": "Bemorda bugun bir nechta xuruj kuzatilmoqda.",
+      "translation_ru": "У пациента сегодня несколько эпизодов."
+    },
+    "I felt a heavy pressure in my chest.": {
+      "translation_uz": "Ko'krak qafasimda kuchli bosim his qildim.",
+      "translation_ru": "Я почувствовал сильное давление в груди."
+    },
+    "I didn't lose consciousness.": {
+      "translation_uz": "Hushimni yo'qotmadim.",
+      "translation_ru": "Я не терял сознание."
+    },
+    "Did the pain remain in the centre of your chest?": {
+      "translation_uz": "Og'riq ko'krak qafasingiz markazida qoldimi?",
+      "translation_ru": "Боль оставалась в центре груди?"
+    },
+    "I suddenly felt a heavy pressure in the centre of my chest.": {
+      "translation_uz": "To'satdan ko'krak qafasim markazida kuchli bosim his qildim.",
+      "translation_ru": "Я внезапно почувствовал сильное давление в центре груди."
+    },
+    "I put it down and sat on the stairs.": {
+      "translation_uz": "Uni qo'yib, zinaga o'tirdim.",
+      "translation_ru": "Я поставил её и сел на лестницу."
+    },
+    "It was a crushing pressure.": {
+      "translation_uz": "Bu ezuvchi bosim edi.",
+      "translation_ru": "Это было сдавливающее давление."
+    },
+    "It spread towards my left shoulder and down my arm.": {
+      "translation_uz": "U chap yelkamga va qo'lim bo'ylab tarqaldi.",
+      "translation_ru": "Оно распространилось к левому плечу и вниз по руке."
+    },
+    "I became sweaty and nauseated.": {
+      "translation_uz": "Terlab ketdim va ko'nglim aynidi.",
+      "translation_ru": "Я вспотел, и меня затошнило."
+    },
+    "My wife called an ambulance.": {
+      "translation_uz": "Xotinim tez yordam chaqirdi.",
+      "translation_ru": "Моя жена вызвала скорую помощь."
+    },
+    "The worst of it lasted about twenty minutes.": {
+      "translation_uz": "Eng og'ir qismi taxminan yigirma daqiqa davom etdi.",
+      "translation_ru": "Самое тяжёлое длилось около двадцати минут."
+    },
+    "I stopped smoking five years ago.": {
+      "translation_uz": "Besh yil oldin chekishni tashladim.",
+      "translation_ru": "Я бросил курить пять лет назад."
+    },
+    "I was carrying some boxes upstairs.": {
+      "translation_uz": "Men qutilarni yuqoriga olib chiqayotgan edim.",
+      "translation_ru": "Я нёс коробки наверх."
+    },
+    "I was lifting the last box when the pain suddenly appeared.": {
+      "translation_uz": "Oxirgi qutini ko'tarayotganimda og'riq to'satdan paydo bo'ldi.",
+      "translation_ru": "Я поднимал последнюю коробку, когда внезапно появилась боль."
+    },
+    "I was carrying some boxes upstairs when I suddenly felt a heavy pressure…": {
+      "translation_uz": "Qutilarni yuqoriga olib chiqayotganimda to'satdan kuchli bosim his qildim…",
+      "translation_ru": "Я нёс коробки наверх, когда внезапно почувствовал сильное давление…"
+    },
+    "I was carrying some boxes": {
+      "translation_uz": "Men qutilarni olib chiqayotgan edim",
+      "translation_ru": "Я нёс коробки"
+    },
+    "when I suddenly felt chest pressure.": {
+      "translation_uz": "to'satdan ko'krak qafasimda bosim his qilganimda.",
+      "translation_ru": "когда внезапно почувствовал давление в груди."
+    },
+    "I was lifting the last box": {
+      "translation_uz": "Oxirgi qutini ko'tarayotgan edim",
+      "translation_ru": "Я поднимал последнюю коробку"
+    },
+    "when the pain suddenly appeared.": {
+      "translation_uz": "og'riq to'satdan paydo bo'lganda.",
+      "translation_ru": "когда внезапно появилась боль."
+    },
+    "I was resting": {
+      "translation_uz": "Dam olayotgan edim",
+      "translation_ru": "Я отдыхал"
+    },
+    "when the symptoms eased slightly.": {
+      "translation_uz": "simptomlar biroz yengillashganda.",
+      "translation_ru": "когда симптомы немного ослабли."
+    },
+    "while I was resting…": {
+      "translation_uz": "dam olayotganimda…",
+      "translation_ru": "пока я отдыхал…"
+    },
+    "I was lifting the box when the pain appeared.": {
+      "translation_uz": "Qutini ko'tarayotganimda og'riq paydo bo'ldi.",
+      "translation_ru": "Я поднимал коробку, когда появилась боль."
+    },
+    "Do you have hypertension, diabetes, high cholesterol…?": {
+      "translation_uz": "Sizda gipertoniya, diabet, yuqori xolesterin bormi…?",
+      "translation_ru": "У вас есть гипертония, диабет, высокий холестерин…?"
+    },
+    "I had experienced mild chest tightness…": {
+      "translation_uz": "Ilgari ko'krak qafasimda yengil siqilish sezgan edim…",
+      "translation_ru": "Ранее я испытывал лёгкое стеснение в груди…"
+    },
+    "before the ambulance arrived\" context": {
+      "translation_uz": "\"tez yordam kelgunga qadar\" konteksti",
+      "translation_ru": "контекст «до приезда скорой помощи»"
+    },
+    "we'll involve the cardiology team urgently": {
+      "translation_uz": "kardiologiya jamoasini shoshilinch jalb qilamiz",
+      "translation_ru": "мы срочно привлечём кардиологическую бригаду"
+    },
+    "If it shows evidence…, we'll involve…": {
+      "translation_uz": "Agar u … belgilarini ko'rsatsa, biz … jalb qilamiz",
+      "translation_ru": "Если он покажет признаки…, мы привлечём…"
+    },
+    "does this mean I'm having a heart attack?": {
+      "translation_uz": "bu menda infarkt bo'layotganini anglatadimi?",
+      "translation_ru": "это значит, что у меня сердечный приступ?"
+    },
+    "hayotiy tajriba — Have you ever…?": {
+      "translation_uz": "hayotiy tajriba — Have you ever…?",
+      "translation_ru": "жизненный опыт — Have you ever…?"
+    },
+    "It has helped for a short time.": {
+      "translation_uz": "U qisqa muddatga yordam berdi.",
+      "translation_ru": "Это помогло на короткое время."
+    },
+    "I haven't had a fever.": {
+      "translation_uz": "Isitmam bo'lmadi.",
+      "translation_ru": "У меня не было температуры."
+    },
+    "Have you ever been admitted to hospital?": {
+      "translation_uz": "Hech qachon kasalxonaga yotqizilganmisiz?",
+      "translation_ru": "Вас когда-нибудь госпитализировали?"
+    },
+    "I had a mild cold last week…": {
+      "translation_uz": "O'tgan hafta yengil shamollagan edim…",
+      "translation_ru": "На прошлой неделе я слегка простудился…"
+    },
+    "She hasn't been taking her preventer regularly.": {
+      "translation_uz": "U profilaktik ingalatorini muntazam qo'llamagan.",
+      "translation_ru": "Она не пользовалась профилактическим ингалятором регулярно."
+    },
+    "symptom began in the past and continues to now.": {
+      "translation_uz": "simptom o'tmishda boshlangan va hozirgacha davom etmoqda.",
+      "translation_ru": "симптом начался в прошлом и продолжается до сих пор."
+    },
+    "I've been wheezing repeatedly, particularly at night…": {
+      "translation_uz": "Ayniqsa kechalari takror-takror xirillab nafas olyapman…",
+      "translation_ru": "Я постоянно хриплю, особенно по ночам…"
+    },
+    "I've been using it four or five times a day…": {
+      "translation_uz": "Uni kuniga to'rt-besh marta ishlatyapman…",
+      "translation_ru": "Я пользуюсь им четыре-пять раз в день…"
+    },
+    "I've been travelling.": {
+      "translation_uz": "Sayohatda bo'ldim.",
+      "translation_ru": "Я путешествовал."
+    },
+    "Cold air has been making it worse.": {
+      "translation_uz": "Sovuq havo ahvolni yomonlashtirmoqda.",
+      "translation_ru": "Холодный воздух ухудшает состояние."
+    },
+    "She has been coughing at night for several weeks…": {
+      "translation_uz": "U bir necha haftadan beri kechalari yo'talmoqda…",
+      "translation_ru": "Она уже несколько недель кашляет по ночам…"
+    },
+    "I've been struggling to breathe for five days.": {
+      "translation_uz": "Besh kundan beri nafas olishga qiynalyapman.",
+      "translation_ru": "Уже пять дней мне трудно дышать."
+    },
+    "Have you been taking your preventer regularly?": {
+      "translation_uz": "Profilaktik ingalatoringizni muntazam qo'llayapsizmi?",
+      "translation_ru": "Вы регулярно пользуетесь профилактическим ингалятором?"
+    },
+    "Have you noticed any triggers?": {
+      "translation_uz": "Biror qo'zg'atuvchi omilni sezdingizmi?",
+      "translation_ru": "Вы заметили какие-либо провоцирующие факторы?"
+    },
+    "The symptoms have kept returning.": {
+      "translation_uz": "Simptomlar qayta-qayta takrorlanmoqda.",
+      "translation_ru": "Симптомы продолжают возвращаться."
+    },
+    "I've been coughing since last week.": {
+      "translation_uz": "O'tgan haftadan beri yo'talyapman.",
+      "translation_ru": "Я кашляю с прошлой недели."
+    },
+    "I had a mild cold last week.": {
+      "translation_uz": "O'tgan hafta yengil shamollagan edim.",
+      "translation_ru": "На прошлой неделе я слегка простудился."
+    },
+    "Cold air has been making it worse…\" / \"if you are able…": {
+      "translation_uz": "Sovuq havo ahvolni yomonlashtirmoqda… / agar imkoningiz bo'lsa…",
+      "translation_ru": "Холодный воздух ухудшает состояние… / если вы сможете…"
+    },
+    "How long will I have to stay here?": {
+      "translation_uz": "Bu yerda qancha vaqt qolishim kerak bo'ladi?",
+      "translation_ru": "Как долго мне придётся здесь оставаться?"
+    },
+    "We'll also check your peak expiratory flow…": {
+      "translation_uz": "Shuningdek, nafas chiqarish tezligingizni ham tekshiramiz…",
+      "translation_ru": "Мы также проверим вашу пиковую скорость выдоха…"
+    },
+    "If your oxygenation improves… we may be able to discharge you.": {
+      "translation_uz": "Agar kislorod bilan ta'minlanishingiz yaxshilansa… sizni uyga chiqarishimiz mumkin.",
+      "translation_ru": "Если ваша оксигенация улучшится… мы, возможно, сможем вас выписать."
+    },
+    "You may need systemic corticosteroids…": {
+      "translation_uz": "Sizga tizimli kortikosteroidlar kerak bo'lishi mumkin…",
+      "translation_ru": "Вам могут понадобиться системные кортикостероиды…"
+    },
+    "if you are able to perform the test safely": {
+      "translation_uz": "agar testni xavfsiz bajara olsangiz",
+      "translation_ru": "если вы сможете безопасно выполнить тест"
+    },
+    "They've been considerably higher over the past month.": {
+      "translation_uz": "Ular o'tgan oy davomida ancha yuqori bo'lib keldi.",
+      "translation_ru": "За последний месяц они были значительно выше."
+    },
+    "I haven't had obvious symptoms.": {
+      "translation_uz": "Menda yaqqol simptomlar bo'lmadi.",
+      "translation_ru": "У меня не было явных симптомов."
+    },
+    "I have. I missed several doses last week…": {
+      "translation_uz": "Ha. O'tgan hafta bir nechta dozani o'tkazib yubordim…",
+      "translation_ru": "Да. На прошлой неделе я пропустил несколько доз…"
+    },
+    "I started metformin.": {
+      "translation_uz": "Metformin qabul qilishni boshladim.",
+      "translation_ru": "Я начал принимать метформин."
+    },
+    "I didn't experience obvious symptoms.": {
+      "translation_uz": "Yaqqol simptomlarni sezmadim.",
+      "translation_ru": "Я не испытывал явных симптомов."
+    },
+    "What treatment did you start?": {
+      "translation_uz": "Qanday davolashni boshladingiz?",
+      "translation_ru": "Какое лечение вы начали?"
+    },
+    "I was diagnosed three years ago during a routine health check.": {
+      "translation_uz": "Menga uch yil oldin muntazam tibbiy ko'rikda tashxis qo'yilgan.",
+      "translation_ru": "Диагноз мне поставили три года назад во время планового осмотра."
+    },
+    "I started metformin and changed my diet.": {
+      "translation_uz": "Metformin ichishni boshladim va ovqatlanishimni o'zgartirdim.",
+      "translation_ru": "Я начал принимать метформин и изменил диету."
+    },
+    "I checked it this morning before breakfast.": {
+      "translation_uz": "Bugun ertalab nonushtadan oldin tekshirdim.",
+      "translation_ru": "Я проверил его сегодня утром перед завтраком."
+    },
+    "They started about two weeks ago.": {
+      "translation_uz": "Ular taxminan ikki hafta oldin boshlandi.",
+      "translation_ru": "Они начались около двух недель назад."
+    },
+    "It was high six months ago.": {
+      "translation_uz": "Olti oy oldin u yuqori edi.",
+      "translation_ru": "Шесть месяцев назад он был высоким."
+    },
+    "I checked my glucose this morning.": {
+      "translation_uz": "Bugun ertalab qandimni tekshirdim.",
+      "translation_ru": "Сегодня утром я проверил уровень глюкозы."
+    },
+    "Have you missed any doses recently?": {
+      "translation_uz": "Yaqinda biror dozani o'tkazib yubordingizmi?",
+      "translation_ru": "Вы недавно пропускали какие-либо дозы?"
+    },
+    "I missed several doses last week.": {
+      "translation_uz": "O'tgan hafta bir nechta dozani o'tkazib yubordim.",
+      "translation_ru": "На прошлой неделе я пропустил несколько доз."
+    },
+    "Have you ever had an HbA1c above target?": {
+      "translation_uz": "HbA1c ko'rsatkichingiz hech qachon maqsaddan yuqori bo'lganmi?",
+      "translation_ru": "У вас когда-нибудь был HbA1c выше целевого уровня?"
+    },
+    "Have you noticed increased thirst?": {
+      "translation_uz": "Chanqoqlik kuchayganini sezdingizmi?",
+      "translation_ru": "Вы заметили усиление жажды?"
+    },
+    "It was high six months ago…": {
+      "translation_uz": "Olti oy oldin u yuqori edi…",
+      "translation_ru": "Шесть месяцев назад он был высоким…"
+    },
+    "I've been eating more fast food and sweet snacks…": {
+      "translation_uz": "Ko'proq fast-fud va shirin gazaklar yeyapman…",
+      "translation_ru": "Я стал есть больше фастфуда и сладких закусок…"
+    },
+    "I've been getting up several times during the night to urinate.": {
+      "translation_uz": "Kechasi siyish uchun bir necha marta turyapman.",
+      "translation_ru": "Я встаю несколько раз за ночь, чтобы помочиться."
+    },
+    "I noticed something was wrong.": {
+      "translation_uz": "Nimadir noto'g'ri ekanini sezdim.",
+      "translation_ru": "Я заметил, что что-то не так."
+    },
+    "Did you lose consciousness?": {
+      "translation_uz": "Hushingizni yo'qotdingizmi?",
+      "translation_ru": "Вы теряли сознание?"
+    },
+    "My right hand suddenly became weak.": {
+      "translation_uz": "O'ng qo'lim to'satdan kuchsizlanib qoldi.",
+      "translation_ru": "Моя правая рука внезапно ослабла."
+    },
+    "I noticed something was wrong at about 7:15 this morning.": {
+      "translation_uz": "Bugun ertalab taxminan 7:15 da nimadir noto'g'ri ekanini sezdim.",
+      "translation_ru": "Сегодня утром около 7:15 я заметил, что что-то не так."
+    },
+    "I dropped my cup and couldn't pick it up again.": {
+      "translation_uz": "Piyolamni tushirib yubordim va uni qayta ko'tara olmadim.",
+      "translation_ru": "Я уронил чашку и не смог её снова поднять."
+    },
+    "A few minutes later, I tried to speak to my wife…": {
+      "translation_uz": "Bir necha daqiqadan so'ng xotinim bilan gaplashmoqchi bo'ldim…",
+      "translation_ru": "Через несколько минут я попытался заговорить с женой…"
+    },
+    "My words came out strangely.": {
+      "translation_uz": "So'zlarim g'alati chiqdi.",
+      "translation_ru": "Слова выходили странно."
+    },
+    "When I stood up, my right leg felt weak and I nearly fell.": {
+      "translation_uz": "O'rnimdan turganimda o'ng oyog'im kuchsiz edi va yiqilib ketishimga sal qoldi.",
+      "translation_ru": "Когда я встал, правая нога ослабла, и я чуть не упал."
+    },
+    "No, I remained conscious throughout.": {
+      "translation_uz": "Yo'q, butun vaqt davomida hushimda edim.",
+      "translation_ru": "Нет, я всё время оставался в сознании."
+    },
+    "My vision became blurred for a few minutes, but then it improved.": {
+      "translation_uz": "Ko'rishim bir necha daqiqa xiralashdi, keyin yaxshilandi.",
+      "translation_ru": "Зрение на несколько минут затуманилось, но потом улучшилось."
+    },
+    "Did you have any difficulty walking?": {
+      "translation_uz": "Yurishda qiyinchilik sezdingizmi?",
+      "translation_ru": "У вас были трудности при ходьбе?"
+    },
+    "Did you develop a sudden severe headache?": {
+      "translation_uz": "To'satdan kuchli bosh og'rig'i paydo bo'ldimi?",
+      "translation_ru": "У вас появилась внезапная сильная головная боль?"
+    },
+    "He hasn't been improving.": {
+      "translation_uz": "Uning ahvoli yaxshilanmayapti.",
+      "translation_ru": "Его состояние не улучшается."
+    },
+    "How long have you been coughing?": {
+      "translation_uz": "Qachondan beri yo'talyapsiz?",
+      "translation_ru": "Как давно вы кашляете?"
+    },
+    "Blood cultures can be taken before antibiotics are started.": {
+      "translation_uz": "Antibiotiklar boshlanishidan oldin qon kulturasi olinishi mumkin.",
+      "translation_ru": "Посев крови можно взять до начала антибиотиков."
+    },
+    "Blood samples will be taken for cultures and other tests.": {
+      "translation_uz": "Kultura va boshqa tahlillar uchun qon namunalari olinadi.",
+      "translation_ru": "Будут взяты образцы крови для посева и других анализов."
+    },
+    "Supplemental oxygen will be given. / Higher-level care may be required.": {
+      "translation_uz": "Qo'shimcha kislorod beriladi. / Yuqori darajadagi parvarish talab qilinishi mumkin.",
+      "translation_ru": "Будет дан дополнительный кислород. / Может потребоваться более интенсивная помощь."
+    },
+    "Supplemental oxygen will be given and your response will be monitored closely.": {
+      "translation_uz": "Qo'shimcha kislorod beriladi va javobingiz yaqindan kuzatiladi.",
+      "translation_ru": "Будет дан дополнительный кислород, и ваша реакция будет тщательно контролироваться."
+    },
+    "Appropriate antimicrobial treatment should be started promptly.": {
+      "translation_uz": "Tegishli antimikrob davolash tezda boshlanishi kerak.",
+      "translation_ru": "Соответствующую антимикробную терапию следует начать незамедлительно."
+    },
+    "Treatment may be adjusted when culture results identify the organism and its sensitivities.": {
+      "translation_uz": "Kultura natijalari mikroorganizm va uning sezuvchanligini aniqlaganda davolash o'zgartirilishi mumkin.",
+      "translation_ru": "Лечение может быть скорректировано, когда результаты посева определят микроорганизм и его чувствительность."
+    },
+    "At the moment, we need to consider...": {
+      "translation_uz": "Hozircha biz … ni hisobga olishimiz kerak.",
+      "translation_ru": "На данный момент нам нужно рассмотреть…"
+    },
+    "Your response will be monitored closely.": {
+      "translation_uz": "Javobingiz yaqindan kuzatiladi.",
+      "translation_ru": "Ваша реакция будет тщательно контролироваться."
+    },
+    "Treatment may be adjusted...": {
+      "translation_uz": "Davolash o'zgartirilishi mumkin…",
+      "translation_ru": "Лечение может быть скорректировано…"
+    },
+    "We'll reassess you repeatedly.": {
+      "translation_uz": "Sizni qayta-qayta baholab boramiz.",
+      "translation_ru": "Мы будем регулярно повторно оценивать ваше состояние."
+    },
+    "The priority is to...": {
+      "translation_uz": "Birinchi navbatda … kerak.",
+      "translation_ru": "Приоритет — …"
+    },
+    "I hadn't vomited.": {
+      "translation_uz": "Qusmagan edim.",
+      "translation_ru": "Меня не рвало."
+    },
+    "What had you eaten?": {
+      "translation_uz": "Nima yegan edingiz?",
+      "translation_ru": "Что вы ели до этого?"
+    },
+    "I had gone to bed feeling slightly nauseated.": {
+      "translation_uz": "Ko'nglim biroz aynib uxlashga yotgan edim.",
+      "translation_ru": "Я лёг спать с лёгкой тошнотой."
+    },
+    "The pain was much stronger than it had been earlier.": {
+      "translation_uz": "Og'riq avvalgidan ancha kuchliroq edi.",
+      "translation_ru": "Боль была гораздо сильнее, чем раньше."
+    },
+    "I hadn't vomited until later.": {
+      "translation_uz": "Keyinroqqacha qusmagan edim.",
+      "translation_ru": "До этого момента меня не рвало."
+    },
+    "The pain started in the upper abdomen.": {
+      "translation_uz": "Og'riq qorinning yuqori qismida boshlandi.",
+      "translation_ru": "Боль началась в верхней части живота."
+    },
+    "I didn't vomit until later.": {
+      "translation_uz": "Keyinroqqacha qusmadim.",
+      "translation_ru": "Меня не рвало до более позднего времени."
+    },
+    "The pain was much stronger.": {
+      "translation_uz": "Og'riq ancha kuchliroq edi.",
+      "translation_ru": "Боль была гораздо сильнее."
+    },
+    "It started in the upper abdomen.": {
+      "translation_uz": "U qorinning yuqori qismida boshlandi.",
+      "translation_ru": "Она началась в верхней части живота."
+    },
+    "It later moved towards the right side.": {
+      "translation_uz": "Keyinroq u o'ng tomonga ko'chdi.",
+      "translation_ru": "Позже она сместилась вправо."
+    },
+    "I felt nauseated, but I didn't vomit until later.": {
+      "translation_uz": "Ko'nglim aynidi, lekin keyinroqqacha qusmadim.",
+      "translation_ru": "Меня тошнило, но рвота началась только позже."
+    },
+    "It seems to go through to my back at times.": {
+      "translation_uz": "Ba'zida u orqamga o'tayotgandek tuyuladi.",
+      "translation_ru": "Иногда кажется, что она отдаёт в спину."
+    },
+    "Negative: should not / shouldn't + base verb.": {
+      "translation_uz": "Inkor: should not / shouldn't + fe'lning asosiy shakli.",
+      "translation_ru": "Отрицание: should not / shouldn't + базовая форма глагола."
+    },
+    "You must provide a urine sample.": {
+      "translation_uz": "Siz siydik namunasini topshirishingiz shart.",
+      "translation_ru": "Вы должны сдать анализ мочи."
+    },
+    "must not / mustn't means prohibition: You must not ignore severe warning signs.": {
+      "translation_uz": "must not / mustn't taqiqni bildiradi: Jiddiy ogohlantiruvchi belgilarga e'tiborsiz bo'lmasligingiz kerak.",
+      "translation_ru": "must not / mustn't означает запрет: Нельзя игнорировать серьёзные тревожные признаки."
+    },
+    "We may have to change the antibiotic.": {
+      "translation_uz": "Antibiotikni o'zgartirishimizga to'g'ri kelishi mumkin.",
+      "translation_ru": "Возможно, нам придётся сменить антибиотик."
+    },
+    "You may have to stay in hospital.": {
+      "translation_uz": "Kasalxonada qolishingizga to'g'ri kelishi mumkin.",
+      "translation_ru": "Возможно, вам придётся остаться в больнице."
+    },
+    "It might be.": {
+      "translation_uz": "Bo'lishi mumkin.",
+      "translation_ru": "Возможно."
+    },
+    "It might be a kidney infection.": {
+      "translation_uz": "Bu buyrak infeksiyasi bo'lishi mumkin.",
+      "translation_ru": "Возможно, это инфекция почек."
+    },
+    "We may have to change the antibiotic according to the susceptibility results.": {
+      "translation_uz": "Sezuvchanlik natijalariga ko'ra antibiotikni o'zgartirishimizga to'g'ri kelishi mumkin.",
+      "translation_ru": "Возможно, нам придётся сменить антибиотик по результатам чувствительности."
+    },
+    "Past: had to + base verb. Future: will have to + base verb.": {
+      "translation_uz": "O'tgan zamon: had to + fe'l. Kelasi zamon: will have to + fe'l.",
+      "translation_ru": "Прошедшее: had to + глагол. Будущее: will have to + глагол."
+    },
+    "Must often expresses a strong instruction or requirement from the speaker: \"You must provide a urine sample.\" Have to often describes a necessity caused by the clinical situation: \"You may have to stay if the infection is severe.": {
+      "translation_uz": "Must ko'pincha so'zlovchining qat'iy ko'rsatmasi yoki talabini bildiradi: \"You must provide a urine sample.\" Have to esa klinik vaziyat tufayli yuzaga kelgan zaruratni bildiradi: \"You may have to stay if the infection is severe.\"",
+      "translation_ru": "Must часто выражает строгое указание или требование говорящего: «You must provide a urine sample.» Have to описывает необходимость, вызванную клинической ситуацией: «You may have to stay if the infection is severe.»"
+    },
+    "Both express possibility. In this dialogue, may is commonly used for a possible clinical outcome or interpretation, while might is used for a more tentative possibility: \"It might be.": {
+      "translation_uz": "Ikkalasi ham ehtimolni bildiradi. Bu dialogda may ehtimoliy klinik natija yoki talqin uchun, might esa ko'proq taxminiy ehtimol uchun ishlatiladi: \"It might be.\"",
+      "translation_ru": "Оба выражают возможность. В этом диалоге may используется для вероятного клинического исхода или интерпретации, а might — для более осторожного предположения: «It might be.»"
+    },
+    "Negative: should not, must not, may not; don't have to = not necessary.": {
+      "translation_uz": "Inkor: should not, must not, may not; don't have to = shart emas.",
+      "translation_ru": "Отрицание: should not, must not, may not; don't have to = не обязательно."
+    },
+    "Strong clinical requirement: You must provide a urine sample.": {
+      "translation_uz": "Qat'iy klinik talab: Siydik namunasini topshirishingiz shart.",
+      "translation_ru": "Строгое клиническое требование: Вы должны сдать анализ мочи."
+    },
+    "Possibility: The infection may involve the upper urinary tract.": {
+      "translation_uz": "Ehtimol: Infeksiya yuqori siydik yo'llarini qamrab olgan bo'lishi mumkin.",
+      "translation_ru": "Возможность: Инфекция может затрагивать верхние мочевые пути."
+    },
+    "Uncertainty: It might be a kidney infection.": {
+      "translation_uz": "Noaniqlik: Bu buyrak infeksiyasi bo'lishi mumkin.",
+      "translation_ru": "Неопределённость: Возможно, это инфекция почек."
+    },
+    "Urgent safety-netting: You must seek urgent medical attention.": {
+      "translation_uz": "Shoshilinch ogohlantirish: Zudlik bilan tibbiy yordamga murojaat qilishingiz shart.",
+      "translation_ru": "Срочное предупреждение: Вы должны немедленно обратиться за медицинской помощью."
+    },
+    "If the blood tests confirm anemia, we'll discuss iron replacement.": {
+      "translation_uz": "Agar qon tahlillari anemiyani tasdiqlasa, temir o'rnini to'ldirishni muhokama qilamiz.",
+      "translation_ru": "Если анализы крови подтвердят анемию, мы обсудим восполнение железа."
+    },
+    "If I start taking iron, will I feel better immediately?": {
+      "translation_uz": "Agar temir preparatini ichishni boshlasam, darhol o'zimni yaxshi his qilamanmi?",
+      "translation_ru": "Если я начну принимать железо, мне сразу станет лучше?"
+    },
+    "If your iron levels were normal, we would look for other causes of anemia.": {
+      "translation_uz": "Agar temir darajangiz normal bo'lganida, anemiyaning boshqa sabablarini qidirgan bo'lardik.",
+      "translation_ru": "Если бы уровень железа был нормальным, мы бы искали другие причины анемии."
+    },
+    "If the bleeding became much heavier, you would need urgent assessment.": {
+      "translation_uz": "Agar qon ketish ancha kuchayganida, sizga shoshilinch tekshiruv kerak bo'lardi.",
+      "translation_ru": "Если бы кровотечение стало значительно сильнее, вам потребовалась бы срочная оценка."
+    },
+    "What would you do if the bleeding became much heavier?": {
+      "translation_uz": "Agar qon ketish ancha kuchaysa, nima qilgan bo'lardingiz?",
+      "translation_ru": "Что бы вы сделали, если бы кровотечение стало значительно сильнее?"
+    },
+    "If the bleeding continues, we'll investigate.": {
+      "translation_uz": "Agar qon ketish davom etsa, tekshiruv o'tkazamiz.",
+      "translation_ru": "Если кровотечение продолжится, мы проведём обследование."
+    },
+    "If iron levels were normal, we would look for other causes.": {
+      "translation_uz": "Agar temir darajasi normal bo'lganida, boshqa sabablarni qidirgan bo'lardik.",
+      "translation_ru": "Если бы уровень железа был нормальным, мы бы искали другие причины."
+    },
+    "If your hemoglobin were severely low and you were clinically unstable, transfusion might be considered.": {
+      "translation_uz": "Agar gemoglobiningiz juda past va holatingiz klinik jihatdan beqaror bo'lganida, qon quyish ko'rib chiqilishi mumkin edi.",
+      "translation_ru": "Если бы гемоглобин был очень низким, а состояние — клинически нестабильным, можно было бы рассмотреть переливание крови."
+    },
+    "could and might express possibility rather than a guaranteed result.": {
+      "translation_uz": "could va might kafolatlangan natijani emas, ehtimolni bildiradi.",
+      "translation_ru": "could и might выражают возможность, а не гарантированный результат."
+    },
+    "I've been feeling increasingly tired for about a month.": {
+      "translation_uz": "Taxminan bir oydan beri o'zimni tobora charchagan his qilyapman.",
+      "translation_ru": "Уже около месяца я чувствую всё большую усталость."
+    },
+    "I haven't noticed bleeding, black stools, or fever.": {
+      "translation_uz": "Qon ketish, qora najas yoki isitmani sezmadim.",
+      "translation_ru": "Я не замечал кровотечения, чёрного стула или температуры."
+    },
+    "How long have you been feeling unwell?": {
+      "translation_uz": "Qachondan beri o'zingizni yomon his qilyapsiz?",
+      "translation_ru": "Как давно вы плохо себя чувствуете?"
+    },
+    "I've been feeling increasingly tired and short of breath for about a month.": {
+      "translation_uz": "Taxminan bir oydan beri o'zimni tobora charchagan his qilyapman va nafasim qisilyapti.",
+      "translation_ru": "Уже около месяца я чувствую всё большую усталость и одышку."
+    },
+    "I've been becoming breathless much more easily.": {
+      "translation_uz": "Nafasim ancha osonroq qisiladigan bo'lib qoldi.",
+      "translation_ru": "Одышка стала появляться гораздо легче."
+    },
+    "I first noticed it about four weeks ago.": {
+      "translation_uz": "Buni birinchi marta taxminan to'rt hafta oldin sezdim.",
+      "translation_ru": "Впервые я заметил это около четырёх недель назад."
+    },
+    "I didn't have any major infection.": {
+      "translation_uz": "Menda jiddiy infeksiya bo'lmadi.",
+      "translation_ru": "У меня не было серьёзной инфекции."
+    },
+    "Did anything happen before the symptoms began?": {
+      "translation_uz": "Simptomlar boshlanishidan oldin biror narsa sodir bo'ldimi?",
+      "translation_ru": "Что-нибудь происходило до появления симптомов?"
+    },
+    "I had been under considerable stress before the symptoms began.": {
+      "translation_uz": "Simptomlar boshlanishidan oldin men kuchli stress ostida edim.",
+      "translation_ru": "До появления симптомов я находился в сильном стрессе."
+    },
+    "I hadn't had any major infection or acute illness.": {
+      "translation_uz": "Menda jiddiy infeksiya yoki o'tkir kasallik bo'lmagan edi.",
+      "translation_ru": "У меня не было серьёзной инфекции или острого заболевания."
+    },
+    "Before the symptoms began, I had missed several doses.": {
+      "translation_uz": "Simptomlar boshlanishidan oldin bir nechta dozani o'tkazib yuborgan edim.",
+      "translation_ru": "До появления симптомов я пропустил несколько доз."
+    },
+    "I had been experiencing considerable stress before the symptoms began.": {
+      "translation_uz": "Simptomlar boshlanishidan oldin men kuchli stressni boshdan kechirgan edim.",
+      "translation_ru": "До появления симптомов я испытывал сильный стресс."
+    },
+    "I hadn't been taking my medication regularly.": {
+      "translation_uz": "Dorilarimni muntazam ichmagan edim.",
+      "translation_ru": "Я не принимал лекарства регулярно."
+    },
+    "He must seek emergency medical attention.": {
+      "translation_uz": "U shoshilinch tibbiy yordamga murojaat qilishi shart.",
+      "translation_ru": "Он должен обратиться за неотложной медицинской помощью."
+    },
+    "Blood samples will be taken.": {
+      "translation_uz": "Qon namunalari olinadi.",
+      "translation_ru": "Будут взяты образцы крови."
+    },
+    "Further investigation may be required.": {
+      "translation_uz": "Qo'shimcha tekshiruv talab qilinishi mumkin.",
+      "translation_ru": "Может потребоваться дополнительное обследование."
+    },
+    "Intravenous access has been established.": {
+      "translation_uz": "Vena ichiga kirish ta'minlandi.",
+      "translation_ru": "Установлен внутривенный доступ."
+    },
+    "Blood samples will be taken for further tests.": {
+      "translation_uz": "Qo'shimcha tahlillar uchun qon namunalari olinadi.",
+      "translation_ru": "Будут взяты образцы крови для дополнительных анализов."
+    },
+    "I haven't noticed bleeding.": {
+      "translation_uz": "Qon ketishini sezmadim.",
+      "translation_ru": "Я не замечал кровотечения."
+    },
+    "I've been feeling increasingly tired for a month.": {
+      "translation_uz": "Bir oydan beri o'zimni tobora charchagan his qilyapman.",
+      "translation_ru": "Уже месяц я чувствую всё большую усталость."
+    },
+    "I first noticed it four weeks ago.": {
+      "translation_uz": "Buni birinchi marta to'rt hafta oldin sezdim.",
+      "translation_ru": "Впервые я заметил это четыре недели назад."
+    },
+    "I hadn't had any major infection.": {
+      "translation_uz": "Menda jiddiy infeksiya bo'lmagan edi.",
+      "translation_ru": "У меня не было серьёзной инфекции."
+    },
+    "I had been experiencing stress before the symptoms began.": {
+      "translation_uz": "Simptomlar boshlanishidan oldin stressni boshdan kechirgan edim.",
+      "translation_ru": "До появления симптомов я испытывал стресс."
+    },
+    "If he develops severe chest pain, he must seek emergency care.": {
+      "translation_uz": "Agar unda kuchli ko'krak og'rig'i paydo bo'lsa, u shoshilinch yordamga murojaat qilishi shart.",
+      "translation_ru": "Если у него появится сильная боль в груди, он должен обратиться за неотложной помощью."
+    },
+    "I'd rather find the cause than treat the symptoms.": {
+      "translation_uz": "Simptomlarni davolagandan ko'ra sababini topganim ma'qul.",
+      "translation_ru": "Я бы предпочёл найти причину, чем лечить симптомы."
+    }
+  }
+}

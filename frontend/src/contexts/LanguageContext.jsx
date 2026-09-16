@@ -3027,7 +3027,8 @@ export function looksEnglish(s) {
   if (!s || typeof s !== 'string') return false;
   if (/[Ѐ-ӿ]/.test(s)) return false;
   if (/[oOgG][‘’'ʻ]/.test(s)) return false;
-  return !/(va|uchun|bilan|kerak|emas|bo'?lw*|qilw*|bemorw*|shifokor|ya'ni|masalan|odatda|ishlatiladi|bildiradi|ifodalaydi|savolw*|javobw*|so'?zw*)/i.test(s);
+  // faqat butun so'zlar: "va" → "evaluate", "vaccine" ichida uchramasin
+  return !/\b(va|uchun|bilan|kerak|emas|qil\w*|bemor\w*|shifokor|ya'ni|masalan|odatda|ishlatiladi|bildiradi|ifodalaydi|savol\w*|javob\w*)\b/i.test(s);
 }
 
 export function LanguageProvider({ children }) {
