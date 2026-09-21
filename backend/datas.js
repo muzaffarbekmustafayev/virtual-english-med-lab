@@ -1,19 +1,18 @@
 #!/usr/bin/env node
 /**
- * datas.js — datas/datas.json → MySQL
+ * datas.js — datas/<Specialty>/MODULE <N>/json/ → MySQL
  *
- *   node datas.js                 # seed every enabled specialty from datas/datas.json
- *   node datas.js --build         # first rebuild datas/datas.json from the Word files, then seed
+ *   node datas.js                 # seed every enabled specialty from the module json files
+ *   node datas.js --build         # first rebuild all module json files from the Word files, then seed
  *   node datas.js --all           # include specialties marked enabled:false (e.g. NURSING)
  *   node datas.js --only=STOM,PED # limit to the given specialty codes
  *   node datas.js --dry-run       # parse + validate + print what would change, no writes
- *   node datas.js --file=path.json
  *
  * What it does (idempotent — safe to run again after updating the Word files):
  *   1. adds any missing columns the current models need (no destructive ALTERs)
  *   2. upserts the 5 specialties (matched by `code`, falling back to legacy names)
  *   3. upserts every module (matched by specialty + order_index) and REPLACES its
- *      grammar / vocabulary / phrasebook / tests with the content from datas.json
+ *      grammar / vocabulary / phrasebook / tests with the content from the module json files
  *   4. leaves users, groups, conversations and results untouched
  *
  * Environment: reads backend/.env (DB_HOST, DB_USER, DB_PASS, DB_NAME …).
@@ -29,13 +28,12 @@ const config = require('./scripts/config');
 const ROOT = path.resolve(__dirname, '..');
 
 function parseArgs(argv) {
-  const a = { build: false, all: false, only: null, dryRun: false, file: null };
+  const a = { build: false, all: false, only: null, dryRun: false };
   for (const x of argv) {
     if (x === '--build') a.build = true;
     else if (x === '--all') a.all = true;
     else if (x === '--dry-run') a.dryRun = true;
     else if (x.startsWith('--only=')) a.only = x.slice(7).split(',').map(s => s.trim().toUpperCase()).filter(Boolean);
-    else if (x.startsWith('--file=')) a.file = x.slice(7);
     else if (x === '-h' || x === '--help') { console.log(fs.readFileSync(__filename, 'utf8').split('*/')[0]); process.exit(0); }
   }
   return a;
@@ -167,23 +165,73 @@ async function seedModule(specialtyRow, m, dryRun) {
   return { created, counts: { grammar: m.grammar.length, vocabulary: m.vocabulary.length, phrasebook: m.phrasebook.length, tests: m.tests.length } };
 }
 
+async function loadDataFromModules() {
+    const specialties = [];
+    const warnings = [];
+
+    for (const spec of config.specialties) {
+        const specDir = path.join(ROOT, config.DATAS_DIR, spec.folder);
+        if (!fs.existsSync(specDir)) {
+            warnings.push(`${spec.code}: folder "${spec.folder}" not found`);
+            continue;
+        }
+
+        const modules = [];
+        const moduleDirs = fs.readdirSync(specDir)
+            .filter(f => fs.statSync(path.join(specDir, f)).isDirectory() && /module/i.test(f))
+            .map(f => path.join(specDir, f));
+
+        for (const moduleDir of moduleDirs) {
+            const jsonDir = path.join(moduleDir, 'json');
+            if (!fs.existsSync(jsonDir)) continue;
+
+            const readJson = (fileName) => {
+                const filePath = path.join(jsonDir, fileName);
+                if (!fs.existsSync(filePath)) return null;
+                return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+            };
+
+            const metadata = readJson('metadata.json');
+            if (!metadata) continue;
+
+            modules.push({
+                ...metadata,
+                dialogue: readJson('dialogue.json') || [],
+                vocabulary: readJson('vocabulary.json') || [],
+                phrasebook: readJson('phrasebook.json') || [],
+                grammar: readJson('grammar.json') || [],
+                tests: readJson('tests.json') || [],
+                scenario: readJson('scenario.json'),
+            });
+        }
+
+        specialties.push({
+            ...spec,
+            modules: modules.sort((a, b) => a.order_index - b.order_index),
+        });
+    }
+
+    return {
+        specialties,
+        warnings,
+        generated_at: new Date().toISOString(),
+    };
+}
+
 async function main() {
   const args = parseArgs(process.argv.slice(2));
-  const file = path.resolve(ROOT, args.file || config.OUTPUT_FILE);
 
-  if (args.build || !fs.existsSync(file)) {
-    console.log(args.build ? '🔨 --build: datas/ ichidagi Word fayllardan datas.json qayta yig\'ilmoqda…' : `ℹ  ${path.relative(ROOT, file)} topilmadi — Word fayllardan yig'ilmoqda…`);
-    const { build, printSummary } = require('./scripts/build_datas');
-    const data = build({});
-    fs.writeFileSync(file, JSON.stringify(data, null, 1), 'utf8');
-    printSummary(data);
+  if (args.build) {
+    console.log('🔨 --build: datas/ ichidagi Word fayllardan module json fayllari qayta yig\'ilmoqda…');
+    const { execSync } = require('child_process');
+    execSync('node backend/scripts/build_module_jsons.js', { stdio: 'inherit' });
   }
 
-  const data = JSON.parse(fs.readFileSync(file, 'utf8'));
+  const data = await loadDataFromModules();
   const selected = data.specialties.filter(s => (args.all || s.enabled) && (!args.only || args.only.includes(s.code)));
   if (!selected.length) { console.error('❌ Hech qanday yo\'nalish tanlanmadi (enabled=false bo\'lsa --all yoki --only=CODE ishlating).'); process.exit(1); }
 
-  console.log(`\n📦 Manba: ${path.relative(ROOT, file)} (yaratilgan: ${data.generated_at})`);
+  console.log(`\n📦 Manba: Modul JSON fayllari (yaratilgan: ${data.generated_at})`);
   console.log(`🎯 Yo'nalishlar: ${selected.map(s => `${s.code} (${s.modules.length} modul)`).join(', ')}${args.dryRun ? '  [DRY RUN]' : ''}`);
 
   await sequelize.authenticate();
