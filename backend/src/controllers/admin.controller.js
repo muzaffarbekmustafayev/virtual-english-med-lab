@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const { Op } = require('sequelize');
 const { resolveEnrollment } = require('../services/enrollment.service');
+const { PASS_THRESHOLD } = require('../config/features');
 const {
   User, Specialty, StudentGroup, TeacherGroup,
   Module, Grammar, Vocabulary, Phrasebook, Test,
@@ -190,7 +191,7 @@ const getOverview = async (req, res) => {
       const convs = allConversations.filter((c) => c.module_id === m.id);
       const spec = specById.get(m.specialty_id);
       const studentIds = new Set(convs.map((c) => c.student_id));
-      const passed = convs.filter((c) => (c.overall_score || 0) >= 60).length;
+      const passed = convs.filter((c) => (c.overall_score || 0) >= PASS_THRESHOLD).length;
       return {
         id: m.id, title: m.title, title_uz: m.title_uz, title_ru: m.title_ru, title_en: m.title_en,
         order_index: m.order_index, specialty_name: spec ? spec.name : '—', specialty_code: spec ? spec.code : null,
@@ -231,7 +232,7 @@ const getOverview = async (req, res) => {
       active_students_30d: activeIds(30).size,
       new_students_30d: allStudents.filter((st) => new Date(st.created_at) >= since(30)).length,
       sessions_7d: allConversations.filter((c) => new Date(c.created_at) >= since(7)).length,
-      pass_rate: allConversations.length ? Math.round((allConversations.filter((c) => (c.overall_score || 0) >= 60).length / allConversations.length) * 100) : 0,
+      pass_rate: allConversations.length ? Math.round((allConversations.filter((c) => (c.overall_score || 0) >= PASS_THRESHOLD).length / allConversations.length) * 100) : 0,
       competencies: {
         grammar: avgOf(allConversations.map((c) => c.grammar_score || 0)),
         vocabulary: avgOf(allConversations.map((c) => c.vocabulary_score || 0)),

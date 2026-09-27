@@ -3,6 +3,7 @@ const {
   Conversation, Message, TestResult, ForumMessage, ModuleResult
 } = require('../models');
 const { Op } = require('sequelize');
+const { PASS_THRESHOLD } = require('../config/features');
 
 // ── GET /api/teacher/dashboard ──────────────────────────────
 const avgOf = (arr) => (arr.length ? Math.round(arr.reduce((a, b) => a + b, 0) / arr.length) : 0);
@@ -62,7 +63,7 @@ const getDashboard = async (req, res) => {
       let totalSum = 0;
       for (const score of moduleMap.values()) {
         totalSum += score;
-        if (score >= 60) passedCount++;
+        if (score >= PASS_THRESHOLD) passedCount++;
       }
 
       const sAvg = moduleMap.size > 0 ? Math.round(totalSum / moduleMap.size) : 0;
@@ -70,7 +71,7 @@ const getDashboard = async (req, res) => {
 
       let cefr = 'A2 Foundation';
       if (sAvg >= 85) cefr = 'B2 Clinical';
-      else if (sAvg >= 60) cefr = 'B1 Medical';
+      else if (sAvg >= PASS_THRESHOLD) cefr = 'B1 Medical';
 
       const scored = studentConvs.filter((c) => c.grammar_score || c.vocabulary_score || c.fluency_score || c.pronunciation_score || c.clinical_score);
       const comp = (key, factor) => (scored.length ? avgOf(scored.map((c) => c[key] || 0)) : Math.min(100, Math.round(sAvg * factor)));
@@ -135,9 +136,9 @@ const getDashboard = async (req, res) => {
         title: m.title, title_uz: m.title_uz, title_ru: m.title_ru, title_en: m.title_en,
         attempts: mConvs.length,
         students_attempted: bests.length,
-        students_passed: bests.filter((v) => v >= 60).length,
+        students_passed: bests.filter((v) => v >= PASS_THRESHOLD).length,
         avg_score: avgOf(bests),
-        completion_rate: list.length ? Math.round((bests.filter((v) => v >= 60).length / list.length) * 100) : 0,
+        completion_rate: list.length ? Math.round((bests.filter((v) => v >= PASS_THRESHOLD).length / list.length) * 100) : 0,
       };
     });
     const recent = (convs, n = 8) => convs.slice(0, n).map((c) => {
@@ -169,14 +170,14 @@ const getDashboard = async (req, res) => {
         average_progress: avgOf(groupStudents.map((s) => s.progress_percent)),
         completed_sessions: gConvs.length,
         sessions_7d: gConvs.filter((c) => Date.now() - new Date(c.created_at) <= 7 * DAY).length,
-        pass_rate: gConvs.length ? Math.round((gConvs.filter((c) => (c.overall_score || 0) >= 60).length / gConvs.length) * 100) : 0,
+        pass_rate: gConvs.length ? Math.round((gConvs.filter((c) => (c.overall_score || 0) >= PASS_THRESHOLD).length / gConvs.length) * 100) : 0,
         total_modules: gMods.length || totalModulesFallback,
         competencies: buildCompetencies(gConvs),
         activity_timeline: buildTimeline(gConvs),
         score_distribution: buildDistribution(gConvs),
         module_matrix: buildModuleMatrix(gMods.length ? gMods : allModules, groupStudents, gConvs),
         top_students: ranked.slice(0, 3),
-        weak_students: ranked.filter((s) => s.average_score < 60).slice(-3).reverse(),
+        weak_students: ranked.filter((s) => s.average_score < PASS_THRESHOLD).slice(-3).reverse(),
         recent_activity: recent(gConvs, 6),
         students: groupStudents,
       };
@@ -190,7 +191,7 @@ const getDashboard = async (req, res) => {
       average_progress: avgOf(allStudentsList.map((s) => s.progress_percent)),
       recent_conversations: conversations.length,
       sessions_7d: conversations.filter((c) => Date.now() - new Date(c.created_at) <= 7 * DAY).length,
-      pass_rate: conversations.length ? Math.round((conversations.filter((c) => (c.overall_score || 0) >= 60).length / conversations.length) * 100) : 0,
+      pass_rate: conversations.length ? Math.round((conversations.filter((c) => (c.overall_score || 0) >= PASS_THRESHOLD).length / conversations.length) * 100) : 0,
       competencies: buildCompetencies(conversations),
       activity_timeline: buildTimeline(conversations),
       score_distribution: buildDistribution(conversations),

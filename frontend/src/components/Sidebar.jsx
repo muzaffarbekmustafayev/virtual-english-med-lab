@@ -10,6 +10,7 @@ import {
   RiHeartPulseLine, RiCloseLine, RiBrainLine, RiBookLine,
   RiLightbulbLine, RiQuestionLine, RiHospitalLine, RiSettings4Line
 } from "react-icons/ri";
+import { Brain, BookOpen, MessageSquareText, HelpCircle, Layers3 } from "lucide-react";
 
 export default function Sidebar({ isOpen, onClose }) {
   const { user, logout } = useAuth();
@@ -44,11 +45,11 @@ export default function Sidebar({ isOpen, onClose }) {
       { section: t('nav_admin_structure_section') },
       { to: "/admin/groups", icon: RiHospitalLine, label: t('nav_admin_structure') },
       { section: t('nav_admin_content_section') },
-      { to: "/admin/content/grammar", icon: RiBrainLine, label: t('nav_admin_grammar') },
-      { to: "/admin/content/vocabulary", icon: RiBookLine, label: t('nav_admin_vocabulary') },
-      { to: "/admin/content/phrasebook", icon: RiLightbulbLine, label: t('nav_admin_phrasebook') },
-      { to: "/admin/content/quizzes", icon: RiQuestionLine, label: t('nav_admin_quizzes') },
-      { to: "/admin/content/scenarios", icon: RiFileListLine, label: t('nav_admin_modules') },
+      { to: "/admin/content/grammar",    icon: Brain,              label: t('nav_admin_grammar'),    lucideColor: 'text-amber-500',   activeBg: 'from-amber-500 to-orange-500' },
+      { to: "/admin/content/vocabulary", icon: BookOpen,           label: t('nav_admin_vocabulary'), lucideColor: 'text-indigo-500',  activeBg: 'from-indigo-500 to-violet-500' },
+      { to: "/admin/content/phrasebook", icon: MessageSquareText,  label: t('nav_admin_phrasebook'), lucideColor: 'text-cyan-500',    activeBg: 'from-cyan-500 to-teal-500' },
+      { to: "/admin/content/quizzes",    icon: HelpCircle,         label: t('nav_admin_quizzes'),    lucideColor: 'text-purple-500',  activeBg: 'from-purple-500 to-pink-500' },
+      { to: "/admin/content/scenarios",  icon: Layers3,            label: t('nav_admin_modules'),    lucideColor: 'text-emerald-500', activeBg: 'from-emerald-500 to-green-500' },
       { section: t('ui_account') },
       { to: "/admin/profile", icon: RiSettings4Line, label: t('nav_profile') },
     ],
@@ -106,6 +107,7 @@ export default function Sidebar({ isOpen, onClose }) {
           }
           const Icon = item.icon;
           const active = isActive(item);
+          const isLucide = item.lucideColor !== undefined;
           return (
             <NavLink
               key={item.to}
@@ -114,7 +116,24 @@ export default function Sidebar({ isOpen, onClose }) {
               onClick={() => onClose && onClose()}
               className={`sb-link mb-0.5 ${active ? 'active' : ''}`}
             >
-              <Icon className="sb-icon" />
+              {isLucide ? (
+                <span
+                  className={`
+                    sb-icon flex items-center justify-center w-7 h-7 rounded-lg transition-all duration-200
+                    ${active
+                      ? `bg-gradient-to-br ${item.activeBg} shadow-md`
+                      : 'bg-white/5'}
+                  `}
+                >
+                  <Icon
+                    size={14}
+                    strokeWidth={active ? 2.5 : 2}
+                    className={active ? 'text-white' : item.lucideColor}
+                  />
+                </span>
+              ) : (
+                <Icon className="sb-icon" />
+              )}
               <span className="truncate flex-1">{item.label}</span>
               {active && <span className="w-1.5 h-1.5 rounded-full bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.9)] shrink-0" />}
             </NavLink>

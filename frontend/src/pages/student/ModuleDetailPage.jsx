@@ -6,6 +6,7 @@ import VirtualPatientChat from '../../components/VirtualPatientChat';
 import GrammarStep, { pickLang } from '../../components/GrammarStep';
 import { looksEnglish } from '../../contexts/LanguageContext';
 import api from '../../lib/api';
+import { PASS_THRESHOLD } from '../../lib/constants';
 import { useLanguage } from '../../contexts/LanguageContext';
 import {
   RiCheckLine, RiArrowRightLine, RiArrowLeftLine,
@@ -370,7 +371,7 @@ export default function ModuleDetailPage() {
     try {
       const res = await api.post(`/student/modules/${id}/tests/submit`, { answers: testAnswers });
       setTestResult(res.data);
-      if (res.data.passed || res.data.score >= 60) {
+      if (res.data.passed || res.data.score >= PASS_THRESHOLD) {
         toast.success(t('quiz_submitted_ok', { score: res.data.score, correct: res.data.correct, total: res.data.total }));
         completeAndGoNext(6);
       } else {
@@ -963,7 +964,7 @@ export default function ModuleDetailPage() {
             ) : (() => {
               const gapScore = gapExercises.reduce((acc, ex) => acc + (gapAnswers[ex.id] === ex.answer ? 1 : 0), 0);
               const gapPercent = Math.round((gapScore / gapExercises.length) * 100);
-              const passed = gapPercent >= 60;
+              const passed = gapPercent >= PASS_THRESHOLD;
 
               return passed ? (
                 <div className="flex flex-wrap items-center gap-3">
@@ -1305,12 +1306,12 @@ export default function ModuleDetailPage() {
                     }`}
                   >
                     <RiRepeatLine className="text-base" />
-                    <span>{activeResult.score >= 60 ? (t('results_retry_btn')) : t('results_retry_chat')}</span>
+                    <span>{activeResult.score >= PASS_THRESHOLD ? (t('results_retry_btn')) : t('results_retry_chat')}</span>
                   </button>
 
                   {/* Next Module Button / Course Completion Banner */}
                   {module?.next_module ? (
-                    activeResult.score >= 60 ? (
+                    activeResult.score >= PASS_THRESHOLD ? (
                       <button
                         onClick={() => navigate(`/student/modules/${module.next_module.id}`)}
                         className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs sm:text-sm shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-between sm:justify-center gap-3 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"

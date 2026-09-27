@@ -4,6 +4,7 @@ import Layout from "../../components/Layout";
 import { useAuth } from "../../contexts/AuthContext";
 import { useLanguage } from "../../contexts/LanguageContext";
 import api from "../../lib/api";
+import { PASS_THRESHOLD } from "../../lib/constants";
 import { NoSpecialtyBanner } from "../../components/ui";
 import {
   RiBookOpenLine, RiTrophyLine, RiCheckboxCircleLine, RiBarChartLine,
@@ -221,7 +222,7 @@ export default function StudentDashboard() {
                   const title = getLocalized(m, 'title') || m.title;
                   const sc = m.score;
                   const isCompleted = m.is_completed;
-                  const scBadge = sc >= 80 ? "badge-emerald" : sc >= 60 ? "badge-blue" : sc > 0 ? "badge-rose" : "badge-slate";
+                  const scBadge = sc >= 80 ? "badge-emerald" : sc >= PASS_THRESHOLD ? "badge-blue" : sc > 0 ? "badge-rose" : "badge-slate";
 
                   return (
                     <div
@@ -301,7 +302,7 @@ export default function StudentDashboard() {
               <div className="divide-y divide-slate-100">
                 {data.recent_activity.map((a) => {
                   const sc = a.overall_score || 0;
-                  const scBadge = sc >= 80 ? "badge-emerald" : sc >= 60 ? "badge-amber" : "badge-rose";
+                  const scBadge = sc >= 80 ? "badge-emerald" : sc >= PASS_THRESHOLD ? "badge-amber" : "badge-rose";
                   return (
                     <div key={a.id} className="py-3.5 flex items-center justify-between gap-4 first:pt-0 last:pb-0 hover:bg-slate-50/50 px-2 rounded-xl transition-colors">
                       <div className="flex items-center gap-3">

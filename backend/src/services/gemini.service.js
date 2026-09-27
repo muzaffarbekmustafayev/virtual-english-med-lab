@@ -1,4 +1,5 @@
 const { GoogleGenAI } = require('@google/genai');
+const { PASS_THRESHOLD } = require('../config/features');
 
 const client = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
@@ -416,7 +417,7 @@ Evaluate the DOCTOR's messages ONLY (ignore the patient's messages).
    - fluency_score (1-10): Natural flow, logical question sequencing.
    - pronunciation_score (1-10): Word clarity, professional tone.
    - clinical_score (1-10): Patient history taking (SOCRATES / OPQRST format: site, onset, character, radiation, associations, time, severity, medical empathy).
-   - overall_score (0-100): Calculated score reflecting their overall performance. (Pass mark is 60. If the student conducted a genuine conversation with reasonable questions and terms, score >= 60).
+   - overall_score (0-100): Calculated score reflecting their overall performance. (Pass mark is ${PASS_THRESHOLD}. If the student conducted a genuine conversation with reasonable questions and terms, score >= ${PASS_THRESHOLD}).
 
 Return ONLY valid JSON matching this exact structure:
 {
@@ -520,7 +521,7 @@ No markdown outside the JSON, return purely the JSON object.
       overall_score: overall,
       target_vocab_used: vocabHits.length > 0 ? vocabHits : (context.vocabulary ? context.vocabulary.slice(0, 2) : []),
       target_phrases_used: phraseHits.length > 0 ? phraseHits : (context.phrases ? context.phrases.slice(0, 1) : []),
-      general_feedback: overall >= 60
+      general_feedback: overall >= PASS_THRESHOLD
         ? 'A\'lo darajadagi klinik muloqot! Bemor shikoyatlari va simptomlari aniq o\'rganildi.'
         : 'Muloqot yetarli darajada to\'liq bo\'lmadi. Ko\'proq klinik savollar berib, anamnez oling.',
       errors: [],

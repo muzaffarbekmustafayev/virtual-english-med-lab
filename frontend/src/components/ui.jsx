@@ -1,12 +1,13 @@
 // Umumiy premium UI bo'laklari: sarlavha, stat-tile, grafiklar, badge'lar, bo'sh holat.
 import { useLanguage } from '../contexts/LanguageContext';
 import { RiInboxLine } from 'react-icons/ri';
+import { PASS_THRESHOLD } from '../lib/constants';
 
 /* ── Score helpers ─────────────────────────────────────────── */
-export const scoreTone = (s) => (s >= 80 ? 'emerald' : s >= 60 ? 'blue' : s > 0 ? 'amber' : 'slate');
+export const scoreTone = (s) => (s >= 80 ? 'emerald' : s >= PASS_THRESHOLD ? 'blue' : s > 0 ? 'amber' : 'slate');
 export const scoreBadge = (s) => `badge-standard badge-${scoreTone(s)}`;
-export const scoreText = (s) => (s >= 80 ? 'text-emerald-600' : s >= 60 ? 'text-blue-600' : s > 0 ? 'text-amber-600' : 'text-slate-400');
-export const scoreBar = (s) => (s >= 80 ? 'bg-emerald-500' : s >= 60 ? 'bg-blue-500' : s > 0 ? 'bg-amber-500' : 'bg-slate-300');
+export const scoreText = (s) => (s >= 80 ? 'text-emerald-600' : s >= PASS_THRESHOLD ? 'text-blue-600' : s > 0 ? 'text-amber-600' : 'text-slate-400');
+export const scoreBar = (s) => (s >= 80 ? 'bg-emerald-500' : s >= PASS_THRESHOLD ? 'bg-blue-500' : s > 0 ? 'bg-amber-500' : 'bg-slate-300');
 
 export function ScoreBadge({ value, suffix = '%', className = '' }) {
   const v = Number(value) || 0;
@@ -272,7 +273,7 @@ export function RadialScore({ value = 0, size = 92, stroke = 9, label }) {
   const v = Math.max(0, Math.min(100, Number(value) || 0));
   const r = (size - stroke) / 2;
   const c = 2 * Math.PI * r;
-  const color = v >= 80 ? '#059669' : v >= 60 ? '#2563eb' : v > 0 ? '#d97706' : '#cbd5e1';
+  const color = v >= 80 ? '#059669' : v >= PASS_THRESHOLD ? '#2563eb' : v > 0 ? '#d97706' : '#cbd5e1';
   return (
     <div className="relative inline-flex items-center justify-center" style={{ width: size, height: size }}>
       <svg width={size} height={size} className="-rotate-90">

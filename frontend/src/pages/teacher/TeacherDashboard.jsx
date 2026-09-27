@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import api from '../../lib/api';
+import { PASS_THRESHOLD } from '../../lib/constants';
 import { useLanguage } from '../../contexts/LanguageContext';
 import {
   PageHeader, StatTile, SectionCard, EmptyState, Skeleton, Progress, Avatar,
@@ -58,7 +59,7 @@ export default function TeacherDashboard() {
       sessions_7d: data.sessions_7d, pass_rate: data.pass_rate, competencies: data.competencies,
       timeline: data.activity_timeline, distribution: data.score_distribution, matrix: null,
       top: [...all].filter((s) => s.completed_sessions > 0).sort((a, b) => b.average_score - a.average_score).slice(0, 3),
-      weak: all.filter((s) => s.completed_sessions > 0 && s.average_score < 60).sort((a, b) => a.average_score - b.average_score).slice(0, 3),
+      weak: all.filter((s) => s.completed_sessions > 0 && s.average_score < PASS_THRESHOLD).sort((a, b) => a.average_score - b.average_score).slice(0, 3),
       recent: data.recent_activity, total_modules: null,
     };
   }, [data, group]);

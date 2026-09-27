@@ -1,5 +1,5 @@
 const { Module, Grammar, Vocabulary, Phrasebook, Conversation, Message, Test, TestResult, User, ModuleResult, Specialty } = require('../models');
-const { UNLOCK_ALL_MODULES } = require('../config/features');
+const { UNLOCK_ALL_MODULES, PASS_THRESHOLD } = require('../config/features');
 const { getPatientReply, getPatientReplyStream, generateFeedback, checkGrammar, generatePatientScenario, tryParseScenario } = require('../services/gemini.service');
 
 // Bemor haqida talabaga ko'rsatsa bo'ladigan qism (tashxis va kutilgan javoblar YASHIRIN qoladi)
@@ -64,7 +64,7 @@ const recalculateAndSaveModuleResult = async (studentId, moduleId) => {
       combinedScore = bestQuizScore;
     }
 
-    const isCompleted = combinedScore >= 60 || bestChatScore >= 60;
+    const isCompleted = combinedScore >= PASS_THRESHOLD || bestChatScore >= PASS_THRESHOLD;
 
     let [modRes] = await ModuleResult.findOrCreate({
       where: { student_id: studentId, module_id: moduleId },
@@ -122,7 +122,7 @@ const getModules = async (req, res) => {
       const combinedScore = modRes ? (modRes.combined_score || 0) : chatScore;
       const bestScore = Math.max(chatScore, combinedScore);
 
-      const is_completed = bestScore >= 60 || (modRes && modRes.is_completed);
+      const is_completed = bestScore >= PASS_THRESHOLD || (modRes && modRes.is_completed);
       const is_unlocked = UNLOCK_ALL_MODULES || prevPassed;
       
       results.push({
@@ -163,7 +163,7 @@ const checkModuleUnlocked = async (studentId, specialtyId, targetModule) => {
       where: { student_id: studentId, module_id: pm.id, status: 'completed' },
       order: [['overall_score', 'DESC']]
     });
-    const passed = conv && conv.overall_score >= 60;
+    const passed = conv && conv.overall_score >= PASS_THRESHOLD;
     if (!passed) {
       return { unlocked: false };
     }
@@ -261,7 +261,7 @@ const getModuleProgress = async (req, res) => {
 
     const evaluationObj = lastConversation ? {
       score: lastConversation.overall_score || 0,
-      passed: (lastConversation.overall_score || 0) >= 60,
+      passed: (lastConversation.overall_score || 0) >= PASS_THRESHOLD,
       feedback: parsedFeedback.general_feedback || 'Klinik muloqot muvaffaqiyatli yakunlandi.',
       details: {
         grammar: lastConversation.grammar_score || 8,
@@ -296,7 +296,7 @@ const getModuleProgress = async (req, res) => {
         score: testResult.score,
         correct: testResult.correct,
         total: testResult.total,
-        passed: (testResult.score || 0) >= 60
+        passed: (testResult.score || 0) >= PASS_THRESHOLD
       } : null,
       module_result: moduleResult || null,
       next_module: nextModule
@@ -698,7 +698,7 @@ const finalizeConversation = async (req, res) => {
 
     const evaluationUnified = {
       score: feedback.overall_score || 0,
-      passed: (feedback.overall_score || 0) >= 60,
+      passed: (feedback.overall_score || 0) >= PASS_THRESHOLD,
       feedback: feedback.general_feedback || 'Klinik muloqot muvaffaqiyatli yakunlandi.',
       details: {
         grammar: feedback.grammar_score || 8,
@@ -807,7 +807,7 @@ const submitTest = async (req, res) => {
 
     const total = tests.length || 1;
     const score = Math.round((correct / total) * 100);
-    const passed = score >= 60;
+    const passed = score >= PASS_THRESHOLD;
 
     await TestResult.create({
       student_id: req.user.id,
@@ -870,15 +870,15 @@ const getDashboard = async (req, res) => {
       include: [{ model: Module, as: 'module', attributes: ['title', 'title_uz', 'title_ru', 'title_en', 'order_index'] }],
     });
 
-    // Count unique completed modules (where score >= 60)
+    // Count unique completed modules (where score >= PASS_THRESHOLD)
     const passedModuleIds = new Set();
     moduleResults.forEach(mr => {
-      if ((mr.is_completed || mr.combined_score >= 60 || mr.best_chat_score >= 60) && moduleIds.includes(mr.module_id)) {
+      if ((mr.is_completed || mr.combined_score >= PASS_THRESHOLD || mr.best_chat_score >= PASS_THRESHOLD) && moduleIds.includes(mr.module_id)) {
         passedModuleIds.add(mr.module_id);
       }
     });
     allConvs.forEach(c => {
-      if (c.overall_score >= 60 && moduleIds.includes(c.module_id)) {
+      if (c.overall_score >= PASS_THRESHOLD && moduleIds.includes(c.module_id)) {
         passedModuleIds.add(c.module_id);
       }
     });
@@ -927,7 +927,7 @@ const getDashboard = async (req, res) => {
       const quizScore = mr ? mr.best_quiz_score : null;
       const chatScore = mr ? mr.best_chat_score : (conv ? conv.overall_score : null);
       const combined = mr ? (mr.combined_score || chatScore || quizScore) : (conv ? conv.overall_score : null);
-      const isPassed = (combined && combined >= 60) || (mr && mr.is_completed) || passedModuleIds.has(m.id);
+      const isPassed = (combined && combined >= PASS_THRESHOLD) || (mr && mr.is_completed) || passedModuleIds.has(m.id);
 
       return {
         id: m.id,
@@ -948,7 +948,7 @@ const getDashboard = async (req, res) => {
     // Compute CEFR level
     let cefrLevel = 'A2 Foundation';
     if (avgScore >= 85) cefrLevel = 'B2 Clinical Pro';
-    else if (avgScore >= 60) cefrLevel = 'B1 Medical';
+    else if (avgScore >= PASS_THRESHOLD) cefrLevel = 'B1 Medical';
 
     const competencies = {
       grammar: countedCompetencies > 0 ? Math.round(bestGrammarSum / countedCompetencies) : Math.min(100, Math.round(avgScore * 0.95)),

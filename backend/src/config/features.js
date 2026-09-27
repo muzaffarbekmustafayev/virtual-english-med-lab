@@ -7,6 +7,6 @@ const UNLOCK_ALL_MODULES = process.env.UNLOCK_ALL_MODULES
   ? process.env.UNLOCK_ALL_MODULES === 'true'
   : true;
 
-const PASS_THRESHOLD = 60; // modul "o'tilgan" hisoblanadigan minimal ball (%)
+const PASS_THRESHOLD = 80; // modul "o'tilgan" hisoblanadigan minimal ball (%)
 
 module.exports = { UNLOCK_ALL_MODULES, PASS_THRESHOLD };

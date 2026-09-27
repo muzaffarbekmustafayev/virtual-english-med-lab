@@ -14,13 +14,86 @@ import {
   RiMentalHealthLine, RiBrainLine, RiListCheck2,
   RiNumbersLine, RiText, RiFileTextLine,
 } from 'react-icons/ri';
+import {
+  Brain, BookOpen, MessageSquareText, HelpCircle, Layers3,
+} from 'lucide-react';
 
 const TABS = [
-  { id: 'grammar',     name: 'nav_admin_grammar',       icon: RiBrainLine,      color: 'amber',   desc: 'cm_tab_grammar_desc' },
-  { id: 'vocabulary',  name: 'nav_admin_vocabulary',          icon: RiBookLine,       color: 'indigo',  desc: 'cm_tab_vocab_desc' },
-  { id: 'phrasebook',  name: 'nav_admin_phrasebook',         icon: RiLightbulbLine,  color: 'cyan',    desc: 'cm_tab_phrase_desc' },
-  { id: 'quizzes',     name: 'nav_admin_quizzes',          icon: RiQuestionLine,   color: 'purple',  desc: 'cm_tab_quiz_desc' },
-  { id: 'scenarios',   name: 'nav_admin_modules',         icon: RiFileListLine,   color: 'emerald', desc: 'cm_tab_modules_desc' },
+  {
+    id: 'grammar',
+    name: 'nav_admin_grammar',
+    icon: RiBrainLine,
+    lucideIcon: Brain,
+    color: 'amber',
+    desc: 'cm_tab_grammar_desc',
+    gradient: 'from-amber-500 to-orange-500',
+    activeBg: 'bg-gradient-to-br from-amber-500 to-orange-500',
+    activeText: 'text-white',
+    activeGlow: 'shadow-amber-500/40',
+    inactiveText: 'text-amber-600',
+    inactiveBg: 'bg-amber-50 hover:bg-amber-100',
+    pill: 'bg-amber-100 text-amber-700',
+  },
+  {
+    id: 'vocabulary',
+    name: 'nav_admin_vocabulary',
+    icon: RiBookLine,
+    lucideIcon: BookOpen,
+    color: 'indigo',
+    desc: 'cm_tab_vocab_desc',
+    gradient: 'from-indigo-500 to-violet-500',
+    activeBg: 'bg-gradient-to-br from-indigo-500 to-violet-500',
+    activeText: 'text-white',
+    activeGlow: 'shadow-indigo-500/40',
+    inactiveText: 'text-indigo-600',
+    inactiveBg: 'bg-indigo-50 hover:bg-indigo-100',
+    pill: 'bg-indigo-100 text-indigo-700',
+  },
+  {
+    id: 'phrasebook',
+    name: 'nav_admin_phrasebook',
+    icon: RiLightbulbLine,
+    lucideIcon: MessageSquareText,
+    color: 'cyan',
+    desc: 'cm_tab_phrase_desc',
+    gradient: 'from-cyan-500 to-teal-500',
+    activeBg: 'bg-gradient-to-br from-cyan-500 to-teal-500',
+    activeText: 'text-white',
+    activeGlow: 'shadow-cyan-500/40',
+    inactiveText: 'text-cyan-600',
+    inactiveBg: 'bg-cyan-50 hover:bg-cyan-100',
+    pill: 'bg-cyan-100 text-cyan-700',
+  },
+  {
+    id: 'quizzes',
+    name: 'nav_admin_quizzes',
+    icon: RiQuestionLine,
+    lucideIcon: HelpCircle,
+    color: 'purple',
+    desc: 'cm_tab_quiz_desc',
+    gradient: 'from-purple-500 to-pink-500',
+    activeBg: 'bg-gradient-to-br from-purple-500 to-pink-500',
+    activeText: 'text-white',
+    activeGlow: 'shadow-purple-500/40',
+    inactiveText: 'text-purple-600',
+    inactiveBg: 'bg-purple-50 hover:bg-purple-100',
+    pill: 'bg-purple-100 text-purple-700',
+  },
+  {
+    id: 'scenarios',
+    name: 'nav_admin_modules',
+    icon: RiFileListLine,
+    lucideIcon: Layers3,
+    color: 'emerald',
+    desc: 'cm_tab_modules_desc',
+    gradient: 'from-emerald-500 to-green-500',
+    activeBg: 'bg-gradient-to-br from-emerald-500 to-green-500',
+    activeText: 'text-white',
+    activeGlow: 'shadow-emerald-500/40',
+    inactiveText: 'text-emerald-600',
+    inactiveBg: 'bg-emerald-50 hover:bg-emerald-100',
+    pill: 'bg-emerald-100 text-emerald-700',
+  },
 ];
 
 const COLOR_MAP = {
@@ -136,6 +209,56 @@ export default function ContentManager() {
         />
       </div>
 
+      {/* ── Tab Navigatsiya Paneli ── */}
+      <div className="mb-6">
+        <div className="bg-white/80 backdrop-blur-sm border border-slate-200 rounded-2xl p-2 shadow-sm">
+          <div className="flex gap-1.5 overflow-x-auto scrollbar-none">
+            {TABS.map((tabItem) => {
+              const isActive = tab === tabItem.id;
+              const LucideIcon = tabItem.lucideIcon;
+              return (
+                <button
+                  key={tabItem.id}
+                  onClick={() => navigate(`/admin/content/${tabItem.id}`)}
+                  className={`
+                    relative flex items-center gap-2.5 px-4 py-2.5 rounded-xl font-semibold text-sm
+                    transition-all duration-300 whitespace-nowrap flex-shrink-0
+                    ${
+                      isActive
+                        ? `${tabItem.activeBg} ${tabItem.activeText} shadow-lg ${tabItem.activeGlow}`
+                        : `${tabItem.inactiveBg} ${tabItem.inactiveText}`
+                    }
+                  `}
+                >
+                  <span
+                    className={`
+                      flex items-center justify-center w-7 h-7 rounded-lg transition-all duration-300
+                      ${
+                        isActive
+                          ? 'bg-white/20'
+                          : 'bg-white shadow-sm border border-slate-200'
+                      }
+                    `}
+                  >
+                    <LucideIcon
+                      size={15}
+                      className={isActive ? 'text-white' : tabItem.inactiveText}
+                      strokeWidth={isActive ? 2.5 : 2}
+                    />
+                  </span>
+                  <span className={isActive ? 'text-white font-bold' : 'font-semibold'}>
+                    {t(tabItem.name)}
+                  </span>
+                  {isActive && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-white/70 shadow-sm ml-0.5" />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
       <div className="bg-white border border-slate-200 rounded-2xl p-4 mb-6 shadow-sm">
         <div className="flex flex-col sm:flex-row gap-4 mb-4 border-b border-slate-100 pb-4">
           <div className="flex-1">
@@ -186,7 +309,7 @@ export default function ContentManager() {
                   >
                     <div className="flex items-center justify-between">
                       <span className={`text-[10px] font-bold uppercase ${isSel ? 'text-indigo-200' : 'text-slate-400'}`}>
-                        Modul {m.order_index}
+                        {t('cm_module_label')} {m.order_index}
                       </span>
                       {isSel && <RiCheckLine className="text-sm" />}
                     </div>
@@ -297,7 +420,7 @@ export default function ContentManager() {
                       </span>
                     </div>
                     {item.definition && (
-                      <p className="text-xs text-slate-600 mt-1"><b>Ta'rif:</b> {item.definition}</p>
+                      <p className="text-xs text-slate-600 mt-1"><b>{t('cm_definition_label')}</b> {item.definition}</p>
                     )}
                     {item.example && (
                       <p className="text-xs text-slate-500 italic mt-0.5 bg-slate-50 px-2.5 py-1 rounded border border-slate-100">
@@ -325,7 +448,7 @@ export default function ContentManager() {
                     </div>
                     <p className="text-sm font-bold text-slate-900 leading-snug">"{item.phrase}"</p>
                     {item.hint_uz && (
-                      <p className="text-xs text-slate-500 mt-1"><b>Ma'nosi:</b> {item.hint_uz}</p>
+                      <p className="text-xs text-slate-500 mt-1"><b>{t('cm_meaning_label')}</b> {item.hint_uz}</p>
                     )}
                   </div>
                 </div>
@@ -386,7 +509,7 @@ export default function ContentManager() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ml-9">
                   <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
                     <span className="text-[11px] font-bold uppercase tracking-wider text-indigo-600 flex items-center gap-1.5">
-                      <RiStethoscopeLine /> Bemor Konteksti
+                      <RiStethoscopeLine /> {t('cm_patient_context_badge')}
                     </span>
                     <p className="text-xs text-slate-700 whitespace-pre-wrap leading-relaxed">
                       {item.patient_context || t('cm_no_context')}
@@ -394,7 +517,7 @@ export default function ContentManager() {
                   </div>
                   <div className="p-4 bg-purple-50/50 border border-purple-200 rounded-xl space-y-2">
                     <span className="text-[11px] font-bold uppercase tracking-wider text-purple-700 flex items-center gap-1.5">
-                      <RiBrainLine /> Final Challenge
+                      <RiBrainLine /> {t('cm_final_challenge_badge')}
                     </span>
                     <p className="text-xs text-slate-700 whitespace-pre-wrap leading-relaxed">
                       {item.final_challenge_context || t('cm_no_final')}
@@ -522,7 +645,7 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
                   {isEdit ? t('cm_edit_module') : t('cm_create_module')}
                 </h3>
                 <p className="text-emerald-100 text-xs mt-0.5">
-                  {isEdit ? form.title : `${STEPS[step - 1].label} — ${step}/3 bosqich`}
+                  {isEdit ? form.title : t('cm_step_of_total').replace('{step}', step)}
                 </p>
               </div>
             </div>
@@ -580,12 +703,12 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
                   />
                 </FormField>
 
-                <FormField label="Mutaxassislik" icon={RiStethoscopeLine} required>
+                <FormField label={t('cm_specialty_label')} icon={RiStethoscopeLine} required>
                   {specialties.length === 0 ? (
                     <div className="bg-amber-50 border border-amber-200 p-3 rounded-xl flex items-center justify-between">
                       <span className="text-amber-800 text-sm font-medium">{t('cm_no_specialty_created')}</span>
                       <a href="/admin/groups" className="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-lg transition-colors">
-                        Yaratish
+                        {t('cm_create_btn')}
                       </a>
                     </div>
                   ) : (
@@ -645,9 +768,9 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
                 />
                 <div className="flex items-center justify-between mt-1">
                   <span className={`text-xs font-medium ${form.patient_context.length > 10 ? 'text-emerald-600' : 'text-slate-400'}`}>
-                    {form.patient_context.length > 10 ? '✓ Yaxshi!' : 'Kamida 10 ta belgi'}
+                    {form.patient_context.length > 10 ? t('cm_chars_valid') : t('cm_min_10_chars')}
                   </span>
-                  <span className="text-xs text-slate-400">{form.patient_context.length} belgi</span>
+                  <span className="text-xs text-slate-400">{t('cm_char_count').replace('{n}', form.patient_context.length)}</span>
                 </div>
               </FormField>
             </div>
@@ -657,7 +780,7 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
           {step === 3 && (
             <div className="space-y-5">
               <SectionHeader icon={RiBrainLine} title={t('cm_final_section')}
-                desc="Suhbat so'ngida talabaga beriladigan murakkab holat (inglizcha)" />
+                desc={t('cm_final_desc_hint')} />
 
               <FormField label={t('cm_final_context')} icon={RiSparklingLine}>
                 <textarea
@@ -667,7 +790,7 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
                   rows={9}
                   className="form-input resize-none font-mono text-xs leading-relaxed"
                 />
-                <span className="text-xs text-slate-400 mt-1 block text-right">{form.final_challenge_context.length} belgi</span>
+                <span className="text-xs text-slate-400 mt-1 block text-right">{t('cm_char_count').replace('{n}', form.final_challenge_context.length)}</span>
               </FormField>
 
               {/* Preview */}
@@ -714,7 +837,7 @@ function ModuleModal({ initialData, specialties, totalModules, onClose, onSaved 
               disabled={!canNext()}
               className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold transition disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              Keyingi <RiArrowRightLine />
+              {t('cm_next_btn')} <RiArrowRightLine />
             </button>
           ) : (
             <button
@@ -882,7 +1005,7 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
 
                 <div className="p-3 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
                   <p className="text-xs font-bold text-slate-700">{t('cm_formula_section')}</p>
-                  <FormField label="🇬🇧 Formula (English)">
+                  <FormField label={t('cm_formula_en')}>
                     <input
                       type="text"
                       value={form.structure_pattern_en || form.structure_pattern || ''}
@@ -895,7 +1018,7 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                     />
                   </FormField>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    <FormField label="🇺🇿 Formula (O'zbekcha)">
+                    <FormField label={t('cm_formula_uz')}>
                       <input
                         type="text"
                         value={form.structure_pattern_uz || ''}
@@ -929,7 +1052,7 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                 <div className="p-3 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
                   <p className="text-xs font-bold text-slate-700">{t('cm_translations_section')}</p>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                    <FormField label="🇺🇿 O'zbekcha" required>
+                    <FormField label={t('cm_lang_uz')} required>
                       <input type="text" value={form.translation_uz || form.translation || ''}
                         onChange={e => { set('translation_uz', e.target.value); set('translation', e.target.value); }}
                         placeholder="Tish og'rig'i" className="form-input text-sm" required />
@@ -953,7 +1076,7 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                       placeholder={t('cm_definition_en_ph')} className="form-input text-sm" />
                   </FormField>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    <FormField label="🇺🇿 O'zbekcha Ta'rif">
+                    <FormField label={t('cm_definition_uz')}>
                       <input type="text" value={form.definition_uz || ''} onChange={e => set('definition_uz', e.target.value)}
                         placeholder={t('cm_definition_uz_ph')} className="form-input text-sm" />
                     </FormField>
@@ -1043,13 +1166,13 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
                             type="text"
                             value={form[key] || ''}
                             onChange={e => set(key, e.target.value)}
-                            placeholder={`Variant ${opt}...`}
+                            placeholder={`${t('cm_correct_answer')} ${opt}...`}
                             className="flex-1 bg-transparent text-xs text-slate-800 placeholder-gray-400 outline-none"
                             required
                           />
                           {isChecked && (
                             <span className="text-[10px] font-bold text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-md shrink-0">
-                              To'g'ri
+                              {t('cm_correct_badge')}
                             </span>
                           )}
                         </div>
@@ -1065,11 +1188,11 @@ function ContentModal({ tab, moduleId, initialData, onClose, onSaved }) {
           <div className="p-5 border-t border-slate-100 bg-slate-50/80 flex items-center justify-end gap-3">
             <button type="button" onClick={onClose}
               className="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 text-sm font-bold hover:bg-slate-100 transition">
-              Bekor Qilish
+              {t('cm_cancel')}
             </button>
             <button type="submit" disabled={saving}
               className={`flex items-center gap-2 px-6 py-2.5 rounded-xl ${colors.bg} text-white text-sm font-bold shadow-sm transition disabled:opacity-50 hover:opacity-90`}>
-              <RiSave3Line /> {saving ? 'Saqlanmoqda...' : isEdit ? 'Yangilash' : "Qo'shish"}
+              <RiSave3Line /> {saving ? t('ui_saving') : isEdit ? t('cm_update') : t('cm_add_btn')}
             </button>
           </div>
         </form>
