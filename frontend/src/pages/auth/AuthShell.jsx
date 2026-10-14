@@ -25,7 +25,7 @@ export default function AuthShell({ heroTitle1, heroTitle2, heroDesc, features, 
             <RiHeartPulseLine size={24} />
           </div>
           <div>
-            <p className="text-white text-lg font-extrabold tracking-tight leading-none">UzMedik</p>
+            <p className="text-white text-lg font-extrabold tracking-tight leading-none">Clinical English Hub</p>
             <p className="text-emerald-300/80 text-[10px] font-bold tracking-[0.18em] uppercase mt-1">{t('app_title')} · {t('app_subtitle')}</p>
           </div>
         </div>
@@ -48,19 +48,19 @@ export default function AuthShell({ heroTitle1, heroTitle2, heroDesc, features, 
         </div>
 
         <div className="relative z-10 flex items-center justify-between text-slate-500 text-xs font-medium">
-          <span>© {new Date().getFullYear()} UzMedik. {t('login_footer_rights')}.</span>
+          <span>© {new Date().getFullYear()} Clinical English Hub. {t('login_footer_rights')}.</span>
           <span className="inline-flex items-center gap-1.5"><RiShieldCheckLine className="text-emerald-500" /> {t('login_secure')}</span>
         </div>
       </div>
 
       {/* ── Form pane ── */}
       <div className="flex-1 flex flex-col relative bg-[radial-gradient(700px_300px_at_100%_0%,rgba(37,99,235,0.06),transparent_60%)]">
-        <div className="flex items-center justify-between p-4 sm:p-6">
-          <div className="lg:hidden flex items-center gap-2.5">
-            <div className="w-9 h-9 bg-slate-900 rounded-xl flex items-center justify-center text-white shadow-md"><RiHeartPulseLine size={20} /></div>
-            <span className="text-slate-900 text-lg font-extrabold tracking-tight">UzMedik</span>
+        <div className="flex items-center justify-between p-3.5 sm:p-6">
+          <div className="lg:hidden flex items-center gap-2 min-w-0">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 bg-slate-900 rounded-xl flex items-center justify-center text-white shadow-md shrink-0"><RiHeartPulseLine size={18} /></div>
+            <span className="text-slate-900 text-base sm:text-lg font-extrabold tracking-tight truncate">Clinical English Hub</span>
           </div>
-          <div className="ml-auto"><LanguageSelector variant="compact" /></div>
+          <div className="ml-auto shrink-0"><LanguageSelector variant="compact" /></div>
         </div>
 
         <div className="flex-1 flex items-center justify-center px-5 sm:px-8 pb-10">

@@ -1,6 +1,6 @@
 const {
   User, StudentGroup, TeacherGroup, Module, Specialty,
-  Conversation, Message, TestResult, ForumMessage, ModuleResult
+  Conversation, Message, TestResult, ForumMessage, ModuleResult, ExamResult
 } = require('../models');
 const { Op } = require('sequelize');
 const { PASS_THRESHOLD } = require('../config/features');

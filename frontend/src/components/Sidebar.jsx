@@ -10,7 +10,6 @@ import {
   RiHeartPulseLine, RiCloseLine, RiBrainLine, RiBookLine,
   RiLightbulbLine, RiQuestionLine, RiHospitalLine, RiSettings4Line
 } from "react-icons/ri";
-import { Brain, BookOpen, MessageSquareText, HelpCircle, Layers3 } from "lucide-react";
 
 export default function Sidebar({ isOpen, onClose }) {
   const { user, logout } = useAuth();
@@ -45,11 +44,11 @@ export default function Sidebar({ isOpen, onClose }) {
       { section: t('nav_admin_structure_section') },
       { to: "/admin/groups", icon: RiHospitalLine, label: t('nav_admin_structure') },
       { section: t('nav_admin_content_section') },
-      { to: "/admin/content/grammar",    icon: Brain,              label: t('nav_admin_grammar'),    lucideColor: 'text-amber-500',   activeBg: 'from-amber-500 to-orange-500' },
-      { to: "/admin/content/vocabulary", icon: BookOpen,           label: t('nav_admin_vocabulary'), lucideColor: 'text-indigo-500',  activeBg: 'from-indigo-500 to-violet-500' },
-      { to: "/admin/content/phrasebook", icon: MessageSquareText,  label: t('nav_admin_phrasebook'), lucideColor: 'text-cyan-500',    activeBg: 'from-cyan-500 to-teal-500' },
-      { to: "/admin/content/quizzes",    icon: HelpCircle,         label: t('nav_admin_quizzes'),    lucideColor: 'text-purple-500',  activeBg: 'from-purple-500 to-pink-500' },
-      { to: "/admin/content/scenarios",  icon: Layers3,            label: t('nav_admin_modules'),    lucideColor: 'text-emerald-500', activeBg: 'from-emerald-500 to-green-500' },
+      { to: "/admin/content/grammar",    icon: RiBrainLine,        label: t('nav_admin_grammar'),    lucideColor: 'text-amber-500',   activeBg: 'from-amber-500 to-orange-500' },
+      { to: "/admin/content/vocabulary", icon: RiBookLine,         label: t('nav_admin_vocabulary'), lucideColor: 'text-indigo-500',  activeBg: 'from-indigo-500 to-violet-500' },
+      { to: "/admin/content/phrasebook", icon: RiChatSmile2Line,   label: t('nav_admin_phrasebook'), lucideColor: 'text-cyan-500',    activeBg: 'from-cyan-500 to-teal-500' },
+      { to: "/admin/content/quizzes",    icon: RiQuestionLine,     label: t('nav_admin_quizzes'),    lucideColor: 'text-purple-500',  activeBg: 'from-purple-500 to-pink-500' },
+      { to: "/admin/content/scenarios",  icon: RiHospitalLine,     label: t('nav_admin_modules'),    lucideColor: 'text-emerald-500', activeBg: 'from-emerald-500 to-green-500' },
       { section: t('ui_account') },
       { to: "/admin/profile", icon: RiSettings4Line, label: t('nav_profile') },
     ],

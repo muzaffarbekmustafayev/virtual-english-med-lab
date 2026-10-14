@@ -158,6 +158,121 @@ export default function StudentDashboard() {
           </div>
         </div>
 
+        {/* ── 3.5. Curriculum Milestones (Oraliq va Yakuniy Imtihonlar) ── */}
+        <div className="card-standard p-6 sm:p-7 bg-white border border-slate-200/90 shadow-2xs space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+            <div>
+              <h2 className="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <RiAwardLine className="text-amber-500 text-base" />
+                <span>O'quv Dasturi Marralari (Imtihonlar)</span>
+              </h2>
+              <p className="text-xs text-slate-500 font-medium mt-0.5">
+                5-moduldan so'ng Oraliq imtihon, 10-moduldan so'ng Yakuniy imtihon qo'yiladi (Oliy hamshiralikda 1–6 va 7–12 oralig'i).
+              </p>
+            </div>
+            <button
+              onClick={() => navigate('/student/modules')}
+              className="text-xs font-bold text-blue-600 hover:text-blue-800 transition-colors flex items-center gap-1"
+            >
+              <span>Barcha modullar</span>
+              <RiArrowRightLine />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {(user?.specialty?.code === 'NURSING' || totalCount === 18) ? (
+              <>
+                <div
+                  onClick={() => navigate('/student/exams/midterm_1')}
+                  className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 hover:border-amber-400 hover:shadow-xs transition-all cursor-pointer flex flex-col justify-between"
+                >
+                  <div>
+                    <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-black uppercase">
+                      Oraliq I (1–6)
+                    </span>
+                    <h3 className="text-sm font-extrabold text-slate-900 mt-2">Oraliq imtihon I</h3>
+                    <p className="text-xs text-slate-500 mt-1">1–6-modullar yakuni bo'yicha integratsiyalashgan klinik attestatsiya.</p>
+                  </div>
+                  <div className="mt-3 pt-3 border-t border-amber-200/60 flex items-center justify-between text-xs font-bold text-amber-700">
+                    <span>{completedCount >= 6 ? "Topshirishga tayyor" : "1–6-modullarni yakunlang"}</span>
+                    <RiArrowRightLine />
+                  </div>
+                </div>
+
+                <div
+                  onClick={() => navigate('/student/exams/midterm_2')}
+                  className="p-4 rounded-2xl bg-orange-50/70 border border-orange-200 hover:border-orange-400 hover:shadow-xs transition-all cursor-pointer flex flex-col justify-between"
+                >
+                  <div>
+                    <span className="px-2 py-0.5 rounded-full bg-orange-100 text-orange-800 text-[10px] font-black uppercase">
+                      Oraliq II (7–12)
+                    </span>
+                    <h3 className="text-sm font-extrabold text-slate-900 mt-2">Oraliq imtihon II</h3>
+                    <p className="text-xs text-slate-500 mt-1">7–12-modullar bo'yicha chuqurlashtirilgan oraliq imtihon.</p>
+                  </div>
+                  <div className="mt-3 pt-3 border-t border-orange-200/60 flex items-center justify-between text-xs font-bold text-orange-700">
+                    <span>{completedCount >= 12 ? "Topshirishga tayyor" : "7–12-modullarni yakunlang"}</span>
+                    <RiArrowRightLine />
+                  </div>
+                </div>
+
+                <div
+                  onClick={() => navigate('/student/exams/final')}
+                  className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200 hover:border-emerald-400 hover:shadow-xs transition-all cursor-pointer flex flex-col justify-between"
+                >
+                  <div>
+                    <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase">
+                      Final (1–18)
+                    </span>
+                    <h3 className="text-sm font-extrabold text-slate-900 mt-2">Yakuniy Davlat Imtihoni</h3>
+                    <p className="text-xs text-slate-500 mt-1">To'liq 18 ta modul bo'yicha yakuniy attestatsiya va rasmiy sertifikat.</p>
+                  </div>
+                  <div className="mt-3 pt-3 border-t border-emerald-200/60 flex items-center justify-between text-xs font-bold text-emerald-700">
+                    <span>{completedCount >= 18 ? "Attestatsiyaga kirish" : "Barcha modullarni o'ting"}</span>
+                    <RiArrowRightLine />
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div
+                  onClick={() => navigate('/student/exams/midterm')}
+                  className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 hover:border-amber-400 hover:shadow-xs transition-all cursor-pointer flex flex-col justify-between"
+                >
+                  <div>
+                    <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-black uppercase">
+                      Oraliq Imtihon (1–5)
+                    </span>
+                    <h3 className="text-sm font-extrabold text-slate-900 mt-2">Oraliq imtihon (Midterm Exam)</h3>
+                    <p className="text-xs text-slate-500 mt-1">1–5-modullar bo'yicha integratsiyalashgan klinik test va virtual bemor imtihoni.</p>
+                  </div>
+                  <div className="mt-3 pt-3 border-t border-amber-200/60 flex items-center justify-between text-xs font-bold text-amber-700">
+                    <span>{completedCount >= 5 ? "Topshirishga tayyor" : "1–5-modullarni yakunlang"}</span>
+                    <RiArrowRightLine />
+                  </div>
+                </div>
+
+                <div
+                  onClick={() => navigate('/student/exams/final')}
+                  className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200 hover:border-emerald-400 hover:shadow-xs transition-all cursor-pointer flex flex-col justify-between"
+                >
+                  <div>
+                    <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase">
+                      Final Exam (1–10)
+                    </span>
+                    <h3 className="text-sm font-extrabold text-slate-900 mt-2">Yakuniy imtihon (Final Exam)</h3>
+                    <p className="text-xs text-slate-500 mt-1">Kurs bo'yicha to'liq yakuniy attestatsiya va malaka sertifikati imtihoni.</p>
+                  </div>
+                  <div className="mt-3 pt-3 border-t border-emerald-200/60 flex items-center justify-between text-xs font-bold text-emerald-700">
+                    <span>{completedCount >= 10 ? "Topshirishga tayyor" : "10 ta modulni yakunlang"}</span>
+                    <RiArrowRightLine />
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+
         {/* ── 4. DETAILED PERSONAL RESULTS & COMPETENCY MATRIX ── */}
         <div className="space-y-6">
           {/* Competency Matrix */}
@@ -174,7 +289,7 @@ export default function StudentDashboard() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 sm:gap-3.5">
               {[
                 { name: t('comp_grammar'),       icon: RiBrainLine,       score: comps.grammar,       color: 'bg-indigo-600' },
                 { name: t('comp_vocabulary'), icon: RiBookOpenLine,    score: comps.vocabulary,    color: 'bg-blue-600' },
@@ -184,14 +299,14 @@ export default function StudentDashboard() {
               ].map((item, idx) => {
                 const Icon = item.icon;
                 return (
-                  <div key={idx} className="bg-slate-50/80 border border-slate-200/70 rounded-2xl p-3.5 space-y-2">
+                  <div key={idx} className="bg-slate-50/80 border border-slate-200/70 rounded-2xl p-3 sm:p-3.5 space-y-2">
                     <div className="flex items-center justify-between">
                       <div className="w-7 h-7 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-700 shadow-2xs">
                         <Icon size={14} />
                       </div>
                       <span className="text-xs font-black text-slate-900">{item.score}%</span>
                     </div>
-                    <p className="text-xs font-bold text-slate-800 leading-tight">{item.name}</p>
+                    <p className="text-xs font-bold text-slate-800 leading-tight truncate">{item.name}</p>
                     <div className="w-full bg-slate-200/80 rounded-full h-1.5 overflow-hidden">
                       <div className={`${item.color} h-1.5 rounded-full transition-all duration-700`} style={{ width: `${item.score}%` }} />
                     </div>

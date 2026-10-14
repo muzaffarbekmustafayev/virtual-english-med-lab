@@ -77,6 +77,13 @@ ModuleResult.belongsTo(Module, { foreignKey: 'module_id',  as: 'module'  });
 User.hasMany(ModuleResult,     { foreignKey: 'student_id', as: 'moduleResults' });
 Module.hasMany(ModuleResult,   { foreignKey: 'module_id',  as: 'moduleResults' });
 
+// ExamResult (Midterms & Finals)
+const ExamResult   = require('./ExamResult');
+ExamResult.belongsTo(User,      { foreignKey: 'student_id',   as: 'student' });
+ExamResult.belongsTo(Specialty, { foreignKey: 'specialty_id', as: 'specialty' });
+User.hasMany(ExamResult,        { foreignKey: 'student_id',   as: 'examResults' });
+Specialty.hasMany(ExamResult,   { foreignKey: 'specialty_id', as: 'examResults' });
+
 // ── Exports ──────────────────────────────────────────────────
 module.exports = {
   Specialty,
@@ -93,5 +100,7 @@ module.exports = {
   TestResult,
   ForumMessage,
   ModuleResult,
+  ExamResult,
 };
+
 

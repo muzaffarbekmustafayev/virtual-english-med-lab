@@ -70,10 +70,10 @@ function UserModal({ user, onClose, onSaved, specialties, groups }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
-        <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-          <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+    <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[92dvh] flex flex-col overflow-hidden transform transition-all">
+        <div className="px-5 sm:px-6 py-4 sm:py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 shrink-0">
+          <h3 className="text-base sm:text-lg font-bold text-slate-800 flex items-center gap-2">
             <span className="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
               {isEditing ? <RiEditLine /> : <RiAddLine />}
             </span>
@@ -89,12 +89,12 @@ function UserModal({ user, onClose, onSaved, specialties, groups }) {
         </div>
 
         {error && (
-          <div className="mx-6 mt-4 p-3 rounded-xl bg-rose-50 text-rose-700 border border-rose-200 text-xs font-bold flex items-center gap-2">
+          <div className="mx-5 sm:mx-6 mt-4 p-3 rounded-xl bg-rose-50 text-rose-700 border border-rose-200 text-xs font-bold flex items-center gap-2 shrink-0">
             <RiCloseLine className="text-lg" /> {error}
           </div>
         )}
 
-        <form onSubmit={submit} className="p-6 space-y-4">
+        <form onSubmit={submit} className="p-5 sm:p-6 space-y-4 overflow-y-auto flex-1">
           <div>
             <label className="block text-sm font-semibold text-slate-700 mb-1.5">{t('auth.full_name')} *</label>
             <div className="relative">

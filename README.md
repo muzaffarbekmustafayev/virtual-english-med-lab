@@ -1,7 +1,7 @@
-# 🩺 Virtual Patient English — Klinik Ingliz Tili Muloqot Platformasi
+# 🩺 Clinical English Hub — Klinik Ingliz Tili Muloqot Platformasi
 
 <p align="center">
-  <img src="screenshots/01_login.png" alt="Virtual Patient English" width="750" style="border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.12);" />
+  <img src="screenshots/01_login.png" alt="Clinical English Hub" width="750" style="border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.12);" />
 </p>
 
 <p align="center">
@@ -20,7 +20,7 @@
 
 ## 📌 Loyiha Haqida (Project Overview)
 
-**Virtual Patient English** — tibbiyot oliy ta'lim muassasalarining **5 ta yo'nalishi** (Davolash ishi, Stomatologiya, Pediatriya ishi, Hamshiralik ishi, Tez tibbiy yordam) talabalari uchun yaratilgan, sun'iy intellekt (Google Gemini AI) asosidagi **interaktiv klinik ingliz tili muloqot simulyatori**. Har bir talaba faqat o'z yo'nalishidagi modullar va shu yo'nalishga mos virtual bemor bilan ishlaydi.
+**Clinical English Hub** — tibbiyot oliy ta'lim muassasalarining **5 ta yo'nalishi** (Davolash ishi, Stomatologiya, Pediatriya ishi, Oliy hamshiralik, Tez tibbiy yordam) talabalari uchun yaratilgan, sun'iy intellekt (Google Gemini AI) asosidagi **interaktiv klinik ingliz tili muloqot va imtihon simulyatori**. Har bir talaba faqat o'z yo'nalishidagi modullar, oraliq/yakuniy imtihonlar va virtual bemorlar bilan ishlaydi.
 
 Platforma talabalarga haqiqiy xorijiy bemorlar bilan xavfsiz, virtual muhitda muloqot qilish, kasallik tarixini to'plash (anamnez), klinik etika me'yorlariga rioya etish va kasbiy leksikani amaliyotda qo'llash imkonini beradi. Har bir simulyatsiya yakunida AI talabaning grammatikasi, tibbiy terminologiyasi, ravonligi, talaffuzi va klinik etikasini 100 ballik shkala bo'yicha ko'p omilli baholaydi.
 

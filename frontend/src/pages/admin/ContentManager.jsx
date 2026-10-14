@@ -14,9 +14,6 @@ import {
   RiMentalHealthLine, RiBrainLine, RiListCheck2,
   RiNumbersLine, RiText, RiFileTextLine,
 } from 'react-icons/ri';
-import {
-  Brain, BookOpen, MessageSquareText, HelpCircle, Layers3,
-} from 'lucide-react';
 
 const TABS = [
   {

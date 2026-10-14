@@ -1169,7 +1169,7 @@ export default function ModuleDetailPage() {
                   </span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 sm:gap-3.5">
                   {[
                     { key: 'grammar',       name: t('results_grammar'),       desc: t('comp_grammar'),           icon: RiBrainLine,       color: 'indigo' },
                     { key: 'vocabulary',    name: t('results_vocab'),         desc: t('comp_vocabulary'),     icon: RiBookLine,        color: 'cyan' },
@@ -1187,14 +1187,14 @@ export default function ModuleDetailPage() {
                     return (
                       <div
                         key={m.key}
-                        className="bg-white border border-slate-200 rounded-2xl p-4 shadow-xs hover:shadow-md hover:border-indigo-300 transition-all flex flex-col justify-between"
+                        className="bg-white border border-slate-200 rounded-2xl p-3 sm:p-4 shadow-xs hover:shadow-md hover:border-indigo-300 transition-all flex flex-col justify-between"
                       >
                         <div>
                           <div className="flex items-center justify-between mb-2">
-                            <div className="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-slate-700">
-                              <Icon size={16} />
+                            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-slate-100 flex items-center justify-center text-slate-700">
+                              <Icon size={15} />
                             </div>
-                            <span className={`text-[10px] font-black px-2 py-0.5 rounded-md ${
+                            <span className={`text-[9px] sm:text-[10px] font-black px-1.5 sm:px-2 py-0.5 rounded-md ${
                               isHigh
                                 ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                                 : isMid
@@ -1205,8 +1205,8 @@ export default function ModuleDetailPage() {
                             </span>
                           </div>
 
-                          <p className="text-xs font-black text-slate-900">{m.name}</p>
-                          <p className="text-[11px] text-slate-500 mb-3">{m.desc}</p>
+                          <p className="text-xs font-black text-slate-900 truncate">{m.name}</p>
+                          <p className="text-[10px] sm:text-[11px] text-slate-500 mb-2 sm:mb-3 line-clamp-2">{m.desc}</p>
                         </div>
 
                         <div>

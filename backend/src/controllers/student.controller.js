@@ -1,6 +1,7 @@
-const { Module, Grammar, Vocabulary, Phrasebook, Conversation, Message, Test, TestResult, User, ModuleResult, Specialty } = require('../models');
+const { Module, Grammar, Vocabulary, Phrasebook, Conversation, Message, Test, TestResult, User, ModuleResult, ExamResult, Specialty } = require('../models');
 const { UNLOCK_ALL_MODULES, PASS_THRESHOLD } = require('../config/features');
 const { getPatientReply, getPatientReplyStream, generateFeedback, checkGrammar, generatePatientScenario, tryParseScenario } = require('../services/gemini.service');
+const { getCurriculumMilestones, getExamScenario } = require('../services/curriculum.service');
 
 // Bemor haqida talabaga ko'rsatsa bo'ladigan qism (tashxis va kutilgan javoblar YASHIRIN qoladi)
 const buildCaseBrief = (patientContext) => {
@@ -980,6 +981,504 @@ const getDashboard = async (req, res) => {
   }
 };
 
+// ── GET /api/student/curriculum ─────────────────────────────
+// Modullar va ular orasidagi Oraliq / Yakuniy imtihonlarni (Milestones) dinamik integratsiya qilib qaytaradi
+const getCurriculum = async (req, res) => {
+  try {
+    const specialty = await Specialty.findByPk(req.user.specialty_id);
+    const specialtyCode = specialty ? specialty.code : 'GEN_MED';
+
+    const modules = await Module.findAll({
+      where: { specialty_id: req.user.specialty_id },
+      order: [['order_index', 'ASC']],
+      attributes: ['id', 'title', 'title_uz', 'title_ru', 'title_en', 'description', 'description_uz', 'description_ru', 'description_en', 'order_index'],
+    });
+
+    const totalModules = modules.length;
+    const milestones = getCurriculumMilestones(specialtyCode, totalModules);
+
+    // Barcha modul natijalarini olish
+    const moduleResults = await ModuleResult.findAll({
+      where: { student_id: req.user.id }
+    });
+    const modResMap = {};
+    moduleResults.forEach(r => { modResMap[r.module_id] = r; });
+
+    // Barcha imtihon natijalarini olish
+    const examResults = await ExamResult.findAll({
+      where: { student_id: req.user.id, specialty_id: req.user.specialty_id }
+    });
+    const examResMap = {};
+    examResults.forEach(r => { examResMap[r.exam_type] = r; });
+
+    let prevCompleted = true; // 1-modul har doim ochiq
+    const curriculumItems = [];
+
+    for (let i = 0; i < modules.length; i++) {
+      const m = modules[i];
+      const mr = modResMap[m.id];
+      const isCompleted = mr ? (mr.is_completed || mr.combined_score >= PASS_THRESHOLD || mr.best_chat_score >= PASS_THRESHOLD) : false;
+      const isUnlocked = UNLOCK_ALL_MODULES || prevCompleted;
+
+      curriculumItems.push({
+        kind: 'module',
+        id: m.id,
+        order_index: m.order_index,
+        title: m.title,
+        title_uz: m.title_uz,
+        title_ru: m.title_ru,
+        title_en: m.title_en,
+        description: m.description,
+        description_uz: m.description_uz,
+        description_ru: m.description_ru,
+        description_en: m.description_en,
+        is_completed: isCompleted,
+        best_score: mr ? (mr.combined_score || mr.best_chat_score || null) : null,
+        is_unlocked: isUnlocked,
+      });
+
+      // Ushbu moduldan keyin oraliq yoki yakuniy imtihon bormi?
+      const ms = milestones.find(mil => mil.after_module === m.order_index);
+      if (ms) {
+        // Ushbu imtihon qamrab olgan modullarning holati
+        const coveredDone = ms.covered_modules.every(idx => {
+          const modAtIdx = modules.find(mod => mod.order_index === idx);
+          if (!modAtIdx) return true;
+          const r = modResMap[modAtIdx.id];
+          return r ? (r.is_completed || r.combined_score >= PASS_THRESHOLD || r.best_chat_score >= PASS_THRESHOLD) : false;
+        });
+
+        const er = examResMap[ms.id];
+        const isExamPassed = er ? er.is_passed : false;
+        const isExamUnlocked = UNLOCK_ALL_MODULES || coveredDone;
+
+        curriculumItems.push({
+          kind: 'exam',
+          id: ms.id,
+          exam_type: ms.id,
+          type: ms.type, // 'midterm' | 'final'
+          after_module: ms.after_module,
+          covered_modules: ms.covered_modules,
+          title: ms.title,
+          title_uz: ms.title_uz,
+          title_ru: ms.title_ru,
+          title_en: ms.title_en,
+          badge: ms.badge,
+          badge_en: ms.badge_en,
+          badge_ru: ms.badge_ru,
+          description_uz: ms.description_uz,
+          description_ru: ms.description_ru,
+          description_en: ms.description_en,
+          is_unlocked: isExamUnlocked,
+          is_completed: isExamPassed,
+          is_passed: isExamPassed,
+          score: er ? er.overall_score : null,
+          quiz_score: er ? er.quiz_score : null,
+          chat_score: er ? er.chat_score : null,
+          attempts_count: er ? er.attempts_count : 0,
+        });
+
+        if (!UNLOCK_ALL_MODULES) {
+          prevCompleted = isExamPassed;
+        }
+      } else {
+        if (!UNLOCK_ALL_MODULES) {
+          prevCompleted = isCompleted;
+        }
+      }
+    }
+
+    res.json({
+      specialty: {
+        id: specialty?.id,
+        code: specialtyCode,
+        name: specialty?.name,
+        name_uz: specialty?.name_uz,
+        name_ru: specialty?.name_ru,
+        name_en: specialty?.name_en,
+      },
+      total_modules: totalModules,
+      milestones: milestones,
+      items: curriculumItems
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ── GET /api/student/exams/:examType ────────────────────────
+// Muayyan imtihon tafsilotlari (qoidalar, qamrov, ssenariy xulosasi)
+const getExamDetails = async (req, res) => {
+  try {
+    const { examType } = req.params;
+    const specialty = await Specialty.findByPk(req.user.specialty_id);
+    const specialtyCode = specialty ? specialty.code : 'GEN_MED';
+
+    const modules = await Module.findAll({
+      where: { specialty_id: req.user.specialty_id },
+      order: [['order_index', 'ASC']],
+      attributes: ['id', 'title', 'title_uz', 'title_ru', 'title_en', 'order_index'],
+    });
+
+    const milestones = getCurriculumMilestones(specialtyCode, modules.length);
+    const ms = milestones.find(m => m.id === examType);
+    if (!ms) return res.status(404).json({ error: 'Imtihon turi topilmadi' });
+
+    // Qamrab olingan modullar
+    const coveredModulesList = modules.filter(m => ms.covered_modules.includes(m.order_index));
+
+    // Bemor ssenariysi (brief)
+    const rawScenario = getExamScenario(specialtyCode, examType);
+    const caseBrief = {
+      role_play: rawScenario.role_play,
+      setting: rawScenario.setting,
+      counterpart_label: rawScenario.counterpart_label,
+      patient: rawScenario.patient_profile ? {
+        name: rawScenario.patient_profile.name,
+        age: rawScenario.patient_profile.age,
+        gender: rawScenario.patient_profile.gender,
+        personality_trait: rawScenario.patient_profile.personality_trait,
+      } : null,
+      chief_complaint: rawScenario.medical_condition?.chief_complaint,
+      duration: rawScenario.medical_condition?.duration,
+      symptoms: rawScenario.medical_condition?.symptoms || [],
+    };
+
+    // Oldingi imtihon natijasi
+    const examResult = await ExamResult.findOne({
+      where: {
+        student_id: req.user.id,
+        specialty_id: req.user.specialty_id,
+        exam_type: examType
+      }
+    });
+
+    res.json({
+      exam: ms,
+      specialty: {
+        code: specialtyCode,
+        name: specialty?.name_uz || specialty?.name
+      },
+      covered_modules: coveredModulesList,
+      case_brief: caseBrief,
+      previous_result: examResult || null,
+      pass_threshold: 70
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ── GET /api/student/exams/:examType/quiz ───────────────────
+// Imtihonga tegishli test savollarini olish
+const getExamQuiz = async (req, res) => {
+  try {
+    const { examType } = req.params;
+    const specialty = await Specialty.findByPk(req.user.specialty_id);
+    const specialtyCode = specialty ? specialty.code : 'GEN_MED';
+
+    const modules = await Module.findAll({
+      where: { specialty_id: req.user.specialty_id },
+      order: [['order_index', 'ASC']],
+      attributes: ['id', 'order_index'],
+    });
+
+    const milestones = getCurriculumMilestones(specialtyCode, modules.length);
+    const ms = milestones.find(m => m.id === examType);
+    if (!ms) return res.status(404).json({ error: 'Imtihon turi topilmadi' });
+
+    const coveredModuleIds = modules
+      .filter(m => ms.covered_modules.includes(m.order_index))
+      .map(m => m.id);
+
+    // Tegishli modullarning test savollari
+    const allTests = await Test.findAll({
+      where: { module_id: { [Op.in]: coveredModuleIds } },
+      attributes: [
+        'id', 'module_id',
+        'question', 'question_uz', 'question_ru', 'question_en',
+        'option_a', 'option_a_uz', 'option_a_ru', 'option_a_en',
+        'option_b', 'option_b_uz', 'option_b_ru', 'option_b_en',
+        'option_c', 'option_c_uz', 'option_c_ru', 'option_c_en',
+        'option_d', 'option_d_uz', 'option_d_ru', 'option_d_en',
+      ]
+    });
+
+    // Random shuffle va 10 ta savol tanlash
+    const shuffled = allTests.sort(() => 0.5 - Math.random()).slice(0, 10);
+
+    res.json({
+      exam_type: examType,
+      total_questions: shuffled.length,
+      questions: shuffled
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ── POST /api/student/exams/:examType/quiz/submit ───────────
+// Imtihon testini topshirish va baholash
+const submitExamQuiz = async (req, res) => {
+  try {
+    const { examType } = req.params;
+    const { answers } = req.body; // { testId: 'A', ... }
+    if (!answers || typeof answers !== 'object') {
+      return res.status(400).json({ error: 'Javoblar yuborilmadi' });
+    }
+
+    const testIds = Object.keys(answers).map(Number);
+    const tests = await Test.findAll({ where: { id: { [Op.in]: testIds } } });
+
+    let correctCount = 0;
+    const details = [];
+
+    tests.forEach(t => {
+      const selected = (answers[t.id] || '').toUpperCase();
+      const isCorrect = selected === t.correct_option?.toUpperCase();
+      if (isCorrect) correctCount++;
+      details.push({
+        test_id: t.id,
+        selected_option: selected,
+        correct_option: t.correct_option,
+        is_correct: isCorrect,
+        explanation: t.explanation_uz || t.explanation || ''
+      });
+    });
+
+    const totalQuestions = tests.length || 1;
+    const quizScore = Math.round((correctCount / totalQuestions) * 100);
+
+    let [examRes] = await ExamResult.findOrCreate({
+      where: {
+        student_id: req.user.id,
+        specialty_id: req.user.specialty_id,
+        exam_type: examType
+      },
+      defaults: {
+        student_id: req.user.id,
+        specialty_id: req.user.specialty_id,
+        exam_type: examType,
+        quiz_score: quizScore,
+        quiz_details: details,
+        attempts_count: 1,
+        last_attempt_at: new Date()
+      }
+    });
+
+    await examRes.update({
+      quiz_score: quizScore,
+      quiz_details: details,
+      attempts_count: (examRes.attempts_count || 0) + 1,
+      last_attempt_at: new Date()
+    });
+
+    res.json({
+      quiz_score: quizScore,
+      correct_count: correctCount,
+      total_questions: totalQuestions,
+      details: details
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ── POST /api/student/exams/:examType/conversation ──────────
+// Imtihon AI Virtual bemori bilan suhbat boshlash
+const startExamConversation = async (req, res) => {
+  try {
+    const { examType } = req.params;
+    const specialty = await Specialty.findByPk(req.user.specialty_id);
+    const specialtyCode = specialty ? specialty.code : 'GEN_MED';
+
+    const modules = await Module.findAll({
+      where: { specialty_id: req.user.specialty_id },
+      order: [['order_index', 'ASC']],
+      attributes: ['id', 'order_index'],
+    });
+
+    const milestones = getCurriculumMilestones(specialtyCode, modules.length);
+    const ms = milestones.find(m => m.id === examType);
+    if (!ms) return res.status(404).json({ error: 'Imtihon turi topilmadi' });
+
+    // Ushbu imtihonga mos modul (after_module ga mos modul)
+    const targetModule = modules.find(m => m.order_index === ms.after_module) || modules[modules.length - 1];
+
+    const examScenario = getExamScenario(specialtyCode, examType);
+
+    // Yangi Conversation yaratish
+    const conversation = await Conversation.create({
+      student_id: req.user.id,
+      module_id: targetModule.id,
+      attempt_type: 'final_challenge',
+      status: 'active',
+      dynamic_scenario: JSON.stringify(examScenario)
+    });
+
+    // Bemorning birinchi kirish xabari
+    const patientName = examScenario.patient_profile?.name || 'Patient';
+    const chief = examScenario.medical_condition?.chief_complaint || "I need medical help.";
+    const firstText = `Hello doctor, I'm ${patientName}. ${chief}. Please help me.`;
+
+    const firstMsg = await Message.create({
+      conversation_id: conversation.id,
+      sender_role: 'patient',
+      content: firstText
+    });
+
+    // ExamResult bilan bog'lash
+    let [examRes] = await ExamResult.findOrCreate({
+      where: {
+        student_id: req.user.id,
+        specialty_id: req.user.specialty_id,
+        exam_type: examType
+      },
+      defaults: {
+        student_id: req.user.id,
+        specialty_id: req.user.specialty_id,
+        exam_type: examType,
+        conversation_id: conversation.id
+      }
+    });
+    await examRes.update({ conversation_id: conversation.id });
+
+    res.json({
+      conversation_id: conversation.id,
+      exam_type: examType,
+      patient_scenario: {
+        role_play: examScenario.role_play,
+        setting: examScenario.setting,
+        counterpart_label: examScenario.counterpart_label,
+        patient: examScenario.patient_profile,
+        chief_complaint: chief
+      },
+      first_message: firstMsg
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ── POST /api/student/exams/:examType/finalize ──────────────
+// Imtihon suhbatini yakunlash va to'liq yakuniy bahoni hisoblash
+const finalizeExamConversation = async (req, res) => {
+  try {
+    const { examType } = req.params;
+    const { conversation_id } = req.body;
+
+    const conv = await Conversation.findByPk(conversation_id, {
+      include: [{ model: Message, as: 'messages', order: [['id', 'ASC']] }]
+    });
+    if (!conv) return res.status(404).json({ error: 'Suhbat topilmadi' });
+
+    const specialty = await Specialty.findByPk(req.user.specialty_id);
+    const specialtyCode = specialty ? specialty.code : 'GEN_MED';
+    const examScenario = getExamScenario(specialtyCode, examType);
+
+    // AI Baholash (generateFeedback)
+    const messages = conv.messages || [];
+    const evaluation = await generateFeedback(messages, JSON.stringify(examScenario), req.user.role || 'student');
+
+    const chatScore = evaluation.overall_score || 0;
+
+    await conv.update({
+      status: 'completed',
+      grammar_score: evaluation.grammar_score || 0,
+      vocabulary_score: evaluation.vocabulary_score || 0,
+      fluency_score: evaluation.fluency_score || 0,
+      pronunciation_score: evaluation.pronunciation_score || 0,
+      clinical_score: evaluation.clinical_score || 0,
+      overall_score: chatScore,
+      general_feedback: evaluation.general_feedback || ''
+    });
+
+    // ExamResult ni yangilash
+    let examRes = await ExamResult.findOne({
+      where: {
+        student_id: req.user.id,
+        specialty_id: req.user.specialty_id,
+        exam_type: examType
+      }
+    });
+
+    const quizScore = examRes ? (examRes.quiz_score || 0) : 0;
+    // Composite: 30% quiz + 70% OSCE clinical communication
+    const finalScore = Math.round(quizScore * 0.3 + chatScore * 0.7);
+    const isPassed = finalScore >= 70 || chatScore >= 70;
+
+    if (!examRes) {
+      examRes = await ExamResult.create({
+        student_id: req.user.id,
+        specialty_id: req.user.specialty_id,
+        exam_type: examType,
+        quiz_score: quizScore,
+        chat_score: chatScore,
+        overall_score: finalScore,
+        grammar_score: evaluation.grammar_score || 0,
+        vocab_score: evaluation.vocabulary_score || 0,
+        fluency_score: evaluation.fluency_score || 0,
+        pronunciation_score: evaluation.pronunciation_score || 0,
+        clinical_score: evaluation.clinical_score || 0,
+        is_passed: isPassed,
+        evaluation: evaluation,
+        conversation_id: conv.id,
+        last_attempt_at: new Date()
+      });
+    } else {
+      await examRes.update({
+        chat_score: chatScore,
+        overall_score: finalScore,
+        grammar_score: evaluation.grammar_score || 0,
+        vocab_score: evaluation.vocabulary_score || 0,
+        fluency_score: evaluation.fluency_score || 0,
+        pronunciation_score: evaluation.pronunciation_score || 0,
+        clinical_score: evaluation.clinical_score || 0,
+        is_passed: isPassed,
+        evaluation: evaluation,
+        conversation_id: conv.id,
+        last_attempt_at: new Date()
+      });
+    }
+
+    res.json({
+      exam_type: examType,
+      quiz_score: quizScore,
+      chat_score: chatScore,
+      final_score: finalScore,
+      is_passed: isPassed,
+      evaluation: evaluation
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ── GET /api/student/exams/:examType/results ────────────────
+const getExamResults = async (req, res) => {
+  try {
+    const { examType } = req.params;
+    const examRes = await ExamResult.findOne({
+      where: {
+        student_id: req.user.id,
+        specialty_id: req.user.specialty_id,
+        exam_type: examType
+      }
+    });
+
+    if (!examRes) {
+      return res.json({ completed: false });
+    }
+
+    res.json({
+      completed: true,
+      result: examRes
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 module.exports = {
   getModules, getModuleById, getGrammar, getVocabulary, getPhrasebook,
   startConversation,
@@ -988,5 +1487,8 @@ module.exports = {
   sendAudioMessage,
   finalizeConversation,
   getFeedback, getMessages, getTests, submitTest,
-  grammarCheck, getDashboard, getModuleProgress
+  grammarCheck, getDashboard, getModuleProgress,
+  getCurriculum, getExamDetails, getExamQuiz, submitExamQuiz,
+  startExamConversation, finalizeExamConversation, getExamResults
 };
+

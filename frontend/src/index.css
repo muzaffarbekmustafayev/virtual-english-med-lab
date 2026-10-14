@@ -104,8 +104,10 @@ body {
 ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
 ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-.scrollbar-none::-webkit-scrollbar { display: none; }
-.scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+.scrollbar-none::-webkit-scrollbar,
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.scrollbar-none,
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 
 /* Komponent klasslari: utility (Tailwind) klasslar ustunlik qilishi uchun components qatlamida */
 @layer components {
@@ -589,7 +591,15 @@ select.input-standard {
 
 @media (max-width: 640px) {
   html { font-size: 14.5px; }
-  .stat-tile .stat-value { font-size: 1.45rem; }
+  .stat-tile { padding: 0.85rem 0.95rem; }
+  .stat-tile .stat-value { font-size: 1.4rem; }
+  .card-hero { border-radius: var(--radius-lg); }
+  .card-standard { border-radius: var(--radius-lg); }
+}
+
+@media (max-width: 380px) {
+  html { font-size: 13.5px; }
+  .stat-tile .stat-value { font-size: 1.25rem; }
 }
 
 }

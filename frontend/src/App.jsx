@@ -11,6 +11,7 @@ import RegisterPage from './pages/auth/RegisterPage';
 import StudentDashboard  from './pages/student/StudentDashboard';
 import ModulesPage       from './pages/student/ModulesPage';
 import ModuleDetailPage  from './pages/student/ModuleDetailPage';
+import ExamDetailPage    from './pages/student/ExamDetailPage';
 import GrammarCheckerPage from './pages/student/GrammarCheckerPage';
 import ForumPage         from './pages/student/ForumPage';
 import ProfilePage       from './pages/ProfilePage';
@@ -63,6 +64,9 @@ export default function App() {
           }/>
           <Route path="/student/modules/:id" element={
             <ProtectedRoute allowedRoles={['student']}><ModuleDetailPage /></ProtectedRoute>
+          }/>
+          <Route path="/student/exams/:examType" element={
+            <ProtectedRoute allowedRoles={['student']}><ExamDetailPage /></ProtectedRoute>
           }/>
           <Route path="/student/grammar" element={
             <ProtectedRoute allowedRoles={['student']}><GrammarCheckerPage /></ProtectedRoute>

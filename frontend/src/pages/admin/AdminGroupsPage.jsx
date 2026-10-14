@@ -573,10 +573,10 @@ export default function AdminGroupsPage() {
 
       {/* Specialty Form Modal */}
       {specForm.show && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
-            <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-              <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[92dvh] flex flex-col overflow-hidden transform transition-all">
+            <div className="px-5 sm:px-6 py-4 sm:py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 shrink-0">
+              <h3 className="text-base sm:text-lg font-bold text-slate-800 flex items-center gap-2">
                 <span className="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
                   {specForm.id ? <RiEditLine /> : <RiAddLine />}
                 </span>
@@ -590,7 +590,7 @@ export default function AdminGroupsPage() {
               </button>
             </div>
             
-            <form onSubmit={saveSpec} className="p-6">
+            <form onSubmit={saveSpec} className="p-5 sm:p-6 overflow-y-auto flex-1">
               <div className="mb-6">
                 <label className="block text-sm font-semibold text-slate-700 mb-2">
                   Yo'nalish nomi
@@ -633,10 +633,10 @@ export default function AdminGroupsPage() {
 
       {/* Group Form Modal */}
       {groupForm.show && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
-            <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-              <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[92dvh] flex flex-col overflow-hidden transform transition-all">
+            <div className="px-5 sm:px-6 py-4 sm:py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 shrink-0">
+              <h3 className="text-base sm:text-lg font-bold text-slate-800 flex items-center gap-2">
                 <span className="w-8 h-8 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center shrink-0">
                   {groupForm.id ? <RiEditLine /> : <RiAddLine />}
                 </span>
@@ -650,7 +650,7 @@ export default function AdminGroupsPage() {
               </button>
             </div>
             
-            <form onSubmit={saveGroup} className="p-6">
+            <form onSubmit={saveGroup} className="p-5 sm:p-6 overflow-y-auto flex-1">
               <div className="mb-4">
                 <label className="block text-sm font-semibold text-slate-700 mb-2">
                   Yo'nalishni tanlang

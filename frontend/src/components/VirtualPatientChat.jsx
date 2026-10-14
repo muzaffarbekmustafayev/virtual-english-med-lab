@@ -929,7 +929,7 @@ export default function VirtualPatientChat({
       </div>
 
       {/* ─── MAIN STAGE CONTAINER ─── */}
-      <div className="p-6 md:p-8 flex-1 flex flex-col justify-center min-h-[460px] bg-slate-50/40">
+      <div className="p-3.5 sm:p-6 md:p-8 flex-1 flex flex-col justify-center min-h-[380px] sm:min-h-[460px] bg-slate-50/40">
 
         {/* ── 1. IDLE STATE ── */}
         {isIdle && (
@@ -1085,7 +1085,7 @@ export default function VirtualPatientChat({
                     </div>
 
                     {/* 24-Bar Responsive Equalizer Wave */}
-                    <div className="h-9 flex items-center justify-center gap-1 my-3">
+                    <div className="h-9 flex items-center justify-center gap-0.5 sm:gap-1 my-2.5 sm:my-3 px-1 max-w-full overflow-hidden">
                       {[...Array(24)].map((_, i) => {
                         const dynamicHeight = isSpeaking
                           ? Math.max(6, Math.sin(i * 0.5 + Date.now() * 0.008) * 26 + 10)
@@ -1096,7 +1096,7 @@ export default function VirtualPatientChat({
                           <span
                             key={i}
                             style={{ height: `${dynamicHeight}px` }}
-                            className={`w-1 sm:w-1.5 rounded-full transition-all duration-100 ${
+                            className={`w-1 sm:w-1.5 rounded-full transition-all duration-100 shrink-0 ${
                               isSpeaking
                                 ? 'bg-gradient-to-t from-indigo-600 via-purple-500 to-pink-400'
                                 : isListening
@@ -1110,11 +1110,11 @@ export default function VirtualPatientChat({
 
                     {/* Primary Voice Action Button */}
                     {isActive && (
-                      <div className="mt-1 flex items-center justify-center gap-3">
+                      <div className="mt-1 flex items-center justify-center gap-2 sm:gap-3">
                         <button
                           onClick={toggleListening}
                           disabled={isProcessing}
-                          className={`px-7 py-3.5 rounded-2xl font-black text-xs sm:text-sm shadow-lg hover:shadow-xl transition-all flex items-center gap-3 cursor-pointer transform hover:scale-[1.03] active:scale-[0.97] ${
+                          className={`px-5 sm:px-7 py-3 sm:py-3.5 rounded-2xl font-black text-xs sm:text-sm shadow-lg hover:shadow-xl transition-all flex items-center gap-2 sm:gap-3 cursor-pointer transform hover:scale-[1.03] active:scale-[0.97] ${
                             isListening
                               ? 'bg-gradient-to-r from-rose-500 via-red-500 to-rose-600 hover:from-rose-600 hover:to-red-700 text-white shadow-rose-200 ring-4 ring-rose-100 animate-pulse'
                               : 'bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-emerald-200 ring-4 ring-emerald-100'
@@ -1122,12 +1122,12 @@ export default function VirtualPatientChat({
                         >
                           {isListening ? (
                             <>
-                              <RiStopCircleLine className="text-xl" />
+                              <RiStopCircleLine className="text-lg sm:text-xl" />
                               <span>{t('chat_stop_send')}</span>
                             </>
                           ) : (
                             <>
-                              <RiMicLine className="text-xl animate-pulse" />
+                              <RiMicLine className="text-lg sm:text-xl animate-pulse" />
                               <span>{t('chat_start_speaking')}</span>
                             </>
                           )}

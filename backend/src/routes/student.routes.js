@@ -17,6 +17,15 @@ router.post('/modules/:id/start',               isStudent, c.startConversation);
 router.get('/modules/:id/tests',                isStudent, c.getTests);
 router.post('/modules/:id/tests/submit',        isStudent, c.submitTest);
 
+// O'quv dasturi va Oraliq / Yakuniy imtihonlar (Curriculum & Exams)
+router.get('/curriculum',                       isStudent, c.getCurriculum);
+router.get('/exams/:examType',                  isStudent, c.getExamDetails);
+router.get('/exams/:examType/quiz',             isStudent, c.getExamQuiz);
+router.post('/exams/:examType/quiz/submit',     isStudent, c.submitExamQuiz);
+router.post('/exams/:examType/conversation',    isStudent, c.startExamConversation);
+router.post('/exams/:examType/finalize',        isStudent, c.finalizeExamConversation);
+router.get('/exams/:examType/results',          isStudent, c.getExamResults);
+
 router.get('/conversation/:id/message/stream',  isStudent, c.sendMessageStream);
 router.get('/conversations/:id/messages/stream',isStudent, c.sendMessageStream);
 router.post('/conversation/:id/audio-stream',   isStudent, c.sendAudioMessage);
