@@ -11,12 +11,7 @@ import {
   RiMicroscopeLine, RiSyringeLine, RiHeartPulseLine, RiHospitalLine,
   RiPlayLine, RiSearchLine, RiAwardLine, RiSparklingLine, RiShieldCheckLine
 } from 'react-icons/ri';
-
-const MODULE_ICONS = [
-  RiFirstAidKitLine, RiStethoscopeLine, RiMicroscopeLine, RiSyringeLine,
-  RiHeartPulseLine, RiHospitalLine, RiFirstAidKitLine, RiStethoscopeLine,
-  RiMicroscopeLine, RiHeartPulseLine,
-];
+import { getModuleVisual } from '../../lib/moduleIcons';
 
 export default function ModulesPage() {
   const navigate = useNavigate();
@@ -100,6 +95,8 @@ export default function ModulesPage() {
     { key: 'locked',       label: t('student.modules.locked_badge') || 'Qulflangan' },
   ];
 
+  const isNursing = user?.specialty?.code === 'NURSING' || modulesOnly.length === 18 || (user?.specialty?.name || '').toLowerCase().includes('hamshira');
+
   return (
     <Layout>
       <div className="space-y-5 sm:space-y-6">
@@ -123,7 +120,9 @@ export default function ModulesPage() {
               {t('student.modules.title') || "O'quv Dasturi va Imtihonlar"}
             </h1>
             <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1 max-w-xl leading-relaxed">
-              Yo'nalishingiz bo'yicha ketma-ket modullar, oraliq va yakuniy imtihonlar. 5 ta moduldan so'ng Oraliq imtihon, kurs yakunida Yakuniy imtihon topshiriladi.
+              {isNursing
+                ? "Oliy hamshiralik (18 modul): 1–6-modullar → Oraliq imtihon I → 7–12-modullar → Oraliq imtihon II → 13–18-modullar → Yakuniy imtihon."
+                : "Davolash ishi, Pediatriya va Stomatologiya (10 modul): 1–5-modul → Oraliq imtihon → 6–10-modul → Yakuniy imtihon."}
             </p>
           </div>
 
@@ -281,7 +280,8 @@ export default function ModulesPage() {
               const st = getStatus(mod);
               const cfg = statusConfig[st];
               const StatusIcon = cfg.icon;
-              const IconComponent = MODULE_ICONS[idx % MODULE_ICONS.length];
+              const visual = getModuleVisual(mod, user?.specialty?.code);
+              const IconComponent = visual.icon;
               const title = getLocalized(mod, 'title') || mod.title;
               const description = getLocalized(mod, 'description') || mod.description;
 
@@ -299,7 +299,7 @@ export default function ModulesPage() {
                     {/* Top row */}
                     <div className="flex items-center justify-between gap-2 mb-4">
                       <div className="flex items-center gap-2.5">
-                        <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 border border-blue-200/80 flex items-center justify-center text-xl font-bold shrink-0">
+                        <div className={`w-10 h-10 rounded-2xl flex items-center justify-center text-xl font-bold shrink-0 border ${visual.bg}`}>
                           <IconComponent />
                         </div>
                         <span className="text-[11px] font-black uppercase tracking-wider text-slate-400">

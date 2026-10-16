@@ -13,6 +13,7 @@ import {
   RiPulseLine, RiAwardLine, RiShieldCheckLine, RiBrainLine,
   RiSpeakLine, RiVolumeUpLine, RiCheckLine, RiLockLine, RiSparkling2Line
 } from "react-icons/ri";
+import { getModuleVisual } from "../../lib/moduleIcons";
 
 export default function StudentDashboard() {
   const { user } = useAuth();
@@ -167,7 +168,9 @@ export default function StudentDashboard() {
                 <span>O'quv Dasturi Marralari (Imtihonlar)</span>
               </h2>
               <p className="text-xs text-slate-500 font-medium mt-0.5">
-                5-moduldan so'ng Oraliq imtihon, 10-moduldan so'ng Yakuniy imtihon qo'yiladi (Oliy hamshiralikda 1–6 va 7–12 oralig'i).
+                {(user?.specialty?.code === 'NURSING' || totalCount === 18 || (user?.specialty?.name || '').toLowerCase().includes('hamshira'))
+                  ? "Oliy hamshiralik (18 modul): 1–6 → Oraliq I → 7–12 → Oraliq II → 13–18 → Final"
+                  : "Davolash ishi, Pediatriya, Stomatologiya (10 modul): 1–5-modul → Oraliq imtihon → 6–10-modul → Yakuniy imtihon"}
               </p>
             </div>
             <button
@@ -180,7 +183,7 @@ export default function StudentDashboard() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {(user?.specialty?.code === 'NURSING' || totalCount === 18) ? (
+            {(user?.specialty?.code === 'NURSING' || totalCount === 18 || (user?.specialty?.name || '').toLowerCase().includes('hamshira')) ? (
               <>
                 <div
                   onClick={() => navigate('/student/exams/midterm_1')}
@@ -222,13 +225,13 @@ export default function StudentDashboard() {
                 >
                   <div>
                     <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase">
-                      Final (1–18)
+                      Final (13–18)
                     </span>
                     <h3 className="text-sm font-extrabold text-slate-900 mt-2">Yakuniy Davlat Imtihoni</h3>
-                    <p className="text-xs text-slate-500 mt-1">To'liq 18 ta modul bo'yicha yakuniy attestatsiya va rasmiy sertifikat.</p>
+                    <p className="text-xs text-slate-500 mt-1">13–18-modullar va to'liq 18 ta modul bo'yicha yakuniy attestatsiya va sertifikat.</p>
                   </div>
                   <div className="mt-3 pt-3 border-t border-emerald-200/60 flex items-center justify-between text-xs font-bold text-emerald-700">
-                    <span>{completedCount >= 18 ? "Attestatsiyaga kirish" : "Barcha modullarni o'ting"}</span>
+                    <span>{completedCount >= 18 ? "Attestatsiyaga kirish" : "18 ta modulni yakunlang"}</span>
                     <RiArrowRightLine />
                   </div>
                 </div>
@@ -244,7 +247,7 @@ export default function StudentDashboard() {
                       Oraliq Imtihon (1–5)
                     </span>
                     <h3 className="text-sm font-extrabold text-slate-900 mt-2">Oraliq imtihon (Midterm Exam)</h3>
-                    <p className="text-xs text-slate-500 mt-1">1–5-modullar bo'yicha integratsiyalashgan klinik test va virtual bemor imtihoni.</p>
+                    <p className="text-xs text-slate-500 mt-1">1–5-modullar bo'yicha integratsiyalashgan klinik test va OSCE muloqot imtihoni.</p>
                   </div>
                   <div className="mt-3 pt-3 border-t border-amber-200/60 flex items-center justify-between text-xs font-bold text-amber-700">
                     <span>{completedCount >= 5 ? "Topshirishga tayyor" : "1–5-modullarni yakunlang"}</span>
@@ -258,10 +261,10 @@ export default function StudentDashboard() {
                 >
                   <div>
                     <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase">
-                      Final Exam (1–10)
+                      Yakuniy Imtihon (6–10)
                     </span>
                     <h3 className="text-sm font-extrabold text-slate-900 mt-2">Yakuniy imtihon (Final Exam)</h3>
-                    <p className="text-xs text-slate-500 mt-1">Kurs bo'yicha to'liq yakuniy attestatsiya va malaka sertifikati imtihoni.</p>
+                    <p className="text-xs text-slate-500 mt-1">6–10-modullar va butun kurs bo'yicha to'liq yakuniy attestatsiya va malaka sertifikati imtihoni.</p>
                   </div>
                   <div className="mt-3 pt-3 border-t border-emerald-200/60 flex items-center justify-between text-xs font-bold text-emerald-700">
                     <span>{completedCount >= 10 ? "Topshirishga tayyor" : "10 ta modulni yakunlang"}</span>
@@ -338,6 +341,8 @@ export default function StudentDashboard() {
                   const sc = m.score;
                   const isCompleted = m.is_completed;
                   const scBadge = sc >= 80 ? "badge-emerald" : sc >= PASS_THRESHOLD ? "badge-blue" : sc > 0 ? "badge-rose" : "badge-slate";
+                  const visual = getModuleVisual(m, user?.specialty?.code);
+                  const ModIcon = visual.icon;
 
                   return (
                     <div
@@ -346,14 +351,15 @@ export default function StudentDashboard() {
                       className="p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover:bg-slate-50/80 cursor-pointer transition-colors"
                     >
                       <div className="flex items-center gap-3.5 min-w-0">
-                        <div className={`w-10 h-10 rounded-2xl flex items-center justify-center font-black text-sm shrink-0 shadow-2xs border ${
-                          isCompleted
-                            ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                            : sc > 0
-                            ? 'bg-blue-50 text-blue-700 border-blue-200'
-                            : 'bg-slate-50 text-slate-400 border-slate-200'
-                        }`}>
-                          {isCompleted ? <RiCheckLine className="text-lg" /> : `#${m.order_index}`}
+                        <div className="relative shrink-0">
+                          <div className={`w-10 h-10 rounded-2xl flex items-center justify-center font-black text-lg shrink-0 shadow-2xs border ${visual.bg}`}>
+                            <ModIcon />
+                          </div>
+                          {isCompleted && (
+                            <span className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 text-white rounded-full flex items-center justify-center text-[10px] shadow-xs">
+                              <RiCheckLine />
+                            </span>
+                          )}
                         </div>
 
                         <div className="min-w-0">

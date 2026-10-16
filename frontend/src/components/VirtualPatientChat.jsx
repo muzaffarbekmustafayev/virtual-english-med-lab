@@ -44,7 +44,7 @@ function buildTheme(module, phrasebook, t = (k) => k) {
     emoji,
     iconTag: brief?.counterpart_label
       ? `${brief.counterpart_label}${patient?.name ? ' · ' + patient.name : ''}`
-      : 'Virtual Patient',
+      : 'Clinical English Hub',
     chiefComplaint: brief?.chief_complaint || module?.description_en || module?.description || '',
     symptoms: Array.isArray(brief?.symptoms) && brief.symptoms.length ? brief.symptoms : [],
     patient,

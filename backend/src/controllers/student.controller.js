@@ -1,7 +1,7 @@
 const { Module, Grammar, Vocabulary, Phrasebook, Conversation, Message, Test, TestResult, User, ModuleResult, ExamResult, Specialty } = require('../models');
 const { UNLOCK_ALL_MODULES, PASS_THRESHOLD } = require('../config/features');
 const { getPatientReply, getPatientReplyStream, generateFeedback, checkGrammar, generatePatientScenario, tryParseScenario } = require('../services/gemini.service');
-const { getCurriculumMilestones, getExamScenario } = require('../services/curriculum.service');
+const { normalizeSpecialtyCode, getCurriculumMilestones, getExamScenario } = require('../services/curriculum.service');
 
 // Bemor haqida talabaga ko'rsatsa bo'ladigan qism (tashxis va kutilgan javoblar YASHIRIN qoladi)
 const buildCaseBrief = (patientContext) => {
@@ -160,11 +160,18 @@ const checkModuleUnlocked = async (studentId, specialtyId, targetModule) => {
   });
 
   for (let pm of prevModules) {
+    const mr = await ModuleResult.findOne({
+      where: { student_id: studentId, module_id: pm.id }
+    });
     const conv = await Conversation.findOne({
       where: { student_id: studentId, module_id: pm.id, status: 'completed' },
       order: [['overall_score', 'DESC']]
     });
-    const passed = conv && conv.overall_score >= PASS_THRESHOLD;
+    const bestScore = Math.max(
+      conv ? (conv.overall_score || 0) : 0,
+      mr ? (mr.combined_score || mr.best_chat_score || 0) : 0
+    );
+    const passed = (mr && mr.is_completed) || bestScore >= PASS_THRESHOLD;
     if (!passed) {
       return { unlocked: false };
     }
@@ -986,7 +993,7 @@ const getDashboard = async (req, res) => {
 const getCurriculum = async (req, res) => {
   try {
     const specialty = await Specialty.findByPk(req.user.specialty_id);
-    const specialtyCode = specialty ? specialty.code : 'GEN_MED';
+    const specialtyCode = normalizeSpecialtyCode(specialty ? (specialty.code || specialty.name_uz || specialty.name) : 'GEN_MED');
 
     const modules = await Module.findAll({
       where: { specialty_id: req.user.specialty_id },
@@ -1112,7 +1119,7 @@ const getExamDetails = async (req, res) => {
   try {
     const { examType } = req.params;
     const specialty = await Specialty.findByPk(req.user.specialty_id);
-    const specialtyCode = specialty ? specialty.code : 'GEN_MED';
+    const specialtyCode = normalizeSpecialtyCode(specialty ? (specialty.code || specialty.name_uz || specialty.name) : 'GEN_MED');
 
     const modules = await Module.findAll({
       where: { specialty_id: req.user.specialty_id },
@@ -1175,7 +1182,7 @@ const getExamQuiz = async (req, res) => {
   try {
     const { examType } = req.params;
     const specialty = await Specialty.findByPk(req.user.specialty_id);
-    const specialtyCode = specialty ? specialty.code : 'GEN_MED';
+    const specialtyCode = normalizeSpecialtyCode(specialty ? (specialty.code || specialty.name_uz || specialty.name) : 'GEN_MED');
 
     const modules = await Module.findAll({
       where: { specialty_id: req.user.specialty_id },
@@ -1290,7 +1297,7 @@ const startExamConversation = async (req, res) => {
   try {
     const { examType } = req.params;
     const specialty = await Specialty.findByPk(req.user.specialty_id);
-    const specialtyCode = specialty ? specialty.code : 'GEN_MED';
+    const specialtyCode = normalizeSpecialtyCode(specialty ? (specialty.code || specialty.name_uz || specialty.name) : 'GEN_MED');
 
     const modules = await Module.findAll({
       where: { specialty_id: req.user.specialty_id },

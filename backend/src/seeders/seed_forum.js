@@ -16,7 +16,7 @@ async function syncAndSeedForum() {
 
     const m1 = await ForumMessage.create({
       sender_id: teacher.id,
-      message_text: "Welcome to Virtual Patient English Forum! 🩺 Feel free to ask questions about clinical terminology, phrasebook usage, and patient communication.",
+      message_text: "Welcome to Clinical English Hub Forum! 🩺 Feel free to ask questions about clinical terminology, phrasebook usage, and patient communication.",
       channel: "general",
       is_pinned: true,
     });

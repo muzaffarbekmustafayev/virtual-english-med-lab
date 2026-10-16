@@ -7,6 +7,7 @@ import GrammarStep, { pickLang } from '../../components/GrammarStep';
 import { looksEnglish } from '../../contexts/LanguageContext';
 import api from '../../lib/api';
 import { PASS_THRESHOLD } from '../../lib/constants';
+import { getModuleVisual } from '../../lib/moduleIcons';
 import { useLanguage } from '../../contexts/LanguageContext';
 import {
   RiCheckLine, RiArrowRightLine, RiArrowLeftLine,
@@ -468,6 +469,9 @@ export default function ModuleDetailPage() {
     );
   }
 
+  const visual = getModuleVisual(module, module?.specialty?.code);
+  const ModIcon = visual.icon;
+
   return (
     <Layout>
       {/* ── Header & Breadcrumbs ── */}
@@ -480,9 +484,14 @@ export default function ModuleDetailPage() {
         >
           <RiArrowLeftLine className="text-lg" />
         </button>
+
+        <div className={`w-11 h-11 rounded-2xl flex items-center justify-center text-2xl font-bold shrink-0 border ${visual.bg}`}>
+          <ModIcon />
+        </div>
+
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200/80">
+            <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full border ${visual.badge}`}>
               {t('module_n', { n: module?.order_index ?? '' })}
             </span>
             {module?.grammar_focus && (

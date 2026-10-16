@@ -57,7 +57,7 @@ export default function ReportsPage() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `Virtual_Patient_Reports_${new Date().toISOString().split('T')[0]}.csv`;
+    link.download = `Clinical_English_Hub_Reports_${new Date().toISOString().split('T')[0]}.csv`;
     document.body.appendChild(link); link.click(); document.body.removeChild(link);
     URL.revokeObjectURL(url);
   };

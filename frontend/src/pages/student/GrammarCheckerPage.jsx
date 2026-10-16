@@ -272,7 +272,7 @@ export default function GrammarCheckerPage() {
               <span className="badge-standard badge-amber">
                 <RiSparklingLine className="text-xs" /> AI Klinik Grammatika Laboratoriyasi
               </span>
-              <span className="text-xs font-bold text-slate-400">· Virtual Medical English</span>
+              <span className="text-xs font-bold text-slate-400">· Clinical English Hub</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
               <span className="w-11 h-11 rounded-2xl bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center text-2xl shrink-0 shadow-2xs">

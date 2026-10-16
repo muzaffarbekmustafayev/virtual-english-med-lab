@@ -1,18 +1,27 @@
 const { Module, Test, Conversation, ModuleResult, ExamResult, Specialty } = require('../models');
 const { UNLOCK_ALL_MODULES, PASS_THRESHOLD } = require('../config/features');
 
+function normalizeSpecialtyCode(val) {
+  const s = String(val || '').toUpperCase();
+  if (s.includes('NURS') || s.includes('HAMSHIRA')) return 'NURSING';
+  if (s.includes('STOM') || s.includes('DENT')) return 'STOM';
+  if (s.includes('PED')) return 'PED';
+  if (s.includes('FIRST') || s.includes('AID') || s.includes('TEZ')) return 'FIRST_AID';
+  if (s.includes('GEN') || s.includes('DAVOLASH') || s.includes('MED') || s.includes('THERAP')) return 'GEN_MED';
+  return s || 'GEN_MED';
+}
+
 /**
  * Mutaxassislik uchun o'quv dasturi marralari (Oraliq va Yakuniy imtihonlar qoidalari)
  *
  * Qoida:
- * - Davolash ishi (10 modul): 1-5 modul → Oraliq imtihon → 6-10 modul → Yakuniy imtihon
- * - Pediatriya (10 modul): 1-5 modul → Oraliq imtihon → 6-10 modul → Yakuniy imtihon
- * - Stomatologiya (10 modul): 1-5 modul → Oraliq imtihon → 6-10 modul → Yakuniy imtihon
- * - Oliy hamshiralik (18 modul): 1-6 modul → Oraliq I → 7-12 modul → Oraliq II → 13-18 modul → Yakuniy imtihon
- * - Tizim o'zi umumiy qoidada 5 ta moduldan keyin oraliq, oxirgisidan keyin final exam qo'yadi.
+ * - Davolash ishi (10 modul): 1–5-modul → Oraliq imtihon → 6–10-modul → Yakuniy imtihon
+ * - Pediatriya (10 modul): 1–5-modul → Oraliq imtihon → 6–10-modul → Yakuniy imtihon
+ * - Stomatologiya (10 modul): 1–5-modul → Oraliq imtihon → 6–10-modul → Yakuniy imtihon
+ * - Oliy hamshiralik (18 modul): 1–6 → Oraliq I → 7–12 → Oraliq II → 13–18 → Final
  */
 function getCurriculumMilestones(specialtyCode, totalModules = 10) {
-  const code = (specialtyCode || '').toUpperCase();
+  const code = normalizeSpecialtyCode(specialtyCode);
 
   if (code === 'NURSING' || totalModules === 18) {
     return [
@@ -25,9 +34,9 @@ function getCurriculumMilestones(specialtyCode, totalModules = 10) {
         title_uz: 'Oraliq imtihon I (1–6 modullar)',
         title_ru: 'Промежуточный экзамен I (Модули 1–6)',
         title_en: 'Midterm Examination I (Modules 1–6)',
-        badge: 'Oraliq I',
-        badge_en: 'Midterm I',
-        badge_ru: 'Промежуточный I',
+        badge: 'Oraliq I (1–6)',
+        badge_en: 'Midterm I (1–6)',
+        badge_ru: 'Промежуточный I (1–6)',
         description_uz: "1–6-modullar bo'yicha kompleks klinik bilimlar va amaliy muloqot imtihoni",
         description_ru: 'Комплексный экзамен по клиническим навыкам за модули 1–6',
         description_en: 'Comprehensive clinical communication assessment covering modules 1–6',
@@ -41,9 +50,9 @@ function getCurriculumMilestones(specialtyCode, totalModules = 10) {
         title_uz: 'Oraliq imtihon II (7–12 modullar)',
         title_ru: 'Промежуточный экзамен II (Модули 7–12)',
         title_en: 'Midterm Examination II (Modules 7–12)',
-        badge: 'Oraliq II',
-        badge_en: 'Midterm II',
-        badge_ru: 'Промежуточный II',
+        badge: 'Oraliq II (7–12)',
+        badge_en: 'Midterm II (7–12)',
+        badge_ru: 'Промежуточный II (7–12)',
         description_uz: "7–12-modullar bo'yicha chuqurlashtirilgan oraliq klinik imtihon",
         description_ru: 'Углубленный экзамен по модулям 7–12',
         description_en: 'Advanced clinical communication assessment covering modules 7–12',
@@ -54,20 +63,21 @@ function getCurriculumMilestones(specialtyCode, totalModules = 10) {
         after_module: 18,
         covered_modules: Array.from({ length: 18 }, (_, i) => i + 1),
         title: 'Yakuniy davlat attestatsiyasi (Final Exam)',
-        title_uz: 'Yakuniy imtihon (Final Exam)',
-        title_ru: 'Итоговый экзамен (Final Exam)',
-        title_en: 'Comprehensive Final Examination',
-        badge: 'Final Exam',
-        badge_en: 'Final Exam',
-        badge_ru: 'Итоговый экзамен',
-        description_uz: "To'liq 18 ta modul bo'yicha yakuniy sertifikatlashtirish imtihoni",
-        description_ru: 'Финальный сертификационный экзамен по всем 18 модулям',
-        description_en: 'Final comprehensive certification exam covering all 18 modules',
+        title_uz: 'Yakuniy imtihon (13–18 modullar / Final Exam)',
+        title_ru: 'Итоговый экзамен (Модули 13–18 / Final Exam)',
+        title_en: 'Comprehensive Final Examination (Modules 13–18)',
+        badge: 'Final Exam (13–18)',
+        badge_en: 'Final Exam (13–18)',
+        badge_ru: 'Итоговый экзамен (13–18)',
+        description_uz: "13–18-modullar va to'liq 18 ta modul bo'yicha yakuniy sertifikatlashtirish imtihoni",
+        description_ru: 'Финальный сертификационный экзамен по модулям 13–18 и всем 18 модулям',
+        description_en: 'Final comprehensive certification exam covering modules 13–18 and all 18 modules',
       }
     ];
   }
 
-  // 10 modulli yoki standart holat: 5 dan keyin oraliq, 10 dan keyin final
+  // 10 modulli standart holat: Davolash ishi, Pediatriya, Stomatologiya
+  // 1–5-modul → Oraliq imtihon → 6–10-modul → Yakuniy imtihon
   const midModule = totalModules > 5 ? 5 : Math.ceil(totalModules / 2);
   const endModule = totalModules;
 
@@ -81,10 +91,10 @@ function getCurriculumMilestones(specialtyCode, totalModules = 10) {
       title_uz: `Oraliq imtihon (1–${midModule} modullar)`,
       title_ru: `Промежуточный экзамен (Модули 1–${midModule})`,
       title_en: `Midterm Examination (Modules 1–${midModule})`,
-      badge: 'Oraliq imtihon',
-      badge_en: 'Midterm Exam',
-      badge_ru: 'Промежуточный экзамен',
-      description_uz: `1–${midModule}-modullar bo'yicha integratsiyalashgan klinik test va virtual bemor imtihoni`,
+      badge: `Oraliq (${1}–${midModule})`,
+      badge_en: `Midterm (${1}–${midModule})`,
+      badge_ru: `Промежуточный (${1}–${midModule})`,
+      description_uz: `1–${midModule}-modullar bo'yicha integratsiyalashgan klinik test va OSCE muloqot imtihoni`,
       description_ru: `Интегрированный промежуточный экзамен по модулям 1–${midModule}`,
       description_en: `Integrated midterm clinical evaluation covering modules 1–${midModule}`,
     },
@@ -93,16 +103,16 @@ function getCurriculumMilestones(specialtyCode, totalModules = 10) {
       type: 'final',
       after_module: endModule,
       covered_modules: Array.from({ length: endModule }, (_, i) => i + 1),
-      title: `Yakuniy imtihon (Final Exam: 1–${endModule})`,
-      title_uz: 'Yakuniy imtihon (Final Exam)',
-      title_ru: 'Итоговый экзамен (Final Exam)',
-      title_en: 'Comprehensive Final Examination',
-      badge: 'Final Exam',
-      badge_en: 'Final Exam',
-      badge_ru: 'Итоговый экзамен',
-      description_uz: "Kurs bo'yicha to'liq yakuniy attestatsiya va malaka sertifikati imtihoni",
-      description_ru: 'Итоговая сертификационная аттестация по всему курсу',
-      description_en: 'Full course final certification and competence examination',
+      title: `Yakuniy imtihon (Final Exam: ${midModule + 1}–${endModule})`,
+      title_uz: `Yakuniy imtihon (${midModule + 1}–${endModule} modullar / Final Exam)`,
+      title_ru: `Итоговый экзамен (Модули ${midModule + 1}–${endModule} / Final Exam)`,
+      title_en: `Comprehensive Final Examination (Modules ${midModule + 1}–${endModule})`,
+      badge: `Yakuniy (${midModule + 1}–${endModule})`,
+      badge_en: `Final (${midModule + 1}–${endModule})`,
+      badge_ru: `Итоговый (${midModule + 1}–${endModule})`,
+      description_uz: `${midModule + 1}–${endModule}-modullar va to'liq kurs bo'yicha yakuniy attestatsiya va malaka sertifikati imtihoni`,
+      description_ru: `Итоговая сертификационная аттестация по модулям ${midModule + 1}–${endModule} и всему курсу`,
+      description_en: `Full course final certification and competence examination (${midModule + 1}–${endModule})`,
     }
   ];
 }
@@ -111,7 +121,7 @@ function getCurriculumMilestones(specialtyCode, totalModules = 10) {
  * Imtihonlar uchun maxsus klinik OSCE virtual bemor ssenariylari
  */
 function getExamScenario(specialtyCode, examType) {
-  const code = (specialtyCode || '').toUpperCase();
+  const code = normalizeSpecialtyCode(specialtyCode);
 
   // Davolash ishi
   if (code === 'GEN_MED') {
@@ -452,6 +462,7 @@ function getExamScenario(specialtyCode, examType) {
 }
 
 module.exports = {
+  normalizeSpecialtyCode,
   getCurriculumMilestones,
   getExamScenario,
 };
