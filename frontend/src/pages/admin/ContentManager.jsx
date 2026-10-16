@@ -20,7 +20,6 @@ const TABS = [
     id: 'grammar',
     name: 'nav_admin_grammar',
     icon: RiBrainLine,
-    lucideIcon: Brain,
     color: 'amber',
     desc: 'cm_tab_grammar_desc',
     gradient: 'from-amber-500 to-orange-500',
@@ -35,7 +34,6 @@ const TABS = [
     id: 'vocabulary',
     name: 'nav_admin_vocabulary',
     icon: RiBookLine,
-    lucideIcon: BookOpen,
     color: 'indigo',
     desc: 'cm_tab_vocab_desc',
     gradient: 'from-indigo-500 to-violet-500',
@@ -50,7 +48,6 @@ const TABS = [
     id: 'phrasebook',
     name: 'nav_admin_phrasebook',
     icon: RiLightbulbLine,
-    lucideIcon: MessageSquareText,
     color: 'cyan',
     desc: 'cm_tab_phrase_desc',
     gradient: 'from-cyan-500 to-teal-500',
@@ -65,7 +62,6 @@ const TABS = [
     id: 'quizzes',
     name: 'nav_admin_quizzes',
     icon: RiQuestionLine,
-    lucideIcon: HelpCircle,
     color: 'purple',
     desc: 'cm_tab_quiz_desc',
     gradient: 'from-purple-500 to-pink-500',
@@ -80,7 +76,6 @@ const TABS = [
     id: 'scenarios',
     name: 'nav_admin_modules',
     icon: RiFileListLine,
-    lucideIcon: Layers3,
     color: 'emerald',
     desc: 'cm_tab_modules_desc',
     gradient: 'from-emerald-500 to-green-500',
@@ -212,7 +207,7 @@ export default function ContentManager() {
           <div className="flex gap-1.5 overflow-x-auto scrollbar-none">
             {TABS.map((tabItem) => {
               const isActive = tab === tabItem.id;
-              const LucideIcon = tabItem.lucideIcon;
+              const TabIcon = tabItem.icon;
               return (
                 <button
                   key={tabItem.id}
@@ -237,10 +232,8 @@ export default function ContentManager() {
                       }
                     `}
                   >
-                    <LucideIcon
-                      size={15}
-                      className={isActive ? 'text-white' : tabItem.inactiveText}
-                      strokeWidth={isActive ? 2.5 : 2}
+                    <TabIcon
+                      className={`text-base ${isActive ? 'text-white' : tabItem.inactiveText}`}
                     />
                   </span>
                   <span className={isActive ? 'text-white font-bold' : 'font-semibold'}>
