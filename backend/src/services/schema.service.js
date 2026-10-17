@@ -42,6 +42,15 @@ async function ensureColumns({ checkOnly = false, log = () => {} } = {}) {
     await qi.addColumn(table, column, { type, allowNull: true });
     log(`   + ${table}.${column}`);
   }
+
+  // Ensure ENUM role in users table includes 'student_all'
+  try {
+    await sequelize.query("ALTER TABLE users MODIFY COLUMN role ENUM('student', 'student_all', 'teacher', 'admin') DEFAULT 'student';");
+    log("   + users.role ENUM yangilandi ('student', 'student_all', 'teacher', 'admin')");
+  } catch (enumErr) {
+    // Already updated or dialect issue
+  }
+
   return count;
 }
 
