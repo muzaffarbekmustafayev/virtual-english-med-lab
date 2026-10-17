@@ -100,11 +100,21 @@ const recalculateAndSaveModuleResult = async (studentId, moduleId) => {
 // Talabaning mutaxassisligiga mos modullar
 const getModules = async (req, res) => {
   try {
+    const specialty = await Specialty.findByPk(req.user.specialty_id);
+    const specialtyCode = normalizeSpecialtyCode(specialty ? (specialty.code || specialty.name_uz || specialty.name) : 'GEN_MED');
+
     const modules = await Module.findAll({
       where: { specialty_id: req.user.specialty_id },
       order: [['order_index', 'ASC']],
       attributes: ['id', 'title', 'title_uz', 'title_ru', 'title_en', 'description', 'description_uz', 'description_ru', 'description_en', 'order_index'],
     });
+
+    const milestones = getCurriculumMilestones(specialtyCode, modules.length);
+    const examResults = await ExamResult.findAll({
+      where: { student_id: req.user.id, specialty_id: req.user.specialty_id }
+    });
+    const examResMap = {};
+    examResults.forEach(r => { examResMap[r.exam_type] = r; });
 
     let prevPassed = true; // 1-modul har doim ochiq bo'ladi
 
@@ -124,7 +134,20 @@ const getModules = async (req, res) => {
       const bestScore = Math.max(chatScore, combinedScore);
 
       const is_completed = bestScore >= PASS_THRESHOLD || (modRes && modRes.is_completed);
-      const is_unlocked = UNLOCK_ALL_MODULES || prevPassed;
+
+      // Ushbu moduldan avvalgi oraliq imtihon topshirilganmi?
+      let examBlocked = false;
+      for (const ms of milestones) {
+        if (ms.after_module < m.order_index) {
+          const er = examResMap[ms.id];
+          if (!er || !er.is_passed) {
+            examBlocked = true;
+            break;
+          }
+        }
+      }
+
+      const is_unlocked = UNLOCK_ALL_MODULES || (prevPassed && !examBlocked);
       
       results.push({
         ...m.toJSON(),
@@ -144,12 +167,15 @@ const getModules = async (req, res) => {
 
 const { Op } = require('sequelize');
 
-// Modul talaba uchun ochiq ekanligini tekshirish (1-modul har doim ochiq, keyingilar avvalgilar 60%+ o'tilgan bo'lsa)
+// Modul talaba uchun ochiq ekanligini tekshirish (1-modul har doim ochiq, keyingilar avvalgilar 60%+ o'tilgan bo'lsa va oraliq imtihon topshirilgan bo'lsa)
 const checkModuleUnlocked = async (studentId, specialtyId, targetModule) => {
   if (!targetModule) return { unlocked: false };
   if (targetModule.order_index <= 1) return { unlocked: true };
 
   if (UNLOCK_ALL_MODULES) return { unlocked: true }; // test rejimi: ketma-ketlik sharti o'chirilgan
+
+  const specialty = await Specialty.findByPk(specialtyId);
+  const specialtyCode = normalizeSpecialtyCode(specialty ? (specialty.code || specialty.name_uz || specialty.name) : 'GEN_MED');
 
   const prevModules = await Module.findAll({
     where: {
@@ -174,6 +200,23 @@ const checkModuleUnlocked = async (studentId, specialtyId, targetModule) => {
     const passed = (mr && mr.is_completed) || bestScore >= PASS_THRESHOLD;
     if (!passed) {
       return { unlocked: false };
+    }
+  }
+
+  // Moduldan oldin oraliq imtihon bormi? Agar bo'lsa, u ham topshirilgan bo'lishi kerak!
+  const milestones = getCurriculumMilestones(specialtyCode, 18);
+  for (const ms of milestones) {
+    if (ms.after_module < targetModule.order_index) {
+      const er = await ExamResult.findOne({
+        where: {
+          student_id: studentId,
+          specialty_id: specialtyId,
+          exam_type: ms.id
+        }
+      });
+      if (!er || !er.is_passed) {
+        return { unlocked: false, blockedByExam: ms.title };
+      }
     }
   }
 

@@ -139,34 +139,6 @@ export default function Sidebar({ isOpen, onClose }) {
           );
         })}
       </nav>
-
-      {/* User card + logout */}
-      <div className="p-3 border-t border-white/5 bg-black/10">
-        <button
-          onClick={() => { navigate(`/${user?.role}/profile`); if (onClose) onClose(); }}
-          className="w-full text-left rounded-2xl p-2.5 flex items-center gap-2.5 hover:bg-white/5 transition-colors group"
-          title={t('ui_my_profile')}
-        >
-          <Avatar name={user?.full_name} seed={user?.id} size="w-9 h-9 text-xs" className="ring-1 ring-white/10" />
-          <div className="overflow-hidden flex-1">
-            <p className="text-white text-xs font-bold truncate group-hover:text-blue-200 transition-colors">{user?.full_name}</p>
-            <div className="flex items-center gap-1.5 mt-0.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0 shadow-[0_0_6px_rgba(52,211,153,0.9)]" />
-              <p className="text-slate-400 text-[10.5px] font-semibold truncate">
-                {ROLE_LABEL[user?.role] || ''}{specialtyName ? ` · ${specialtyName}` : ''}
-              </p>
-            </div>
-          </div>
-        </button>
-        <button
-          id="sidebar-logout-btn"
-          onClick={handleLogout}
-          className="mt-1 w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-rose-500/15 text-xs font-bold transition-all border border-transparent hover:border-rose-400/20"
-        >
-          <RiLogoutBoxRLine className="text-base text-slate-500" />
-          <span>{t('sign_out')}</span>
-        </button>
-      </div>
     </aside>
   );
 }

@@ -275,41 +275,41 @@ export default function ExamDetailPage() {
           </div>
         </div>
 
-        {/* ── 2. Exam Hero Banner ── */}
-        <div className={`p-5 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl text-white relative overflow-hidden shadow-lg ${
+        {/* ── 2. Exam Hero Banner (Glassmorphism + Gradients) ── */}
+        <div className={`p-6 sm:p-8 rounded-3xl text-white relative overflow-hidden shadow-xl backdrop-blur-xl border border-white/20 ${
           isMidterm
-            ? 'bg-gradient-to-r from-amber-600 via-orange-600 to-amber-700 shadow-amber-600/20'
-            : 'bg-gradient-to-r from-emerald-700 via-teal-700 to-cyan-800 shadow-emerald-700/20'
+            ? 'bg-gradient-to-r from-amber-600/95 via-orange-600/90 to-amber-700/95 shadow-amber-600/25'
+            : 'bg-gradient-to-r from-emerald-700/95 via-teal-700/90 to-cyan-800/95 shadow-emerald-700/25'
         }`}>
           <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5 sm:gap-6">
             <div className="max-w-2xl">
               <div className="flex flex-wrap items-center gap-2 mb-2.5">
-                <span className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-white/20 backdrop-blur text-white text-[11px] sm:text-xs font-black uppercase tracking-wider border border-white/25">
+                <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-[11px] sm:text-xs font-black uppercase tracking-wider border border-white/30 shadow-xs">
                   {exam?.badge || (isMidterm ? 'Oraliq imtihon' : 'Yakuniy imtihon')}
                 </span>
-                <span className="text-[11px] sm:text-xs font-bold text-white/90 px-2.5 py-0.5 rounded-full bg-black/20">
+                <span className="text-[11px] sm:text-xs font-bold text-white/95 px-3 py-1 rounded-full bg-black/20 backdrop-blur-md border border-white/10">
                   {examInfo?.specialty?.name}
                 </span>
-                <span className="text-[11px] sm:text-xs font-bold text-white/90 px-2.5 py-0.5 rounded-full bg-black/20">
-                  {t('exam_covered') || "Qamrab olingan"}: {exam?.covered_modules?.length} ta modul
+                <span className="text-[11px] sm:text-xs font-bold text-white/95 px-3 py-1 rounded-full bg-black/20 backdrop-blur-md border border-white/10">
+                  {t('exam_covered') || "Qamrov"}: {exam?.covered_modules?.length} ta modul
                 </span>
               </div>
 
-              <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight leading-snug">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-black tracking-tight leading-snug">
                 {getLocalized(exam, 'title') || exam?.title}
               </h1>
-              <p className="text-xs sm:text-sm text-white/80 font-medium mt-1.5 sm:mt-2 leading-relaxed">
+              <p className="text-xs sm:text-sm text-white/85 font-medium mt-1.5 sm:mt-2 leading-relaxed">
                 {getLocalized(exam, 'description') || exam?.description_uz}
               </p>
             </div>
 
             {finalResult && (
-              <div className="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/20 shrink-0 text-center w-full md:w-auto min-w-[160px]">
+              <div className="bg-white/15 backdrop-blur-xl rounded-2xl p-4 border border-white/30 shrink-0 text-center w-full md:w-auto min-w-[160px] shadow-lg">
                 <p className="text-[10px] sm:text-[11px] font-bold text-white/80 uppercase tracking-wider">{t('exam_score') || "Umumiy Ball"}</p>
                 <p className="text-2xl sm:text-3xl font-black text-white mt-0.5 sm:mt-1">
                   {finalResult.overall_score || finalResult.final_score}%
                 </p>
-                <span className={`inline-block mt-1.5 sm:mt-2 px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-black ${
+                <span className={`inline-block mt-1.5 sm:mt-2 px-3 py-0.5 rounded-full text-[10px] sm:text-[11px] font-black shadow-xs ${
                   (finalResult.is_passed) ? 'bg-emerald-400 text-slate-950' : 'bg-rose-400 text-slate-950'
                 }`}>
                   {finalResult.is_passed ? (t('exam_passed_status') || "Topshirildi") : (t('exam_failed_status') || "Qayta urinish")}
@@ -322,10 +322,10 @@ export default function ExamDetailPage() {
         {/* ── 3. Step 1: Comprehensive Quiz ── */}
         {step === 1 && (
           <div className="space-y-5 sm:space-y-6">
-            <div className="card-standard p-4 sm:p-6 md:p-7">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-100 pb-4 mb-5 sm:mb-6 gap-2">
+            <div className="card-glass p-5 sm:p-7 md:p-8">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200/70 pb-4 mb-5 sm:mb-6 gap-2">
                 <div>
-                  <h2 className="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2">
+                  <h2 className="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
                     <RiFileTextLine className="text-blue-600 text-lg sm:text-xl shrink-0" />
                     <span>{t('exam_quiz_title') || "1-qism: Integratsiyalashgan Klinik Test"}</span>
                   </h2>
@@ -334,7 +334,7 @@ export default function ExamDetailPage() {
                   </p>
                 </div>
                 {quizResult && (
-                  <span className="badge-standard badge-amber text-xs sm:text-sm font-black px-3 py-1 self-start sm:self-auto">
+                  <span className="badge-standard badge-amber text-xs sm:text-sm font-black px-3.5 py-1.5 self-start sm:self-auto shadow-xs">
                     <RiTrophyLine /> {quizResult.quiz_score}%
                   </span>
                 )}
@@ -443,31 +443,31 @@ export default function ExamDetailPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
             {/* Left: Patient Profile Brief */}
             <div className="lg:col-span-1 space-y-4">
-              <div className="card-standard p-4 sm:p-5 space-y-3.5 sm:space-y-4">
-                <div className="flex items-center gap-2.5 border-b border-slate-100 pb-3">
-                  <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg font-bold shrink-0">
+              <div className="card-glass p-5 sm:p-6 space-y-4">
+                <div className="flex items-center gap-3 border-b border-slate-200/60 pb-3.5">
+                  <div className="w-10 h-10 rounded-2xl bg-blue-500/10 text-blue-600 flex items-center justify-center text-xl font-bold shrink-0 border border-blue-200/60">
                     <RiUser3Line />
                   </div>
                   <div className="min-w-0">
-                    <h3 className="text-sm font-extrabold text-slate-900 truncate">{caseBrief?.patient?.name || "Virtual Bemor"}</h3>
+                    <h3 className="text-sm font-black text-slate-900 truncate">{caseBrief?.patient?.name || "Virtual Bemor"}</h3>
                     <p className="text-[11px] text-slate-500 font-semibold truncate">{caseBrief?.role_play || "Klinik Keys"}</p>
                   </div>
                 </div>
 
-                <div className="space-y-2 text-xs">
-                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
-                    <span className="font-extrabold text-slate-500 uppercase text-[10px] block">Asosiy shikoyat</span>
-                    <p className="font-bold text-slate-800 mt-0.5">{caseBrief?.chief_complaint || "Klinik murojaat"}</p>
+                <div className="space-y-2.5 text-xs">
+                  <div className="p-3 rounded-2xl bg-white/70 border border-slate-200/80 shadow-2xs">
+                    <span className="font-black text-slate-400 uppercase text-[10px] block">Asosiy shikoyat</span>
+                    <p className="font-bold text-slate-800 mt-0.5 leading-snug">{caseBrief?.chief_complaint || "Klinik murojaat"}</p>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
-                    <span className="font-extrabold text-slate-500 uppercase text-[10px] block">Bemor holati</span>
-                    <p className="text-slate-600 mt-0.5">{caseBrief?.patient?.personality_trait || "Vaziyatga mos muloqot qiling"}</p>
+                  <div className="p-3 rounded-2xl bg-white/70 border border-slate-200/80 shadow-2xs">
+                    <span className="font-black text-slate-400 uppercase text-[10px] block">Bemor holati</span>
+                    <p className="text-slate-600 mt-0.5 leading-snug">{caseBrief?.patient?.personality_trait || "Vaziyatga mos muloqot qiling"}</p>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-amber-50 border border-amber-200/80 text-amber-900">
-                    <span className="font-extrabold uppercase text-[10px] block">Topshiriq</span>
-                    <p className="text-[11px] font-medium mt-0.5">
+                  <div className="p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200 text-amber-900 shadow-2xs">
+                    <span className="font-black uppercase text-[10px] block text-amber-700">Klinik Topshiriq</span>
+                    <p className="text-[11px] font-medium mt-0.5 leading-relaxed">
                       Ingliz tilida professional anamnez oling, bemorning xavotirlarini tinglang va shoshilinch rejani tushuntiring.
                     </p>
                   </div>
@@ -476,9 +476,9 @@ export default function ExamDetailPage() {
                 <button
                   onClick={handleFinalizeExam}
                   disabled={finalizingChat || messages.length < 4}
-                  className={`w-full py-3 px-4 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 shadow-sm ${
+                  className={`w-full py-3.5 px-4 rounded-2xl text-xs font-black transition-all flex items-center justify-center gap-2 shadow-sm ${
                     messages.length >= 4
-                      ? 'bg-emerald-600 hover:bg-emerald-700 text-white cursor-pointer'
+                      ? 'bg-emerald-600 hover:bg-emerald-700 text-white cursor-pointer shadow-emerald-500/20 hover:shadow-md'
                       : 'bg-slate-100 text-slate-400 cursor-not-allowed'
                   }`}
                 >
@@ -490,9 +490,9 @@ export default function ExamDetailPage() {
 
             {/* Right: Real-time Live Consultation Chat */}
             <div className="lg:col-span-2">
-              <div className="card-standard flex flex-col h-[500px] sm:h-[560px]">
+              <div className="card-glass flex flex-col h-[520px] sm:h-[580px] overflow-hidden">
                 {/* Chat header */}
-                <div className="p-3.5 sm:p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 rounded-t-3xl gap-2">
+                <div className="p-3.5 sm:p-4 border-b border-slate-200/70 flex items-center justify-between bg-white/60 backdrop-blur-md rounded-t-3xl gap-2">
                   <div className="flex items-center gap-2 min-w-0">
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
                     <span className="text-xs font-extrabold text-slate-800 truncate">

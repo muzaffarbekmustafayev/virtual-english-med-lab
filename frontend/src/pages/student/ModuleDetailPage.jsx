@@ -302,54 +302,18 @@ export default function ModuleDetailPage() {
       const lowerTarget = targetWord.toLowerCase();
       const punctMatch = rawWords[chosenIdx].match(/[.,?!;:()]+$/);
       const trailingPunct = punctMatch ? punctMatch[0] : '';
-      
-      const blanked = rawWords.map((w, i) => i === chosenIdx ? (`_______${trailingPunct}`) : w).join(' ');
 
-      // Build 4 distinct, intelligent options
-      let options = [];
-      if (GRAMMAR_DISTRACTORS[lowerTarget]) {
-        options = GRAMMAR_DISTRACTORS[lowerTarget].map(opt => {
-          if (targetWord[0] === targetWord[0].toUpperCase() && targetWord[0] !== targetWord[0].toLowerCase()) {
-            return opt.charAt(0).toUpperCase() + opt.slice(1);
-          }
-          return opt;
-        });
-      } else {
-        const candidatePool = [
-          ...items.flatMap(x => x.phrase.split(/\s+/).map(w => w.replace(/[.,?!;:()'"]/g, ''))),
-          ...(vocabItems || []).map(v => v.word ? v.word.split(' ')[0] : '')
-        ].filter(w => w && w.length >= 3 && w.toLowerCase() !== lowerTarget);
-
-        const uniquePool = Array.from(new Set(candidatePool.map(w => w.toLowerCase())));
-        const picked = uniquePool.slice(0, 3).map(w => {
-          if (targetWord[0] === targetWord[0].toUpperCase() && targetWord[0] !== targetWord[0].toLowerCase()) {
-            return w.charAt(0).toUpperCase() + w.slice(1);
-          }
-          return w;
-        });
-        options = [targetWord, ...picked];
-      }
-
-      if (!options.includes(targetWord)) {
-        options[0] = targetWord;
-      }
-      const uniqueOptions = Array.from(new Set(options));
-      while (uniqueOptions.length < 4) {
-        const fallbacks = ['have', 'been', 'feeling', 'worse', 'pain', 'should', 'start'];
-        for (const fb of fallbacks) {
-          if (!uniqueOptions.includes(fb) && fb !== targetWord) {
-            uniqueOptions.push(fb);
-            if (uniqueOptions.length >= 4) break;
-          }
-        }
-      }
-      const finalOptions = uniqueOptions.slice(0, 4).sort(() => 0.5 - Math.random());
+      // Matnni bo'sh joydan oldingi va keyingi qismlarga ajratamiz
+      const beforeWords = rawWords.slice(0, chosenIdx).join(' ');
+      const afterWords = rawWords.slice(chosenIdx + 1).join(' ');
 
       return {
         id: idx,
-        blanked,
+        beforeText: beforeWords,
+        afterText: afterWords,
+        trailingPunct,
+        targetLength: targetWord.length,
         answer: targetWord,
-        options: finalOptions,
         hint_uz: p.hint_uz || p.hint || '',
         hint_ru: p.hint_ru || p.hint_uz || p.hint || '',
         hint_en: p.hint_en || p.phrase || '',
@@ -871,26 +835,36 @@ export default function ModuleDetailPage() {
       {/* ════════════════════════════════════════════════════════════════ */}
       {/* ── STEP 4: Gap Fill ─────────────────────────────────────────── */}
       {/* ════════════════════════════════════════════════════════════════ */}
+      {/* ════════════════════════════════════════════════════════════════ */}
+      {/* ── STEP 4: Gap Fill (Qo'lda yozish + Glassmorphism) ──────────── */}
+      {/* ════════════════════════════════════════════════════════════════ */}
       {step === 4 && (
         <div className="animate-fade-in space-y-6">
-          <div className="flex flex-wrap items-center justify-between gap-3 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+          <div className="card-glass p-5 sm:p-6 flex flex-wrap items-center justify-between gap-3">
             <div>
-              <h2 className="text-lg font-black text-slate-900 flex items-center gap-2">
-                <RiBookLine className="text-emerald-600" /> {t('gap_title')}
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-100/80 text-emerald-800 border border-emerald-200">
+                  {t('step_badge_4') || "4-bosqich"}
+                </span>
+                <span className="text-xs font-bold text-slate-400">
+                  {gapExercises.length} {t('gap_exercises_count') || "ta mashq"}
+                </span>
+              </div>
+              <h2 className="text-lg sm:text-xl font-black text-slate-900 flex items-center gap-2">
+                <RiBookLine className="text-emerald-600" /> {t('gap_title') || "Gap-Fill: Bo'sh joyni to'ldiring"}
               </h2>
               <p className="text-xs text-slate-500 font-medium mt-0.5">
-                {t('gap_subtitle')}
+                {t('gap_subtitle_manual') || "Jumlada tushirib qoldirilgan tibbiy so'zni klaviaturadan to'g'ri yozing. So'z uzunligi bo'sh joy o'lchamiga moslangan."}
               </p>
             </div>
-            <span className="text-xs px-3 py-1 bg-emerald-50 text-emerald-700 font-bold rounded-full border border-emerald-200">
-              {t('step_badge_4')}
-            </span>
           </div>
 
           <div className="space-y-4">
             {gapExercises.map((ex) => {
-              const isCorrect = gapChecked && gapAnswers[ex.id] === ex.answer;
-              const isWrong = gapChecked && gapAnswers[ex.id] && gapAnswers[ex.id] !== ex.answer;
+              const userVal = (gapAnswers[ex.id] || '').trim();
+              const isMatch = userVal.toLowerCase() === ex.answer.toLowerCase();
+              const isCorrect = gapChecked && isMatch;
+              const isWrong = gapChecked && !isMatch;
 
               const hintText = lang === 'en'
                 ? (looksEnglish(ex.hint_en) ? ex.hint_en : ex.original)
@@ -898,56 +872,76 @@ export default function ModuleDetailPage() {
                 ? (ex.hint_ru || ex.hint_uz || ex.hint)
                 : (ex.hint_uz || ex.hint);
 
+              // Input kengligi so'z uzunligiga mos: har bir harf uchun ~13px + padding
+              const inputWidthCh = Math.max(ex.targetLength + 2, 8);
+
               return (
                 <div
                   key={ex.id}
-                  className={`bg-white border rounded-2xl p-5 shadow-xs transition-all ${
+                  className={`card-glass p-5 sm:p-6 transition-all duration-300 ${
                     isCorrect
-                      ? 'border-emerald-300 bg-emerald-50/20'
+                      ? 'border-emerald-400/80 bg-emerald-50/40 shadow-emerald-500/10'
                       : isWrong
-                      ? 'border-rose-300 bg-rose-50/20'
-                      : 'border-slate-200'
+                      ? 'border-rose-400/80 bg-rose-50/40 shadow-rose-500/10'
+                      : 'hover:border-slate-300'
                   }`}
                 >
                   {hintText && (
-                    <p className="text-xs text-slate-500 font-medium mb-1.5 flex items-center gap-1.5">
+                    <div className="flex items-center gap-2 text-xs text-slate-500 font-medium mb-3 bg-white/60 backdrop-blur-xs px-3 py-1.5 rounded-xl border border-slate-100 w-fit">
                       <RiMessage3Line className="text-indigo-600 shrink-0" />
                       <span>{hintText}</span>
-                    </p>
+                    </div>
                   )}
-                  <p className="text-sm md:text-base font-bold text-slate-900 mb-4 leading-relaxed">
-                    {ex.id + 1}. {ex.blanked}
-                  </p>
 
-                  <div className="flex flex-wrap gap-2">
-                    {ex.options.map((opt, i) => {
-                      const isSelected = gapAnswers[ex.id] === opt;
-                      let btnClass = 'bg-slate-50 border-slate-200 text-slate-700 hover:border-indigo-300';
+                  {/* Inline jumla va uning ichida aniq uzunlikdagi input */}
+                  <div className="text-sm sm:text-base font-bold text-slate-800 leading-loose flex flex-wrap items-center gap-x-2 gap-y-2">
+                    <span className="w-6 h-6 rounded-full bg-slate-900 text-white text-[11px] font-black flex items-center justify-center shrink-0">
+                      {ex.id + 1}
+                    </span>
 
-                      if (isSelected) {
-                        btnClass = 'bg-indigo-50 border-indigo-500 text-indigo-700 font-extrabold shadow-xs';
-                      }
+                    {ex.beforeText && <span>{ex.beforeText}</span>}
 
-                      if (gapChecked) {
-                        if (opt === ex.answer) {
-                          btnClass = 'bg-emerald-50 border-emerald-500 text-emerald-800 font-black shadow-xs';
-                        } else if (isSelected && opt !== ex.answer) {
-                          btnClass = 'bg-rose-50 border-rose-400 text-rose-700 line-through';
-                        }
-                      }
+                    {/* Mos so'z uzunligidagi maxsus input */}
+                    <div className="inline-flex items-center relative">
+                      <input
+                        type="text"
+                        disabled={gapChecked}
+                        maxLength={ex.targetLength + 4}
+                        placeholder={'•'.repeat(ex.targetLength)}
+                        value={gapAnswers[ex.id] || ''}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setGapAnswers(prev => ({ ...prev, [ex.id]: val }));
+                        }}
+                        style={{ width: `${inputWidthCh}ch` }}
+                        className={`text-center font-extrabold text-sm sm:text-base px-2.5 py-1 rounded-xl transition-all outline-none ${
+                          gapChecked
+                            ? isCorrect
+                              ? 'bg-emerald-100/80 border-2 border-emerald-500 text-emerald-900 shadow-sm'
+                              : 'bg-rose-100/80 border-2 border-rose-500 text-rose-900 line-through'
+                            : 'input-glass text-blue-700 font-bold focus:border-blue-500 focus:bg-white shadow-xs'
+                        }`}
+                      />
+                      {ex.trailingPunct && <span className="ml-0.5">{ex.trailingPunct}</span>}
+                    </div>
 
-                      return (
-                        <button
-                          key={i}
-                          disabled={gapChecked}
-                          onClick={() => setGapAnswers(prev => ({ ...prev, [ex.id]: opt }))}
-                          className={`px-4 py-2 rounded-xl text-xs border font-bold transition-all cursor-pointer ${btnClass}`}
-                        >
-                          {opt} {gapChecked && opt === ex.answer ? ' ✓' : ''}
-                        </button>
-                      );
-                    })}
+                    {ex.afterText && <span>{ex.afterText}</span>}
                   </div>
+
+                  {/* Tekshirilgandan so'ng to'g'ri so'z ko'rsatmasi */}
+                  {gapChecked && (
+                    <div className="mt-3.5 pt-3 border-t border-slate-200/60 flex items-center gap-2 text-xs">
+                      {isCorrect ? (
+                        <span className="text-emerald-700 font-extrabold flex items-center gap-1.5 bg-emerald-100/60 px-3 py-1 rounded-lg">
+                          ✓ {t('correct') || "To'g'ri!"}
+                        </span>
+                      ) : (
+                        <span className="text-rose-700 font-semibold flex items-center gap-1.5 bg-rose-100/60 px-3 py-1 rounded-lg">
+                          ✗ {t('correct_answer_is') || "To'g'ri javob"}: <strong className="font-black text-slate-900 underline">{ex.answer}</strong>
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -964,21 +958,23 @@ export default function ModuleDetailPage() {
             {!gapChecked ? (
               <button
                 onClick={() => setGapChecked(true)}
-                disabled={Object.keys(gapAnswers).length < gapExercises.length}
-                title={Object.keys(gapAnswers).length < gapExercises.length ? t('answer_all_hint', { done: Object.keys(gapAnswers).length, total: gapExercises.length }) : ''}
+                disabled={gapExercises.some(ex => !(gapAnswers[ex.id] || '').trim())}
                 className="px-6 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-sm shadow-md shadow-emerald-200 transition-all disabled:opacity-50 cursor-pointer"
               >
-                {t('gap_check')}
+                {t('gap_check') || "Javoblarni tekshirish"}
               </button>
             ) : (() => {
-              const gapScore = gapExercises.reduce((acc, ex) => acc + (gapAnswers[ex.id] === ex.answer ? 1 : 0), 0);
+              const gapScore = gapExercises.reduce((acc, ex) => {
+                const ans = (gapAnswers[ex.id] || '').trim().toLowerCase();
+                return acc + (ans === ex.answer.toLowerCase() ? 1 : 0);
+              }, 0);
               const gapPercent = Math.round((gapScore / gapExercises.length) * 100);
               const passed = gapPercent >= PASS_THRESHOLD;
 
               return passed ? (
                 <div className="flex flex-wrap items-center gap-3">
                   <span className="text-emerald-700 font-extrabold text-xs bg-emerald-50 px-3 py-2 rounded-xl border border-emerald-200">
-                    {t('gap_score_passed', { pct: gapPercent })}
+                    {t('gap_score_passed', { pct: gapPercent }) || `Muvaffaqiyatli: ${gapPercent}%`}
                   </span>
                   <button
                     onClick={() => completeAndGoNext(5)}
@@ -991,7 +987,7 @@ export default function ModuleDetailPage() {
               ) : (
                 <div className="flex flex-wrap items-center gap-3">
                   <span className="text-rose-700 font-extrabold text-xs bg-rose-50 px-3 py-2 rounded-xl border border-rose-200">
-                    {t('gap_score_failed', { pct: gapPercent })}
+                    {t('gap_score_failed', { pct: gapPercent }) || `Ball: ${gapPercent}%. 60% dan yuqori bo'lishi kerak.`}
                   </span>
                   <button
                     onClick={() => {
