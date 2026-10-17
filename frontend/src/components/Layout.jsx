@@ -44,12 +44,18 @@ export default function Layout({ children, contentClass = '' }) {
   const specialtyEmoji = user?.specialty?.icon || SPECIALTY_EMOJI[user?.specialty?.code] || '🩺';
 
   const PORTAL = {
-    student: { label: t('header_student_portal'), icon: RiStethoscopeLine, cls: 'bg-blue-50 text-blue-700 border-blue-200/80' },
-    teacher: { label: t('header_teacher_portal'), icon: RiUserStarLine, cls: 'bg-emerald-50 text-emerald-700 border-emerald-200/80' },
-    admin:   { label: t('header_admin_portal'),   icon: RiShieldCheckLine, cls: 'bg-purple-50 text-purple-700 border-purple-200/80' },
-  }[role];
+    student:     { label: t('header_student_portal'), icon: RiStethoscopeLine, cls: 'bg-blue-50 text-blue-700 border-blue-200/80' },
+    student_all: { label: t('header_student_all_portal') || "Talaba (Barcha yo'nalishlar)", icon: RiStethoscopeLine, cls: 'bg-indigo-50 text-indigo-700 border-indigo-200/80' },
+    teacher:     { label: t('header_teacher_portal'), icon: RiUserStarLine, cls: 'bg-emerald-50 text-emerald-700 border-emerald-200/80' },
+    admin:       { label: t('header_admin_portal'),   icon: RiShieldCheckLine, cls: 'bg-purple-50 text-purple-700 border-purple-200/80' },
+  }[role] || { label: t('header_student_portal'), icon: RiStethoscopeLine, cls: 'bg-blue-50 text-blue-700 border-blue-200/80' };
   const PortalIcon = PORTAL.icon;
-  const ROLE_LABEL = { student: t('role_student'), teacher: t('role_teacher'), admin: t('role_admin') }[role];
+  const ROLE_LABEL = {
+    student: t('role_student'),
+    student_all: t('role_student_all') || "Talaba (Barcha)",
+    teacher: t('role_teacher'),
+    admin: t('role_admin')
+  }[role] || t('role_student');
   // "Dr. John Watson" → "Dr. John"; "Ali Valiyev" → "Ali"
   const shortName = (() => {
     const parts = (user?.full_name || '').trim().split(/\s+/).filter(Boolean);

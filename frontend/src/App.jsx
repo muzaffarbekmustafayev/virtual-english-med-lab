@@ -55,30 +55,30 @@ export default function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/"         element={<RoleRedirect />} />
 
-          {/* ─── STUDENT ────────────────────────────────── */}
+          {/* ─── STUDENT & STUDENT_ALL ──────────────────── */}
           <Route path="/student/dashboard" element={
-            <ProtectedRoute allowedRoles={['student']}><StudentDashboard /></ProtectedRoute>
+            <ProtectedRoute allowedRoles={['student', 'student_all']}><StudentDashboard /></ProtectedRoute>
           }/>
           <Route path="/student/modules" element={
-            <ProtectedRoute allowedRoles={['student']}><ModulesPage /></ProtectedRoute>
+            <ProtectedRoute allowedRoles={['student', 'student_all']}><ModulesPage /></ProtectedRoute>
           }/>
           <Route path="/student/modules/:id" element={
-            <ProtectedRoute allowedRoles={['student']}><ModuleDetailPage /></ProtectedRoute>
+            <ProtectedRoute allowedRoles={['student', 'student_all']}><ModuleDetailPage /></ProtectedRoute>
           }/>
           <Route path="/student/exams/:examType" element={
-            <ProtectedRoute allowedRoles={['student']}><ExamDetailPage /></ProtectedRoute>
+            <ProtectedRoute allowedRoles={['student', 'student_all']}><ExamDetailPage /></ProtectedRoute>
           }/>
           <Route path="/student/grammar" element={
-            <ProtectedRoute allowedRoles={['student']}><GrammarCheckerPage /></ProtectedRoute>
+            <ProtectedRoute allowedRoles={['student', 'student_all']}><GrammarCheckerPage /></ProtectedRoute>
           }/>
           <Route path="/student/grammar/:tab" element={
-            <ProtectedRoute allowedRoles={['student']}><GrammarCheckerPage /></ProtectedRoute>
+            <ProtectedRoute allowedRoles={['student', 'student_all']}><GrammarCheckerPage /></ProtectedRoute>
           }/>
           <Route path="/student/forum" element={
-            <ProtectedRoute allowedRoles={['student']}><ForumPage /></ProtectedRoute>
+            <ProtectedRoute allowedRoles={['student', 'student_all']}><ForumPage /></ProtectedRoute>
           }/>
           <Route path="/student/profile" element={
-            <ProtectedRoute allowedRoles={['student']}><ProfilePage /></ProtectedRoute>
+            <ProtectedRoute allowedRoles={['student', 'student_all']}><ProfilePage /></ProtectedRoute>
           }/>
 
           {/* ─── PROFILE (barcha rollar) ────────────────── */}

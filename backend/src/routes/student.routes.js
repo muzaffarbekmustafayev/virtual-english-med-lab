@@ -2,9 +2,10 @@ const router = require('express').Router();
 const { authenticate, requireRole } = require('../middleware/auth');
 const c = require('../controllers/student.controller');
 
-const isStudent = [authenticate, requireRole('student')];
+const isStudent = [authenticate, requireRole('student', 'student_all')];
 
 // Modullar va mashg'ulotlar
+router.get('/specialties',                      isStudent, c.getSpecialties);
 router.get('/dashboard',                        isStudent, c.getDashboard);
 router.get('/modules',                          isStudent, c.getModules);
 router.get('/modules/:id',                      isStudent, c.getModuleById);

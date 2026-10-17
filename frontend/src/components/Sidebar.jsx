@@ -27,6 +27,15 @@ export default function Sidebar({ isOpen, onClose }) {
       { section: t('ui_account') },
       { to: "/student/profile", icon: RiUser3Line, label: t('nav_profile') },
     ],
+    student_all: [
+      { section: t('navigation') },
+      { to: "/student/dashboard", icon: RiDashboardLine, label: t('nav_dashboard') },
+      { to: "/student/modules", icon: RiBookOpenLine, label: t('nav_all_specialties') || "Barcha yo'nalishlar", match: '/student/modules' },
+      { to: "/student/grammar", icon: RiQuillPenLine, label: t('nav_grammar'), match: '/student/grammar' },
+      { to: "/student/forum", icon: RiChatSmile2Line, label: t('nav_forum') },
+      { section: t('ui_account') },
+      { to: "/student/profile", icon: RiUser3Line, label: t('nav_profile') },
+    ],
     teacher: [
       { section: t('navigation') },
       { to: "/teacher/dashboard", icon: RiDashboardLine, label: t('nav_dashboard') },
@@ -55,7 +64,12 @@ export default function Sidebar({ isOpen, onClose }) {
   };
   const navItems = NAV[user?.role] || [];
 
-  const ROLE_LABEL = { student: t('role_student'), teacher: t('role_teacher'), admin: t('role_admin') };
+  const ROLE_LABEL = {
+    student: t('role_student'),
+    student_all: t('role_student_all') || "Talaba (Barcha yo'nalishlar)",
+    teacher: t('role_teacher'),
+    admin: t('role_admin')
+  };
   const specialtyName = getLocalized(user?.specialty, 'name') || user?.specialty?.name || '';
 
   const handleLogout = () => {

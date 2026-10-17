@@ -11,11 +11,12 @@ import {
   RiMailLine, RiShieldCheckLine, RiUserStarLine, RiUser3Line
 } from 'react-icons/ri';
 
-const ROLES = ['student', 'teacher', 'admin'];
+const ROLES = ['student', 'student_all', 'teacher', 'admin'];
 const ROLE_BADGE = {
-  student: 'badge-blue',
-  teacher: 'badge-emerald',
-  admin:   'badge-purple'
+  student:     'badge-blue',
+  student_all: 'badge-purple',
+  teacher:     'badge-emerald',
+  admin:       'badge-amber'
 };
 
 function UserModal({ user, onClose, onSaved, specialties, groups }) {
@@ -159,17 +160,20 @@ function UserModal({ user, onClose, onSaved, specialties, groups }) {
                 onChange={(e) => setForm({ ...form, role: e.target.value })}
                 className="block w-full pl-10 pr-10 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-sm bg-slate-50 focus:bg-white appearance-none font-medium"
               >
-                <option value="student">{t('admin_role_student')}</option>
+                <option value="student">{t('admin_role_student') || "Talaba (Muayyan yo'nalish)"}</option>
+                <option value="student_all">{t('role_student_all') || "Talaba (Barcha yo'nalishlar)"}</option>
                 <option value="teacher">{t('role_teacher')}</option>
                 <option value="admin">{t('role_admin')}</option>
               </select>
             </div>
           </div>
 
-          {form.role === 'student' && (
+          {(form.role === 'student' || form.role === 'student_all') && (
             <div className="grid grid-cols-2 gap-3 pt-2 border-t border-slate-100">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5">{t('auth.specialty')}</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                  {t('auth.specialty')} {form.role === 'student_all' && <span className="text-[10px] text-slate-400 font-normal">({t('default_optional') || "asosiy/boshlang'ich"})</span>}
+                </label>
                 <select
                   value={form.specialty_id}
                   onChange={(e) => setForm({ ...form, specialty_id: e.target.value, group_id: '' })}

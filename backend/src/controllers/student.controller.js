@@ -97,21 +97,25 @@ const recalculateAndSaveModuleResult = async (studentId, moduleId) => {
 
 
 // ── GET /api/student/modules ─────────────────────────────────
-// Talabaning mutaxassisligiga mos modullar
+// Talabaning mutaxassisligiga mos modullar (yoki student_all uchun tanlangan mutaxassislik)
 const getModules = async (req, res) => {
   try {
-    const specialty = await Specialty.findByPk(req.user.specialty_id);
+    const activeSpecialtyId = (req.user.role === 'student_all' && req.query.specialty_id)
+      ? parseInt(req.query.specialty_id)
+      : (req.user.specialty_id || 1);
+
+    const specialty = await Specialty.findByPk(activeSpecialtyId);
     const specialtyCode = normalizeSpecialtyCode(specialty ? (specialty.code || specialty.name_uz || specialty.name) : 'GEN_MED');
 
     const modules = await Module.findAll({
-      where: { specialty_id: req.user.specialty_id },
+      where: { specialty_id: activeSpecialtyId },
       order: [['order_index', 'ASC']],
       attributes: ['id', 'title', 'title_uz', 'title_ru', 'title_en', 'description', 'description_uz', 'description_ru', 'description_en', 'order_index'],
     });
 
     const milestones = getCurriculumMilestones(specialtyCode, modules.length);
     const examResults = await ExamResult.findAll({
-      where: { student_id: req.user.id, specialty_id: req.user.specialty_id }
+      where: { student_id: req.user.id, specialty_id: activeSpecialtyId }
     });
     const examResMap = {};
     examResults.forEach(r => { examResMap[r.exam_type] = r; });
@@ -231,8 +235,12 @@ const getModuleById = async (req, res) => {
     });
     if (!module) return res.status(404).json({ error: 'Modul topilmadi' });
 
-    const { unlocked } = await checkModuleUnlocked(req.user.id, req.user.specialty_id, module);
-    if (!unlocked) return res.status(403).json({ error: 'Modul qulflangan. Avvalgi modullarni kamida 60% ga yakunlang.' });
+    // student_all roli uchun modulning o'z mutaxassisligi bo'yicha tekshiriladi (yoki har doim ochiq)
+    const specialtyId = req.user.role === 'student_all' ? module.specialty_id : req.user.specialty_id;
+    const { unlocked } = await checkModuleUnlocked(req.user.id, specialtyId, module);
+    if (!unlocked && req.user.role !== 'student_all') {
+      return res.status(403).json({ error: 'Modul qulflangan. Avvalgi modullarni kamida 60% ga yakunlang.' });
+    }
 
     const next = await Module.findOne({
       where: {
@@ -894,8 +902,12 @@ const grammarCheck = async (req, res) => {
 // ── GET /api/student/dashboard ──────────────────────────────
 const getDashboard = async (req, res) => {
   try {
+    const activeSpecialtyId = (req.user.role === 'student_all' && req.query.specialty_id)
+      ? parseInt(req.query.specialty_id)
+      : (req.user.specialty_id || 1);
+
     const modules = await Module.findAll({
-      where: { specialty_id: req.user.specialty_id },
+      where: { specialty_id: activeSpecialtyId },
       attributes: ['id', 'title', 'order_index'],
     });
 
@@ -1035,11 +1047,15 @@ const getDashboard = async (req, res) => {
 // Modullar va ular orasidagi Oraliq / Yakuniy imtihonlarni (Milestones) dinamik integratsiya qilib qaytaradi
 const getCurriculum = async (req, res) => {
   try {
-    const specialty = await Specialty.findByPk(req.user.specialty_id);
+    const activeSpecialtyId = (req.user.role === 'student_all' && req.query.specialty_id)
+      ? parseInt(req.query.specialty_id)
+      : (req.user.specialty_id || 1);
+
+    const specialty = await Specialty.findByPk(activeSpecialtyId);
     const specialtyCode = normalizeSpecialtyCode(specialty ? (specialty.code || specialty.name_uz || specialty.name) : 'GEN_MED');
 
     const modules = await Module.findAll({
-      where: { specialty_id: req.user.specialty_id },
+      where: { specialty_id: activeSpecialtyId },
       order: [['order_index', 'ASC']],
       attributes: ['id', 'title', 'title_uz', 'title_ru', 'title_en', 'description', 'description_uz', 'description_ru', 'description_en', 'order_index'],
     });
@@ -1056,7 +1072,7 @@ const getCurriculum = async (req, res) => {
 
     // Barcha imtihon natijalarini olish
     const examResults = await ExamResult.findAll({
-      where: { student_id: req.user.id, specialty_id: req.user.specialty_id }
+      where: { student_id: req.user.id, specialty_id: activeSpecialtyId }
     });
     const examResMap = {};
     examResults.forEach(r => { examResMap[r.exam_type] = r; });
@@ -1529,6 +1545,19 @@ const getExamResults = async (req, res) => {
   }
 };
 
+// ── GET /api/student/specialties ───────────────────────────
+// Barcha mutaxassisliklarni olish (student_all uchun)
+const getSpecialties = async (req, res) => {
+  try {
+    const specialties = await Specialty.findAll({
+      order: [['id', 'ASC']]
+    });
+    res.json(specialties);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 module.exports = {
   getModules, getModuleById, getGrammar, getVocabulary, getPhrasebook,
   startConversation,
@@ -1539,6 +1568,7 @@ module.exports = {
   getFeedback, getMessages, getTests, submitTest,
   grammarCheck, getDashboard, getModuleProgress,
   getCurriculum, getExamDetails, getExamQuiz, submitExamQuiz,
-  startExamConversation, finalizeExamConversation, getExamResults
+  startExamConversation, finalizeExamConversation, getExamResults,
+  getSpecialties
 };
 

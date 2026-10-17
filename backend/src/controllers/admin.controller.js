@@ -298,9 +298,10 @@ const createUser = async (req, res) => {
 
     const password_hash = await bcrypt.hash(password, 10);
     const userRole = role || 'student';
+    const isStudentLike = userRole === 'student' || userRole === 'student_all';
     // guruh faqat talabalarga; yo'nalish o'qituvchi uchun ham bo'lishi mumkin (ma'lumot sifatida)
     const enroll = await resolveEnrollment(
-      { specialty_id, group_id: userRole === 'student' ? group_id : null },
+      { specialty_id: userRole === 'student_all' ? (specialty_id || 1) : specialty_id, group_id: isStudentLike ? group_id : null },
       { specialty_id: null, group_id: null },
       { actor: 'admin' }
     );
@@ -328,6 +329,7 @@ const updateUser = async (req, res) => {
 
     const { full_name, email, role, specialty_id, group_id, password } = req.body;
     const nextRole = role || user.role;
+    const isStudentLike = nextRole === 'student' || nextRole === 'student_all';
 
     if (email && email !== user.email) {
       const dup = await User.findOne({ where: { email } });
@@ -336,7 +338,7 @@ const updateUser = async (req, res) => {
 
     // admin guruhdan guruhga to'g'ridan-to'g'ri o'tkaza oladi; yo'nalish/guruh mosligi tekshiriladi
     const enroll = await resolveEnrollment(
-      { specialty_id, group_id: nextRole === 'student' ? group_id : null },
+      { specialty_id: nextRole === 'student_all' ? (specialty_id || user.specialty_id || 1) : specialty_id, group_id: isStudentLike ? group_id : null },
       { specialty_id: user.specialty_id, group_id: user.group_id },
       { actor: 'admin' }
     );

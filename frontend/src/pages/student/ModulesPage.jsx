@@ -17,31 +17,54 @@ export default function ModulesPage() {
   const navigate = useNavigate();
   const { t, getLocalized } = useLanguage();
   const { user } = useAuth();
+  const isStudentAll = user?.role === 'student_all';
+
+  const [specialties, setSpecialties] = useState([]);
+  const [selectedSpecialtyId, setSelectedSpecialtyId] = useState(user?.specialty_id || 1);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter]   = useState('all');
   const [search, setSearch]   = useState('');
 
+  // student_all uchun mutaxassisliklar ro'yxatini yuklash
   useEffect(() => {
+    if (isStudentAll) {
+      api.get('/student/specialties')
+        .then(res => {
+          if (Array.isArray(res.data) && res.data.length > 0) {
+            setSpecialties(res.data);
+            if (!user?.specialty_id) {
+              setSelectedSpecialtyId(res.data[0].id);
+            }
+          }
+        })
+        .catch(() => {});
+    }
+  }, [isStudentAll]);
+
+  useEffect(() => {
+    setLoading(true);
+    const query = isStudentAll ? `?specialty_id=${selectedSpecialtyId}` : '';
+
     // Avval curriculum (modullar + oraliq/yakuniy imtihonlar) ni olamiz
-    api.get('/student/curriculum')
+    api.get(`/student/curriculum${query}`)
       .then(r => {
         if (r.data?.items) {
           setItems(r.data.items);
         } else {
           // fallback
-          return api.get('/student/modules').then(res => {
+          return api.get(`/student/modules${query}`).then(res => {
             setItems(res.data.map(m => ({ ...m, kind: 'module' })));
           });
         }
       })
       .catch(() => {
-        api.get('/student/modules')
+        api.get(`/student/modules${query}`)
           .then(res => setItems(res.data.map(m => ({ ...m, kind: 'module' }))))
           .catch(() => {});
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [selectedSpecialtyId, isStudentAll]);
 
   const getStatus = (item) => {
     if (!item.is_unlocked) return 'locked';
@@ -112,6 +135,11 @@ export default function ModulesPage() {
               <span className="text-xs text-slate-500 font-bold px-2.5 py-0.5 rounded-full bg-slate-100 border border-slate-200">
                 Clinical English Hub
               </span>
+              {isStudentAll && (
+                <span className="badge-standard badge-purple text-[10px] font-black uppercase tracking-wider">
+                  Barcha yo'nalishlar
+                </span>
+              )}
             </div>
             <h1 className="text-2xl sm:text-[1.9rem] font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5">
               <span className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 border border-blue-200 flex items-center justify-center text-xl shrink-0">
@@ -138,6 +166,50 @@ export default function ModulesPage() {
             />
           </div>
         </div>
+
+        {/* ── 1.5. Mutaxassisliklar Tanlash Paneli (Faqat student_all uchun) ── */}
+        {isStudentAll && specialties.length > 0 && (
+          <div className="card-glass p-4 sm:p-5">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <RiHospitalLine className="text-indigo-600 text-base" />
+                <h3 className="text-xs font-black uppercase tracking-wider text-slate-800">
+                  Tibbiy Yo'nalishni Tanlang ({specialties.length} ta yo'nalish)
+                </h3>
+              </div>
+              <span className="text-[11px] font-bold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-100">
+                Erkin kirish
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              {specialties.map((s) => {
+                const isSelected = selectedSpecialtyId === s.id;
+                return (
+                  <button
+                    key={s.id}
+                    onClick={() => setSelectedSpecialtyId(s.id)}
+                    className={`p-3 rounded-2xl border text-left transition-all flex items-center gap-3 cursor-pointer ${
+                      isSelected
+                        ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white border-blue-600 shadow-md shadow-blue-500/20 scale-[1.02]'
+                        : 'bg-white/80 hover:bg-white text-slate-700 border-slate-200/90 hover:border-blue-300 shadow-2xs'
+                    }`}
+                  >
+                    <span className="text-2xl shrink-0">{s.icon || '🩺'}</span>
+                    <div className="min-w-0">
+                      <p className={`text-xs font-extrabold truncate ${isSelected ? 'text-white' : 'text-slate-900'}`}>
+                        {getLocalized(s, 'name') || s.name}
+                      </p>
+                      <p className={`text-[10px] font-semibold truncate ${isSelected ? 'text-blue-100' : 'text-slate-400'}`}>
+                        {s.code}
+                      </p>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* ── 2. Filter Pills (Mobile Horizontal Scrollable) ── */}
         <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 w-full flex-nowrap sm:flex-wrap">

@@ -106,6 +106,23 @@ async function ensureDefaultSeedData() {
       console.log('👨‍🎓 [HOST READY] Talaba akkaunti yaratildi: student@vpe.uz / student123');
     }
 
+    // 6. Ensure Student All Account (allstudent@vpe.uz / student123)
+    const studentAllEmail = 'allstudent@vpe.uz';
+    let studentAll = await User.findOne({ where: { email: studentAllEmail } });
+    if (!studentAll) {
+      const allHash = await bcrypt.hash('student123', 10);
+      await User.create({
+        full_name: 'Barcha Yo\'nalishlar Talabasi',
+        email: studentAllEmail,
+        password_hash: allHash,
+        role: 'student_all',
+        specialty_id: specialty?.id || 1,
+        group_id: group?.id || null,
+        current_level: 1,
+      });
+      console.log('🌟 [HOST READY] Barcha yo\'nalishlar talabasi akkaunti yaratildi: allstudent@vpe.uz / student123');
+    }
+
   } catch (err) {
     console.error('⚠️ [HOST INIT] ensureDefaultSeedData xatolik:', err.message);
   }

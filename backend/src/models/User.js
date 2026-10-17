@@ -6,7 +6,7 @@ const User = sequelize.define('User', {
   full_name:     { type: DataTypes.STRING(150), allowNull: false },
   email:         { type: DataTypes.STRING(100), allowNull: false, unique: true },
   password_hash: { type: DataTypes.STRING(255), allowNull: false },
-  role:          { type: DataTypes.ENUM('student', 'teacher', 'admin'), defaultValue: 'student' },
+  role:          { type: DataTypes.ENUM('student', 'student_all', 'teacher', 'admin'), defaultValue: 'student' },
   specialty_id:  { type: DataTypes.INTEGER, allowNull: true },
   group_id:      { type: DataTypes.INTEGER, allowNull: true },
   current_level: { type: DataTypes.INTEGER, defaultValue: 1 },
