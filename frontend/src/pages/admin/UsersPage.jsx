@@ -8,7 +8,7 @@ import { useLanguage } from '../../contexts/LanguageContext';
 import {
   RiTeamLine, RiAddLine, RiEditLine, RiDeleteBinLine,
   RiCloseLine, RiSearchLine, RiLockPasswordLine, RiUserLine,
-  RiMailLine, RiShieldCheckLine, RiUserStarLine, RiUser3Line
+  RiMailLine, RiShieldCheckLine, RiUserStarLine, RiUser3Line, RiSparklingLine
 } from 'react-icons/ri';
 
 const ROLES = ['student', 'student_all', 'teacher', 'admin'];
@@ -160,10 +160,10 @@ function UserModal({ user, onClose, onSaved, specialties, groups }) {
                 onChange={(e) => setForm({ ...form, role: e.target.value })}
                 className="block w-full pl-10 pr-10 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-sm bg-slate-50 focus:bg-white appearance-none font-medium"
               >
-                <option value="student">{t('admin_role_student') || "Talaba (Muayyan yo'nalish)"}</option>
-                <option value="student_all">{t('role_student_all') || "Talaba (Barcha yo'nalishlar)"}</option>
-                <option value="teacher">{t('role_teacher')}</option>
-                <option value="admin">{t('role_admin')}</option>
+                <option value="student">{t('admin_role_student') || "Talaba (Muayyan bitta yo'nalish)"}</option>
+                <option value="student_all">🌟 Barcha modulni ko'ra oladigan student (Barcha yo'nalishlar)</option>
+                <option value="teacher">{t('role_teacher') || "O'qituvchi"}</option>
+                <option value="admin">{t('role_admin') || "Administrator"}</option>
               </select>
             </div>
           </div>
@@ -294,10 +294,29 @@ export default function UsersPage() {
           title={t('admin.users.title')}
           subtitle={t('admin.users.subtitle')}
           actions={
-            <button onClick={() => { setModalUser(null); setShowModal(true); }} className="btn-primary">
-              <RiAddLine className="text-base" />
-              <span>{t('admin.users.add_user_btn')}</span>
-            </button>
+            <div className="flex flex-wrap items-center gap-2.5">
+              <button
+                onClick={() => {
+                  setModalUser({ role: 'student_all' });
+                  setShowModal(true);
+                }}
+                className="btn-primary-gradient bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 shadow-purple-500/25 hover:shadow-purple-500/40 text-xs font-black py-2.5 px-4 cursor-pointer flex items-center gap-2"
+                title="Barcha yo'nalishlar va modullarga to'liq kirish huquqiga ega talaba qo'shish"
+              >
+                <RiSparklingLine className="text-base text-amber-300 animate-pulse" />
+                <span>+ Barcha modulni ko'ra oladigan student qo'shish</span>
+              </button>
+              <button
+                onClick={() => {
+                  setModalUser(null);
+                  setShowModal(true);
+                }}
+                className="btn-secondary text-xs font-bold py-2.5 px-3.5 cursor-pointer flex items-center gap-1.5"
+              >
+                <RiAddLine className="text-base" />
+                <span>{t('admin.users.add_user_btn') || "Foydalanuvchi qo'shish"}</span>
+              </button>
+            </div>
           }
         />
 
