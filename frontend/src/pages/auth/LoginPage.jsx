@@ -26,7 +26,8 @@ export default function LoginPage() {
     try {
       const user = await login(form.email.trim(), form.password);
       toast.success(`${t('auth.welcome_back')}, ${user.full_name || ''}!`);
-      navigate(`/${user.role}/dashboard`, { replace: true });
+      const targetRole = user.role === 'student_all' ? 'student' : user.role;
+      navigate(`/${targetRole}/dashboard`, { replace: true });
     } catch (err) {
       const msg = err.response?.data?.error || t('auth.invalid_creds');
       setError(msg);

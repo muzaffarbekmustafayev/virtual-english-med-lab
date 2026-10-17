@@ -34,13 +34,15 @@ import './index.css';
 function ProfileRedirect() {
   const { user } = useAuth();
   if (!user) return <Navigate to="/login" replace />;
-  return <Navigate to={`/${user.role}/profile`} replace />;
+  const role = user.role === 'student_all' ? 'student' : user.role;
+  return <Navigate to={`/${role}/profile`} replace />;
 }
 
 function RoleRedirect() {
   const { user } = useAuth();
   if (!user) return <Navigate to="/login" replace />;
-  return <Navigate to={`/${user.role}/dashboard`} replace />;
+  const role = user.role === 'student_all' ? 'student' : user.role;
+  return <Navigate to={`/${role}/dashboard`} replace />;
 }
 
 export default function App() {
