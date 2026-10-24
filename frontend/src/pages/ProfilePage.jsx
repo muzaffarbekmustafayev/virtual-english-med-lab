@@ -13,7 +13,7 @@ import {
   RiUser3Line, RiBookOpenLine, RiBarChartLine, RiGroupLine, RiMailLine,
   RiCheckLine, RiKey2Line, RiStethoscopeLine, RiLockLine, RiTrophyLine,
   RiShieldCheckLine, RiUserStarLine, RiRobot2Line, RiArrowRightLine,
-  RiSparkling2Line, RiSave3Line, RiRefreshLine, RiLockPasswordLine,
+  RiSparkling2Line, RiSparklingLine, RiSave3Line, RiRefreshLine, RiLockPasswordLine,
   RiEyeLine, RiEyeOffLine, RiCalendarLine, RiTeamLine, RiSettings4Line,
   RiHospitalLine, RiMessage3Line, RiSpeedLine, RiFileListLine, RiAlertLine
 } from 'react-icons/ri';
@@ -448,6 +448,62 @@ function StudentOverview({ data, modules, t, getLocalized, navigate, COMP_LABELS
 
       <SectionCard icon={RiBarChartLine} iconClass="text-indigo-600" title={t('profile_competency_title')} desc={t('profile_all_modules')} bodyClass="p-5">
         <CompetencyBars comps={data?.competencies || {}} labels={COMP_LABELS} />
+      </SectionCard>
+
+      {/* PhD Pre-test & Post-test Learning Gain Card in Profile */}
+      <SectionCard
+        icon={RiSparklingLine}
+        iconClass="text-indigo-600"
+        title="Boshlang'ich va Yakuniy baholash (Pre-test & Post-test)"
+        desc="PhD ilmiy tajriba-sinov o'sish ko'rsatkichlari (Learning Gain)"
+        bodyClass="p-5 space-y-4"
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="p-4 rounded-2xl bg-blue-50/70 border border-blue-200 text-center">
+            <span className="text-[11px] font-bold text-slate-500 uppercase">Pre-test (Boshlang'ich)</span>
+            <div className="text-2xl font-black text-blue-800 mt-1">
+              {data?.pre_test ? `${data.pre_test.score}%` : 'Topshirilmagan'}
+            </div>
+            <p className="text-[11px] text-slate-500 mt-1">
+              {data?.pre_test ? "Boshlang'ich daraja qayd etilgan" : "O'qishdan oldingi sinov"}
+            </p>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-purple-50/70 border border-purple-200 text-center">
+            <span className="text-[11px] font-bold text-slate-500 uppercase">Post-test (Yakuniy)</span>
+            <div className="text-2xl font-black text-purple-800 mt-1">
+              {data?.post_test ? `${data.post_test.score}%` : "Modullardan so'ng"}
+            </div>
+            <p className="text-[11px] text-slate-500 mt-1">
+              {data?.post_test ? "Yakuniy daraja qayd etilgan" : "Kurs yakunidagi sinov"}
+            </p>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200 text-center">
+            <span className="text-[11px] font-bold text-slate-500 uppercase">Ilmiy O'sish (Gain)</span>
+            <div className="text-2xl font-black text-emerald-700 mt-1">
+              {data?.growth_analysis?.absolute_gain !== undefined
+                ? `${data.growth_analysis.absolute_gain >= 0 ? '+' : ''}${data.growth_analysis.absolute_gain} ball`
+                : '—'}
+            </div>
+            <p className="text-[11px] text-emerald-800 font-semibold mt-1">
+              {data?.growth_analysis?.gain_category_uz || 'Taqqoslov kutilmoqda'}
+            </p>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
+          <p className="text-xs text-slate-500 max-w-xl">
+            {data?.growth_analysis?.pedagogical_summary?.uz || "Pre-test va Post-test orqali talabaning o'quv davridagi ilmiy o'sish sur'ati baholanadi."}
+          </p>
+          <button
+            onClick={() => navigate(data?.has_post_test ? '/student/post-test' : '/student/pre-test')}
+            className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-sm"
+          >
+            {data?.has_post_test ? "O'sish tahlilini ko'rish" : (data?.has_pre_test ? "Pre-test natijasi" : "Pre-testni topshirish")}
+            <RiArrowRightLine />
+          </button>
+        </div>
       </SectionCard>
 
       <SectionCard icon={RiBookOpenLine} title={t('profile_module_history')} right={<span className="badge-standard badge-slate">{modules.length} {t('ui_module_short')}</span>}>

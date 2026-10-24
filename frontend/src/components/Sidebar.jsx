@@ -21,6 +21,7 @@ export default function Sidebar({ isOpen, onClose }) {
     student: [
       { section: t('navigation') },
       { to: "/student/dashboard", icon: RiDashboardLine, label: t('nav_dashboard') },
+      { to: "/student/pre-test", icon: RiLightbulbLine, label: "Pre-test / Post-test", match: '/student/pre' },
       { to: "/student/modules", icon: RiBookOpenLine, label: t('nav_modules'), match: '/student/modules' },
       { to: "/student/grammar", icon: RiQuillPenLine, label: t('nav_grammar'), match: '/student/grammar' },
       { to: "/student/forum", icon: RiChatSmile2Line, label: t('nav_forum') },
@@ -30,6 +31,7 @@ export default function Sidebar({ isOpen, onClose }) {
     student_all: [
       { section: t('navigation') },
       { to: "/student/dashboard", icon: RiDashboardLine, label: t('nav_dashboard') },
+      { to: "/student/pre-test", icon: RiLightbulbLine, label: "Pre-test / Post-test", match: '/student/pre' },
       { to: "/student/modules", icon: RiBookOpenLine, label: t('nav_all_specialties') || "Barcha yo'nalishlar", match: '/student/modules' },
       { to: "/student/grammar", icon: RiQuillPenLine, label: t('nav_grammar'), match: '/student/grammar' },
       { to: "/student/forum", icon: RiChatSmile2Line, label: t('nav_forum') },

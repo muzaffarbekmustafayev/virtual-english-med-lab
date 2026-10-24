@@ -6,7 +6,7 @@ import { useLanguage } from '../../contexts/LanguageContext';
 import { PageHeader, StatTile, SectionCard, EmptyState, Skeleton, Avatar, ScoreBadge, useRelativeTime, scoreText } from '../../components/ui';
 import {
   RiBarChartGroupedLine, RiFileExcel2Line, RiFilter3Line, RiSearchLine,
-  RiGroupLine, RiUser3Line, RiTrophyLine, RiBrainLine, RiBookOpenLine, RiStethoscopeLine, RiCloseLine
+  RiGroupLine, RiUser3Line, RiTrophyLine, RiBrainLine, RiBookOpenLine, RiStethoscopeLine, RiCloseLine, RiLineChartLine, RiSparklingLine
 } from 'react-icons/ri';
 
 const EMPTY = { groups: [], modules: [], summary: { total_students: 0, average_overall: 0, average_grammar: 0, average_vocab: 0, average_clinical: 0 }, reports: [] };
@@ -50,8 +50,8 @@ export default function ReportsPage() {
 
   // Excel (CSV, UTF-8 BOM)
   const exportToExcel = () => {
-    const headers = ['ID', t('teacher.groups.student_name'), t('auth.email'), t('auth.group'), t('ui_sessions'), 'Quiz (%)', 'Grammar (%)', 'Vocabulary (%)', 'Fluency (%)', 'Pronunciation (%)', 'Clinical (%)', 'Overall (%)'];
-    const rows = reportsData.reports.map((r) => [r.student_id, `"${r.full_name}"`, `"${r.email}"`, `"${r.group_name}"`, r.completed_sessions, r.quiz_score, r.grammar_score, r.vocab_score, r.fluency_score, r.pron_score, r.clinical_score, r.overall_score]);
+    const headers = ['ID', t('teacher.groups.student_name'), t('auth.email'), t('auth.group'), t('ui_sessions'), 'Pre-test (%)', 'Post-test (%)', 'Learning Gain', 'Gain Category', 'Quiz (%)', 'Grammar (%)', 'Vocabulary (%)', 'Fluency (%)', 'Pronunciation (%)', 'Clinical (%)', 'Overall (%)'];
+    const rows = reportsData.reports.map((r) => [r.student_id, `"${r.full_name}"`, `"${r.email}"`, `"${r.group_name}"`, r.completed_sessions, r.pre_test_score !== null ? r.pre_test_score : '', r.post_test_score !== null ? r.post_test_score : '', r.learning_gain !== null ? r.learning_gain : '', `"${r.gain_category || ''}"`, r.quiz_score, r.grammar_score, r.vocab_score, r.fluency_score, r.pron_score, r.clinical_score, r.overall_score]);
     const csv = '﻿' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
@@ -132,6 +132,9 @@ export default function ReportsPage() {
                     <th>{t('teacher.groups.student_name')}</th>
                     <th>{t('auth.group')}</th>
                     <th className="text-center">{t('ui_sessions')}</th>
+                    <th className="text-center text-blue-700 bg-blue-50/50">Pre-test</th>
+                    <th className="text-center text-indigo-700 bg-indigo-50/50">Post-test</th>
+                    <th className="text-center text-emerald-700 bg-emerald-50/50">O'sish (Gain)</th>
                     <th className="text-center">{t('student.detail.steps.quiz')}</th>
                     <th className="text-center">{t('student.detail.metrics.grammar')}</th>
                     <th className="text-center">{t('student.detail.metrics.vocabulary')}</th>
@@ -156,6 +159,19 @@ export default function ReportsPage() {
                       </td>
                       <td><span className="badge-standard badge-slate">{r.group_name || '—'}</span></td>
                       <td className="text-center font-bold tabular">{r.completed_sessions}</td>
+                      <td className="text-center font-extrabold tabular bg-blue-50/30 text-blue-700">
+                        {r.pre_test_score !== null && r.pre_test_score !== undefined ? `${r.pre_test_score}%` : '—'}
+                      </td>
+                      <td className="text-center font-extrabold tabular bg-indigo-50/30 text-indigo-700">
+                        {r.post_test_score !== null && r.post_test_score !== undefined ? `${r.post_test_score}%` : '—'}
+                      </td>
+                      <td className="text-center font-black tabular bg-emerald-50/30">
+                        {r.learning_gain !== null && r.learning_gain !== undefined ? (
+                          <span className={`px-2 py-0.5 rounded-full text-xs ${r.learning_gain >= 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}`}>
+                            {r.learning_gain >= 0 ? `+${r.learning_gain}` : r.learning_gain}
+                          </span>
+                        ) : '—'}
+                      </td>
                       <td className="text-center font-bold tabular text-slate-700">{r.quiz_score}%</td>
                       <td className="text-center font-bold tabular text-slate-700">{r.grammar_score}%</td>
                       <td className="text-center font-bold tabular text-slate-700">{r.vocab_score}%</td>

@@ -576,6 +576,18 @@ const getReports = async (req, res) => {
           ? convs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0]
           : null;
 
+        // Pre-test va Post-test natijalarini olish
+        const preRes = await ExamResult.findOne({
+          where: { student_id: s.id, exam_type: 'pre_test' }
+        });
+        const postRes = await ExamResult.findOne({
+          where: { student_id: s.id, exam_type: 'post_test' }
+        });
+
+        const preScore = preRes ? (preRes.overall_score ?? preRes.quiz_score) : null;
+        const postScore = postRes ? (postRes.overall_score ?? postRes.quiz_score) : null;
+        const learningGain = (preScore !== null && postScore !== null) ? (postScore - preScore) : null;
+
         return {
           student_id: s.id,
           full_name: s.full_name,
@@ -589,6 +601,10 @@ const getReports = async (req, res) => {
           pron_score: avgPron,
           clinical_score: avgClinical,
           overall_score: avgOverall,
+          pre_test_score: preScore,
+          post_test_score: postScore,
+          learning_gain: learningGain,
+          gain_category: learningGain !== null ? (learningGain >= 30 ? "Yuqori o'sish" : (learningGain >= 15 ? "O'rtacha o'sish" : (learningGain > 0 ? "Boshlang'ich o'sish" : "O'sish yo'q"))) : null,
           last_activity: lastConv ? lastConv.created_at : s.created_at
         };
       })
@@ -608,11 +624,27 @@ const getReports = async (req, res) => {
       ? Math.round(reportRows.reduce((a, b) => a + b.clinical_score, 0) / totalStudents)
       : 0;
 
+    const studentsWithBoth = reportRows.filter(r => r.learning_gain !== null);
+    const avgGain = studentsWithBoth.length
+      ? Math.round(studentsWithBoth.reduce((a, b) => a + b.learning_gain, 0) / studentsWithBoth.length)
+      : null;
+    const studentsWithPre = reportRows.filter(r => r.pre_test_score !== null);
+    const avgPre = studentsWithPre.length
+      ? Math.round(studentsWithPre.reduce((a, b) => a + b.pre_test_score, 0) / studentsWithPre.length)
+      : null;
+    const studentsWithPost = reportRows.filter(r => r.post_test_score !== null);
+    const avgPost = studentsWithPost.length
+      ? Math.round(studentsWithPost.reduce((a, b) => a + b.post_test_score, 0) / studentsWithPost.length)
+      : null;
+
     res.json({
       groups: availableGroups,
       modules: availableModules,
       summary: {
         total_students: totalStudents,
+        average_pre_test: avgPre,
+        average_post_test: avgPost,
+        average_learning_gain: avgGain,
         average_overall: overallAvg,
         average_grammar: grammarAvg,
         average_vocab: vocabAvg,

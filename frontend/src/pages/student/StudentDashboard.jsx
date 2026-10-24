@@ -10,7 +10,7 @@ import {
   RiBookOpenLine, RiTrophyLine, RiCheckboxCircleLine, RiBarChartLine,
   RiArrowRightLine, RiTimeLine, RiSparklingLine, RiStethoscopeLine,
   RiQuillPenLine, RiChatSmile2Line, RiFireLine, RiCompass3Line,
-  RiPulseLine, RiAwardLine, RiShieldCheckLine, RiBrainLine,
+  RiPulseLine, RiAwardLine, RiShieldCheckLine, RiBrainLine, RiLineChartLine,
   RiSpeakLine, RiVolumeUpLine, RiCheckLine, RiLockLine, RiSparkling2Line
 } from "react-icons/ri";
 import { getModuleVisual } from "../../lib/moduleIcons";
@@ -106,6 +106,103 @@ export default function StudentDashboard() {
             </div>
           </div>
         </div>
+
+        {/* ── Pre-Test Prompt / Notice / Growth Analysis Widget ── */}
+        {data?.has_pre_test === false ? (
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 text-white p-6 sm:p-7 shadow-xl shadow-blue-500/20 border border-blue-400/30">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-2xl shrink-0">
+                  <RiSparklingLine className="text-amber-300" />
+                </div>
+                <div>
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 text-white text-[11px] font-bold mb-1 border border-white/20">
+                    Boshlang'ich bosqich
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-bold">
+                    Dastlabki bilim darajasini aniqlovchi Pre-test
+                  </h3>
+                  <p className="text-xs sm:text-sm text-blue-100 max-w-xl mt-1 leading-relaxed">
+                    O'quv modullarini boshlashdan avval dastlabki bilim darajangizni aniqlash uchun qisqa Pre-test topshirishingiz lozim. Bu natija kurs yakunidagi o'sishingizni tahlil qilish uchun asos bo'ladi.
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => navigate('/student/pre-test')}
+                className="px-6 py-3 rounded-2xl bg-white text-blue-700 font-bold text-sm hover:bg-blue-50 transition-all shrink-0 shadow-sm flex items-center gap-2 hover:scale-[1.02] active:scale-[0.98]"
+              >
+                Pre-testni topshirish <RiArrowRightLine />
+              </button>
+            </div>
+          </div>
+        ) : data?.growth_analysis?.has_both ? (
+          <div className="bg-white rounded-3xl p-6 sm:p-7 border border-indigo-200/80 shadow-sm space-y-4 bg-gradient-to-br from-white via-indigo-50/20 to-emerald-50/20">
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl font-bold">
+                  <RiLineChartLine />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-slate-900">
+                    O'sish va Dinamika Tahlili (Pre vs Post-test)
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    PhD tajriba-sinovi ilmiy o'sish ko'rsatkichi (Learning Gain)
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => navigate('/student/post-test')}
+                className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+              >
+                Batafsil tahlil <RiArrowRightLine />
+              </button>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-center">
+                <span className="text-[11px] font-bold text-slate-500 uppercase">Pre-test</span>
+                <div className="text-2xl font-black text-slate-800 mt-1">{data.growth_analysis.pre_score}%</div>
+                <span className="text-[10px] text-slate-400">Boshlang'ich</span>
+              </div>
+              <div className="p-3.5 rounded-2xl bg-indigo-50/60 border border-indigo-200 text-center">
+                <span className="text-[11px] font-bold text-indigo-700 uppercase">Post-test</span>
+                <div className="text-2xl font-black text-indigo-800 mt-1">{data.growth_analysis.post_score}%</div>
+                <span className="text-[10px] text-indigo-500">Yakuniy</span>
+              </div>
+              <div className="p-3.5 rounded-2xl bg-emerald-500 text-white text-center shadow-sm">
+                <span className="text-[11px] font-bold text-emerald-100 uppercase">O'sish (Gain)</span>
+                <div className="text-2xl font-black mt-1">
+                  {data.growth_analysis.absolute_gain >= 0 ? `+${data.growth_analysis.absolute_gain}` : data.growth_analysis.absolute_gain} ball
+                </div>
+                <span className="text-[10px] text-emerald-100 font-semibold">
+                  +{data.growth_analysis.percentage_gain}% o'sish
+                </span>
+              </div>
+              <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-center text-center">
+                <span className="text-[11px] font-bold text-slate-500 uppercase">Sur'at</span>
+                <div className="text-xs font-extrabold text-slate-800 mt-1.5 line-clamp-2">
+                  {data.growth_analysis.gain_category_uz}
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : data?.has_pre_test ? (
+          <div className="p-4 rounded-2xl bg-blue-50/60 border border-blue-200/70 flex items-center justify-between gap-3 text-xs">
+            <div className="flex items-center gap-2.5 text-blue-900 font-medium">
+              <RiCheckLine className="text-emerald-600 text-base shrink-0 font-bold" />
+              <span>
+                Pre-test topshirilgan: <strong>{data.pre_test?.score}%</strong>. Barcha modullarni yakunlagach, Post-test topshirib o'sish darajangizni baholang!
+              </span>
+            </div>
+            <button
+              onClick={() => navigate('/student/pre-test')}
+              className="text-blue-700 hover:text-blue-800 font-bold shrink-0 underline"
+            >
+              Pre-test natijasi
+            </button>
+          </div>
+        ) : null}
 
         {/* ── 2. Stat Metric Cards ── */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

@@ -18,6 +18,13 @@ router.post('/modules/:id/start',               isStudent, c.startConversation);
 router.get('/modules/:id/tests',                isStudent, c.getTests);
 router.post('/modules/:id/tests/submit',        isStudent, c.submitTest);
 
+// Boshlang'ich Pre-test va Yakuniy Post-test (PhD Tajriba-sinov Baholash)
+router.get('/pre-test',                         isStudent, c.getPreTest);
+router.post('/pre-test/submit',                 isStudent, c.submitPreTest);
+router.get('/post-test',                        isStudent, c.getPostTest);
+router.post('/post-test/submit',                isStudent, c.submitPostTest);
+router.get('/growth-analysis',                  isStudent, c.getGrowthAnalysis);
+
 // O'quv dasturi va Oraliq / Yakuniy imtihonlar (Curriculum & Exams)
 router.get('/curriculum',                       isStudent, c.getCurriculum);
 router.get('/exams/:examType',                  isStudent, c.getExamDetails);

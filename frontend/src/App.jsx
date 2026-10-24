@@ -15,6 +15,7 @@ import ExamDetailPage    from './pages/student/ExamDetailPage';
 import GrammarCheckerPage from './pages/student/GrammarCheckerPage';
 import ForumPage         from './pages/student/ForumPage';
 import ProfilePage       from './pages/ProfilePage';
+import PrePostTestPage   from './pages/student/PrePostTestPage';
 
 // Teacher
 import TeacherDashboard from './pages/teacher/TeacherDashboard';
@@ -66,6 +67,15 @@ export default function App() {
           }/>
           <Route path="/student/modules/:id" element={
             <ProtectedRoute allowedRoles={['student', 'student_all']}><ModuleDetailPage /></ProtectedRoute>
+          }/>
+          <Route path="/student/pre-test" element={
+            <ProtectedRoute allowedRoles={['student', 'student_all']}><PrePostTestPage mode="pre_test" /></ProtectedRoute>
+          }/>
+          <Route path="/student/post-test" element={
+            <ProtectedRoute allowedRoles={['student', 'student_all']}><PrePostTestPage mode="post_test" /></ProtectedRoute>
+          }/>
+          <Route path="/student/growth-analysis" element={
+            <ProtectedRoute allowedRoles={['student', 'student_all']}><PrePostTestPage mode="post_test" /></ProtectedRoute>
           }/>
           <Route path="/student/exams/:examType" element={
             <ProtectedRoute allowedRoles={['student', 'student_all']}><ExamDetailPage /></ProtectedRoute>

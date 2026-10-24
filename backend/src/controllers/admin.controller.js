@@ -5,7 +5,7 @@ const { PASS_THRESHOLD } = require('../config/features');
 const {
   User, Specialty, StudentGroup, TeacherGroup,
   Module, Grammar, Vocabulary, Phrasebook, Test,
-  Conversation, TestResult, ForumMessage,
+  Conversation, TestResult, ForumMessage, ExamResult,
 } = require('../models');
 
 // ── GET /api/admin/overview ──────────────────────────────────
@@ -61,6 +61,17 @@ const getOverview = async (req, res) => {
       const t = teacherById.get(l.teacher_id);
       if (t) teachersOfGroup.get(l.group_id).push({ id: t.id, full_name: t.full_name });
     });
+
+    // PhD Pre-test & Post-test statistics
+    const allExamResults = await ExamResult.findAll({
+      where: { exam_type: ['pre_test', 'post_test'] },
+      attributes: ['student_id', 'specialty_id', 'exam_type', 'overall_score', 'quiz_score', 'evaluation']
+    });
+    const preResults = allExamResults.filter(e => e.exam_type === 'pre_test');
+    const postResults = allExamResults.filter(e => e.exam_type === 'post_test');
+    const avgPre = preResults.length ? avgOf(preResults.map(p => p.overall_score || p.quiz_score || 0)) : null;
+    const avgPost = postResults.length ? avgOf(postResults.map(p => p.overall_score || p.quiz_score || 0)) : null;
+    const avgGain = (avgPre !== null && avgPost !== null) ? (avgPost - avgPre) : null;
 
     const enrichStudent = (st, groupName) => {
       const convs = st.Conversations || [];
@@ -233,6 +244,13 @@ const getOverview = async (req, res) => {
       new_students_30d: allStudents.filter((st) => new Date(st.created_at) >= since(30)).length,
       sessions_7d: allConversations.filter((c) => new Date(c.created_at) >= since(7)).length,
       pass_rate: allConversations.length ? Math.round((allConversations.filter((c) => (c.overall_score || 0) >= PASS_THRESHOLD).length / allConversations.length) * 100) : 0,
+      phd_experiments: {
+        pre_test_count: preResults.length,
+        post_test_count: postResults.length,
+        avg_pre_test: avgPre,
+        avg_post_test: avgPost,
+        avg_learning_gain: avgGain
+      },
       competencies: {
         grammar: avgOf(allConversations.map((c) => c.grammar_score || 0)),
         vocabulary: avgOf(allConversations.map((c) => c.vocabulary_score || 0)),

@@ -83,7 +83,7 @@ export default function ModulesPage() {
   const filtered = items
     .filter(item => {
       if (filter === 'all') return true;
-      if (filter === 'exams') return item.kind === 'exam';
+      if (filter === 'exams') return item.kind === 'exam' || item.kind === 'pre_test' || item.kind === 'post_test';
       if (filter === 'modules') return item.kind === 'module';
       return getStatus(item) === filter;
     })
@@ -251,6 +251,131 @@ export default function ModulesPage() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {filtered.map((item, idx) => {
+              // Pre-test kardasi
+              if (item.kind === 'pre_test') {
+                const isPassed = item.is_completed;
+                return (
+                  <div
+                    key="pre-test-card"
+                    onClick={() => navigate('/student/pre-test')}
+                    className="col-span-1 sm:col-span-2 lg:col-span-3 rounded-2xl sm:rounded-3xl p-5 sm:p-7 border transition-all cursor-pointer bg-gradient-to-r from-blue-600/10 via-indigo-600/5 to-cyan-500/10 border-blue-300 hover:border-blue-500 hover:shadow-lg"
+                  >
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-5">
+                      <div className="flex items-start gap-3.5 sm:gap-4">
+                        <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center text-xl sm:text-2xl font-bold shrink-0 shadow-sm bg-gradient-to-tr from-blue-600 to-indigo-500 text-white shadow-blue-500/30">
+                          <RiSparklingLine />
+                        </div>
+                        <div>
+                          <div className="flex flex-wrap items-center gap-2 mb-1">
+                            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-blue-100 text-blue-800 border border-blue-300">
+                              {item.badge || "Pre-test (Dastlabki baholash)"}
+                            </span>
+                            <span className="text-[11px] font-bold text-slate-500">
+                              Modullardan oldingi diagnostik bosqich
+                            </span>
+                          </div>
+                          <h3 className="text-base sm:text-lg font-black text-slate-900">
+                            {item.title_uz || item.title}
+                          </h3>
+                          <p className="text-xs text-slate-500 line-clamp-2 max-w-2xl mt-0.5">
+                            {item.description_uz || item.description}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-3 shrink-0 self-end sm:self-center">
+                        {isPassed ? (
+                          <div className="flex items-center gap-3">
+                            <div className="text-right">
+                              <span className="text-[10px] text-slate-400 font-bold block uppercase">Pre-test bali</span>
+                              <span className="text-lg font-black text-blue-700">{item.score}%</span>
+                            </div>
+                            <span className="px-4 py-2 rounded-xl bg-blue-100 text-blue-800 font-bold text-xs flex items-center gap-1.5">
+                              <RiCheckboxCircleLine /> Bajarilgan
+                            </span>
+                          </div>
+                        ) : (
+                          <span className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-blue-500/20">
+                            Pre-testni topshirish <RiArrowRightLine />
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+
+              // Post-test kardasi
+              if (item.kind === 'post_test') {
+                const isCompleted = item.is_completed;
+                const isUnlocked = item.is_unlocked;
+                return (
+                  <div
+                    key="post-test-card"
+                    onClick={() => isUnlocked && navigate('/student/post-test')}
+                    className={`col-span-1 sm:col-span-2 lg:col-span-3 rounded-2xl sm:rounded-3xl p-5 sm:p-7 border transition-all ${
+                      isUnlocked
+                        ? 'bg-gradient-to-r from-purple-500/10 via-indigo-500/5 to-pink-500/10 border-purple-300 hover:border-purple-400 hover:shadow-lg cursor-pointer'
+                        : 'bg-slate-50 border-slate-200 opacity-70 cursor-not-allowed'
+                    }`}
+                  >
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-5">
+                      <div className="flex items-start gap-3.5 sm:gap-4">
+                        <div className={`w-11 h-11 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center text-xl sm:text-2xl font-bold shrink-0 shadow-sm ${
+                          isUnlocked
+                            ? 'bg-gradient-to-tr from-purple-600 to-indigo-500 text-white shadow-purple-500/30'
+                            : 'bg-slate-200 text-slate-400'
+                        }`}>
+                          <RiAwardLine />
+                        </div>
+                        <div>
+                          <div className="flex flex-wrap items-center gap-2 mb-1">
+                            <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider ${
+                              isUnlocked
+                                ? 'bg-purple-100 text-purple-800 border border-purple-300'
+                                : 'bg-slate-200 text-slate-600'
+                            }`}>
+                              {item.badge || "Post-test (Yakuniy baholash)"}
+                            </span>
+                            <span className="text-[11px] font-bold text-slate-500">
+                              PhD tadqiqoti: O'sish tahlili (Learning Gain)
+                            </span>
+                          </div>
+                          <h3 className="text-base sm:text-lg font-black text-slate-900">
+                            {item.title_uz || item.title}
+                          </h3>
+                          <p className="text-xs text-slate-500 line-clamp-2 max-w-2xl mt-0.5">
+                            {item.description_uz || item.description}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-3 shrink-0 self-end sm:self-center">
+                        {isCompleted ? (
+                          <div className="flex items-center gap-3">
+                            <div className="text-right">
+                              <span className="text-[10px] text-slate-400 font-bold block uppercase">Post-test bali</span>
+                              <span className="text-lg font-black text-purple-700">{item.score}%</span>
+                            </div>
+                            <span className="px-4 py-2 rounded-xl bg-purple-100 text-purple-800 font-bold text-xs flex items-center gap-1.5">
+                              <RiCheckboxCircleLine /> O'sish tahlilini ko'rish
+                            </span>
+                          </div>
+                        ) : isUnlocked ? (
+                          <span className="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-purple-500/20">
+                            Post-testni topshirish <RiArrowRightLine />
+                          </span>
+                        ) : (
+                          <span className="px-4 py-2 rounded-xl bg-slate-200 text-slate-500 font-semibold text-xs flex items-center gap-1.5">
+                            <RiLockLine /> Modullar tugagach ochiladi
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+
               // Agar EXAM (Oraliq yoki Yakuniy Imtihon) bo'lsa
               if (item.kind === 'exam') {
                 const isMidterm = item.type === 'midterm';

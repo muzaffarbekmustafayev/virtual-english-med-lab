@@ -2,6 +2,7 @@ const { Module, Grammar, Vocabulary, Phrasebook, Conversation, Message, Test, Te
 const { UNLOCK_ALL_MODULES, PASS_THRESHOLD } = require('../config/features');
 const { getPatientReply, getPatientReplyStream, generateFeedback, checkGrammar, generatePatientScenario, tryParseScenario } = require('../services/gemini.service');
 const { normalizeSpecialtyCode, getCurriculumMilestones, getExamScenario } = require('../services/curriculum.service');
+const { getTestForStudent, evaluateTest, calculateLearningGain } = require('../services/prePostTest.service');
 
 // Bemor haqida talabaga ko'rsatsa bo'ladigan qism (tashxis va kutilgan javoblar YASHIRIN qoladi)
 const buildCaseBrief = (patientContext) => {
@@ -120,7 +121,9 @@ const getModules = async (req, res) => {
     const examResMap = {};
     examResults.forEach(r => { examResMap[r.exam_type] = r; });
 
-    let prevPassed = true; // 1-modul har doim ochiq bo'ladi
+    const preTestRes = examResMap['pre_test'];
+    const hasPreTest = Boolean(preTestRes);
+    let prevPassed = UNLOCK_ALL_MODULES || hasPreTest;
 
     const results = [];
     
@@ -174,6 +177,22 @@ const { Op } = require('sequelize');
 // Modul talaba uchun ochiq ekanligini tekshirish (1-modul har doim ochiq, keyingilar avvalgilar 60%+ o'tilgan bo'lsa va oraliq imtihon topshirilgan bo'lsa)
 const checkModuleUnlocked = async (studentId, specialtyId, targetModule) => {
   if (!targetModule) return { unlocked: false };
+
+  // Pre-test tekshiruvi: Agar talaba hali o'z mutaxassisligi bo'yicha Pre-test topshirmagan bo'lsa,
+  // 1-modul ham qulflanadi va avval Pre-test topshirish talab qilinadi!
+  if (!UNLOCK_ALL_MODULES) {
+    const preTestRes = await ExamResult.findOne({
+      where: {
+        student_id: studentId,
+        specialty_id: specialtyId,
+        exam_type: 'pre_test'
+      }
+    });
+    if (!preTestRes) {
+      return { unlocked: false, blockedByPreTest: true, blockedByExam: "Boshlang'ich baholash (Pre-test)" };
+    }
+  }
+
   if (targetModule.order_index <= 1) return { unlocked: true };
 
   if (UNLOCK_ALL_MODULES) return { unlocked: true }; // test rejimi: ketma-ketlik sharti o'chirilgan
@@ -1021,6 +1040,15 @@ const getDashboard = async (req, res) => {
       clinical: countedCompetencies > 0 ? Math.round(bestClinicalSum / countedCompetencies) : Math.min(100, Math.round(avgScore * 1.01)),
     };
 
+    // Pre-test va Post-test natijalarini olish
+    const preTestRes = await ExamResult.findOne({
+      where: { student_id: req.user.id, specialty_id: activeSpecialtyId, exam_type: 'pre_test' }
+    });
+    const postTestRes = await ExamResult.findOne({
+      where: { student_id: req.user.id, specialty_id: activeSpecialtyId, exam_type: 'post_test' }
+    });
+    const growthAnalysis = calculateLearningGain(preTestRes, postTestRes);
+
     res.json({
       stats: {
         total_modules: totalCount,
@@ -1037,6 +1065,25 @@ const getDashboard = async (req, res) => {
       competencies,
       module_results: moduleScoresList,
       recent_activity: allConvs.slice(0, 6),
+      has_pre_test: Boolean(preTestRes),
+      pre_test: preTestRes ? {
+        id: preTestRes.id,
+        score: preTestRes.overall_score || preTestRes.quiz_score,
+        grammar_score: preTestRes.grammar_score,
+        vocab_score: preTestRes.vocab_score,
+        clinical_score: preTestRes.clinical_score,
+        completed_at: preTestRes.created_at || preTestRes.last_attempt_at,
+      } : null,
+      has_post_test: Boolean(postTestRes),
+      post_test: postTestRes ? {
+        id: postTestRes.id,
+        score: postTestRes.overall_score || postTestRes.quiz_score,
+        grammar_score: postTestRes.grammar_score,
+        vocab_score: postTestRes.vocab_score,
+        clinical_score: postTestRes.clinical_score,
+        completed_at: postTestRes.created_at || postTestRes.last_attempt_at,
+      } : null,
+      growth_analysis: growthAnalysis,
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -1077,8 +1124,41 @@ const getCurriculum = async (req, res) => {
     const examResMap = {};
     examResults.forEach(r => { examResMap[r.exam_type] = r; });
 
-    let prevCompleted = true; // 1-modul har doim ochiq
-    const curriculumItems = [];
+    const preTestRes = examResMap['pre_test'];
+    const hasPreTest = Boolean(preTestRes);
+    const postTestRes = examResMap['post_test'];
+    const hasPostTest = Boolean(postTestRes);
+
+    const preItem = {
+      kind: 'pre_test',
+      id: 'pre_test',
+      exam_type: 'pre_test',
+      type: 'pre_test',
+      order_index: 0,
+      title: "Boshlang'ich baholash (Pre-test)",
+      title_uz: "Boshlang'ich baholash (Pre-test)",
+      title_ru: "Входное тестирование (Pre-test)",
+      title_en: "Baseline Assessment (Pre-test)",
+      badge: "Pre-test (Kirish)",
+      badge_uz: "Pre-test (Kirish)",
+      badge_ru: "Pre-test (Входной)",
+      badge_en: "Pre-test (Baseline)",
+      description_uz: "Modullarni boshlashdan oldin tibbiy ingliz tili bo'yicha boshlang'ich bilim darajasini aniqlash",
+      description_ru: "Определение исходного уровня владения медицинским английским языком перед началом модулей",
+      description_en: "Determine baseline clinical English proficiency before starting modules",
+      is_unlocked: true,
+      is_completed: hasPreTest,
+      is_passed: hasPreTest,
+      score: preTestRes ? (preTestRes.overall_score || preTestRes.quiz_score) : null,
+      quiz_score: preTestRes ? preTestRes.quiz_score : null,
+      grammar_score: preTestRes ? preTestRes.grammar_score : null,
+      vocab_score: preTestRes ? preTestRes.vocab_score : null,
+      clinical_score: preTestRes ? preTestRes.clinical_score : null,
+      attempts_count: preTestRes?.attempts_count || (hasPreTest ? 1 : 0),
+    };
+
+    let prevCompleted = UNLOCK_ALL_MODULES || hasPreTest;
+    const curriculumItems = [preItem];
 
     for (let i = 0; i < modules.length; i++) {
       const m = modules[i];
@@ -1154,6 +1234,45 @@ const getCurriculum = async (req, res) => {
       }
     }
 
+    const allModulesDone = modules.every(m => {
+      const r = modResMap[m.id];
+      return r ? (r.is_completed || r.combined_score >= PASS_THRESHOLD || r.best_chat_score >= PASS_THRESHOLD) : false;
+    });
+    const isPostUnlocked = UNLOCK_ALL_MODULES || allModulesDone;
+
+    const growthAnalysis = calculateLearningGain(preTestRes, postTestRes);
+
+    const postItem = {
+      kind: 'post_test',
+      id: 'post_test',
+      exam_type: 'post_test',
+      type: 'post_test',
+      order_index: totalModules + 1,
+      title: "Yakuniy baholash & O'sish tahlili (Post-test)",
+      title_uz: "Yakuniy baholash & O'sish tahlili (Post-test)",
+      title_ru: "Итоговое тестирование и анализ прогресса (Post-test)",
+      title_en: "Final Evaluation & Growth Analysis (Post-test)",
+      badge: "Post-test (Yakuniy)",
+      badge_uz: "Post-test (Yakuniy)",
+      badge_ru: "Post-test (Итоговый)",
+      badge_en: "Post-test (Final Gain)",
+      description_uz: "Modullarni o'rgangandan so'ng erishilgan o'sish va bilimlarni kompleks taqqoslash",
+      description_ru: "Комплексное сравнение прироста знаний и навыков после изучения всех модулей",
+      description_en: "Comprehensive evaluation of learning gain and growth compared to baseline",
+      is_unlocked: isPostUnlocked,
+      is_completed: hasPostTest,
+      is_passed: hasPostTest,
+      score: postTestRes ? (postTestRes.overall_score || postTestRes.quiz_score) : null,
+      quiz_score: postTestRes ? postTestRes.quiz_score : null,
+      grammar_score: postTestRes ? postTestRes.grammar_score : null,
+      vocab_score: postTestRes ? postTestRes.vocab_score : null,
+      clinical_score: postTestRes ? postTestRes.clinical_score : null,
+      attempts_count: postTestRes?.attempts_count || (hasPostTest ? 1 : 0),
+      growth_analysis: growthAnalysis,
+    };
+
+    curriculumItems.push(postItem);
+
     res.json({
       specialty: {
         id: specialty?.id,
@@ -1163,6 +1282,9 @@ const getCurriculum = async (req, res) => {
         name_ru: specialty?.name_ru,
         name_en: specialty?.name_en,
       },
+      has_pre_test: hasPreTest,
+      has_post_test: hasPostTest,
+      growth_analysis: growthAnalysis,
       total_modules: totalModules,
       milestones: milestones,
       items: curriculumItems
@@ -1558,6 +1680,291 @@ const getSpecialties = async (req, res) => {
   }
 };
 
+
+// ── Pre-test va Post-test (PhD Tajriba-sinov Baholash Tizimi) ──
+const getPreTest = async (req, res) => {
+  try {
+    const activeSpecialtyId = (req.user.role === 'student_all' && req.query.specialty_id)
+      ? parseInt(req.query.specialty_id)
+      : (req.user.specialty_id || 1);
+
+    const specialty = await Specialty.findByPk(activeSpecialtyId);
+    const specialtyCode = normalizeSpecialtyCode(specialty ? (specialty.code || specialty.name_uz || specialty.name) : 'GEN_MED');
+
+    const existing = await ExamResult.findOne({
+      where: {
+        student_id: req.user.id,
+        specialty_id: activeSpecialtyId,
+        exam_type: 'pre_test'
+      }
+    });
+
+    const testData = getTestForStudent(specialtyCode, 'pre_test');
+
+    if (existing) {
+      return res.json({
+        completed: true,
+        test_info: testData,
+        result: existing
+      });
+    }
+
+    res.json({
+      completed: false,
+      test: testData
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+const submitPreTest = async (req, res) => {
+  try {
+    const { answers } = req.body;
+    if (!answers || typeof answers !== 'object') {
+      return res.status(400).json({ error: "Javoblar yuborilmadi" });
+    }
+
+    const activeSpecialtyId = (req.user.role === 'student_all' && req.body.specialty_id)
+      ? parseInt(req.body.specialty_id)
+      : (req.user.specialty_id || 1);
+
+    const specialty = await Specialty.findByPk(activeSpecialtyId);
+    const specialtyCode = normalizeSpecialtyCode(specialty ? (specialty.code || specialty.name_uz || specialty.name) : 'GEN_MED');
+
+    const evalResult = evaluateTest(specialtyCode, 'pre_test', answers);
+
+    let [examRes, created] = await ExamResult.findOrCreate({
+      where: {
+        student_id: req.user.id,
+        specialty_id: activeSpecialtyId,
+        exam_type: 'pre_test'
+      },
+      defaults: {
+        student_id: req.user.id,
+        specialty_id: activeSpecialtyId,
+        exam_type: 'pre_test',
+        quiz_score: evalResult.overall_score,
+        overall_score: evalResult.overall_score,
+        grammar_score: evalResult.grammar_score,
+        vocab_score: evalResult.vocab_score,
+        clinical_score: evalResult.clinical_score,
+        is_passed: true,
+        attempts_count: 1,
+        quiz_details: evalResult.details,
+        evaluation: {
+          category_breakdown: evalResult.category_breakdown,
+          correct_count: evalResult.correct_count,
+          total_questions: evalResult.total_questions,
+          cefr_level: evalResult.cefr_level,
+          recommendations: evalResult.recommendations,
+          time_spent_seconds: req.body.time_spent_seconds || null,
+        },
+        last_attempt_at: new Date()
+      }
+    });
+
+    if (!created) {
+      await examRes.update({
+        quiz_score: evalResult.overall_score,
+        overall_score: evalResult.overall_score,
+        grammar_score: evalResult.grammar_score,
+        vocab_score: evalResult.vocab_score,
+        clinical_score: evalResult.clinical_score,
+        is_passed: true,
+        attempts_count: (examRes.attempts_count || 0) + 1,
+        quiz_details: evalResult.details,
+        evaluation: {
+          category_breakdown: evalResult.category_breakdown,
+          correct_count: evalResult.correct_count,
+          total_questions: evalResult.total_questions,
+          cefr_level: evalResult.cefr_level,
+          recommendations: evalResult.recommendations,
+          time_spent_seconds: req.body.time_spent_seconds || examRes.evaluation?.time_spent_seconds || null,
+        },
+        last_attempt_at: new Date()
+      });
+    }
+
+    res.json({
+      success: true,
+      result: examRes,
+      evaluation: evalResult
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+const getPostTest = async (req, res) => {
+  try {
+    const activeSpecialtyId = (req.user.role === 'student_all' && req.query.specialty_id)
+      ? parseInt(req.query.specialty_id)
+      : (req.user.specialty_id || 1);
+
+    const specialty = await Specialty.findByPk(activeSpecialtyId);
+    const specialtyCode = normalizeSpecialtyCode(specialty ? (specialty.code || specialty.name_uz || specialty.name) : 'GEN_MED');
+
+    const modules = await Module.findAll({
+      where: { specialty_id: activeSpecialtyId },
+      order: [['order_index', 'ASC']],
+      attributes: ['id', 'order_index']
+    });
+
+    const moduleResults = await ModuleResult.findAll({
+      where: { student_id: req.user.id }
+    });
+    const modResMap = {};
+    moduleResults.forEach(r => { modResMap[r.module_id] = r; });
+
+    const allModulesDone = modules.every(m => {
+      const r = modResMap[m.id];
+      return r ? (r.is_completed || r.combined_score >= PASS_THRESHOLD || r.best_chat_score >= PASS_THRESHOLD) : false;
+    });
+
+    const isUnlocked = UNLOCK_ALL_MODULES || allModulesDone;
+
+    const existing = await ExamResult.findOne({
+      where: {
+        student_id: req.user.id,
+        specialty_id: activeSpecialtyId,
+        exam_type: 'post_test'
+      }
+    });
+
+    const preRes = await ExamResult.findOne({
+      where: {
+        student_id: req.user.id,
+        specialty_id: activeSpecialtyId,
+        exam_type: 'pre_test'
+      }
+    });
+
+    const growthAnalysis = calculateLearningGain(preRes, existing);
+    const testData = getTestForStudent(specialtyCode, 'post_test');
+
+    res.json({
+      is_unlocked: isUnlocked,
+      completed: Boolean(existing),
+      test: testData,
+      result: existing,
+      pre_test_result: preRes,
+      growth_analysis: growthAnalysis
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+const submitPostTest = async (req, res) => {
+  try {
+    const { answers } = req.body;
+    if (!answers || typeof answers !== 'object') {
+      return res.status(400).json({ error: "Javoblar yuborilmadi" });
+    }
+
+    const activeSpecialtyId = (req.user.role === 'student_all' && req.body.specialty_id)
+      ? parseInt(req.body.specialty_id)
+      : (req.user.specialty_id || 1);
+
+    const specialty = await Specialty.findByPk(activeSpecialtyId);
+    const specialtyCode = normalizeSpecialtyCode(specialty ? (specialty.code || specialty.name_uz || specialty.name) : 'GEN_MED');
+
+    const evalResult = evaluateTest(specialtyCode, 'post_test', answers);
+
+    const preTestRes = await ExamResult.findOne({
+      where: {
+        student_id: req.user.id,
+        specialty_id: activeSpecialtyId,
+        exam_type: 'pre_test'
+      }
+    });
+
+    const growthAnalysis = calculateLearningGain(preTestRes, evalResult);
+
+    let [examRes, created] = await ExamResult.findOrCreate({
+      where: {
+        student_id: req.user.id,
+        specialty_id: activeSpecialtyId,
+        exam_type: 'post_test'
+      },
+      defaults: {
+        student_id: req.user.id,
+        specialty_id: activeSpecialtyId,
+        exam_type: 'post_test',
+        quiz_score: evalResult.overall_score,
+        overall_score: evalResult.overall_score,
+        grammar_score: evalResult.grammar_score,
+        vocab_score: evalResult.vocab_score,
+        clinical_score: evalResult.clinical_score,
+        is_passed: true,
+        attempts_count: 1,
+        quiz_details: evalResult.details,
+        evaluation: {
+          ...(growthAnalysis || {}),
+          cefr_level: evalResult.cefr_level,
+          recommendations: evalResult.recommendations,
+          time_spent_seconds: req.body.time_spent_seconds || null,
+        },
+        last_attempt_at: new Date()
+      }
+    });
+
+    if (!created) {
+      await examRes.update({
+        quiz_score: evalResult.overall_score,
+        overall_score: evalResult.overall_score,
+        grammar_score: evalResult.grammar_score,
+        vocab_score: evalResult.vocab_score,
+        clinical_score: evalResult.clinical_score,
+        is_passed: true,
+        attempts_count: (examRes.attempts_count || 0) + 1,
+        quiz_details: evalResult.details,
+        evaluation: {
+          ...(growthAnalysis || {}),
+          cefr_level: evalResult.cefr_level,
+          recommendations: evalResult.recommendations,
+          time_spent_seconds: req.body.time_spent_seconds || null,
+        },
+        last_attempt_at: new Date()
+      });
+    }
+
+    res.json({
+      success: true,
+      result: examRes,
+      evaluation: evalResult,
+      growth_analysis: growthAnalysis
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+const getGrowthAnalysis = async (req, res) => {
+  try {
+    const activeSpecialtyId = (req.user.role === 'student_all' && req.query.specialty_id)
+      ? parseInt(req.query.specialty_id)
+      : (req.user.specialty_id || 1);
+
+    const preRes = await ExamResult.findOne({
+      where: { student_id: req.user.id, specialty_id: activeSpecialtyId, exam_type: 'pre_test' }
+    });
+    const postRes = await ExamResult.findOne({
+      where: { student_id: req.user.id, specialty_id: activeSpecialtyId, exam_type: 'post_test' }
+    });
+
+    const analysis = calculateLearningGain(preRes, postRes);
+    res.json({
+      pre_test: preRes,
+      post_test: postRes,
+      analysis: analysis
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 module.exports = {
   getModules, getModuleById, getGrammar, getVocabulary, getPhrasebook,
   startConversation,
@@ -1569,6 +1976,7 @@ module.exports = {
   grammarCheck, getDashboard, getModuleProgress,
   getCurriculum, getExamDetails, getExamQuiz, submitExamQuiz,
   startExamConversation, finalizeExamConversation, getExamResults,
-  getSpecialties
+  getSpecialties,
+  getPreTest, submitPreTest, getPostTest, submitPostTest, getGrowthAnalysis
 };
 
