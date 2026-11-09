@@ -143,7 +143,7 @@ export default function Layout({ children, contentClass = '' }) {
                   </div>
                   <button
                     role="menuitem"
-                    onClick={() => { setMenuOpen(false); navigate(`/${role}/profile`); }}
+                    onClick={() => { setMenuOpen(false); navigate('/profile'); }}
                     className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors"
                   >
                     <RiUser3Line className="text-base text-blue-600" />

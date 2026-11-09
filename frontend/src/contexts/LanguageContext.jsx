@@ -4,6 +4,26 @@ const LanguageContext = createContext(null);
 
 export const TRANSLATIONS = {
   uz: {
+    // Additional UI & exam keys
+    all_specialties_access: "Barcha yo'nalishlar ochiq",
+    correct: "To'g'ri",
+    correct_answer_is: "To'g'ri javob",
+    default_optional: "Ixtiyoriy",
+    exam_covered: "Qamrov",
+    exam_failed_status: "Qayta urinish",
+    exam_passed_status: "Topshirildi",
+    exam_quiz_subtitle: "O'tilgan modullar bo'yicha tibbiy terminologiya va klinik amaliyot savollari",
+    exam_quiz_title: "Klinik bilimlar testi",
+    exam_score: "Imtihon bali",
+    exam_step_chat: "Klinik muloqot",
+    exam_step_quiz: "Bilimlar testi",
+    exam_step_result: "Imtihon natijasi",
+    gap_exercises_count: "ta mashq",
+    gap_subtitle_manual: "Jumlada tushirib qoldirilgan tibbiy so'zni klaviaturadan to'g'ri yozing",
+    header_student_all_portal: "Talaba (Barcha yo'nalishlar)",
+    nav_all_specialties: "Barcha yo'nalishlar",
+    role_student_all: "Talaba (Barcha yo'nalishlar)",
+    voice_not_supported: "Brauzeringiz ovozli muloqotni qo'llab-quvvatlamaydi",
     // App header
     enroll_change_specialty_title: "Yo'nalishni o'zgartirasizmi?",
     enroll_change_specialty_desc: "Modullar to'plami yangi yo'nalishga almashadi. Hozirgi guruhingizdan chiqarilasiz — yangi yo'nalishdagi guruhni tanlashingiz mumkin. Avvalgi natijalaringiz saqlanib qoladi.",
@@ -1044,6 +1064,26 @@ export const TRANSLATIONS = {
   },
 
   ru: {
+    // Additional UI & exam keys
+    all_specialties_access: "Доступны все специальности",
+    correct: "Правильно",
+    correct_answer_is: "Правильный ответ",
+    default_optional: "Необязательно",
+    exam_covered: "Охват",
+    exam_failed_status: "Повторная попытка",
+    exam_passed_status: "Сдано",
+    exam_quiz_subtitle: "Вопросы по медицинской терминологии и клинической практике пройденных модулей",
+    exam_quiz_title: "Тест клинических знаний",
+    exam_score: "Балл экзамена",
+    exam_step_chat: "Клинический диалог",
+    exam_step_quiz: "Тестирование знаний",
+    exam_step_result: "Результат экзамена",
+    gap_exercises_count: "упражнений",
+    gap_subtitle_manual: "Вставьте пропущенное медицинское слово, введя его с клавиатуры",
+    header_student_all_portal: "Студент (Все специальности)",
+    nav_all_specialties: "Все направления",
+    role_student_all: "Студент (Все направления)",
+    voice_not_supported: "Ваш браузер не поддерживает голосовой ввод",
     // App header
     enroll_change_specialty_title: "Изменить направление?",
     enroll_change_specialty_desc: "Набор модулей сменится на новое направление. Вы будете исключены из текущей группы — можно выбрать группу нового направления. Прежние результаты сохранятся.",
@@ -2084,6 +2124,26 @@ export const TRANSLATIONS = {
   },
 
   en: {
+    // Additional UI & exam keys
+    all_specialties_access: "All specialties available",
+    correct: "Correct",
+    correct_answer_is: "Correct answer",
+    default_optional: "Optional",
+    exam_covered: "Coverage",
+    exam_failed_status: "Retry needed",
+    exam_passed_status: "Passed",
+    exam_quiz_subtitle: "Questions on medical terminology and clinical practice for covered modules",
+    exam_quiz_title: "Clinical Knowledge Quiz",
+    exam_score: "Exam Score",
+    exam_step_chat: "Clinical Dialogue",
+    exam_step_quiz: "Knowledge Quiz",
+    exam_step_result: "Exam Result",
+    gap_exercises_count: "exercises",
+    gap_subtitle_manual: "Type the missing medical term correctly in the blank",
+    header_student_all_portal: "Student (All Specialties)",
+    nav_all_specialties: "All Specialties",
+    role_student_all: "Student (All Specialties)",
+    voice_not_supported: "Your browser does not support voice input",
     // App header
     enroll_change_specialty_title: "Change your specialty?",
     enroll_change_specialty_desc: "Your module set will switch to the new specialty. You will leave your current group and can pick a group in the new specialty. Your previous results are kept.",

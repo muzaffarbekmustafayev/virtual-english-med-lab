@@ -167,7 +167,7 @@ export default function ContentManager() {
   };
 
   const activeModule = modules.find(m => m.id == selMod);
-  const activeTab = TABS.find(t => t.id === tab);
+  const activeTab = TABS.find(tb => tb.id === tab);
 
   const filteredItems = items.filter(item => {
     if (tab === 'scenarios' && selSpec && item.specialty_id !== selSpec) return false;

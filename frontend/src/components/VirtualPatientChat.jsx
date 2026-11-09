@@ -230,7 +230,7 @@ export default function VirtualPatientChat({
   const stopAudioAnalyser = () => {
     if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
     if (micStreamRef.current) {
-      micStreamRef.current.getTracks().forEach(t => t.stop());
+      micStreamRef.current.getTracks().forEach(trk => trk.stop());
       micStreamRef.current = null;
     }
     if (audioContextRef.current) {

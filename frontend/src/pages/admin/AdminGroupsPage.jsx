@@ -450,8 +450,8 @@ export default function AdminGroupsPage() {
                           onChange={e => setSelectedTeacherId(e.target.value)}
                         >
                           <option value="">-- Tanlash --</option>
-                          {teachers.filter(t => !activeGroup?.teachers?.some(at => at.id === t.id)).map(t => (
-                            <option key={t.id} value={t.id}>{t.full_name}</option>
+                          {teachers.filter(tch => !activeGroup?.teachers?.some(at => at.id === tch.id)).map(tch => (
+                            <option key={tch.id} value={tch.id}>{tch.full_name}</option>
                           ))}
                         </select>
                         <button 
@@ -471,19 +471,19 @@ export default function AdminGroupsPage() {
                         <p className="text-xs text-slate-400 font-medium">{t('admin_no_teachers')}</p>
                       </div>
                     )}
-                    {activeGroup?.teachers?.map(t => (
-                      <div key={t.id} className="flex items-center justify-between bg-white border border-slate-100 p-3 rounded-2xl shadow-sm hover:shadow-md transition-shadow group">
+                    {activeGroup?.teachers?.map(tch => (
+                      <div key={tch.id} className="flex items-center justify-between bg-white border border-slate-100 p-3 rounded-2xl shadow-sm hover:shadow-md transition-shadow group">
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white shadow-sm font-bold">
-                            {t.full_name?.charAt(0).toUpperCase()}
+                            {tch.full_name?.charAt(0).toUpperCase()}
                           </div>
                           <div>
-                            <span className="text-sm font-bold text-slate-800 block">{t.full_name}</span>
-                            <span className="text-[10px] font-semibold text-slate-400">{t.email}</span>
+                            <span className="text-sm font-bold text-slate-800 block">{tch.full_name}</span>
+                            <span className="text-[10px] font-semibold text-slate-400">{tch.email}</span>
                           </div>
                         </div>
                         <button 
-                          onClick={() => removeTeacher(t.id)} 
+                          onClick={() => removeTeacher(tch.id)} 
                           className="w-8 h-8 flex items-center justify-center text-slate-300 hover:text-rose-500 bg-slate-50 hover:bg-rose-50 rounded-xl transition-colors opacity-0 group-hover:opacity-100"
                           title={t('admin_remove_from_group')}
                         >
