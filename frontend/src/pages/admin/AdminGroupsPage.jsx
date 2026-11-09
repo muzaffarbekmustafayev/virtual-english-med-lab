@@ -59,7 +59,7 @@ export default function AdminGroupsPage() {
 
   // Derived Data
   const teachers = useMemo(() => users.filter(u => u.role === 'teacher'), [users]);
-  const students = useMemo(() => users.filter(u => u.role === 'student'), [users]);
+  const students = useMemo(() => users.filter(u => u.role === 'student' || u.role === 'student_all'), [users]);
   
   const filteredGroups = useMemo(() => {
     if (!selectedSpecId) return groups;

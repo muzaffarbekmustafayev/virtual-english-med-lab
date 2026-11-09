@@ -293,8 +293,15 @@ const getUsers = async (req, res) => {
       where,
       attributes: { exclude: ['password_hash'] },
       include: [
-        { model: Specialty,    as: 'specialty', attributes: ['id', 'name'] },
-        { model: StudentGroup, as: 'group',     attributes: ['id', 'name'] },
+        { model: Specialty,    as: 'specialty',     attributes: ['id', 'name', 'code'] },
+        { model: StudentGroup, as: 'group',         attributes: ['id', 'name', 'specialty_id'] },
+        {
+          model: StudentGroup,
+          as: 'teacherGroups',
+          attributes: ['id', 'name', 'specialty_id'],
+          through: { attributes: [] },
+          include: [{ model: Specialty, as: 'specialty', attributes: ['id', 'name'] }],
+        },
       ],
       order: [['created_at', 'DESC']],
     });
@@ -307,7 +314,7 @@ const getUsers = async (req, res) => {
 // ── POST /api/admin/users ────────────────────────────────────
 const createUser = async (req, res) => {
   try {
-    const { full_name, email, password, role, specialty_id, group_id } = req.body;
+    const { full_name, email, password, role, specialty_id, group_id, teacher_group_ids, group_ids } = req.body;
     if (!full_name || !email || !password)
       return res.status(400).json({ error: 'Ism, email va parol majburiy' });
 
@@ -330,10 +337,32 @@ const createUser = async (req, res) => {
       email,
       password_hash,
       role: userRole,
-      ...enroll.updates,
+      specialty_id: userRole === 'teacher' ? (specialty_id ? parseInt(specialty_id) : null) : enroll.updates.specialty_id,
+      group_id: isStudentLike ? enroll.updates.group_id : null,
     });
 
-    res.status(201).json({ ...user.toJSON(), password_hash: undefined });
+    const targetGroupIds = teacher_group_ids || group_ids;
+    if (userRole === 'teacher' && Array.isArray(targetGroupIds) && targetGroupIds.length > 0) {
+      const records = targetGroupIds.map((gid) => ({ teacher_id: user.id, group_id: parseInt(gid) }));
+      await TeacherGroup.bulkCreate(records);
+    }
+
+    const created = await User.findByPk(user.id, {
+      attributes: { exclude: ['password_hash'] },
+      include: [
+        { model: Specialty,    as: 'specialty',     attributes: ['id', 'name', 'code'] },
+        { model: StudentGroup, as: 'group',         attributes: ['id', 'name', 'specialty_id'] },
+        {
+          model: StudentGroup,
+          as: 'teacherGroups',
+          attributes: ['id', 'name', 'specialty_id'],
+          through: { attributes: [] },
+          include: [{ model: Specialty, as: 'specialty', attributes: ['id', 'name'] }],
+        },
+      ],
+    });
+
+    res.status(201).json(created);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -345,7 +374,7 @@ const updateUser = async (req, res) => {
     const user = await User.findByPk(req.params.id);
     if (!user) return res.status(404).json({ error: 'Foydalanuvchi topilmadi' });
 
-    const { full_name, email, role, specialty_id, group_id, password } = req.body;
+    const { full_name, email, role, specialty_id, group_id, password, teacher_group_ids, group_ids } = req.body;
     const nextRole = role || user.role;
     const isStudentLike = nextRole === 'student' || nextRole === 'student_all';
 
@@ -366,12 +395,38 @@ const updateUser = async (req, res) => {
       full_name: full_name || user.full_name,
       email: email || user.email,
       role: nextRole,
-      ...enroll.updates,
+      specialty_id: nextRole === 'teacher' ? (specialty_id !== undefined ? (specialty_id ? parseInt(specialty_id) : null) : user.specialty_id) : enroll.updates.specialty_id,
+      group_id: isStudentLike ? enroll.updates.group_id : null,
     };
     if (password) updates.password_hash = await bcrypt.hash(password, 10);
 
     await user.update(updates);
-    res.json({ message: 'Yangilandi', user: { ...user.toJSON(), password_hash: undefined } });
+
+    const targetGroupIds = teacher_group_ids !== undefined ? teacher_group_ids : group_ids;
+    if (nextRole === 'teacher' && Array.isArray(targetGroupIds)) {
+      await TeacherGroup.destroy({ where: { teacher_id: user.id } });
+      if (targetGroupIds.length > 0) {
+        const records = targetGroupIds.map((gid) => ({ teacher_id: user.id, group_id: parseInt(gid) }));
+        await TeacherGroup.bulkCreate(records);
+      }
+    }
+
+    const updated = await User.findByPk(user.id, {
+      attributes: { exclude: ['password_hash'] },
+      include: [
+        { model: Specialty,    as: 'specialty',     attributes: ['id', 'name', 'code'] },
+        { model: StudentGroup, as: 'group',         attributes: ['id', 'name', 'specialty_id'] },
+        {
+          model: StudentGroup,
+          as: 'teacherGroups',
+          attributes: ['id', 'name', 'specialty_id'],
+          through: { attributes: [] },
+          include: [{ model: Specialty, as: 'specialty', attributes: ['id', 'name'] }],
+        },
+      ],
+    });
+
+    res.json({ message: 'Yangilandi', user: updated });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -437,7 +492,13 @@ const getGroups = async (req, res) => {
       include: [
         { model: Specialty, as: 'specialty', attributes: ['id', 'name'] },
         { model: User, as: 'teachers', attributes: ['id', 'full_name', 'email'], through: { attributes: [] } },
-        { model: User, as: 'students', attributes: ['id', 'full_name', 'email'], where: { role: 'student' }, required: false },
+        {
+          model: User,
+          as: 'students',
+          attributes: ['id', 'full_name', 'email', 'role', 'specialty_id'],
+          where: { role: { [Op.in]: ['student', 'student_all'] } },
+          required: false,
+        },
       ],
       order: [['name', 'ASC']],
     });
@@ -504,7 +565,7 @@ const removeTeacherGroup = async (req, res) => {
 const assignStudentGroup = async (req, res) => {
   try {
     const { student_id, group_id, specialty_id } = req.body;
-    const student = await User.findOne({ where: { id: student_id, role: 'student' } });
+    const student = await User.findOne({ where: { id: student_id, role: { [Op.in]: ['student', 'student_all'] } } });
     if (!student) return res.status(404).json({ error: 'Talaba topilmadi' });
 
     // group_id: null → guruhdan chiqarish (yo'nalish saqlanadi); son → biriktirish/o'tkazish (yo'nalish guruhniki bo'ladi)

@@ -8,7 +8,8 @@ import { useLanguage } from '../../contexts/LanguageContext';
 import {
   RiTeamLine, RiAddLine, RiEditLine, RiDeleteBinLine,
   RiCloseLine, RiSearchLine, RiLockPasswordLine, RiUserLine,
-  RiMailLine, RiShieldCheckLine, RiUserStarLine, RiUser3Line, RiSparklingLine
+  RiMailLine, RiShieldCheckLine, RiUserStarLine, RiUser3Line, RiSparklingLine,
+  RiGroupLine, RiCheckLine, RiHospitalLine
 } from 'react-icons/ri';
 
 const ROLES = ['student', 'student_all', 'teacher', 'admin'];
@@ -23,15 +24,28 @@ function UserModal({ user, onClose, onSaved, specialties, groups }) {
   const { t } = useLanguage();
   const isEditing = !!(user && user.id);
   const [form, setForm] = useState({
-    full_name:    user?.full_name || '',
-    email:        user?.email || '',
-    password:     '',
-    role:         user?.role || 'student',
-    specialty_id: user?.specialty_id || '',
-    group_id:     user?.group_id || ''
+    full_name:          user?.full_name || '',
+    email:              user?.email || '',
+    password:           '',
+    role:               user?.role || 'student',
+    specialty_id:       user?.specialty_id || '',
+    group_id:           user?.group_id || '',
+    teacher_group_ids:  (user?.teacherGroups || []).map(g => g.id),
   });
   const [loading, setLoading] = useState(false);
   const [error, setError]     = useState('');
+
+  const toggleTeacherGroup = (groupId) => {
+    setForm(prev => {
+      const exists = prev.teacher_group_ids.includes(groupId);
+      return {
+        ...prev,
+        teacher_group_ids: exists
+          ? prev.teacher_group_ids.filter(id => id !== groupId)
+          : [...prev.teacher_group_ids, groupId]
+      };
+    });
+  };
 
   const submit = async (e) => {
     e.preventDefault();
@@ -39,12 +53,14 @@ function UserModal({ user, onClose, onSaved, specialties, groups }) {
     setError('');
 
     try {
+      const isStudentLike = form.role === 'student' || form.role === 'student_all';
       const payload = {
         full_name:    form.full_name.trim(),
         email:        form.email.trim(),
         role:         form.role,
-        specialty_id: form.role === 'student' && form.specialty_id ? parseInt(form.specialty_id) : null,
-        group_id:     form.role === 'student' && form.group_id ? parseInt(form.group_id) : null,
+        specialty_id: form.specialty_id ? parseInt(form.specialty_id) : null,
+        group_id:     isStudentLike && form.group_id ? parseInt(form.group_id) : null,
+        teacher_group_ids: form.role === 'teacher' ? form.teacher_group_ids : undefined,
       };
 
       if (form.password) {
@@ -168,16 +184,17 @@ function UserModal({ user, onClose, onSaved, specialties, groups }) {
             </div>
           </div>
 
+          {/* Student & Student All: Specialty and Single Group selection */}
           {(form.role === 'student' || form.role === 'student_all') && (
             <div className="grid grid-cols-2 gap-3 pt-2 border-t border-slate-100">
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                  {t('auth.specialty')} {form.role === 'student_all' && <span className="text-[10px] text-slate-400 font-normal">({t('default_optional') || "asosiy/boshlang'ich"})</span>}
+                  {t('auth.specialty')} {form.role === 'student_all' && <span className="text-[10px] text-slate-400 font-normal">({t('default_optional') || "asosiy"})</span>}
                 </label>
                 <select
                   value={form.specialty_id}
                   onChange={(e) => setForm({ ...form, specialty_id: e.target.value, group_id: '' })}
-                  className="block w-full px-3 py-2 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-xs bg-slate-50 focus:bg-white"
+                  className="block w-full px-3 py-2 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-xs bg-slate-50 focus:bg-white font-medium"
                 >
                   <option value="">{t('ui_select')}</option>
                   {specialties.map((s) => (
@@ -191,7 +208,7 @@ function UserModal({ user, onClose, onSaved, specialties, groups }) {
                 <select
                   value={form.group_id}
                   onChange={(e) => setForm({ ...form, group_id: e.target.value })}
-                  className="block w-full px-3 py-2 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-xs bg-slate-50 focus:bg-white"
+                  className="block w-full px-3 py-2 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-xs bg-slate-50 focus:bg-white font-medium"
                 >
                   <option value="">{t('ui_select')}</option>
                   {groups
@@ -200,6 +217,62 @@ function UserModal({ user, onClose, onSaved, specialties, groups }) {
                     <option key={g.id} value={g.id}>{g.name}</option>
                   ))}
                 </select>
+              </div>
+            </div>
+          )}
+
+          {/* Teacher: Specialty (Department) & Multi-Group Assignment */}
+          {form.role === 'teacher' && (
+            <div className="space-y-3 pt-2 border-t border-slate-100">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                  Kafedra / Mutaxassislik (Ixtiyoriy)
+                </label>
+                <select
+                  value={form.specialty_id}
+                  onChange={(e) => setForm({ ...form, specialty_id: e.target.value })}
+                  className="block w-full px-3 py-2 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all text-xs bg-slate-50 focus:bg-white font-medium"
+                >
+                  <option value="">-- Kafedra tanlanmagan --</option>
+                  {specialties.map((s) => (
+                    <option key={s.id} value={s.id}>{s.name}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block text-xs font-bold text-slate-700">
+                    O'qituvchi biriktirilgan guruhlar ({form.teacher_group_ids.length} ta)
+                  </label>
+                  <span className="text-[10px] text-slate-400">Guruh ustiga bosib tanlang</span>
+                </div>
+
+                {groups.length === 0 ? (
+                  <p className="text-xs text-slate-400 py-2">Hali guruhlar yaratilmagan</p>
+                ) : (
+                  <div className="flex flex-wrap gap-1.5 max-h-36 overflow-y-auto p-2 bg-slate-50 rounded-xl border border-slate-200">
+                    {groups.map(g => {
+                      const isSelected = form.teacher_group_ids.includes(g.id);
+                      return (
+                        <button
+                          key={g.id}
+                          type="button"
+                          onClick={() => toggleTeacherGroup(g.id)}
+                          className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1 ${
+                            isSelected
+                              ? 'bg-emerald-600 text-white shadow-xs'
+                              : 'bg-white text-slate-700 border border-slate-200 hover:border-slate-300'
+                          }`}
+                        >
+                          <RiGroupLine className="text-xs" />
+                          <span>{g.name}</span>
+                          {isSelected && <RiCheckLine className="text-xs" />}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             </div>
           )}
@@ -242,8 +315,6 @@ export default function UsersPage() {
   const [showModal, setShowModal]     = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-
-  // Auto-open modal logic removed
 
   const loadData = async () => {
     setLoading(true);
@@ -325,9 +396,10 @@ export default function UsersPage() {
           <div className="flex flex-wrap items-center gap-2">
             {[
               { key: 'all', label: t('common.all') },
-              { key: 'student', label: t('role_students_plural') },
-              { key: 'teacher', label: t('role_teachers_plural') },
-              { key: 'admin', label: t('role_admins_plural') },
+              { key: 'student', label: t('role_students_plural') || 'Talabalar' },
+              { key: 'student_all', label: "Barcha yo'nalish talabalari" },
+              { key: 'teacher', label: t('role_teachers_plural') || "O'qituvchilar" },
+              { key: 'admin', label: t('role_admins_plural') || 'Adminlar' },
             ].map(f => (
               <button
                 key={f.key}
@@ -370,16 +442,23 @@ export default function UsersPage() {
                   <tr>
                     <th>{t('ui_user')}</th>
                     <th>{t('auth.role')}</th>
-                    <th>{t('auth.specialty')} / {t('auth.group')}</th>
+                    <th>Mutaxassislik & Biriktirilgan Guruhlar</th>
                     <th className="text-right">{t('common.actions')}</th>
                   </tr>
                 </thead>
                 <tbody>
                   {filtered.map(u => {
                     const badgeClass = ROLE_BADGE[u.role] || 'badge-slate';
+                    const roleLabel = {
+                      student:     t('role_student') || 'Talaba',
+                      student_all: t('role_student_all') || 'Talaba (Barcha)',
+                      teacher:     t('role_teacher') || "O'qituvchi",
+                      admin:       t('role_admin') || 'Administrator',
+                    }[u.role] || u.role;
+
                     return (
                       <tr key={u.id}>
-                        <td className="">
+                        <td>
                           <div className="flex items-center gap-3">
                             <Avatar name={u.full_name} seed={u.id} size="w-9 h-9 text-xs" />
                             <div>
@@ -388,19 +467,82 @@ export default function UsersPage() {
                             </div>
                           </div>
                         </td>
-                        <td className="">
+
+                        <td>
                           <span className={`badge-standard ${badgeClass}`}>
-                            {{ student: t('role_student'), teacher: t('role_teacher'), admin: t('role_admin') }[u.role] || u.role}
+                            {roleLabel}
                           </span>
                         </td>
-                        <td className=" text-slate-600 font-medium">
-                          {u.role === 'student' ? (
-                            <span>{u.specialty?.name || '—'} {u.group?.name ? `(${u.group.name})` : ''}</span>
-                          ) : (
-                            <span className="text-slate-400">—</span>
+
+                        {/* Specialty & Groups Associations */}
+                        <td>
+                          {/* 1. Regular Student */}
+                          {u.role === 'student' && (
+                            <div className="space-y-1">
+                              <span className="font-bold text-slate-800 text-xs block">
+                                {u.specialty?.name || "Yo'nalishsiz"}
+                              </span>
+                              {u.group?.name ? (
+                                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-blue-50 text-blue-700 font-bold text-[11px] border border-blue-200">
+                                  <RiGroupLine className="text-xs" /> {u.group.name}
+                                </span>
+                              ) : (
+                                <span className="inline-block text-[11px] text-amber-600 bg-amber-50 px-2 py-0.5 rounded-lg font-medium border border-amber-200">
+                                  Guruh biriktirilmagan
+                                </span>
+                              )}
+                            </div>
+                          )}
+
+                          {/* 2. Student All Specialties */}
+                          {u.role === 'student_all' && (
+                            <div className="space-y-1">
+                              <span className="inline-flex items-center gap-1 font-bold text-purple-700 text-xs">
+                                <RiSparklingLine className="text-amber-500 text-sm" /> Barcha yo'nalishlar (All)
+                              </span>
+                              {u.group?.name ? (
+                                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-purple-50 text-purple-700 font-bold text-[11px] border border-purple-200 block w-fit">
+                                  <RiGroupLine className="text-xs" /> {u.group.name}
+                                </span>
+                              ) : (
+                                <span className="text-[11px] text-slate-400 block font-medium">
+                                  Guruhsiz (Mustaqil)
+                                </span>
+                              )}
+                            </div>
+                          )}
+
+                          {/* 3. Teacher: Specialty + ALL taught groups */}
+                          {u.role === 'teacher' && (
+                            <div className="space-y-1.5">
+                              {u.specialty?.name && (
+                                <span className="text-xs font-bold text-slate-700 block">
+                                  {u.specialty.name}
+                                </span>
+                              )}
+                              {u.teacherGroups && u.teacherGroups.length > 0 ? (
+                                <div className="flex flex-wrap gap-1 max-w-[280px]">
+                                  {u.teacherGroups.map(tg => (
+                                    <span key={tg.id} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-emerald-50 text-emerald-800 font-bold text-[11px] border border-emerald-200">
+                                      <RiGroupLine className="text-xs text-emerald-600" /> {tg.name}
+                                    </span>
+                                  ))}
+                                </div>
+                              ) : (
+                                <span className="inline-block text-[11px] text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-lg font-medium">
+                                  Guruh biriktirilmagan
+                                </span>
+                              )}
+                            </div>
+                          )}
+
+                          {/* 4. Admin */}
+                          {u.role === 'admin' && (
+                            <span className="text-xs font-semibold text-slate-400">Tizim administratori</span>
                           )}
                         </td>
-                        <td className=" text-right">
+
+                        <td className="text-right">
                           <div className="flex items-center justify-end gap-1">
                             <button
                               onClick={() => { setModalUser(u); setShowModal(true); }}
